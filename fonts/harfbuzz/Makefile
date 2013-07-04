@@ -12,6 +12,7 @@ LICENSE=	mit
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		gmake pkg-config
 GCC_REQD=		4.8
 GNU_CONFIGURE=		yes
