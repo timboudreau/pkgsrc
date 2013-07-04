@@ -5,6 +5,7 @@
 COMMENT=	Library to read/create different archive formats
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 CONFIGURE_ARGS+=	--disable-bsdcat
 CONFIGURE_ARGS+=	--disable-bsdcpio
 CONFIGURE_ARGS+=	--disable-bsdtar
