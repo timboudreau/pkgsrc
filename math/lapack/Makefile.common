@@ -13,11 +13,12 @@ LICENSE=	modified-bsd
 
 USE_LANGUAGES=		c fortran
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 
 DISTINFO_FILE=	${.CURDIR}/../../math/lapack/distinfo
 PATCHDIR=	${.CURDIR}/../../math/lapack/patches
 
-INSTALLATION_DIRS=	lib
+INSTALLATION_DIRS=	lib${LIBARCHSUFFIX}
 
 # blas fails using the gold linker with:
 # fatal error: --sysroot=: must take a non-empty argument
