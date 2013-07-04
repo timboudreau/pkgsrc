@@ -4,3 +4,4 @@ SHA1 (taglib-1.11.1.tar.gz) = 80a30eeae67392f636c9f113c60d778c2995c99e
 RMD160 (taglib-1.11.1.tar.gz) = 408d2a888875bc29fc64c4d0056daebba2c55192
 SHA512 (taglib-1.11.1.tar.gz) = 7846775c4954ea948fe4383e514ba7c11f55d038ee06b6ea5a0a1c1069044b348026e76b27aa4ba1c71539aa8143e1401fab39184cc6e915ba0ae2c06133cb98
 Size (taglib-1.11.1.tar.gz) = 1261620 bytes
+SHA1 (patch-CMakeLists.txt) = 142b609852191fbb70d5051d0a753aeddab6ad8f
