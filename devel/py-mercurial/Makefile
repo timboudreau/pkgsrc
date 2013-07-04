@@ -21,6 +21,13 @@ USE_TOOLS+=			gmake msgfmt
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1 ${PKGMANDIR}/man5
 INSTALLATION_DIRS+=	share/doc/mercurial
 
+# Only single script is installed, so handle both multi archs.
+SUBST_CLASSES+=		libdir
+SUBST_STAGE.libdir=	pre-configure
+SUBST_FILES.libdir=	${WRKSRC}/hg
+SUBST_SED.libdir=	-e 's|@LIBDIR32@|${PREFIX}/${PYSITELIB.32}|'
+SUBST_SED.libdir+=	-e 's|@LIBDIR64@|${PREFIX}/${PYSITELIB.64}|'
+
 .include "Makefile.version"
 
 do-test:

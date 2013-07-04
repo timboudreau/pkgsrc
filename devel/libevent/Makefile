@@ -8,6 +8,7 @@ COMMENT=	Asynchronous event notification library
 CONFLICTS+=	libev<3.9nb1
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE+=	libevent_core.pc.in
 PKGCONFIG_OVERRIDE+=	libevent_extra.pc.in
