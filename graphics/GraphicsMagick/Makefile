@@ -12,6 +12,7 @@ DEPENDS+=	urw-fonts-[0-9]*:../../fonts/urw-fonts
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		bin lib
 USE_TOOLS+=		gmake pkg-config:run gs:run
 USE_FEATURES=		vsnprintf	# optional but recommended for security
 GNU_CONFIGURE=		yes

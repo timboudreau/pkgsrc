@@ -11,6 +11,7 @@ LICENSE=	modified-bsd
 
 USE_CMAKE=		yes
 USE_LANGUAGES=		c99 c++
+USE_MULTIARCH=		lib
 CMAKE_ARGS+=		-DALLOW_IN_SOURCE_BUILD=ON
 
 PKGCONFIG_OVERRIDE=	pkgconfig/jasper.pc
