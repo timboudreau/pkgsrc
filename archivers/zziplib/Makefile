@@ -11,6 +11,7 @@ COMMENT=	Library for ZIP archive handling
 LICENSE=	gnu-lgpl-v2 OR mpl-1.1
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-zlib=${BUILDLINK_PREFIX.zlib}
 CONFIGURE_ARGS+=	--disable-builddir
