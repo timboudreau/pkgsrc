@@ -14,6 +14,7 @@ LICENSE=	2-clause-bsd
 BUILD_DEPENDS+=		help2man-[0-9]*:../../converters/help2man
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		bin lib
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		gm4:run	makeinfo gettext
 GNU_CONFIGURE=		yes
