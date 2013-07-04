@@ -15,6 +15,7 @@ COMMENT=		Library for reading and modifying mp4 files
 USE_LANGUAGES=		c c++
 USE_PKGLOCALEDIR=	yes
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	USENASM=no
 # the "bootstrap" script checks too much, and isn't useful anyway

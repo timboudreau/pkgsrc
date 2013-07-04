@@ -14,6 +14,7 @@ LICENSE=	mit
 USE_LIBTOOL=		yes
 USE_TOOLS+=		pkg-config gmake
 USE_LANGUAGES=		c c++
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--disable-documentation
 
