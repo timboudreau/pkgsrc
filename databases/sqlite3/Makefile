@@ -11,6 +11,7 @@ COMMENT=	SQL Database Engine in a C Library
 .include "options.mk"
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		bin lib
 USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--disable-static-shell
