@@ -17,6 +17,7 @@ BUILD_DEPENDS+=	libxslt-[0-9]*:../../textproc/libxslt
 USE_LANGUAGES=	c c++
 
 USE_CMAKE=	yes
+USE_MULTIARCH=	lib
 CMAKE_ARGS+=	-DMAN_INSTALL_DIR:PATH=${PKGMANDIR}/man1
 CMAKE_ARGS+=	-DINCLUDE_INSTALL_DIR:PATH=include/tidy
 
