@@ -10,6 +10,7 @@ COMMENT=	Sample rate converter library
 LICENSE=	2-clause-bsd
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		pkg-config
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE+=	${WRKSRC}/samplerate.pc.in
