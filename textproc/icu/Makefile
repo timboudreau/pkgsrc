@@ -13,6 +13,7 @@ LICENSE=	mit
 
 WRKSRC=			${WRKDIR}/icu/source
 USE_LANGUAGES=		c99 c++
+USE_MULTIARCH=		lib
 USE_TOOLS+=		gmake
 GCC_REQD+=		4.8
 TEST_TARGET=		check
