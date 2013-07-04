@@ -10,6 +10,7 @@ COMMENT=	Library for build higher-level cryptographic tools
 LICENSE=	isc
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE=	libsodium.pc.in
 

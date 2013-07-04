@@ -10,6 +10,7 @@ COMMENT=	ASN.1 structure parser library
 LICENSE=	gnu-fdl-v1.3 AND gnu-lgpl-v2.1 AND gnu-gpl-v3
 
 USE_LIBTOOL=		yes
+USE_MULTIARCH=		lib
 USE_TOOLS+=		makeinfo
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-packager="pkgsrc"
