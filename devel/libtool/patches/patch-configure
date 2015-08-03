@@ -3,7 +3,7 @@ $NetBSD: patch-configure,v 1.1 2017/03/06 16:14:07 jperkin Exp $
 Automatically generated using manual-* patches and bootstrap.
 DO NOT MODIFY THIS PATCH MANUALLY!  YOUR CHANGES WILL BE LOST!
 
---- configure.orig	2017-02-02 10:07:28.000000000 +0000
+--- configure.orig	2015-02-15 16:14:34.000000000 +0000
 +++ configure
 @@ -5903,7 +5903,7 @@ else
      lt_cv_sys_max_cmd_len=8192;
@@ -24,7 +24,7 @@ DO NOT MODIFY THIS PATCH MANUALLY!  YOUR CHANGES WILL BE LOST!
  : ${CP="cp -f"}
  : ${MV="mv -f"}
  : ${RM="rm -f"}
-@@ -6369,12 +6372,19 @@ linux* | k*bsd*-gnu | kopensolaris*-gnu 
+@@ -6369,12 +6372,19 @@ linux* | k*bsd*-gnu | kopensolaris*-gnu
    lt_cv_deplibs_check_method=pass_all
    ;;
  
@@ -419,15 +419,35 @@ DO NOT MODIFY THIS PATCH MANUALLY!  YOUR CHANGES WILL BE LOST!
  	;;
  
        *nto* | *qnx*)
-@@ -15966,7 +16074,7 @@ fi
+@@ -15966,15 +16074,15 @@ fi
  	    # GNU C++ compiler with Solaris linker
  	    if test yes,no = "$GXX,$with_gnu_ld"; then
  	      no_undefined_flag_CXX=' $wl-z ${wl}defs'
 -	      if $CC --version | $GREP -v '^2\.7' > /dev/null; then
+-	        archive_cmds_CXX='$CC -shared $pic_flag -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-h $wl$soname -o $lib'
 +	      if true; then
- 	        archive_cmds_CXX='$CC -shared $pic_flag -nostdlib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags $wl-h $wl$soname -o $lib'
++	        archive_cmds_CXX='$CC -shared $pic_flag $libobjs $deplibs $compiler_flags $wl-h $wl$soname -o $lib'
  	        archive_expsym_cmds_CXX='echo "{ global:" > $lib.exp~cat $export_symbols | $SED -e "s/\(.*\)/\1;/" >> $lib.exp~echo "local: *; };" >> $lib.exp~
-                   $CC -shared $pic_flag -nostdlib $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~$RM $lib.exp'
+-                  $CC -shared $pic_flag -nostdlib $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags~$RM $lib.exp'
++                  $CC -shared $pic_flag $wl-M $wl$lib.exp $wl-h $wl$soname -o $lib $libobjs $deplibs $compiler_flags~$RM $lib.exp'
+ 
+ 	        # Commands to make compiler produce verbose output that lists
+ 	        # what "hidden" libraries, object files and flags are used when
+ 	        # linking a shared library.
+-	        output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP "\-L"'
++	        output_verbose_link_cmd=func_echo_all
+ 	      else
+ 	        # g++ 2.7 appears to require '-G' NOT '-shared' on this
+ 	        # platform.
+@@ -15985,7 +16093,7 @@ fi
+ 	        # Commands to make compiler produce verbose output that lists
+ 	        # what "hidden" libraries, object files and flags are used when
+ 	        # linking a shared library.
+-	        output_verbose_link_cmd='$CC -G $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP "\-L"'
++	        output_verbose_link_cmd=func_echo_all
+ 	      fi
+ 
+ 	      hardcode_libdir_flag_spec_CXX='$wl-R $wl$libdir'
 @@ -16131,6 +16239,7 @@ if { { eval echo "\"\$as_me\":${as_linen
         # Some compilers place space between "-{L,R}" and the path.
         # Remove the space.
@@ -1395,7 +1415,7 @@ DO NOT MODIFY THIS PATCH MANUALLY!  YOUR CHANGES WILL BE LOST!
        ;;
  
      openbsd* | bitrig*)
-@@ -31933,7 +32352,10 @@ func_cc_basename ()
+@@ -31933,7 +32354,10 @@ func_cc_basename ()
          *) break;;
        esac
      done
