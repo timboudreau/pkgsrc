@@ -73,6 +73,8 @@ SMF_METHODS=		named
 INSTALL_MAKE_FLAGS+=	sysconfdir=${PREFIX}/share/examples/bind9
 CONF_FILES+=		share/examples/bind9/bind.keys \
 			${PKG_SYSCONFDIR}/bind.keys
+CONF_FILES+=		share/examples/bind9/named.conf \
+			${PKG_SYSCONFDIR}/named.conf
 
 INSTALLATION_DIRS+=	${DOCDIR} ${DOCDIR}/arm
 
@@ -81,6 +83,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/${f} ${DESTDIR}${PREFIX}/${DOCDIR}
 .endfor
 	${INSTALL_DATA} ${WRKSRC}/doc/arm/*.html ${DESTDIR}${PREFIX}/${DOCDIR}/arm
+	${INSTALL_DATA} ${FILESDIR}/named.conf ${DESTDIR}${PREFIX}/share/examples/bind9
 
 .include "../../security/openssl/buildlink3.mk"
 .include "../../mk/krb5.buildlink3.mk"
