@@ -30,6 +30,7 @@ SHA1 (patch-gcc_ggc-common.c) = fa577bc25260d7e6304f166686ba51c0b677d7f6
 SHA1 (patch-gcc_ginclude_stddef.h) = 8af3e4b4058fc623c61e91f5771699f0ce679957
 SHA1 (patch-gcc_ira.c) = 37bfd4118a9393d7d0fc142ee13379526fd733ee
 SHA1 (patch-gcc_system.h) = 4c959a6b1c4d524cbdf44cfb80f0e5758ec20783
+SHA1 (patch-gcc_targhooks.c) = 1ff864e79cd216a45afd4f3bdef8aab54fec14d6
 SHA1 (patch-include_libiberty.h) = 5254c6a421ae16c71571820f6f07906367f042ba
 SHA1 (patch-libcilkrts_runtime_os-unix.c) = 165e736decbc6e0e3d905d418d71cf4873927925
 SHA1 (patch-libcilkrts_runtime_signal_node.c) = e12fd7c9f109db568c46e915bd1bae28fae7b95a
