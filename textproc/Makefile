@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.935 2017/06/21 22:18:55 taca Exp $
+# $NetBSD: Makefile,v 1.937 2017/06/24 07:18:11 adam Exp $
 #
 
 COMMENT=	Text processing utilities (does not include desktop publishing)
@@ -782,6 +782,7 @@ SUBDIR+=	py-sphinxcontrib-websupport
 SUBDIR+=	py-tabulate
 SUBDIR+=	py-textile
 SUBDIR+=	py-tinycss
+SUBDIR+=	py-ujson
 SUBDIR+=	py-uritemplate
 SUBDIR+=	py-validators
 SUBDIR+=	py-vobject
@@ -907,6 +908,8 @@ SUBDIR+=	tei-p5-schema
 SUBDIR+=	tei-xsl
 SUBDIR+=	tex-latexdiff
 SUBDIR+=	tex-latexdiff-doc
+SUBDIR+=	tex-lwarp
+SUBDIR+=	tex-lwarp-doc
 SUBDIR+=	tex-makeindex
 SUBDIR+=	tex-makeindex-doc
 SUBDIR+=	tex-xmltex
