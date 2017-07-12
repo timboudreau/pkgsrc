@@ -40,12 +40,12 @@ the best way to fix that.   at least it compiles now....
  $(GSSOC_XE): $(GS_SO) $(PSSRC)$(SOC_LOADER)
  	$(GLCC) -g -o $(GSSOC_XE) $(PSSRC)dxmainc.c \
 -	-L$(BINDIR) -l$(GS)
-+	-L$(BINDIR) -L$(PREFIX)/lib -Wl,-R$(PREFIX)/lib -l$(GS)
++	-L$(BINDIR) -L$(PREFIX)/lib$(LIBARCHSUFFIX) -Wl,-R$(PREFIX)/lib$(LIBARCHSUFFIX) -l$(GS)
  
  $(GSSOX_XE): $(GS_SO) $(PSSRC)$(SOC_LOADER)
  	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(PSSRC)$(SOC_LOADER) \
 -	-L$(BINDIR) -l$(GS) $(SOC_LIBS)
-+	-L$(BINDIR) -L$(PREFIX)/lib -Wl,-R$(PREFIX)/lib -l$(GS) $(SOC_LIBS)
++	-L$(BINDIR) -L$(PREFIX)/lib$(LIBARCHSUFFIX) -Wl,-R$(PREFIX)/lib$(LIBARCHSUFFIX) -l$(GS) $(SOC_LIBS)
  
  # ------------------------- Recursive make targets ------------------------- #
  

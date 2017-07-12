@@ -25,12 +25,12 @@ Add some rpaths.
  $(GSSOC_XE): gs-so-links-subtarget $(PSSRC)$(SOC_LOADER) $(UNIX_DLL_MAK) $(MAKEDIRS)
  	$(GLCC) -g -o $(GSSOC_XE) $(PSSRC)dxmainc.c \
 -	-L$(BINDIR) -l$(GS_SO_BASE)
-+	-L$(BINDIR) -L$(PREFIX)/lib -Wl,-R$(PREFIX)/lib -l$(GS_SO_BASE)
++	-L$(BINDIR) -L$(PREFIX)/lib$(LIBARCHSUFFIX) -Wl,-R$(PREFIX)/lib$(LIBARCHSUFFIX) -l$(GS_SO_BASE)
  
  $(GSSOX_XE): gs-so-links-subtarget $(PSSRC)$(SOC_LOADER) $(UNIX_DLL_MAK) $(MAKEDIRS)
  	$(GLCC) -g $(SOC_CFLAGS) -o $(GSSOX_XE) $(PSSRC)$(SOC_LOADER) \
 -	-L$(BINDIR) -l$(GS_SO_BASE) $(SOC_LIBS)
-+	-L$(BINDIR) -L$(PREFIX)/lib -Wl,-R$(PREFIX)/lib -l$(GS_SO_BASE) $(SOC_LIBS)
++	-L$(BINDIR) -L$(PREFIX)/lib$(LIBARCHSUFFIX) -Wl,-R$(PREFIX)/lib$(LIBARCHSUFFIX) -l$(GS_SO_BASE) $(SOC_LIBS)
  
  $(PCLSOC_XE): gpcl6-so-links-subtarget $(PLSRC)$(REALMAIN_SRC).c $(UNIX_DLL_MAK) $(MAKEDIRS)
  	$(GLCC) -g -o $(PCLSOC_XE) $(PLSRC)$(REALMAIN_SRC).c -L$(BINDIR) -l$(PCL_SO_BASE)
