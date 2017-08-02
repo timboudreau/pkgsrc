@@ -1,0 +1,50 @@
+$NetBSD: patch-aa,v 1.0 2017/08/02 01:24:40 wiz Exp $
+Fix floating point errors failing build on pkgsrc's gcc.
+--- build/Makefile	2017-08-02 10:20:14.208882721 +0000
++++ build/Makefile	2017-08-02 10:20:38.112262148 +0000
+@@ -23,6 +23,19 @@
+ 	-lz
+ INCLUDES+= -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/usr/X11/include/
+ endif
++ifeq ($(UNAME), SunOS)
++CC=${LIBTOOL} --mode=link g++
++LD_PLATFORM_FLAGS=\
++        ${PREFIX}/lib/libboost_program_options.a \
++        ${PREFIX}/lib/libsndfile.a \
++        ${PREFIX}/lib/libpng16.a \
++        ${PREFIX}/lib/libogg.a \
++        ${PREFIX}/lib/libvorbis.la \
++        ${PREFIX}/lib/libvorbisfile.la \
++        ${PREFIX}/lib/libvorbisenc.a \
++        ${PREFIX}/lib/libFLAC.a \
++        -lz
++endif
+ 
+ all: $(BINARY)
+ 
+@@ -42,7 +55,7 @@
+ 	mkdir -p `dirname $(BINARY)`
+ 	echo $(INCLUDES)
+ 	# -Wno-unused-local-typedefs
+-	$(CC) -O3 -Wall -Werror $(SRC)/*.cpp $(INCLUDES) $(LD_PLATFORM_FLAGS) -o $(BINARY)
++	$(CC) -O3 -Wall -Wno-error $(SRC)/*.cpp $(INCLUDES) $(LD_PLATFORM_FLAGS) -o $(BINARY)
+ 
+ clean:
+ 	rm -f $(BINARY)
+@@ -50,7 +63,7 @@
+ 	rm -f $(SRC)/version.hpp
+ 
+ profile:
+-	$(CC) -O3 -Wall -Werror $(SRC)/*.cpp $(INCLUDES) $(LD_PLATFORM_FLAGS) -o $(BINARY)_profile -g -pg
++	$(CC) -O3 -Wall -Wno-error $(SRC)/*.cpp $(INCLUDES) $(LD_PLATFORM_FLAGS) -o $(BINARY)_profile -g -pg
+ 	$(BINARY)_profile baked.wav
+ 	gprof $(BINARY)_profile|less
+ 
+@@ -94,4 +107,7 @@
+ 		mv png++-0.2.5/ ../dependencies/include/png++ \
+ 	)
+ 
++install_dependencies_SunOS:
++	echo "No install_dependencies on SunOS"
++
+ install_dependencies: install_dependencies_$(UNAME)
