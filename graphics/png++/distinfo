@@ -1,0 +1,7 @@
+$NetBSD$
+
+SHA1 (png++-0.2.9.tar.gz) = 024ce64b0a473984637ab2be1ef535cc744488e9
+RMD160 (png++-0.2.9.tar.gz) = 7cbe7190863f49ca4bc694aadd08096c53714cd6
+SHA512 (png++-0.2.9.tar.gz) = 905e037faf26eef9ca1d9508471dde9f480f41a87d72133057865078b2fd040b1cf84727ece48d79117d615fdfbc0a749fec7dbe362366763e2017865a7fe132
+Size (png++-0.2.9.tar.gz) = 592770 bytes
+SHA1 (patch-DESTDIR.patch) = bc4a02bce484ba75fced1c40674461fa1063647d

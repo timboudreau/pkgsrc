@@ -1,0 +1,16 @@
+$NetBSD: patch-DESTDIR.patch,v 1.7 2014/09/08 21:24:45 wiz Exp $
+Upstream Makefile does not support DESTDIR.
+
+--- Makefile	2017-08-01 23:43:13.758080888 -0400
++++ Makefile	2017-08-01 01:23:23.323520528 -0400
+@@ -54,8 +54,8 @@
+ uninstall: uninstall-headers uninstall-docs
+ 
+ install-headers:
+-	mkdir -p $(PREFIX)/include/png++
+-	cp $(headers) $(PREFIX)/include/png++
++	mkdir -p $(DESTDIR)$(PREFIX)/include/png++
++	cp $(headers) $(DESTDIR)$(PREFIX)/include/png++
+ 
+ uninstall-headers:
+ 	rm -rf $(PREFIX)/include/png++
