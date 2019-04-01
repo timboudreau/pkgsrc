@@ -9,5 +9,6 @@ RMD160 (proftpd-1.3.5d.tar.gz) = 2052a7c41824c8ce9558fd11c78843b1b07ab6e7
 SHA512 (proftpd-1.3.5d.tar.gz) = 3297ddd1f11d46123bbe46488d75fa7a6dcdf2c2d6e7e880a78a427f9f1e9901878dab179e41092e0b9864a615d8ba0b0bf444d4f829870e993e3169c7141c37
 Size (proftpd-1.3.5d.tar.gz) = 29966560 bytes
 SHA1 (patch-Makefile.in) = 332dcd9d773770c10d876dc9da1dc7f6b1c15421
+SHA1 (patch-configure) = 5b1ba2c106217a394443b84ac418b56dab30fe28
 SHA1 (patch-contrib_mod__sftp_Makefile.in) = 8a805d777597b4fb06a45b484373880e535a0cee
 SHA1 (patch-contrib_mod_tls.c) = e36dfa9427804b41eb2ad49378b62890325d50ed
