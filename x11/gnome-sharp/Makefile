@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.66 2017/04/22 21:03:19 adam Exp $
+# $NetBSD: Makefile,v 1.80 2019/04/03 00:33:14 ryoon Exp $
 #
 
 DISTNAME=	gnome-sharp-2.24.2
-PKGREVISION=	44
+PKGREVISION=	57
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-sharp/2.24/}
 
@@ -33,7 +33,7 @@ PKGCONFIG_OVERRIDE+=	gnome/gnome-sharp-2.0.pc.in
 PKGCONFIG_OVERRIDE+=	gnomevfs/gnome-vfs-sharp-2.0.pc.in
 
 SUBST_CLASSES=		pc
-SUBST_STAGE.pc=		post-patch
+SUBST_STAGE.pc=		pre-configure
 SUBST_FILES.pc=		${PKGCONFIG_OVERRIDE}
 SUBST_SED.pc=		-e "s|\$${pcfiledir}/../..|@prefix@|g"
 SUBST_MESSAGE.pc=	Fixing hardcoded paths.

@@ -1,7 +1,7 @@
-$NetBSD: distinfo,v 1.19 2017/05/29 12:55:10 wiz Exp $
+$NetBSD: distinfo,v 1.25 2019/03/02 14:51:53 adam Exp $
 
-SHA1 (libatomic_ops-7.6.0.tar.gz) = b7236a3c3d6f3e5da69fe0c7b9508eb814a09825
-RMD160 (libatomic_ops-7.6.0.tar.gz) = 2500519f00de1e1197eb3d57f3858702b07c13d8
-SHA512 (libatomic_ops-7.6.0.tar.gz) = 58f1f1df94ff33bda5833af2e3a6a4af120ccfc0cec0fb15e2db24341e2ffd5a6436169cb4e7dbd96a6cb0431c1295dc4b5270d4b01806e470bacadc902720fc
-Size (libatomic_ops-7.6.0.tar.gz) = 493177 bytes
-SHA1 (patch-ad) = 6fb90f31ca7309c8ea65fb482a9964c5267c35fe
+SHA1 (libatomic_ops-7.6.10.tar.gz) = ad1c9cd6cc22e042a784e34baa360874083e5f60
+RMD160 (libatomic_ops-7.6.10.tar.gz) = b5258c1fcbce5d91d66b9bb3046a74e04cda79a5
+SHA512 (libatomic_ops-7.6.10.tar.gz) = 4661445503ef4303e873559af319ad799a7eddad3df45ad602cf338c594a642ad4333a36fa91722f0d8c48acd38bbf45c60a468c7375d14824520a83c1109ec9
+Size (libatomic_ops-7.6.10.tar.gz) = 503734 bytes
+SHA1 (patch-src_atomic__ops.h) = 244324fb2ecf738a9407c128fc33930eb81f26d8

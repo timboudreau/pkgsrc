@@ -1,7 +1,7 @@
-$NetBSD: distinfo,v 1.66 2016/11/28 15:40:50 wiz Exp $
+$NetBSD: distinfo,v 1.71 2019/04/07 19:49:12 leot Exp $
 
-SHA1 (links-2.14.tar.bz2) = 0594a7401670e40d71906f1e35eec9aeb82e45f5
-RMD160 (links-2.14.tar.bz2) = a1240a32e90bd0ab2e047f74ea5bfd0f3a33bbac
-SHA512 (links-2.14.tar.bz2) = d03b091957e0a2e06605fcf7c9bc56d48ebbcdc695f4ce894901540008455a9bc6544abdecd787faa041e2dbdff28b0d6ddcc9d26528d39d7d72750655c73575
-Size (links-2.14.tar.bz2) = 6535707 bytes
+SHA1 (links-2.19.tar.bz2) = 486d9b46ac428de02bf8a1f4324b33e795c7a19d
+RMD160 (links-2.19.tar.bz2) = 4ee2ac48d97dc071032b10ed4d6456f6b6a29ae2
+SHA512 (links-2.19.tar.bz2) = 8716cea6feb5a02b59d7e2dd5bfd0af9b2ac2a4427c0f98a3c8a8eaabca31e7a96c16888c0de19976749485b3cdbf75cbff88a37cd3b58700c1f090acec328ea
+Size (links-2.19.tar.bz2) = 6460441 bytes
 SHA1 (patch-ab) = 3856b53ea6c17d72ca569acf1128ae40d2439ffb

@@ -1,12 +1,11 @@
-$NetBSD: patch-ad,v 1.1 2011/07/17 12:49:17 mrg Exp $
+$NetBSD: patch-ad,v 1.3 2019/01/04 13:35:16 ryoon Exp $
 
 patch to fix big-endian mips support from matt@netbsd.org
 
-
 diff -rup src/cpus/cpu_mips_coproc.cc src/cpus/cpu_mips_coproc.cc
---- src/cpus/cpu_mips_coproc.cc	2009-06-21 09:03:48.000000000 -0700
-+++ src/cpus/cpu_mips_coproc.cc	2009-11-12 12:22:12.000000000 -0800
-@@ -1987,6 +1987,13 @@ void coproc_function(struct cpu *cpu, st
+--- src/cpus/cpu_mips_coproc.cc.orig	2018-12-07 06:29:22.000000000 +0000
++++ src/cpus/cpu_mips_coproc.cc
+@@ -2029,6 +2029,13 @@ void coproc_function(struct cpu *cpu, st
  
  	if (cpnr < 2 && (((function & 0x03e007f8) == (COPz_MTCz << 21))
  	              || ((function & 0x03e007f8) == (COPz_DMTCz << 21)))) {
@@ -20,7 +19,7 @@ diff -rup src/cpus/cpu_mips_coproc.cc src/cpus/cpu_mips_coproc.cc
  		if (unassemble_only) {
  			debug("%s%i\t%s,", copz==COPz_DMTCz? "dmtc" : "mtc",
  			    cpnr, regnames[rt]);
-@@ -1996,16 +2003,10 @@ void coproc_function(struct cpu *cpu, st
+@@ -2038,16 +2045,10 @@ void coproc_function(struct cpu *cpu, st
  				debug("r%i", rd);
  			if (function & 7)
  				debug(",%i", (int)(function & 7));

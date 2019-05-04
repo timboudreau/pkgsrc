@@ -1,31 +1,26 @@
-# $NetBSD: Makefile.common,v 1.18 2017/06/23 17:12:54 fhajny Exp $
+# $NetBSD: Makefile.common,v 1.27 2019/04/25 18:42:41 adam Exp $
 
-PDNS_VERSION=		4.0.4
-DISTNAME=		pdns-${PDNS_VERSION}
-CATEGORIES=		net
-MASTER_SITES=		http://downloads.powerdns.com/releases/
-EXTRACT_SUFX=		.tar.bz2
+PDNS_VERSION=	4.1.8
+DISTNAME=	pdns-${PDNS_VERSION}
+CATEGORIES=	net
+MASTER_SITES=	http://downloads.powerdns.com/releases/
+EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER?=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.powerdns.com/
-LICENSE=		gnu-gpl-v2
-
-USE_TOOLS+=		bison flex gmake pkg-config
-USE_LANGUAGES=		c c++
-USE_LIBTOOL=		yes
-GNU_CONFIGURE=		yes
+MAINTAINER?=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.powerdns.com/
+LICENSE=	gnu-gpl-v2
 
 BUILD_DEPENDS+=		ragel-[0-9]*:../../devel/ragel
 
-GNU_CONFIGURE_LIBSUBDIR=pdns
-
-CONFIGURE_ARGS+=	--without-lua
+USE_LANGUAGES=		c c++
+USE_LIBTOOL=		yes
+USE_TOOLS+=		bison flex gmake pkg-config
+GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-boost=${BUILDLINK_PREFIX.boost-headers}
+CONFIGURE_ARGS+=	--without-lua
 
-BUILDLINK_TRANSFORM+=	rm:-fstack-protector
-
-.include "../../mk/dlopen.buildlink3.mk"
 .include "../../devel/boost-headers/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
+.include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.9 2017/06/21 07:24:06 markd Exp $
+$NetBSD: distinfo,v 1.12 2019/01/30 06:16:44 markd Exp $
 
-SHA1 (tex-glossaries-44564/glossaries.tar.xz) = 1c2d2a93b414553a48292cca03c5e7c8c6273c61
-RMD160 (tex-glossaries-44564/glossaries.tar.xz) = 2d7131d6e3cce340dc94ffb65dfa3080e9284972
-SHA512 (tex-glossaries-44564/glossaries.tar.xz) = 80dc166de3b42e9898573ed43c2a91f128b29e2222cbe9218206ebea745e402dea93d17cafe64c7f3984e9cd19f007502dd3a61cad73546055bf4f8836cd9bfa
-Size (tex-glossaries-44564/glossaries.tar.xz) = 74796 bytes
+SHA1 (tex-glossaries-49618/glossaries.tar.xz) = d2cb369c363d21227cc2b05e9a9ad5767fbbe1b8
+RMD160 (tex-glossaries-49618/glossaries.tar.xz) = d5827f2678e3f8c93d5646eb20512930687fb67c
+SHA512 (tex-glossaries-49618/glossaries.tar.xz) = c82109389164260b2bfb7e0d26455a8883cd13e47d4fd1c5f9d5e34f1c30dd0bf69bcc110b6236fccd0c30ba15c6a3b50476080b69d0fc4e8bcab283bcd53b24
+Size (tex-glossaries-49618/glossaries.tar.xz) = 76660 bytes

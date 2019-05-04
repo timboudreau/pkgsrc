@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.1 2017/07/07 07:27:15 adam Exp $
+@comment $NetBSD: PLIST,v 1.5 2019/04/04 12:25:38 adam Exp $
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
@@ -13,6 +13,9 @@ ${PYSITELIB}/sanic/__main__.pyo
 ${PYSITELIB}/sanic/app.py
 ${PYSITELIB}/sanic/app.pyc
 ${PYSITELIB}/sanic/app.pyo
+${PYSITELIB}/sanic/blueprint_group.py
+${PYSITELIB}/sanic/blueprint_group.pyc
+${PYSITELIB}/sanic/blueprint_group.pyo
 ${PYSITELIB}/sanic/blueprints.py
 ${PYSITELIB}/sanic/blueprints.pyc
 ${PYSITELIB}/sanic/blueprints.pyo
@@ -25,18 +28,21 @@ ${PYSITELIB}/sanic/constants.pyo
 ${PYSITELIB}/sanic/cookies.py
 ${PYSITELIB}/sanic/cookies.pyc
 ${PYSITELIB}/sanic/cookies.pyo
-${PYSITELIB}/sanic/defaultFilter.py
-${PYSITELIB}/sanic/defaultFilter.pyc
-${PYSITELIB}/sanic/defaultFilter.pyo
 ${PYSITELIB}/sanic/exceptions.py
 ${PYSITELIB}/sanic/exceptions.pyc
 ${PYSITELIB}/sanic/exceptions.pyo
 ${PYSITELIB}/sanic/handlers.py
 ${PYSITELIB}/sanic/handlers.pyc
 ${PYSITELIB}/sanic/handlers.pyo
+${PYSITELIB}/sanic/helpers.py
+${PYSITELIB}/sanic/helpers.pyc
+${PYSITELIB}/sanic/helpers.pyo
 ${PYSITELIB}/sanic/log.py
 ${PYSITELIB}/sanic/log.pyc
 ${PYSITELIB}/sanic/log.pyo
+${PYSITELIB}/sanic/reloader_helpers.py
+${PYSITELIB}/sanic/reloader_helpers.pyc
+${PYSITELIB}/sanic/reloader_helpers.pyo
 ${PYSITELIB}/sanic/request.py
 ${PYSITELIB}/sanic/request.pyc
 ${PYSITELIB}/sanic/request.pyo

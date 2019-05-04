@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.21 2016/10/13 12:22:56 mef Exp $
+# $NetBSD: Makefile,v 1.23 2018/08/22 09:44:59 wiz Exp $
 
 DISTNAME=		patchutils-0.3.4
+PKGREVISION=		1
 CATEGORIES=		devel
 MASTER_SITES=		http://cyberelk.net/tim/data/patchutils/stable/
 EXTRACT_SUFX=		.tar.xz
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://cyberelk.net/tim/patchutils/index.html
+HOMEPAGE=		http://cyberelk.net/tim/software/patchutils/
 COMMENT=		Some programs for manipulating patch files
 LICENSE=		gnu-gpl-v2
 

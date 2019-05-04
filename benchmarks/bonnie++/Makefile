@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.32 2016/07/09 06:37:50 wiz Exp $
+# $NetBSD: Makefile,v 1.35 2018/08/22 09:42:58 wiz Exp $
 #
 
-DISTNAME=	bonnie++-1.03e
-PKGREVISION=	6
+DISTNAME=	bonnie++-1.97.3
 CATEGORIES=	benchmarks
-MASTER_SITES=	http://www.coker.com.au/bonnie++/
+PKGREVISION=	2
+MASTER_SITES=	http://www.coker.com.au/bonnie++/experimental/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -17,6 +17,8 @@ USE_TOOLS+=		gmake perl:run tee
 REPLACE_PERL+=		bon_csv2txt.in bon_csv2html.in
 
 INSTALLATION_DIRS=	bin share/doc/bonnie++ ${PKGMANDIR}/man1 ${PKGMANDIR}/man8
+
+CFLAGS.NetBSD+=		-D_LARGEFILE64_SOURCE=1
 
 # todo: patch bonnie++.8 to point to correct path to readme.html
 post-install:

@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.1 2016/01/12 14:03:54 leot Exp $
+# $NetBSD: Makefile,v 1.3 2019/04/25 07:33:14 maya Exp $
 
 DISTNAME=	pdf-redact-tools-0.1
+PKGREVISION=	1
 CATEGORIES=	print
 MASTER_SITES=	${MASTER_SITE_GITHUB:=firstlook/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://firstlook.org/code/project/pdf-redact-tools/
+#HOMEPAGE=	https://firstlook.org/code/project/pdf-redact-tools/
 COMMENT=	Strip metadata from documents before publishing
 LICENSE=	gnu-gpl-v3
 

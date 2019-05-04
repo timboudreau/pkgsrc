@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.7 2017/05/19 13:18:18 prlw1 Exp $
+# $NetBSD: options.mk,v 1.9 2019/02/16 03:31:06 gdt Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.ghostscript
 PKG_SUPPORTED_OPTIONS=	x11 cups debug fontconfig disable-compile-inits utf8
@@ -42,7 +42,7 @@ SUBST_MESSAGE.cupsetc=	Fixing CUPS etc directory path to install as example
 SUBST_FILES.cupsetc=	cups/cups.mak
 SUBST_SED.cupsetc=	-e 's|$$(CUPSSERVERROOT)|${CUPS_EGDIR}|g'
 
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../mk/jpeg.buildlink3.mk"
 .else
 CONFIGURE_ARGS+=	--disable-cups
@@ -61,7 +61,7 @@ CONFIGURE_ARGS+=	--disable-freetype
 
 # Please note the same if condition is in post-extract: target in Makefile
 .if !empty(PKG_OPTIONS:Mdisable-compile-inits)
-CONFIGURE_ARGS+=        --disable-compile-inits
+CONFIGURE_ARGS+=	--disable-compile-inits
 PLIST.no_cidfmap=	YES
 .else
 PLIST.cidfmap=		YES

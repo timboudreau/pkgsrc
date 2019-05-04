@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.13 2016/07/09 06:38:10 wiz Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:43:33 wiz Exp $
 
 DISTNAME=	libwhisker2-2.5
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=whisker/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/whisker/
+HOMEPAGE=	https://sourceforge.net/projects/whisker/
 COMMENT=	Perl module geared specifically for HTTP testing
 LICENSE=	2-clause-bsd
 

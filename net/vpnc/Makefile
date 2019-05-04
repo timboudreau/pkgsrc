@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.41 2016/07/09 06:38:46 wiz Exp $
+# $NetBSD: Makefile,v 1.44 2018/08/22 09:46:08 wiz Exp $
 #
 
 DISTNAME=		vpnc-0.5.3
-PKGREVISION=		14
+PKGREVISION=		15
 CATEGORIES=		net security
-MASTER_SITES=		http://www.unix-ag.uni-kl.de/~massar/vpnc/
+MASTER_SITES=		https://www.unix-ag.uni-kl.de/~massar/vpnc/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.unix-ag.uni-kl.de/~massar/vpnc/
+HOMEPAGE=		https://www.unix-ag.uni-kl.de/~massar/vpnc/
 COMMENT=		Client for Cisco3000 VPN Concentrator
 
 NOT_FOR_PLATFORM=	Interix-*-*
@@ -21,7 +21,7 @@ OWN_DIRS=		${PKG_SYSCONFDIR}/vpnc
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	fixing pathnames
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	config.c vpnc-script.in makeman.pl pcf2vpnc
 SUBST_FILES.paths+=	vpnc.8.template vpnc-disconnect
 SUBST_SED.paths=	-e 's|@PKG_SYSCONFDIR@|${PKG_SYSCONFDIR}|g'

@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.12 2017/04/22 21:03:48 adam Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/03 00:32:57 ryoon Exp $
 
-DISTNAME=	gnome-online-accounts-3.16.3
-PKGREVISION=	10
+DISTNAME=	gnome-online-accounts-3.28.0
+PKGREVISION=	8
 CATEGORIES=	net devel
-MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-online-accounts/3.16/}
+MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-online-accounts/3.28/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -12,7 +12,7 @@ COMMENT=	Service that allows online accounts to be used with GNOME
 LICENSE=	gnu-gpl-v2
 
 BUILD_DEPENDS+=	gtk-doc>=1.3:../../textproc/gtk-doc
-BUILD_DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
+TOOL_DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
 
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes

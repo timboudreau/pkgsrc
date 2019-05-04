@@ -1,36 +1,46 @@
-# $NetBSD: Makefile,v 1.7 2016/10/27 22:14:19 gdt Exp $
+# $NetBSD: Makefile,v 1.17 2019/02/27 14:29:58 gdt Exp $
 
-VERSION_BASE=	4.9.3
-VERSION=	${VERSION_BASE}
-WRKSRC=		${WRKDIR}/proj-${VERSION_BASE}
+# I have an update to 6 ready, but it is on hold pending an assessment
+# of projects.h removal fallout - gdt.
+VERSION_BASE=	5.2.0
+VERSION_RC=	
+VERSION=	${VERSION_BASE}${VERSION_RC}
+PKGREVISION=	3
+# proj RCs have names like 5.1.0RC1 but unpack to 5.1.0
+WRKFINAL=	proj-${VERSION_BASE}
+WRKSRC=		${WRKDIR}/${WRKFINAL}
 DISTNAME=	proj-${VERSION}
 CATEGORIES=	geography
-MASTER_SITES=	http://download.osgeo.org/proj/
-DISTFILES=	${DISTNAME}${EXTRACT_SUFX} proj-datumgrid-1.5${EXTRACT_SUFX}
+MASTER_SITES=	https://download.osgeo.org/proj/
+DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
+		proj-datumgrid-1.8${EXTRACT_SUFX} \
+		proj-datumgrid-europe-1.1${EXTRACT_SUFX} \
+		proj-datumgrid-north-america-1.1${EXTRACT_SUFX} \
+		proj-datumgrid-oceania-1.0${EXTRACT_SUFX}
 
 MAINTAINER=	gdt@NetBSD.org
-HOMEPAGE=	http://trac.osgeo.org/proj/
+HOMEPAGE=	http://proj4.org/
 COMMENT=	Cartographic projection software
 
+# Grid files also have the following "cc-by ish" licenses:
+# cc-by, 2-clause-bsd,  License Ouverte, cc0 (eu)
+# open-government, cc-by, public-domain (na)
+# cc-by (oceania)
 LICENSE=	mit
 
 PREV_PKGPATH=		misc/proj
 
+USE_LANGUAGES=		c99 c++11
 USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 
 TEST_TARGET=		check
 
-# The last file is out of order to avoid reordering the whole list
-# from datumgrid-1.4 to datumgrid-1.5
-DATUMGRID_FILES= 							\
-	FL.lla MD.lla README.NADUS TN.lla WI.lla WO.lla alaska.lla	\
-	conus.lla hawaii.lla ntv1_can.dat null.lla nzgd2kgrid0005.gsb	\
-	prvi.lla stgeorge.lla stlrnc.lla stpaul.lla ntf_r93.gsb
-
+# \todo Ideally, the files would be unpacked directly in nad.
+# Assume that all of the stray files in ${WRKDIR} came from datumgrids.
 post-extract:
-	cd ${WRKDIR} &&	${LN} ${DATUMGRID_FILES} ${WRKSRC}/nad
+	cd ${WRKDIR} &&	for f in *; do if [ $$f != ${WRKFINAL} ]; then mv $$f ${WRKFINAL}/nad; fi; done
 
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

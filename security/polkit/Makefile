@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.6 2016/07/09 06:38:56 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.14 2018/11/29 16:21:07 wiz Exp $
 
-DISTNAME=	polkit-0.113
-PKGREVISION=	3
+DISTNAME=	polkit-0.115
+PKGREVISION=	2
 CATEGORIES=	security
 MASTER_SITES=	http://www.freedesktop.org/software/polkit/releases/
 
@@ -14,7 +13,10 @@ LICENSE=	gnu-lgpl-v2
 BUILD_DEPENDS+=		libxslt-[0-9]*:../../textproc/libxslt
 BUILD_DEPENDS+=		docbook-xsl-[0-9]*:../../textproc/docbook-xsl
 
+NOT_PAX_MPROTECT_SAFE=	lib/polkit-1/polkitd
+
 GNU_CONFIGURE=		yes
+USE_LANGUAGES=		c c++11
 USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		pkg-config intltool gmake msgfmt perl
@@ -25,6 +27,7 @@ PKGCONFIG_OVERRIDE+=	data/polkit-agent-1.pc.in
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ARGS+=	--with-polkitd-user=${POLKITD_USER}
 CONFIGURE_ARGS+=	--disable-libsystemd-login
+CONFIGURE_ARGS+=	--disable-libelogind
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -37,6 +40,8 @@ PKG_HOME.${POLKITD_USER}=	${VARBASE}
 PKG_GROUPS_VARS+=		POLKITD_GROUP
 PKG_USERS_VARS+=		POLKITD_USER
 
+BUILD_DEFS+=		VARBASE
+
 REPLACE_PERL+=		src/polkitbackend/toarray.pl
 
 INSTALL_MAKE_FLAGS+=	sysconfdir=${PREFIX}/share/examples/polkit
@@ -46,6 +51,7 @@ OWN_DIRS_PERMS+=	${PKG_SYSCONFDIR}/polkit-1/rules.d \
 			${POLKITD_USER} ${POLKITD_GROUP} 700
 OWN_DIRS_PERMS+=	${PREFIX}/share/polkit-1/rules.d \
 			${POLKITD_USER} ${POLKITD_GROUP} 700
+MAKE_DIRS+=		${PKG_SYSCONFDIR}/dbus-1/system.d
 SPECIAL_PERMS+=		lib/polkit-1/polkit-agent-helper-1 ${SETUID_ROOT_PERMS}
 SPECIAL_PERMS+=		bin/pkexec ${SETUID_ROOT_PERMS}
 
@@ -62,7 +68,8 @@ SUBST_FILES.paths+=	docs/man/pkexec.xml
 SUBST_FILES.paths+=	src/examples/org.freedesktop.policykit.examples.pkexec.policy.in
 SUBST_SED.paths+=	-e 's,/usr/bin/,${PREFIX}/bin/,g'
 
-.include "../../lang/spidermonkey17/buildlink3.mk"
+
+.include "../../lang/spidermonkey52/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../textproc/expat/buildlink3.mk"

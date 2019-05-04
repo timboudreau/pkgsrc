@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.95 2017/04/30 01:22:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.115 2019/04/03 00:33:10 ryoon Exp $
 #
 
 PKGVER=		0.8.8
 DISTNAME=	compiz-${PKGVER}
-PKGREVISION=	29
+PKGREVISION=	48
 CATEGORIES=	wm x11
 MASTER_SITES=	http://releases.compiz.org/${PKGVER}/
 
@@ -59,7 +59,7 @@ PKGCONFIG_OVERRIDE+=	libdecoration/libdecoration.pc.in
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	metadata/decoration.xml.in
 SUBST_SED.paths=	-e 's,@PREFIX@,${PREFIX},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 .include "options.mk"
 

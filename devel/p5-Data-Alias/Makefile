@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.20 2017/06/14 15:50:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.23 2018/08/22 09:43:48 wiz Exp $
 
-DISTNAME=	Data-Alias-1.20
+DISTNAME=	Data-Alias-1.21
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Data/}
 
@@ -12,10 +12,9 @@ COMMENT=	Comprehensive set of aliasing operations
 LICENSE=	${PERL5_LICENSE}
 
 PERL5_PACKLIST=	auto/Data/Alias/.packlist
+PERL5_MODULE_TYPE=	Module::Install
 
 USE_LANGUAGES=	c
-
-MAKE_ENV+=	PERL_USE_UNSAFE_INC=1
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/bsd.pkg.mk"

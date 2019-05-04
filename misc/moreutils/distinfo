@@ -1,0 +1,11 @@
+$NetBSD: distinfo,v 1.5 2019/02/02 17:53:41 leot Exp $
+
+SHA1 (moreutils-0.63.tar.gz) = fd8924dc609995b0ad172c546be3d3d72f46ad01
+RMD160 (moreutils-0.63.tar.gz) = 056a6e43e2fb5f1d9474145853bf92a067f0e304
+SHA512 (moreutils-0.63.tar.gz) = d8a217e740fc34b8c360dda2b1bd947095671d658bb711740918638f0590d7189519b470aeeab523614f01678d07ce79c927e59eb8417a709dd925726e56a3e6
+Size (moreutils-0.63.tar.gz) = 92609 bytes
+SHA1 (patch-Makefile) = 80fb38e584db12f344ed66da76c8bee0127d17cc
+SHA1 (patch-ifdata.c) = 5c0d9737657354ad1877f2efc6ff08e76ca7bc62
+SHA1 (patch-is__utf8_Makefile) = 8feacdc8a0a0939aefd7f647be8196bdfdbda66c
+SHA1 (patch-pee.c) = 0c2cf167e7038fadd818ea3262686a1b4ed5aa7e
+SHA1 (patch-sponge.c) = 3ba941bcc1d6595c8fb6aa59b1636e86dadfdf32

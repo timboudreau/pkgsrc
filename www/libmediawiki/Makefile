@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.32 2017/04/30 01:21:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.39 2018/12/13 19:51:38 adam Exp $
 #
 
 PKGNAME=	libmediawiki-4.13.0
-PKGREVISION=	4
+PKGREVISION=	10
 DISTNAME=	digikam-4.13.0
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_KDE:=digikam/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.digikam.org/
+HOMEPAGE=	https://www.digikam.org/
 COMMENT=	Mediawiki C++ interface for KDE
 LICENSE=	gnu-gpl-v2
 

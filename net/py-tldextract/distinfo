@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2017/06/22 09:34:47 adam Exp $
+$NetBSD: distinfo,v 1.4 2019/03/06 08:48:31 adam Exp $
 
-SHA1 (tldextract-2.1.0.tar.gz) = 87ac9ef99e6be76f8f8adc170e5abb7d7ee6c2fb
-RMD160 (tldextract-2.1.0.tar.gz) = fa762905de70d48f371996452346b0f869b2e910
-SHA512 (tldextract-2.1.0.tar.gz) = 484141e8af67f5a5df608d5d3da972f25d73a5a28a88ca4ba75dac5dc63614efe2b259629893d316617126d230b6c7acdf618b2c73e561454965e6fb748c3b9d
-Size (tldextract-2.1.0.tar.gz) = 51137 bytes
+SHA1 (tldextract-2.2.1.tar.gz) = 0132b786b0f4ba609284031ef4547a4d36d874a8
+RMD160 (tldextract-2.2.1.tar.gz) = 2320d98865fd2888806a67c4b733249568b421bf
+SHA512 (tldextract-2.2.1.tar.gz) = db4f14e514c0e68f85f28226343d7ec91ceea2843ee01c9a2950f0972f365bf343640e07cfb118aff52bab975719be71d179fc6b3bd4da7eb62a47b62747cc0b
+Size (tldextract-2.2.1.tar.gz) = 54538 bytes

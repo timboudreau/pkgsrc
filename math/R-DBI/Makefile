@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.3 2015/08/07 01:41:38 wen Exp $
+# $NetBSD: Makefile,v 1.6 2018/05/09 18:08:19 minskim Exp $
 
+DISTNAME=	DBI_1.0.0
 CATEGORIES=	math
-MASTER_SITES=	${MASTER_SITE_R_CRAN:=contrib/}
 
-MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	${R_HOMEPAGE_BASE}/DBI/
+MAINTAINER=	minskim@NetBSD.org
+HOMEPAGE=	http://r-dbi.github.io/DBI
 COMMENT=	R Database Interface
 LICENSE=	gnu-lgpl-v2
 
-R_PKGNAME=	DBI
-R_PKGVER=	0.3.1
+USE_LANGUAGES=	# none
 
+BUILDLINK_API_DEPENDS.R+=	R>=3.0.0
 .include "../../math/R/Makefile.extension"
 .include "../../mk/bsd.pkg.mk"

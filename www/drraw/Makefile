@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.21 2016/07/09 06:39:12 wiz Exp $
+# $NetBSD: Makefile,v 1.24 2019/02/12 13:20:46 kleink Exp $
 #
 
 DISTNAME=		drraw-2.2b2
-PKGREVISION=		5
+PKGREVISION=		6
 CATEGORIES=		databases graphics www
 MASTER_SITES=		http://web.taranis.org/drraw/dist/
 
@@ -45,9 +45,9 @@ do-install:
 .endfor
 
 SUBST_CLASSES+=		prefix
-SUBST_STAGE.prefix=	post-patch
+SUBST_STAGE.prefix=	pre-configure
 SUBST_FILES.prefix=	drraw.cgi
-SUBST_SED.prefix=	-e "s,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g"
+SUBST_VARS.prefix=	PKG_SYSCONFDIR
 SUBST_MESSAGE.prefix=	Fixing harcoded paths.
 
 .include "../../mk/bsd.pkg.mk"

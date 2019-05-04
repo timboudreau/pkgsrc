@@ -1,0 +1,7 @@
+$NetBSD: distinfo,v 1.2 2018/08/28 13:22:20 ryoon Exp $
+
+SHA1 (gcc-8.2.0.tar.xz) = 19926bdb6c4b58891015929853d41aeff019d400
+RMD160 (gcc-8.2.0.tar.xz) = 4fba19867980d04bed1e62d46d4787c99f4fd13d
+SHA512 (gcc-8.2.0.tar.xz) = 64898a165f67e136d802a92e7633bf1b06c85266027e52127ea025bf5fc2291b5e858288aac0bdba246e6cdf7c6ec88bc8e0e7f3f6f1985f4297710cafde56ed
+Size (gcc-8.2.0.tar.xz) = 63460876 bytes
+SHA1 (patch-contrib_download__prerequisites) = 50f8aaf7403ce9f63cc119ff038d5f3e952bb8b6

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.58 2017/04/22 21:03:25 adam Exp $
+# $NetBSD: Makefile,v 1.79 2019/04/26 13:13:44 maya Exp $
 
 DISTNAME=		spectrum-1.4.8
-PKGREVISION=		37
+PKGREVISION=		52
 CATEGORIES=		chat
 MASTER_SITES=		https://cloud.github.com/downloads/hanzz/libtransport/
 
-MAINTAINER=		schnoebe@NetBSD.org
-HOMEPAGE=		http://spectrum.im/
+MAINTAINER=		pkgsrc-users@NetBSD.org
+HOMEPAGE=		https://spectrum.im/
 COMMENT=		XMPP transport/gateway based on libpurple
 LICENSE=		gnu-gpl-v3
 
@@ -20,7 +20,7 @@ USE_LANGUAGES=		c++ c
 
 REPLACE_PYTHON+=	spectrumctl/spectrumctl.py
 PY_PATCHPLIST=		yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-xmpppy
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-xmpppy
 
 BUILD_DEFS+=		JABBER_USER JABBER_GROUP
 BUILD_DEFS+=		SPECTRUM_RUN SPECTRUM_DB SPECTRUM_LOG
@@ -55,7 +55,7 @@ CONF_FILES+=		${EGDIR}/spectrum.cfg ${PKG_SYSCONFDIR}/spectrum.cfg
 .include "options.mk"
 
 SUBST_CLASSES+=		cfgpath
-SUBST_STAGE.cfgpath=	post-patch
+SUBST_STAGE.cfgpath=	pre-configure
 SUBST_FILES.cfgpath+=	src/configfile.cpp
 SUBST_FILES.cfgpath+=	tools/migrate-db/main.cpp
 SUBST_FILES.cfgpath+=	spectrumctl/spectrumctl.py
@@ -65,13 +65,13 @@ SUBST_SED.cfgpath=	-e 's,/etc/spectrum,${PKG_SYSCONFDIR},g'
 SUBST_SED.cfgpath+=	-e 's,@ETC_SPECTRUM@,${PKG_SYSCONFDIR},g'
 
 SUBST_CLASSES+=		manpath
-SUBST_STAGE.manpath=	post-patch
+SUBST_STAGE.manpath=	pre-configure
 SUBST_FILES.manpath=	CMakeLists.txt
 SUBST_MESSAGE.manpath=	Correcting man page directory
 SUBST_SED.manpath+=	-e 's,@PKGMANDIR@,${PKGMANDIR},g'
 
 SUBST_CLASSES+=		users
-SUBST_STAGE.users=	post-patch
+SUBST_STAGE.users=	pre-configure
 SUBST_FILES.users=	spectrumctl/spectrumctl.py
 SUBST_FILES.users+=	spectrumctl/spectrum/env.py
 SUBST_FILES.users+=	man/spectrumctl.8
@@ -79,7 +79,7 @@ SUBST_MESSAGE.users=	Correcting spectrum user
 SUBST_SED.users=	-e 's/@SPECTRUM_USER@/${JABBER_USER}/g'
 
 SUBST_CLASSES+=		cfg
-SUBST_STAGE.cfg=	post-patch
+SUBST_STAGE.cfg=	pre-configure
 SUBST_FILES.cfg=	spectrum.cfg
 SUBST_MESSAGE.cfg=	Fixing paths in default config file
 SUBST_SED.cfg=		-e 's,/var/run/spectrum,${SPECTRUM_RUN},g'
@@ -93,7 +93,7 @@ MESSAGE_SUBST+=		PKG_SYSCONFDIR=${PKG_SYSCONFDIR}
 FILES_SUBST+=		PREFIX=${PREFIX}
 FILES_SUBST+=		JABBER_USER=${JABBER_USER}
 
-INSTALLATION_DIRS+=	bin ${PKG_SYSCONFDIR}
+INSTALLATION_DIRS+=	bin
 INSTALLATION_DIRS+=	share/locales
 INSTALLATION_DIRS+=	${EGDIR}
 # INSTALLATION_DIRS+=	${DOCDIR}

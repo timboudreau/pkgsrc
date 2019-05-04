@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.13 2015/04/13 23:12:42 rodent Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/25 07:33:01 maya Exp $
 #
 
 DISTNAME=	ibus-table-others-1.3.7
+PKGREVISION=	1
 CATEGORIES=	inputmethod
 MASTER_SITES=	https://github.com/moebiuscurve/ibus-table-others/releases/download/${PKGVERSION_NOREV}/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/ibus/
+HOMEPAGE=	https://github.com/ibus/ibus/wiki
 COMMENT=	All non-Chinese tables for IBus-Table
 LICENSE=	gnu-gpl-v3
 

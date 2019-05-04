@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2017/04/22 21:03:13 adam Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/25 20:56:31 markd Exp $
 
 DISTNAME=	kunitconversion-${KF5VER}
-PKGREVISION=	4
 CATEGORIES=	misc
 
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Support for unit conversion
 LICENSE=	gnu-lgpl-v2.1
 
-.include "../../meta-pkgs/kf5/Makefile.common"
+.include "../../meta-pkgs/kde/kf5.mk"
 
 USE_TOOLS+=	msgmerge
 

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.99 2017/06/20 11:36:40 wiz Exp $
+# $NetBSD: Makefile,v 1.115 2018/09/17 06:56:22 maya Exp $
 
-DISTNAME=	fontconfig-2.12.3
+DISTNAME=	fontconfig-2.13.1
 CATEGORIES=	fonts
 MASTER_SITES=	https://www.fontconfig.org/release/
 EXTRACT_SUFX=	.tar.bz2
@@ -10,8 +10,11 @@ HOMEPAGE=	https://www.fontconfig.org/
 COMMENT=	Library for configuring and customizing font access
 #LICENSE=	x11?
 
+# https://bugs.freedesktop.org/show_bug.cgi?id=101280
+BUILD_DEPENDS+=	gperf-[0-9]*:../../devel/gperf
+
 USE_LIBTOOL=		yes
-USE_TOOLS+=		gmake pkg-config
+USE_TOOLS+=		gmake pkg-config msgfmt
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-default-fonts=${LOCALBASE}/share/fonts/X11
 CONFIGURE_ARGS+=	--with-expat-includes=${BUILDLINK_PREFIX.expat}/include
@@ -67,7 +70,7 @@ MAKE_DIRS+=	${PKG_SYSCONFDIR}/conf.d
 FC_STDCONF=	10-scale-bitmap-fonts.conf 10-hinting-full.conf \
 	10-hinting-medium.conf 10-hinting-none.conf 10-hinting-slight.conf \
 	20-unhint-small-vera.conf \
-	30-metric-aliases.conf 30-urw-aliases.conf 40-nonlatin.conf \
+	30-metric-aliases.conf 40-nonlatin.conf \
 	45-latin.conf 49-sansserif.conf 50-user.conf 51-local.conf \
 	60-latin.conf 65-fonts-persian.conf 65-nonlatin.conf 69-unifont.conf \
 	80-delicious.conf 90-synthetic.conf
@@ -86,14 +89,19 @@ TEST_TARGET=	check
 CONFIGURE_ENV+=	CC_FOR_BUILD=${NATIVE_CC:Q}
 .endif
 
-.if ${X11_TYPE} != "modular" && exists(${X11BASE}/lib/libfontconfig.so)
-LDFLAGS+=	-L../src/.libs
-.endif
+pre-configure:
+	-cd ${BUILDLINK_X11_DIR:Q} && ${FIND} . -path "*fontconfig*" -type l -delete
 
 post-install:
 	${INSTALL_DATA} ${FILESDIR}/30-pkgsrc-aliases.conf ${DESTDIR}${TMPLDIR}
 
+.include "../../archivers/bzip2/buildlink3.mk"
+.include "../../devel/gettext-lib/buildlink3.mk"
+.if ${OPSYS} != "Darwin"
+.include "../../devel/libuuid/buildlink3.mk"
+.endif
 .include "../../devel/zlib/buildlink3.mk"
+BUILDLINK_API_DEPENDS.freetype2+=	freetype2>=2.8.1
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../textproc/expat/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,9 +1,10 @@
-@comment $NetBSD: PLIST,v 1.2 2017/05/09 11:54:07 adam Exp $
-bin/natsort${PYVERSSUFFIX}
+@comment $NetBSD: PLIST,v 1.4 2018/09/24 09:43:26 adam Exp $
+bin/natsort-${PYVERSSUFFIX}
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
 ${PYSITELIB}/${EGG_INFODIR}/entry_points.txt
+${PYSITELIB}/${EGG_INFODIR}/requires.txt
 ${PYSITELIB}/${EGG_INFODIR}/top_level.txt
 ${PYSITELIB}/natsort/__init__.py
 ${PYSITELIB}/natsort/__init__.pyc
@@ -11,9 +12,6 @@ ${PYSITELIB}/natsort/__init__.pyo
 ${PYSITELIB}/natsort/__main__.py
 ${PYSITELIB}/natsort/__main__.pyc
 ${PYSITELIB}/natsort/__main__.pyo
-${PYSITELIB}/natsort/_version.py
-${PYSITELIB}/natsort/_version.pyc
-${PYSITELIB}/natsort/_version.pyo
 ${PYSITELIB}/natsort/compat/__init__.py
 ${PYSITELIB}/natsort/compat/__init__.pyc
 ${PYSITELIB}/natsort/compat/__init__.pyo
@@ -41,6 +39,9 @@ ${PYSITELIB}/natsort/ns_enum.pyo
 ${PYSITELIB}/natsort/unicode_numbers.py
 ${PYSITELIB}/natsort/unicode_numbers.pyc
 ${PYSITELIB}/natsort/unicode_numbers.pyo
+${PYSITELIB}/natsort/unicode_numeric_hex.py
+${PYSITELIB}/natsort/unicode_numeric_hex.pyc
+${PYSITELIB}/natsort/unicode_numeric_hex.pyo
 ${PYSITELIB}/natsort/utils.py
 ${PYSITELIB}/natsort/utils.pyc
 ${PYSITELIB}/natsort/utils.pyo

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.21 2017/07/07 22:44:26 pgoyette Exp $
+# $NetBSD: Makefile,v 1.27 2019/02/09 09:13:24 maya Exp $
 #
 
 # Note -- version number also in the do-install rule
@@ -7,7 +7,7 @@ MINVER=01
 
 DISTNAME=		memtest86+-${MAJVER}.${MINVER}
 PKGNAME=		memtestplus-${MAJVER}.${MINVER}
-PKGREVISION=		1
+PKGREVISION=		6
 CATEGORIES=		sysutils
 MASTER_SITES=		http://www.memtest.org/download/${MAJVER}.${MINVER}/
 
@@ -18,15 +18,10 @@ LICENSE=		gnu-gpl-v2
 
 ONLY_FOR_PLATFORM=	NetBSD-*-i386 Linux-*-i386 NetBSD-*-x86_64 Linux-*-x86_64
 
-PKGSRC_USE_FORTIFY=no
-PKGSRC_USE_SSP=no
+FORTIFY_SUPPORTED=	no
+SSP_SUPPORTED=		no
 
 .include "../../mk/bsd.prefs.mk"
-.if !empty(MACHINE_PLATFORM:MNetBSD-5.*)
-GCC_REQD+=		4.6
-.else
-GCC_REQD+=		4.5
-.endif
 
 USE_TOOLS+=		gmake
 SUBST_CLASSES+=		delcr
@@ -39,13 +34,12 @@ SUBST_SED.delcr=	-e 's/.$$//g'
 
 .include "../../mk/compiler.mk"
 
-.if !empty(CC_VERSION:Mgcc-3.*)
-BUILDLINK_TRANSFORM+=	rm:-fno-stack-protector
-.endif
-
 .if !empty(PKGSRC_COMPILER:Mclang)
 BROKEN+=	${PKGNAME} does not produce a working binary with clang
 .endif
+
+pre-configure:
+	${CP} ${FILESDIR}/io.h ${WRKSRC}
 
 do-install:
 	${INSTALL_DATA_DIR} ${DESTDIR}${PREFIX}/mdec

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.23 2017/04/09 16:03:06 wen Exp $
+$NetBSD: distinfo,v 1.25 2018/07/16 01:21:34 wen Exp $
 
-SHA1 (SQL-Abstract-1.84.tar.gz) = b4865553254af4ebbad1c5561eeb2d27ac7cabff
-RMD160 (SQL-Abstract-1.84.tar.gz) = 69b6727164de9d3bc375cf789f53f82f099c7574
-SHA512 (SQL-Abstract-1.84.tar.gz) = 2d41ca76cc50dcf85e40b6585b3036ae62801ce78b64cc3b6a6471540901bfacdbfe2f76e68fdea2d1caa509f57216d4bb4f214cee7008380d5f60643e1a3a6b
-Size (SQL-Abstract-1.84.tar.gz) = 98744 bytes
+SHA1 (SQL-Abstract-1.86.tar.gz) = 0bf3e3319b035d2fd13838f103a0691a2e4721ae
+RMD160 (SQL-Abstract-1.86.tar.gz) = 3494993c5c02bbfcd94207f4d96c4f4259721a70
+SHA512 (SQL-Abstract-1.86.tar.gz) = 248652656bebf9e3f3e2582880f78f4f8c6dd2a8e2546a750b33e9d95cd6da6d8a197d0be69b5e44a24e04c8e1262d4bf3085fa95405fa28eefc3b822a93fa42
+Size (SQL-Abstract-1.86.tar.gz) = 104797 bytes

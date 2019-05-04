@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.86 2017/04/22 21:03:07 adam Exp $
+# $NetBSD: Makefile,v 1.105 2019/04/26 13:13:44 maya Exp $
 
 DISTNAME=	empathy-2.34.0
-PKGREVISION=	54
+PKGREVISION=	71
 CATEGORIES=	chat gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/empathy/2.34/}
 
@@ -10,7 +10,7 @@ HOMEPAGE=	http://live.gnome.org/Empathy
 COMMENT=	Gnome instant messenger client
 LICENSE=	gnu-gpl-v2
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37
 
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		gawk gmake gsed intltool msgfmt pkg-config
@@ -49,7 +49,7 @@ BUILDLINK_API_DEPENDS.enchant+=		enchant>=1.2.0
 .include "../../sysutils/dbus/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../sysutils/libnotify/buildlink3.mk"
-.include "../../textproc/enchant/buildlink3.mk"
+.include "../../textproc/enchant2/buildlink3.mk"
 .include "../../textproc/gnome-doc-utils/buildlink3.mk"
 .include "../../textproc/gtk-doc/buildlink3.mk"
 .include "../../textproc/iso-codes/buildlink3.mk"

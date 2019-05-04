@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.6 2017/02/12 06:25:57 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.17 2019/03/18 16:17:51 gdt Exp $
 
-DISTNAME=	zathura-ps-0.2.4
-PKGREVISION=	2
+DISTNAME=	zathura-ps-0.2.6
+PKGREVISION=	3
 CATEGORIES=	print
-MASTER_SITES=	http://pwmt.org/projects/zathura-ps/download/
+MASTER_SITES=	https://pwmt.org/projects/zathura-ps/download/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://pwmt.org/projects/zathura-ps/
+HOMEPAGE=	https://pwmt.org/projects/zathura-ps/
 COMMENT=	Add PS support to zathura using libspectre library
 LICENSE=	zlib
 
-USE_TOOLS+=	pkg-config gmake
-USE_LIBTOOL=	yes
+USE_TOOLS+=	pkg-config
 
+.include "../../devel/py-meson/build.mk"
 .include "../../graphics/cairo/buildlink3.mk"
 .include "../../print/libspectre/buildlink3.mk"
 .include "../../print/zathura/buildlink3.mk"

@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.7 2017/03/20 15:56:11 taca Exp $
+# $NetBSD: Makefile,v 1.9 2018/09/23 17:03:33 taca Exp $
 
-DISTNAME=	rack-cache-1.7.0
+DISTNAME=	rack-cache-1.8.0
 CATEGORIES=	www
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://rack.github.com/
+HOMEPAGE=	https://github.com/rtomayko/rack-cache
 COMMENT=	HTTP Caching for Rack
 LICENSE=	mit
 

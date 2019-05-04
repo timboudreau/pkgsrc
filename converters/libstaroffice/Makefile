@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.2 2017/04/30 01:21:30 ryoon Exp $
+# $NetBSD: Makefile,v 1.8 2018/12/13 19:51:44 adam Exp $
 
 DISTNAME=	libstaroffice-0.0.2
-PKGREVISION=	1
+PKGREVISION=	6
 CATEGORIES=	converters
 MASTER_SITES=	http://dev-www.libreoffice.org/src/
 EXTRACT_SUFX=	.tar.bz2
@@ -23,4 +23,5 @@ PKGCONFIG_OVERRIDE+=	libstaroffice.pc.in
 
 .include "../../converters/librevenge/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,21 +1,20 @@
-# $NetBSD: Makefile,v 1.11 2017/02/12 06:25:34 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.18 2018/11/14 22:21:50 kleink Exp $
 
-DISTNAME=	ibus-libthai-0.1.2
-PKGREVISION=	5
+DISTNAME=	ibus-libthai-0.1.4
+PKGREVISION=	4
 CATEGORIES=	inputmethod
 MASTER_SITES=	http://linux.thai.net/pub/thailinux/software/libthai/
 MASTER_SITES+=	ftp://linux.thai.net/pub/ThaiLinux/software/libthai/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://linux.thai.net/projects/ibus-libthai
+HOMEPAGE=	https://linux.thai.net/projects/ibus-libthai
 COMMENT=	Thai imput method engine for IBus based on libthai library
 LICENSE=	gnu-gpl-v2
 
-GNU_CONFIGURE=		yes
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		pkg-config
+GNU_CONFIGURE=		yes
 
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../devel/glib2/buildlink3.mk"

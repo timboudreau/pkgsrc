@@ -1,5 +1,6 @@
-# $NetBSD: Makefile,v 1.296 2017/04/24 20:11:40 fhajny Exp $
+# $NetBSD: Makefile,v 1.308 2019/04/03 00:32:52 ryoon Exp $
 
+PKGREVISION= 1
 .include "../../mail/postfix/Makefile.common"
 
 COMMENT=	Postfix SMTP server and tools
@@ -49,7 +50,7 @@ CONF_FILES_PERMS=	# empty
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKDIR}/mailer.conf
 SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 INSTALLATION_DIRS+=	${LIBEXECDIR} ${METADIR} ${SHLIBDIR} ${EXAMPLEDIR} ${DOCDIR}
 

@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2016/08/21 21:17:58 markd Exp $
+@comment $NetBSD: PLIST,v 1.5 2019/04/25 20:50:24 markd Exp $
 bin/kbuildsycoca5
 include/KF5/KService/KAutostart
 include/KF5/KService/KDBusServiceStarter
@@ -44,12 +44,16 @@ man/ca/man8/desktoptojson.8
 man/ca/man8/kbuildsycoca5.8
 man/de/man8/desktoptojson.8
 man/de/man8/kbuildsycoca5.8
+man/es/man8/desktoptojson.8
+man/es/man8/kbuildsycoca5.8
 man/it/man8/desktoptojson.8
 man/it/man8/kbuildsycoca5.8
 man/man8/desktoptojson.8
 man/man8/kbuildsycoca5.8
 man/nl/man8/desktoptojson.8
 man/nl/man8/kbuildsycoca5.8
+man/pt/man8/desktoptojson.8
+man/pt/man8/kbuildsycoca5.8
 man/pt_BR/man8/desktoptojson.8
 man/pt_BR/man8/kbuildsycoca5.8
 man/sv/man8/desktoptojson.8
@@ -57,13 +61,13 @@ man/sv/man8/kbuildsycoca5.8
 man/uk/man8/desktoptojson.8
 man/uk/man8/kbuildsycoca5.8
 qt5/mkspecs/modules/qt_KService.pri
+share/examples/kde-xdg/kservice.categories
 share/examples/kservice/applications.menu
 share/kservicetypes5/application.desktop
 share/kservicetypes5/kplugininfo.desktop
 share/locale/af/LC_MESSAGES/kservice5.mo
 share/locale/ar/LC_MESSAGES/kservice5.mo
 share/locale/as/LC_MESSAGES/kservice5.mo
-share/locale/ast/LC_MESSAGES/kservice5.mo
 share/locale/be/LC_MESSAGES/kservice5.mo
 share/locale/be@latin/LC_MESSAGES/kservice5.mo
 share/locale/bg/LC_MESSAGES/kservice5.mo

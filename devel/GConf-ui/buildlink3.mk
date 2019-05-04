@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.28 2017/02/12 06:24:37 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.33 2018/11/14 22:21:13 kleink Exp $
 
 BUILDLINK_TREE+=	GConf-ui
 
@@ -6,8 +6,8 @@ BUILDLINK_TREE+=	GConf-ui
 GCONF_UI_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.GConf-ui+=	GConf-ui>=2.8.0.1
-BUILDLINK_ABI_DEPENDS.GConf-ui+=	GConf-ui>=2.32.4nb18
-BUILDLINK_PKGSRCDIR.GConf-ui?=	../../devel/GConf-ui
+BUILDLINK_ABI_DEPENDS.GConf-ui+=	GConf-ui>=3.2.3nb5
+BUILDLINK_PKGSRCDIR.GConf-ui?=		../../devel/GConf-ui
 
 .include "../../devel/GConf/buildlink3.mk"
 .include "../../x11/gtk2/buildlink3.mk"

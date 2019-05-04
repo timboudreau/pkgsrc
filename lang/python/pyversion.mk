@@ -1,4 +1,4 @@
-# $NetBSD: pyversion.mk,v 1.123 2017/01/01 14:34:26 adam Exp $
+# $NetBSD: pyversion.mk,v 1.129 2019/04/26 09:44:59 roy Exp $
 
 # This file determines which Python version is used as a dependency for
 # a package.
@@ -8,8 +8,8 @@
 # PYTHON_VERSION_DEFAULT
 #	The preferred Python version to use.
 #
-#	Possible values: 27 34 35 36
-#	Default: 27
+#	Possible values: 27 36 37
+#	Default: 37
 #
 # === Infrastructure variables ===
 #
@@ -27,19 +27,19 @@
 #	order of the entries matters, since earlier entries are
 #	preferred over later ones.
 #
-#	Possible values: 36 35 34 27
-#	Default: 36 35 34 27
+#	Possible values: 37 36 27
+#	Default: 37 36 27
 #
 # PYTHON_VERSIONS_INCOMPATIBLE
 #	The Python versions that are NOT acceptable for the package.
 #
-#	Possible values: 27 34 35 36
+#	Possible values: 27 36 37
 #	Default: (empty)
 #
 # PYTHON_FOR_BUILD_ONLY
 #	Whether Python is needed only at build time or at run time.
 #
-#	Possible values: yes no tool
+#	Possible values: yes no test tool
 #	Default: no
 #
 # PYTHON_SELF_CONFLICT
@@ -84,8 +84,8 @@ PYTHON_VERSION_REQD?=	${PKGNAME_OLD:C/(^.*-|^)py([0-9][0-9])-.*/\2/}
 BUILD_DEFS+=		PYTHON_VERSION_DEFAULT
 BUILD_DEFS_EFFECTS+=	PYPACKAGE
 
-PYTHON_VERSION_DEFAULT?=		27
-PYTHON_VERSIONS_ACCEPTED?=		36 35 34 27
+PYTHON_VERSION_DEFAULT?=		37
+PYTHON_VERSIONS_ACCEPTED?=		37 36 27
 PYTHON_VERSIONS_INCOMPATIBLE?=		# empty by default
 
 # transform the list into individual variables
@@ -165,6 +165,8 @@ PYTHON_FOR_BUILD_ONLY?=		no
 .if defined(PYPKGSRCDIR)
 .  if !empty(PYTHON_FOR_BUILD_ONLY:M[tT][oO][oO][lL])
 TOOL_DEPENDS+=			${PYDEPENDENCY}
+.  elif !empty(PYTHON_FOR_BUILD_ONLY:M[tT][eE][sS][tT])
+TEST_DEPENDS+=			${PYDEPENDENCY}
 .  else
 .    if !empty(PYTHON_FOR_BUILD_ONLY:M[yY][eE][sS])
 BUILDLINK_DEPMETHOD.python?=	build
@@ -174,7 +176,11 @@ BUILDLINK_DEPMETHOD.python?=	build
 .endif
 
 PYTHONBIN=	${LOCALBASE}/bin/python${PYVERSSUFFIX}
+.if exists(${PYTHONBIN}m)
+PYTHONCONFIG=	${LOCALBASE}/bin/python${PYVERSSUFFIX}m-config
+.else
 PYTHONCONFIG=	${LOCALBASE}/bin/python${PYVERSSUFFIX}-config
+.endif
 PY_COMPILE_ALL= \
 	${PYTHONBIN} ${PREFIX}/lib/python${PYVERSSUFFIX}/compileall.py -q
 PY_COMPILE_O_ALL= \
@@ -201,9 +207,10 @@ ALL_ENV+=		PYTHON=${PYTHONBIN}
 # used by FindPythonInterp.cmake and FindPythonLibs.cmake
 CMAKE_ARGS+=		-DPYVERSSUFFIX:STRING=${PYVERSSUFFIX}
 # set this explicitly, as by default it will prefer the built in framework
-CMAKE_ARGS.Darwin+=	-DPYTHON_INCLUDE_DIR:PATH=${BUILDLINK_DIR}/${PYINC}
-CMAKE_ARGS.Darwin+=	-DPYTHON_INCLUDE_PATH:PATH=${BUILDLINK_DIR}/${PYINC}
-CMAKE_ARGS.Darwin+=	-DPYTHON_EXECUTABLE:FILEPATH=${PYTHONBIN}
+# on Darwin
+CMAKE_ARGS+=		-DPYTHON_INCLUDE_DIR:PATH=${BUILDLINK_DIR}/${PYINC}
+CMAKE_ARGS+=		-DPYTHON_INCLUDE_PATH:PATH=${BUILDLINK_DIR}/${PYINC}
+CMAKE_ARGS+=		-DPYTHON_EXECUTABLE:FILEPATH=${PYTHONBIN}
 .endif
 
 .endif	# PYTHON_PYVERSION_MK

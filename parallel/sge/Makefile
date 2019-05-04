@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.65 2016/10/03 11:48:31 wiz Exp $
+# $NetBSD: Makefile,v 1.67 2018/08/22 09:46:10 wiz Exp $
 
 DISTNAME=		sge-8.1.6
-PKGREVISION=		5
+PKGREVISION=		6
 CATEGORIES=		parallel sysutils
 MASTER_SITES=		http://arc.liv.ac.uk/downloads/SGE/releases/8.1.6/
 
@@ -123,7 +123,7 @@ post-patch:
 	rm ${WRKSRC}/source/dist/util/*.orig
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	source/dist/util/arch_variables
 SUBST_SED.paths=	-e 's;@rcd_dir@;${RCD_SCRIPTS_DIR};'
 

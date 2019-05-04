@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.134 2017/05/25 12:58:34 jperkin Exp $
+# $NetBSD: Makefile,v 1.146 2018/11/29 11:21:46 prlw1 Exp $
 #
 
 DISTNAME=	libgnomeui-2.24.5
-PKGREVISION=	34
+PKGREVISION=	43
 CATEGORIES=	devel gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/libgnomeui/2.24/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Core GNOME2 graphical libraries
 LICENSE=	gnu-lgpl-v2
 
@@ -24,8 +24,8 @@ PKGCONFIG_OVERRIDE=	${PKGCONFIG_BASE}.in
 
 .include "../../mk/compiler.mk"
 
-.if ${OPSYS} == "SunOS" && !empty(CC_VERSION:Mgcc-[7-9]*)
-SUBST_CLASSES+=		xopen
+.if !empty(CC_VERSION:Mgcc-[6-9]*) || !empty(PKGSRC_COMPILER:Mclang)
+SUBST_CLASSES.SunOS+=	xopen
 SUBST_STAGE.xopen=	pre-configure
 SUBST_FILES.xopen=	libgnomeui/gnome-file-entry.c libgnomeui/gnome-client.c
 SUBST_FILES.xopen+=	libgnomeui/gnome-dateedit.c

@@ -7,6 +7,7 @@ ads			Enable Windows Active Directory support.
 afterstep		Enable afterstep support.
 agg			Enable agg support.
 alsa			Enable ALSA support.
+amanda-bsdtar		Enable bsdtar support in Amanda.
 amanda-dump-snap	If dump supports -X, use it.
 amanda-fqdn		Use FQDN's in Amanda.
 amanda-smb		Enable SMB backup support.
@@ -30,7 +31,6 @@ apache			Enable support for Apache web server.
 apache-mpm-event	Use multi-threaded workers in Apache web server.
 apache-mpm-prefork	Use pre-forked workers in Apache web server.
 apache-mpm-worker	Use multiple processes of multi-threaded workers in Apache web server.
-apache-shared-modules	Build all modules as shared for apache22.
 apple-common-crypto	Use Apple's CommonCrypto.
 ares			Use the ares library for asynchronous name resolution.
 aria2-metalink		Enable Metalink support.
@@ -50,6 +50,7 @@ auth-mysql		Use MySQL for the jabberd2 authorization database.
 auth-pam		Use PAM for jabberd2 authorization.
 auth-pgsql		Use PostgreSQL for the jabberd2 authorization database.
 auth-sqlite		Use SQLite for the jabberd2 authorization database.
+av1			AOmedia Video 1 video codec support
 avahi			Enable DNS service discovery and multicast DNS support.
 avahi-howl		Enable howl compatibility in avahi.
 bacula-static		Enable building of statically linked versions of the Bacula daemons.
@@ -60,6 +61,7 @@ bind-json-statistics-server	Enable building in the statistics server with JSON i
 bind-xml-statistics-server	Enable building in the statistics server with XML output in bind95 and later.
 bittorrent		Enable bittorrent support.
 blender-exppython	Enable the Experimental Python support.
+bluray			Enable libbluray support.
 boehm-gc		Use Boehm's garbage collector for memory allocation.
 bozohttpd-do-htpasswd	Enable .htpasswd file processing in bozohttpd.
 bugzilla-charts		Enable generation of charts.
@@ -71,6 +73,7 @@ caca			Enable libcaca support.
 cairo			Enable cairo support.
 camlp4	Enable camlp4 support.
 camlzip			Enable camlzip support (for zip/gz/jar).
+canlock			Enable Cancel-Lock support.
 canna			Use Canna as Japanese conversion program.
 cares			Use the c-ares library for asynchronous name resolution.
 catalog-mysql		Store Bacula catalog in MySQL database.
@@ -83,14 +86,15 @@ cerf			Enable libcerf support.
 cg			Add support for the Cg compiler.
 cgi			Enable CGI support.
 chasen			Use ChaSen as the Japanese Morphological Analzer.
-checkpassword-suid	Install checkpassword executable setuid root.
 cjk			Enable Chinese/Japanese/Korean support.
 clamav			Enable ClamAV support.
 clang-static-analyzer	Install the clang static analyzer.
 claws-mail-jpilot	Add jpilot support.
 clisp			Common/C Lisp.
 clutter			Use Clutter for graphics support.
+cmdliner			Enable cmdliner support.
 cmxs			Produce CMXS files.
+color			Enable color support.
 compface		Enable compface support.
 coqide			Enable ide support for coq.
 coreaudio		Enable Core Audio library support.
@@ -105,6 +109,9 @@ curses			Enable curses support.
 cvs			Enable CVS support.
 cvsgraph		Enable cvsgraph support.
 cython			Enable Cython support.
+daap                    Enable Digital Audio Access Protocol support.
+daemontools-moresignals	Add options to send SIG{QUIT,USR1,USR2} to daemons.
+dante                   Enable Dante support.
 dar-int32		Use 32-bit integers for file lengths in Dar.
 dar-int64		Use 64-bit integers for file lengths in Dar.
 darwin			Build and/or run on Darwin and Mac OS X.
@@ -119,8 +126,7 @@ deliver-suid		Install deliver executable setuid root.
 disable-compile-inits	Disable compile time implicit initialization.
 djbdns-cachestats	Patch to add stats for cache hits/misses.
 djbdns-ignoreip2	Patch to treat certain responses as NXDOMAIN.
-djbdns-qmerge1		Initial patches to address dnscache poisoning weakness.
-djbdns-qmerge2		Newer patches to address dnscache poisoning weakness.
+djbdns-mergequeries	Patch to address dnscache poisoning weakness.
 djbdns-tinydns64	Patch to fix tinydns-data on 64-bit platforms.
 djbfft-pentium		Optimize for Pentium{,MMX} processors.
 djbfft-ppro		Optimize for Pentium{Pro,II,III} processors.
@@ -141,8 +147,6 @@ dspam-verbose-debug	Enable verbose debugging support.
 dspam-virtualusers	Enable support for virtual users.
 dtrace			Enable DTrace support.
 dts			Enable DTS Coherent Acoustics support.
-duplicity-amazons3	Add Amazon S3 support.
-duplicity-dropbox	Add Dropbox support.
 dv			Enable usage of the libdv library.
 dvdcss			Enable CSS support for DVDs.
 dvdnav			Enable libdvdnav support to navigate DVDs.
@@ -155,9 +159,11 @@ eb			Enable EB dictionary library support.
 ecap			Enable eCAP support.
 ecl			Use Embeddable Common Lisp.
 ecore			Enable ecore library support.
+editline		Enable use of the NetBSD Editline library.
 eekboard		Use eekboard for virtual keyboard support.
 efence			Build with Electric Fence malloc() debugger support.
 efnet			Enable tweaks to support EFNet.
+el1			Switch to EL1 before booting kernel (required for 32-bit kernels).
 elinks-exmode		Enable vi-like command entry.
 elinks-fastmem		Allow direct use of system memory allocation functions.
 elinks-html-highlight	Enable HTML highlighting using DOM engine.
@@ -190,6 +196,7 @@ farsight		Enable farsight2 support.
 farstream		Enable farstream support.
 fastcgi			Use FastCGI as the CGI manager.
 fax			Enable fax support
+fcitx			Enable Fcitx inputmethod support
 fd-small		Build smaller misc/fd package.
 ffmpeg			Enable ffmpeg support.
 fftw			Use the fftw library for Discrete Fourier Transforms.
@@ -199,9 +206,13 @@ finger			Enable finger support.
 firefox			Use firefox as gecko rendering engine.
 firefox3		Use firefox3 as gecko rendering engine.
 flac			Enable FLAC support.
+flambda			Enable Flambda optimisation passes
 floppyd			Use floppyd to access floppy device.
 fluidsynth		Enable MIDI support using fluidsynth.
+fmt		Enable ocaml-fmt support.
 fontconfig		Enable FONTCONFIG (fonts/fontconfig) support.
+fossil-system-sqlite	Use pkgsrc sqlite for fossil instead of built-in.
+fossil-th1-hooks	Add support for TH1 scripts in fossil.
 freediameter-all-extensions	Build all extensions for freeDiameter (except test and debug).
 freeradius-simul-use	Enable Simultaneous-Use.
 freeswitch-08k		8000Hz Audio Files
@@ -216,6 +227,7 @@ fuse			Enable Filesystem in Userspace support.
 gamin			Enable Gamin file and directory monitoring system support.
 gcc-ada			Build the gcc Ada frontend and libraries.
 gcc-c++			Build the gcc C++ frontend and libraries.
+gcc-d			Build the gcc D frontend and libraries.
 gcc-fortran		Build the gcc Fortran frontend and libraries.
 gcc-go			Build the gcc Go frontend and libraries.
 gcc-graphite		Build the gcc Graphite framework for high-level memory optimisation.
@@ -227,7 +239,6 @@ gcc-objc++		Build the gcc Objective-C++ frontend and libraries.
 gconf			Use GConf to store preferences.
 gd			Use GD to render graphical output.
 gdal			Use the GDAL library.
-gdb6-tui		Build the tui application.
 gdbm			Use the GNU gdbm database library.
 gdk-pixbuf		Use gdk-pixbuf as imaging library.
 gdk-pixbuf2		Use gdk-pixbuf2 as imaging library.
@@ -248,9 +259,8 @@ gnome			Enable GNOME support.
 gnome-keyring		Enable GNOME keyring support.
 gnomecanvas		Enable GNOME canvas support
 gnomevfs		Enable GNOME Virtual File System support.
+gnupg1			Use GNU Privacy Guard (GnuPG) Version 1.x
 gnupg2			Use GNU Privacy Guard (GnuPG) Version 2.0
-gnupg2-gpgsm		Install gpgsm binary.
-gnupg21			Use GNU Privacy Guard (GnuPG) Version 2.1
 gnuplot-pdf-doc		Install PDF document.
 gnutls			Enable GNU TLS support.
 goffice			Enable goffice support.
@@ -335,7 +345,6 @@ jpeg			Enable JPEG support.
 json			Enable JSON (JavaScript Object Notation) support.
 jwhois-enable-cache	Enable cache support.
 kde			Enable KDE support.
-kde3			Enable support for KDE 3.
 kde4			Enable support for KDE 4.
 kerberos		Enable Kerberos support.
 kerberos-prefix-cmds	Enables addition of a prefix to the kerberos client commands.
@@ -422,7 +431,6 @@ libgcrypt		Use GNU cryptographic library.
 libgme			Enable Game_Music_Emu video game music file library support.
 libgpod			Enable libgpod support.
 libiconv-cp932		Add supplemental support for CP932.
-libidn			Add support for libidn text conversion.
 libind			Add Indian script support using libind.
 liblqr			Enable liblqr (liquid rescale) support.
 libmms			Enable streaming from mms:// URLS using libmms.
@@ -457,6 +465,7 @@ lsof-less-secure-sockets	If 'lsof-more-secure' is set, allow all sockets to be v
 lsof-more-secure	Only allow root to view all open files with lsof.
 lua			Enable Lua support.
 luit			Enable luit support.
+lwt			Enable Lwt support.	
 lynx			Use and enable support for the lynx browser.
 lz4			Enable LZ4 (de)compression support.
 lzma			Enable LZMA (de)compression support.
@@ -540,12 +549,15 @@ nghttp2-asio		Build the nghttp2 ASIO C++ library.
 nghttp2-tools		Build the supplied nghttp2 apps and tools.
 nginx			Enable support for Nginx web server.
 ninja-build		Enable build by ninja-build.
+nis			Enable Network Information Service / Yellow Pages / YP.
 nls			Use native language support.
 nntp			Enable Network News Transport Protocol (NNTP) support.
 nntpcache-pgp		Enable pgp signed nocem support.
 notmuch-emacs		Install emacs support files for notmuch.
 nspluginwrapper		Enable running non native netscape compatible plugins.
 nss			Enable Network Security Services (NSS) support.
+oauth			Enable OAuth support.
+ocaml			Enable OCaml support.
 ocaml-tyxml		Enable OCaml-tyxml support
 ocamlgraph		Enable Ocamlgraph support.
 octave			Enable Octave support.
@@ -576,18 +588,21 @@ p5-module-build-license-creation	Enable license creation.
 pam			Enable PAM support.
 pcb-motif		Use Motif for the gui instead of GTK for cad/pcb.
 pcre			Enable Perl-compatible regular expressions.
+pcre2-jit		Enable JIT (just-in-time) support in pcre2.
 pcsc			Enable PC/SC support.
 pdf			Enable PDF support.
 perl			Enable Perl support.
 pgadmin-db-designer	Enable pgAdmin database-designer functionality.
 pgsql			Enable PostgreSQL support.
 php-sockets		Enable php-sockets support.
+pic			Enable compiling with -fPIC
 pim			Enable pim (personal information management) support.
 pinepwd			Enable $HOME/.pinepwd stored IMAP password file.
 pinfo-native-curses	Use NetBSD native curses rather than ncurses.
 pkcs11			Use certificate-on-a-stick (or card) support.
 plotutils		Enable plotutils support.
 png			Enable PNG support.
+polkit                  Enable Polkit support.
 poppler			Enable poppler-utils support.
 portals			Enable BSD Portals support
 portaudio		Enable PortAudio audio library support.
@@ -598,30 +613,22 @@ ppx	Enable PPX support.
 prime			Use Prime for Kana-to-Kanji conversion.
 proftpd-readme		Enable mod_readme.
 psiconv			Enable psiconv support (for PSION 5 file formats).
+psl			Enable support for Public Suffix List.
 pstack			Enable pstack backtrace library.
 psycopg1		Enable psycopg 1.1.x support.
 psycopg2		Enable psycopg 2.x support.
 pulseaudio		Enable support for the PulseAudio sound server.
 py-numpy		Enable support for NumPy.
+pymalloc		Build python with the pymalloc specialist object allocator.
 pyrex			Enable Pyrex language support.
 python			Enable Python support.
 qdbm			Enable qdbm support.
 qemu			Use qemu.
 qemu-0			Use qemu-0.x.
-qmail-badrcptto		Patch to SMTP-reject particular envelope recipients.
-qmail-bigdns		Patch to handle oversized responses to MX queries.
-qmail-maildiruniq	Patch to avoid name collisions when PIDs recycle fast.
-qmail-netqmail		Patch collection prepared by respected list members.
-qmail-outgoingip	Patch to force a particular source IP address.
-qmail-qregex		Patch to SMTP-reject customizable patterns.
-qmail-rcptcheck		Patch to SMTP-reject via a script or program.
-qmail-realrcptto	Patch to SMTP-reject nonexistent recipients.
-qmail-remote		Patch to run $QMAILREMOTE instead of "qmail-remote".
+qmail-customerror	Patch to return custom messages from queue filters.
 qmail-srs		Patch to implement Sender Rewriting Scheme with libsrs2.
-qmail-viruscan		Patch to SMTP-reject certain types of MIME attachments.
 qpopper-servermode	Enable server mode.
 qt			Enable support for QT.
-qt3			Enable support for QT3.
 qt4			Enable support for QT4.
 qt5			Enable support for QT5.
 quartz			Enable Quartz support on Mac OS X.
@@ -682,6 +689,7 @@ snort-prelude		Enable support for the Prelude Hybrid IDS system.
 socks4			Enable Socks4 support.
 socks5			Enable Socks5 support.
 softhsm			Enable SoftHSM for key management.
+spacetime		Enable memory profiling with Spacetime
 spamassassin		Enable SpamAssassin support.
 spamassassin-perl-warnings	Enable Perl warnings at run-time.
 spamassassin-taint-checks	Enable Perl taint checks to improve security.
@@ -739,13 +747,16 @@ sysroot			Allow pkg to accept sysroot option, which changes system root.
 szip			Enable szip compression.
 tacacs-shrubbery-acls-support	Enable ACL support.
 tacacs-shrubbery-drop-root-privileges	Drop root privileges, and run as a non-root user.
+tai-system-clock	Enable application support for /etc/localtime being TAI.
 tap			Enable Tom's Audio Processing plugins library support.
 tcl			Enable Tcl scripting support.
 tcpwrappers		Enable tcpwrappers support.
+termcap			Enable termcap support.
 terminfo		Use terminfo.
 tests			Build and install tests.
 theora			Use the theora codecs.
 threads			Enable threads support.
+tiff			Enable TIFF support.
 timidity		Enable MIDI support using timidity.
 tin-use-inn-spool	Use the INN spool directories.
 tls			Enable TLS support.
@@ -755,7 +766,6 @@ trn-inn			Use INN as NNTP client.
 trn-nntpclnt		Use nntpclnt as NNTP client.
 tuning			Specify server tuning for large.
 twolame			Enable MP2 support using twolame.
-ucspi-ssl-perl		Enable Perl support in ucspi-ssl.
 ucspi-tcp-nodefaultrbl	Remove the (nonexistent) default RBL from rblsmtpd.
 udev			Enable support for the udev device manager.
 uds			Enable support for Unix domain sockets.
@@ -776,13 +786,13 @@ unrealircd-shunnotices	Notify a user when they are no longer shunned.
 unrealircd-topicisnuhost	/topic command to show the nick!user@host of the person who set the topic.
 unrealircd-ziplinks	Compress data before transmitting it between servers.
 upnp			Enable support for UPnP.
+upower                  Enable support for upower.
 utf8			Enable UTF-8 (iconv) character encoding support.
 uucp			Enable support for uucp.
 uulib			Enable support for uulib.
 v4l2			Enable V4L2 (Video4Linux2) support.
 vaapi			Enable support for VAAPI.
 valgrind		Enable Valgrind debugging and profiling support.
-vatnumber-suds		Enable lightweight soap-based web services client (net/py-suds).
 vbr			Enable Vouch By Reference support.
 vdpau			Enable support for VDPAU.
 vflib			Enable support for Japanese vector font library.
@@ -823,6 +833,8 @@ xaw3d			Enable Xaw3D support.
 xblast-mini		Use a 480x392 window instead a 960x784 window in xblast.
 xcb			Enable XCB (libxcb) support.
 xcursor			Enable Xcursor support.
+xdbe			Use X11 Double Buffer Extension.
+xdg-utils		Enable xdg-utils support.
 xen			Use xen.
 xft2			Enable Xft support.
 xim			Enable X Input Method support.
@@ -830,6 +842,8 @@ xinerama		Enable Xinerama support.
 xjdic-locale		Honor LOCALE env var, instead of requiring ISO-2022-JP.
 xlockmore-allow-root	Allow root to get access.
 xlockmore-dpms		Use DPMS.
+xls			Enable XLS support.
+xlsx			Enable XLSX support.
 xml			Enable XML support.
 xmlrpc			Enable XMLRPC support.
 xpm			Enable X PixMap image format support.

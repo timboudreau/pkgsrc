@@ -1,6 +1,8 @@
-$NetBSD: patch-deps_uv_src_unix_netbsd.c,v 1.5 2017/06/14 12:59:14 fhajny Exp $
+$NetBSD: patch-deps_uv_src_unix_netbsd.c,v 1.9 2018/05/03 21:19:16 fhajny Exp $
 
---- deps/uv/src/unix/netbsd.c.orig	2017-06-08 10:31:21.000000000 +0000
+Bring back support for NetBSD<8.
+
+--- deps/uv/src/unix/netbsd.c.orig	2018-04-24 14:41:22.000000000 +0000
 +++ deps/uv/src/unix/netbsd.c
 @@ -40,6 +40,11 @@
  #include <unistd.h>
@@ -11,18 +13,18 @@ $NetBSD: patch-deps_uv_src_unix_netbsd.c,v 1.5 2017/06/14 12:59:14 fhajny Exp $
 +# include <sys/param.h>
 +#endif
 +
+ static uv_mutex_t process_title_mutex;
+ static uv_once_t process_title_mutex_once = UV_ONCE_INIT;
  static char *process_title;
- 
- 
-@@ -77,7 +82,11 @@ int uv_exepath(char* buffer, size_t* siz
+@@ -87,7 +92,11 @@ int uv_exepath(char* buffer, size_t* siz
    mib[0] = CTL_KERN;
    mib[1] = KERN_PROC_ARGS;
-   mib[2] = mypid;
+   mib[2] = -1;
 +#if __NetBSD_Version__ >= 799000000
-+  mib[3] = KERN_PROC_PATHNAME;
+   mib[3] = KERN_PROC_PATHNAME;
 +#else
-   mib[3] = KERN_PROC_ARGV;
++  mib[3] = KERN_PROC_ARGV;
 +#endif
+   int_size = ARRAY_SIZE(int_buf);
  
-   cb = *size;
-   if (sysctl(mib, 4, buffer, &cb, NULL, 0))
+   if (sysctl(mib, 4, int_buf, &int_size, NULL, 0))

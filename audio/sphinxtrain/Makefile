@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.3 2016/07/09 06:37:50 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2019/04/25 07:32:36 maya Exp $
 
 DISTNAME=	sphinxtrain-1.0.8
-PKGREVISION=	2
+PKGREVISION=	4
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=cmusphinx/}
 
-MAINTAINER=	filip@joyent.com
+MAINTAINER=	fhajny@NetBSD.org
 HOMEPAGE=	http://cmusphinx.sourceforge.net/
 COMMENT=	CMUSphinx speed recognition acoustic model training tools
 LICENSE=	2-clause-bsd

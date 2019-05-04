@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2016/08/21 21:24:50 markd Exp $
+$NetBSD: distinfo,v 1.6 2019/04/25 21:05:22 markd Exp $
 
-SHA1 (kdbusaddons-5.25.0.tar.xz) = 169f2b881aa49d82d5b8b2a78ffb8941b3cd8072
-RMD160 (kdbusaddons-5.25.0.tar.xz) = 93d02326dc4e0a20fc2a655316b4abd502056498
-SHA512 (kdbusaddons-5.25.0.tar.xz) = fd4745908d30eed1e9141aef38f666d5e7c1b7d0eea699da9ca39ca6fcf3f46ffacfb153e142bd137a00390a1ffbb0f48880c07a6ebf60044720ad08ca369b7a
-Size (kdbusaddons-5.25.0.tar.xz) = 34084 bytes
+SHA1 (kdbusaddons-5.57.0.tar.xz) = bdba69c24afbdef9fa6bdfb1aca12b72a9905a5e
+RMD160 (kdbusaddons-5.57.0.tar.xz) = aa02df4040670d3d7a03f49bda01e39c278fef51
+SHA512 (kdbusaddons-5.57.0.tar.xz) = ce8ba7f0499ac57d93f327edcc0a58c03174813f41bc170be577c09403b218080057f7eef3642eef859776979a0cf04e0f064071f073ee8600e04bca1ef90187
+Size (kdbusaddons-5.57.0.tar.xz) = 37152 bytes

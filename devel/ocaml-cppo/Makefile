@@ -1,36 +1,31 @@
-# $NetBSD: Makefile,v 1.10 2017/07/11 10:20:03 jaapb Exp $
+# $NetBSD: Makefile,v 1.23 2019/03/05 16:53:49 jaapb Exp $
 
-DISTNAME=	cppo-1.5.0
+DISTNAME=	cppo-1.6.5
 PKGNAME=	ocaml-${DISTNAME}
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=mjambon/}
-GITHUB_TAG=	v${PKGVERSION_NOREV}
 GITHUB_PROJECT=	cppo
+GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	jaapb@NetBSD.org
-HOMEPAGE=	http://mjambon.com/cppo.html
+#HOMEPAGE=	http://mjambon.com/cppo.html
 COMMENT=	C-style preprocessor for OCaml
 LICENSE=	modified-bsd
 
 USE_LANGUAGES=	# none
-USE_TOOLS+=	gmake
+#USE_TOOLS+=	gmake
 
-OCAML_USE_FINDLIB=	yes
+OCAML_USE_DUNE=	yes
+
+INSTALLATION_DIRS+=	bin ${OCAML_SITELIBDIR}/cppo_ocamlbuild \
+			share/doc/ocaml-cppo share/doc/ocaml-cppo_ocamlbuild
+OCAML_FINDLIB_DIRS+=    cppo_ocamlbuild
+DUNE_BUILD_PACKAGES=	cppo cppo_ocamlbuild
+OPAM_INSTALL_FILES=	cppo cppo_ocamlbuild
 
 .include "../../mk/ocaml.mk"
 
-BUILD_TARGET=	ocamlbuild all
-.if ${OCAML_USE_OPT_COMPILER} == "yes"
-BUILD_TARGET+=	opt
-MAKE_ENV+=	BEST=.native NATDYNLINK=YES
-.else
-MAKE_ENV+=	BEST=.byte
-.endif
-
-MAKE_ENV+=	BINDIR=${DESTDIR}/${PREFIX}/bin DESTDIR=${DESTDIR} OCAML_SITELIBDIR=${OCAML_SITELIBDIR}
-INSTALLATION_DIRS+=	bin ${OCAML_SITELIBDIR}/cppo_ocamlbuild
-OCAML_FINDLIB_DIRS=	cppo_ocamlbuild
-
 .include "../../devel/ocamlbuild/buildlink3.mk"
-.include "../../lang/camlp4/buildlink3.mk"
+BUILDLINK_DEPMETHOD.ocamlbuild?=        full
 .include "../../mk/bsd.pkg.mk"

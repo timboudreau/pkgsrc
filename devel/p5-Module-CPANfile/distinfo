@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.4 2016/04/30 10:27:23 wen Exp $
+$NetBSD: distinfo,v 1.6 2018/05/02 11:44:02 wiz Exp $
 
-SHA1 (Module-CPANfile-1.1002.tar.gz) = d8a8986a50ddca73e409c3801c14d3938efc3fce
-RMD160 (Module-CPANfile-1.1002.tar.gz) = 4f3bf0853e4ceefd6f3016fa7780d506ff0ce8a1
-SHA512 (Module-CPANfile-1.1002.tar.gz) = 948a0d16c3af8d1694f9b1060acb1425664671f56bf2cdf1e4ec80dfee4d0d1fd3723501c81e8cdee5a06edac0da04296c9bf6806a0f8be3c0a6a0eb438c4d16
-Size (Module-CPANfile-1.1002.tar.gz) = 22117 bytes
+SHA1 (Module-CPANfile-1.1004.tar.gz) = e30eb3bc42d6179e3b45a8f46d880e159c04e56c
+RMD160 (Module-CPANfile-1.1004.tar.gz) = f984b14f225484b450be769afd67270b63b630d7
+SHA512 (Module-CPANfile-1.1004.tar.gz) = cb2261c3d055d8010955456b8dfdb3abbc07318b1c7ff72848788e3d24f15ecf39ede28f84a30b391a5d52bb5d92eab2ab0af6d7d53a5723be2d23bff074d6cb
+Size (Module-CPANfile-1.1004.tar.gz) = 22989 bytes

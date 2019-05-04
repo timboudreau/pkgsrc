@@ -1,9 +1,9 @@
-$NetBSD: distinfo,v 1.6 2016/02/23 11:31:54 jperkin Exp $
+$NetBSD: distinfo,v 1.8 2018/04/29 09:43:54 wiz Exp $
 
-SHA1 (xdg-user-dirs-0.15.tar.gz) = 4e722682adcce33b4b9130b148bfbd9d49737814
-RMD160 (xdg-user-dirs-0.15.tar.gz) = 16a15a2283643139891570466dd3521542cbd2da
-SHA512 (xdg-user-dirs-0.15.tar.gz) = 2365003d4c116326357755dbeb462d5d7a4fd1391fe0b4ced5597db1017dff230676773aa8cd4bdd9dbb1bfb59c1c71d08ed860a047e0e9c2ab2487c814c7ca9
-Size (xdg-user-dirs-0.15.tar.gz) = 243747 bytes
-SHA1 (patch-ab) = 2a699ce58d526684c53c0e989b95de588908e324
-SHA1 (patch-ac) = 9a765ae9a9ee8065bed91f47a528a592c626daf7
+SHA1 (xdg-user-dirs-0.17.tar.gz) = 246cea7db52ef7e29774fa416981a548377de557
+RMD160 (xdg-user-dirs-0.17.tar.gz) = 57ca97a2eebdb856371095191daf2a6bf338920b
+SHA512 (xdg-user-dirs-0.17.tar.gz) = a02cc251f2d0a8bd0dad498901c8c6fbe8dae0e0e156abcaf27b1ded376a1ed369c2e59201d56ab4e38c9d521026fa39199177f3868c30e5c50cc03665dc335f
+Size (xdg-user-dirs-0.17.tar.gz) = 257291 bytes
+SHA1 (patch-ab) = a68f8557afcedc2bbf947834eeef067ac78d21a7
+SHA1 (patch-ac) = 1bb7ee838a2e8c016f1b5988d51de153e61e9a04
 SHA1 (patch-xdg-user-dirs-update.c) = 303cd15575e34942ede3b5bc23cf76575e833ff9

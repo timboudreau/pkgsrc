@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.64 2017/02/12 06:25:59 ryoon Exp $
+# $NetBSD: Makefile,v 1.72 2018/11/29 11:21:57 prlw1 Exp $
 #
 
 DISTNAME=	gnome-pkgview-1.0.6
-PKGREVISION=	49
+PKGREVISION=	56
 CATEGORIES=	sysutils gnome
 MASTER_SITES=	http://www.greatnorthern.demon.co.uk/packages/gnome-pkgview/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.greatnorthern.demon.co.uk/gnome-pkgview.html
+#HOMEPAGE=	http://www.greatnorthern.demon.co.uk/gnome-pkgview.html
 COMMENT=	Displays the version of GNOME components installed
 
 USE_TOOLS+=		intltool msgfmt pkg-config

@@ -1,17 +1,16 @@
-# $NetBSD: Makefile,v 1.16 2017/01/01 14:44:04 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/09/05 08:18:23 adam Exp $
 
-DISTNAME=	flup-1.0.2
-PKGNAME=	${PYPKGPREFIX}-flup-1.0.2
+DISTNAME=	flup-1.0.3
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	www python
-MASTER_SITES=	http://www.saddi.com/software/flup/dist/
+MASTER_SITES=	${MASTER_SITE_PYPI:=f/flup/}
 
 MAINTAINER=	joerg@NetBSD.org
-HOMEPAGE=	http://www.saddi.com/software/flup/
-COMMENT=	WSGI support modules (python-2.x version)
+HOMEPAGE=	https://www.saddi.com/software/flup/
+COMMENT=	WSGI support modules
 LICENSE=	2-clause-bsd
 
-USE_LANGUAGES=	# empty
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

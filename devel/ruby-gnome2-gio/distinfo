@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.6 2017/06/10 08:27:19 tsutsui Exp $
+$NetBSD: distinfo,v 1.20 2019/03/21 08:42:21 tsutsui Exp $
 
-SHA1 (gio2-3.1.6.gem) = 4fe191521fab18f6b2de5d710ee1e3e52400a23b
-RMD160 (gio2-3.1.6.gem) = 280d0583a4dd000ba3467a12378a1b10e55958f8
-SHA512 (gio2-3.1.6.gem) = 8d66f71da5c1e9f43740dcaa57e03a258267e334a22fd5ce83863fefa7e28ce234fee3df73bc8b0b4015716559f971fe0a174a5599f99068009daed75ab1f796
-Size (gio2-3.1.6.gem) = 26112 bytes
+SHA1 (gio2-3.3.6.gem) = f960be0e5d09c13ccae78eaa9d2fe35b3fa9d1dd
+RMD160 (gio2-3.3.6.gem) = ad474815ef811bc18b632b23466c4ca3e162db95
+SHA512 (gio2-3.3.6.gem) = 092eb58997c57e3a93db114e3e125fc5f8098b65f96a46bf1af9ab4fc785d9df7eb16394ec38ef94d9b778e732fbe071f7f8576a5c9a8baccd87bfa7c32bc728
+Size (gio2-3.3.6.gem) = 37888 bytes

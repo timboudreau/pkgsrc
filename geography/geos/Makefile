@@ -1,12 +1,6 @@
-# $NetBSD: Makefile,v 1.29 2017/01/22 23:44:47 gdt Exp $
+# $NetBSD: Makefile,v 1.33 2018/11/30 16:00:45 gdt Exp $
 
-# Do not update to 3.6, because there is serious ABI breakage which
-# prevents osm2pgsql from working, and may well cause other programs
-# to have issues.  osm2pgsql plans to stop using geos, and it seems
-# better to have slightly old geos in pkgsrc then to have a bunch of
-# broken other programs.  Please email me if you have a problem with
-# this.  -- gdt, 20170122
-DISTNAME=	geos-3.5.1
+DISTNAME=	geos-3.7.1
 CATEGORIES=	geography
 MASTER_SITES=	http://download.osgeo.org/geos/
 EXTRACT_SUFX=	.tar.bz2
@@ -17,25 +11,28 @@ EXTRACT_SUFX=	.tar.bz2
 
 # According to the geos project (as documented in README), the C++
 # interface should not be directly used and other packages should not
-# link against it.  Therefore, pkgsrc will perform a recursive revbump
-# when the geos_c shlib version changes, and will generally ignore
-# geos shlib name changes.  However, people on the geos list dispute
-# this characterization.
-
-# The following packages either incorrectly (from the geos
-# READMEviewpoint) or suboptimally (from some comments ont he list)
-# link directly against -lgeos and should be revbumped on every update
-# (and perhaps fixed not to use -lgeos):
+# link against it.  Therefore, in theory pkgsrc would perform a
+# recursive revbump when the libgeos_c.so version changes, and would
+# generally ignore libgeos.so shlib name changes.
+#
+# However, libtool explicitly adds dependency_libs, so packages that
+# intend to only depend on the C library end up being linked directly
+# to the C++ library also.  Thus, they need revbumping because of
+# libtools {bug or feature}.
+#
+# Packages that need revbumping because of libtool's behavior:
 #   geography/gdal-lib
-#   geoggraph/osm2pgsql
-#     https://github.com/openstreetmap/osm2pgsql/issues/634
+#   geography/py-gdal
+#   databases/postgresql-postgis2
+# Packages that need revbumping because of direct use of the C++ lib:
+#   (none known)
 
 MAINTAINER=	gdt@NetBSD.org
 HOMEPAGE=	https://trac.osgeo.org/geos
 COMMENT=	C++ port of the Java Topology Suite (JTS)
 LICENSE=	gnu-lgpl-v2.1
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++11
 USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
 GNU_CONFIGURE=		yes

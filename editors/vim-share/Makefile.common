@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.158 2017/07/09 23:58:24 wen Exp $
+# $NetBSD: Makefile.common,v 1.162 2018/07/04 13:40:17 jperkin Exp $
 
 # used by editors/vim/Makefile
 # used by editors/vim-gtk2/Makefile
@@ -17,7 +17,7 @@ MASTER_SITES=		${MASTER_SITE_GITHUB:=vim/}
 .include "../../mk/bsd.prefs.mk"
 
 MAINTAINER=		morr@NetBSD.org
-HOMEPAGE=		http://www.vim.org/
+HOMEPAGE=		https://www.vim.org/
 LICENSE=		vim-license
 
 CONFLICTS+=		vim-kde-[0-9]*
@@ -60,7 +60,7 @@ ALTERNATIVES_SRC=
 
 SUBST_CLASSES+=		sysconfdir
 SUBST_FILES.sysconfdir=	feature.h
-SUBST_STAGE.sysconfdir=	post-patch
+SUBST_STAGE.sysconfdir=	pre-configure
 SUBST_VARS.sysconfdir=	PKG_SYSCONFDIR
 
 post-patch:

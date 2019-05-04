@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.70 2017/02/01 11:31:50 jperkin Exp $
+# $NetBSD: Makefile,v 1.80 2019/04/25 15:59:54 roy Exp $
 
 .include "dist.mk"
 
 PKGNAME=	python27-${PY_DISTVERSION}
-PKGREVISION=	1
 CATEGORIES=	lang python
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.python.org/
+HOMEPAGE=	https://www.python.org/
 COMMENT=	Interpreted, interactive, object-oriented programming language
 LICENSE=	python-software-foundation
 
@@ -15,22 +14,20 @@ DEPENDS=	mozilla-rootcerts>=1.0.20150804nb1:../../security/mozilla-rootcerts
 
 CONFLICTS+=	python-[0-9]*
 
+USE_LANGUAGES=		c c++
 GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--with-threads
 CONFIGURE_ARGS+=	--enable-shared
-CONFIGURE_ARGS+=	OPT=${CFLAGS:Q}
-CONFIGURE_ARGS+=	--with-system-ffi
 CONFIGURE_ARGS+=	--with-dbmliborder=ndbm:bdb
+CONFIGURE_ARGS+=	--with-system-ffi
+CONFIGURE_ARGS+=	--with-threads
 CONFIGURE_ENV+=		MKDIR_P=${MKDIR:Q}
-
+CONFIGURE_ENV+=		OPT=${CFLAGS:M*:Q}
 PKGCONFIG_OVERRIDE+=	Misc/python.pc.in
 
 LDFLAGS+=		-L${WRKSRC}
 
 # $RANDOM usage there is fine
 CHECK_PORTABILITY_SKIP=	Tools/faqwiz/move-faqwiz.sh
-
-USE_LANGUAGES=		c c++
 
 PTHREAD_OPTS+=		require
 PTHREAD_AUTO_VARS=	yes
@@ -52,12 +49,6 @@ CFLAGS+=	-fwrapv
 LIBS.SunOS+=		-lrt
 
 PY_VER_SUFFIX=		2.7
-
-PLIST_SRC=	${.CURDIR}/../../lang/python27/PLIST.common
-.if exists(${.CURDIR}/../../lang/python27/PLIST.${OPSYS})
-PLIST_SRC+=	${.CURDIR}/../../lang/python27/PLIST.${OPSYS}
-.endif
-PLIST_SRC+=	${.CURDIR}/../../lang/python27/PLIST.common_end
 
 .if ${OPSYS} == "NetBSD"
 # XXX work around a botched autoconf check which ignores libintl
@@ -89,40 +80,43 @@ IS_64BIT_PLATFORM?=	yes
 IS_64BIT_PLATFORM?=	no
 .endif
 
+PLIST_VARS+=	dl dll extra-so nis qt
+
 # the dl module isn't built for 64 bit archs
-PLIST_VARS+=	dl
 .if empty(IS_64BIT_PLATFORM:M[yY][eE][sS])
 PLIST.dl=	yes
 .endif
 
 # setup.py causes some modules to be built if the platform is *not* 64bit.
-PLIST_VARS+=	extra-so
 .if !empty(IS_64BIT_PLATFORM:M[nN][oO])
 PLIST.extra-so=	yes
 .endif
 
 # For Xcode 5 we need to search the SDK path for headers, otherwise certain
 # modules will not be built.
-.if ${OPSYS} == "Darwin" && exists(${OSX_SDK_PATH}/usr/include)
-CFLAGS+=		-I${OSX_SDK_PATH}/usr/include
+.if ${OPSYS} == "Darwin"
+.  if exists(${OSX_SDK_PATH}/usr/include)
+CFLAGS+=	-I${OSX_SDK_PATH:Q}/usr/include
+.  endif
+.  if exists(${OSX_SDK_PATH}/System/Library/Frameworks/QuickTime.framework)
+PLIST.qt=	yes
+.  endif
 .endif
 
-PLIST_VARS+=	dll nis no-nis
-.if ${OPSYS} == "IRIX"
-.  if ${ABI} == "64"
-PLIST.no-nis=	yes
-.  else
-PLIST.nis=	yes
-.  endif
-.else
+.if ${OPSYS} != "IRIX"
 PLIST.dll=	yes
-.  if ${OPSYS} == "MirBSD"
-# neither nis nor no-nis
-.  elif ${OPSYS} != "NetBSD" || exists(/usr/bin/ypcat)
-PLIST.nis=	yes
-.  else
-PLIST.no-nis=	yes
+.endif
+
+.for incdir in ${_OPSYS_INCLUDE_DIRS}
+.  if (exists(${incdir}/rpc/rpc.h) || exists(${incdir}/tirpc/rpc/rpc.h))
+HAVE_RPC_H=	yes
 .  endif
+.  if (exists(${incdir}/rpcsvc/yp_prot.h) || exists(${incdir}/nsl/rpcsvc/yp_prot.h))
+HAVE_YP_PROT_H=	yes
+.  endif
+.endfor
+.if (${HAVE_RPC_H:Uno} == yes && ${HAVE_YP_PROT_H:Uno} == yes)
+PLIST.nis=	yes
 .endif
 
 # configure complains about buggy getaddrinfo()
@@ -136,8 +130,38 @@ INSTALL_TARGET=	altinstall
 REPLACE_INTERPRETER+=	py27
 REPLACE.py27.old=	.*python[^ ]*
 REPLACE.py27.new=	${PREFIX}/bin/python${PY_VER_SUFFIX}
-REPLACE_FILES.py27=	Lib/*.py Lib/*/*.py Lib/*/*/*.py
-REPLACE_FILES.py27+=	Lib/*/*/*/*.py
+REPLACE_FILES.py27=	Lib/UserString.py
+REPLACE_FILES.py27+=	Lib/base64.py
+REPLACE_FILES.py27+=	Lib/cProfile.py
+REPLACE_FILES.py27+=	Lib/cgi.py
+REPLACE_FILES.py27+=	Lib/encodings/rot_13.py
+REPLACE_FILES.py27+=	Lib/idlelib/PyShell.py
+REPLACE_FILES.py27+=	Lib/keyword.py
+REPLACE_FILES.py27+=	Lib/lib2to3/pgen2/token.py
+REPLACE_FILES.py27+=	Lib/lib2to3/tests/data/different_encoding.py
+REPLACE_FILES.py27+=	Lib/lib2to3/tests/data/false_encoding.py
+REPLACE_FILES.py27+=	Lib/lib2to3/tests/pytree_idempotency.py
+REPLACE_FILES.py27+=	Lib/mimify.py
+REPLACE_FILES.py27+=	Lib/pdb.py
+REPLACE_FILES.py27+=	Lib/plat-mac/appletrunner.py
+REPLACE_FILES.py27+=	Lib/plat-mac/bundlebuilder.py
+REPLACE_FILES.py27+=	Lib/platform.py
+REPLACE_FILES.py27+=	Lib/profile.py
+REPLACE_FILES.py27+=	Lib/pydoc.py
+REPLACE_FILES.py27+=	Lib/quopri.py
+REPLACE_FILES.py27+=	Lib/smtpd.py
+REPLACE_FILES.py27+=	Lib/smtplib.py
+REPLACE_FILES.py27+=	Lib/symbol.py
+REPLACE_FILES.py27+=	Lib/tabnanny.py
+REPLACE_FILES.py27+=	Lib/test/bisect_cmd.py
+REPLACE_FILES.py27+=	Lib/test/curses_tests.py
+REPLACE_FILES.py27+=	Lib/test/re_tests.py
+REPLACE_FILES.py27+=	Lib/test/pystone.py
+REPLACE_FILES.py27+=	Lib/test/regrtest.py
+REPLACE_FILES.py27+=	Lib/timeit.py
+REPLACE_FILES.py27+=	Lib/trace.py
+REPLACE_FILES.py27+=	Lib/uu.py
+REPLACE_FILES.py27+=	Lib/webbrowser.py
 
 SUBST_CLASSES+=		libffi
 SUBST_MESSAGE.libffi=	Fixing libffi include path on Darwin.
@@ -145,29 +169,16 @@ SUBST_STAGE.libffi=	pre-configure
 SUBST_FILES.libffi=	setup.py
 SUBST_SED.libffi=	-e 's,/usr/include/ffi,${BUILDLINK_PREFIX.libffi}/include,'
 
-SUBST_CLASSES+=		findlib
-SUBST_MESSAGE.findlib=	Fixing find_library_file on Darwin.
-SUBST_STAGE.findlib=	pre-configure
-SUBST_FILES.findlib=	Lib/distutils/unixccompiler.py
-SUBST_SED.findlib=	-e 's,/usr/local,${PREFIX},'
-
 # XXX: It might be needed to add manually more paths like ${PREFIX}/qt5/lib
-# Testing:
-# >>> from ctypes.util import find_library
-# >>> find_library("m")
-# 'libm.so.0'
-# >>> find_library("crypto")
-# 'libcrypto.so.11'
-# >>> find_library("GL")
-# 'libGL.so.2'
-# >>> find_library("curl")
-# 'libcurl.so.4'
-
-SUBST_CLASSES+=		pfindlib
-SUBST_MESSAGE.pfindlib=	Fixing find_library() on POSIX-like (excluding Darwin) systems.
-SUBST_STAGE.pfindlib=	pre-configure
-SUBST_FILES.pfindlib=	Lib/ctypes/util.py
-SUBST_SED.pfindlib=	-e 's!\(-Wl,-t -o\)!${COMPILER_RPATH_FLAG}${PREFIX}/lib -L${PREFIX}/lib \1!'
+# Test: python -c 'from ctypes.util import find_library; print(find_library("ffi"));'
+SUBST_CLASSES+=		findlib
+SUBST_MESSAGE.findlib=	Fixing find_library().
+SUBST_STAGE.findlib=	pre-configure
+SUBST_FILES.findlib=	Lib/ctypes/macholib/dyld.py
+SUBST_FILES.findlib+=	Lib/ctypes/util.py
+SUBST_FILES.findlib+=	Lib/distutils/unixccompiler.py
+SUBST_SED.findlib=	-e 's,/usr/local,${PREFIX},'
+SUBST_SED.findlib+=	-e 's!\(-Wl,-t -o\)!${COMPILER_RPATH_FLAG}${PREFIX}/lib -L${PREFIX}/lib \1!'
 
 .include "options.mk"
 
@@ -181,7 +192,7 @@ SUBST_CLASSES+=		cacert
 SUBST_MESSAGE.cacert=	Configuring location of default CA certificate file.
 SUBST_STAGE.cacert=	pre-configure
 SUBST_FILES.cacert=	Modules/_ssl.c
-SUBST_SED.cacert=	-e 's,@PREFIX@,${PREFIX},'
+SUBST_VARS.cacert=	PREFIX
 
 post-extract:
 	${LN} -s ${WRKSRC}/Lib/smtpd.py ${WRKSRC}/Tools/scripts/smtpd${PY_VER_SUFFIX}.py

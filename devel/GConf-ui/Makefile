@@ -1,12 +1,9 @@
-# $NetBSD: Makefile,v 1.35 2017/02/12 06:24:37 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.43 2018/11/14 22:21:13 kleink Exp $
 
-MAKE_JOBS_SAFE=	no
-
+PKGREVISION= 5
 .include "../../devel/GConf/Makefile.common"
 
-PKGNAME=	${DISTNAME:S/GConf/GConf-ui/}
-PKGREVISION=	18
+PKGNAME=	GConf-ui-${GCONF_VERSION}
 
 BUILDLINK_API_DEPENDS.GConf+=	GConf>=${GCONF_VERSION}
 
@@ -24,6 +21,5 @@ do-install:
 		${DESTDIR}${PREFIX}/libexec
 
 .include "../../devel/GConf/buildlink3.mk"
-#.include "../../security/policykit/buildlink3.mk"
 .include "../../x11/gtk2/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

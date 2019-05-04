@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.10 2017/04/30 01:21:31 ryoon Exp $
+# $NetBSD: Makefile,v 1.17 2019/01/14 13:06:10 taca Exp $
 
 PKGNAME=		${PHP_PKG_PREFIX}-${DISTNAME}
-PKGREVISION=		1
+PKGREVISION=		6
 COMMENT=		PHP extension for SQL Relay
 EXTRACT_SUFX=		.tar.gz
 
@@ -9,7 +9,7 @@ EXTRACT_SUFX=		.tar.gz
 
 LICENSE=		gnu-gpl-v2 AND php
 
-PHP_VERSIONS_ACCEPTED=	56 70
+PHP_VERSIONS_ACCEPTED=	56 71 72
 
 CONFIGURE_ARGS+=	--with-php-prefix=${BUILDLINK_PREFIX.php}
 

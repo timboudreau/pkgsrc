@@ -1,17 +1,19 @@
-$NetBSD: patch-libmp3lame_lame.c,v 1.1 2015/02/27 19:49:16 snj Exp $
+$NetBSD: patch-libmp3lame_lame.c,v 1.3 2017/12/04 08:20:37 he Exp $
 
-https://bugs.debian.org/778703
+Add patch to check against invalid input sample rate.
+Should fix CVE-2015-9099.  Ref.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
 
---- libmp3lame/lame.c.orig	2011-10-18 14:51:20.000000000 -0700
-+++ libmp3lame/lame.c	2015-02-27 11:06:06.000000000 -0800
-@@ -822,6 +822,12 @@ lame_init_params(lame_global_flags * gfp
+--- libmp3lame/lame.c.orig	2017-10-10 19:08:39.000000000 +0000
++++ libmp3lame/lame.c
+@@ -801,6 +801,12 @@ lame_init_params(lame_global_flags * gfp
+             gfp->samplerate_out * 16 * cfg->channels_out / (1.e3 * gfp->VBR_mean_bitrate_kbps);
      }
- #endif
  
-+    if (gfp->samplerate_in < 0 || gfp->num_channels < 0) {
-+        freegfc(gfc);
-+        gfp->internal_flags = NULL;
-+        return -1;
++    if (gfp->samplerate_in < 0) {
++	freegfc(gfc);
++	gfp->internal_flags = NULL;
++	return -1;
 +    }
 +
      cfg->disable_reservoir = gfp->disable_reservoir;

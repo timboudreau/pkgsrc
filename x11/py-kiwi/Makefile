@@ -1,21 +1,21 @@
-# $NetBSD: Makefile,v 1.42 2017/02/12 06:26:14 ryoon Exp $
+# $NetBSD: Makefile,v 1.49 2019/04/26 13:14:25 maya Exp $
 
 DISTNAME=	kiwi-1.9.29
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	18
+PKGREVISION=	22
 CATEGORIES=	x11 python
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/kiwi/1.9/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.async.com.br/projects/kiwi/
+#HOMEPAGE=	http://www.async.com.br/projects/kiwi/
 COMMENT=	Framework and a set of enhanced PyGTK widgets
 LICENSE=	gnu-lgpl-v2.1 # or later
 
 USE_LANGUAGES=		#none
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		msgfmt
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 SUBST_CLASSES+=		localedir
 SUBST_STAGE.localedir=	pre-configure

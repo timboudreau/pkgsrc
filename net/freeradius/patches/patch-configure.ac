@@ -1,0 +1,17 @@
+$NetBSD: patch-configure.ac,v 1.2 2018/04/12 01:21:07 nonaka Exp $
+
+Check if in_pkt_info has ipi_spec_dst before trying to use (NetBSD 8 doesn't).
+Fix test syntax.
+
+--- configure.ac.orig	2017-07-17 12:43:00.000000000 +0000
++++ configure.ac
+@@ -1511,7 +1511,8 @@ dnl #
+ dnl #  struct ip_pktinfo
+ dnl #
+ FR_CHECK_STRUCT_HAS_MEMBER([#include <netinet/in.h>], [struct in_pktinfo], ipi_addr)
+-if test "x$ac_cv_type_struct_in_pktinfo_has_ipi_addr" = "xyes"; then
++FR_CHECK_STRUCT_HAS_MEMBER([#include <netinet/in.h>], [struct in_pktinfo], ipi_spec_dst)
++if test "$ac_cv_type_struct_in_pktinfo_has_ipi_addr" = "yes" && test "$ac_cv_type_struct_in_pktinfo_has_ipi_spec_dst" = "yes"; then
+   AC_DEFINE(HAVE_IP_PKTINFO, [], [define if you have IP_PKTINFO (Linux)])
+ fi
+ 

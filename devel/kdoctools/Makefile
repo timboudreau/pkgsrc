@@ -1,16 +1,15 @@
-# $NetBSD: Makefile,v 1.7 2017/04/22 21:03:09 adam Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/25 20:50:23 markd Exp $
 
 DISTNAME=	kdoctools-${KF5VER}
-PKGREVISION=	4
 CATEGORIES=	devel
 
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Documentation generation from docbook
 LICENSE=	gnu-lgpl-v2.1
 
-.include "../../meta-pkgs/kf5/Makefile.common"
+.include "../../meta-pkgs/kde/kf5.mk"
 
-USE_TOOLS+=	perl
+USE_TOOLS+=	msgmerge perl
 
 BUILD_DEPENDS+=	p5-URI-[0-9]*:../../www/p5-URI
 DEPENDS+=	docbook-xsl-[0-9]*:../../textproc/docbook-xsl

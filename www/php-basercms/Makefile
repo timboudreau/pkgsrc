@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.7 2016/10/17 19:55:49 bsiegert Exp $
+# $NetBSD: Makefile,v 1.9 2018/12/17 15:56:32 taca Exp $
 
-BASERVER=	3.0.9
+BASERVER=	3.0.16
 DISTNAME=	basercms-${BASERVER}
 PKGNAME=	${PHP_PKG_PREFIX}-${DISTNAME}
 CATEGORIES=	www
-MASTER_SITES=	-http://basercms.net/packages/download/basercms/${BASERVER}
+MASTER_SITES=	-https://basercms.net/packages/download/basercms/${BASERVER}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://basercms.net/
+HOMEPAGE=	https://basercms.net/
 COMMENT=	Easy to use Content Management System for Japan/Japanese
 LICENSE=	mit
 

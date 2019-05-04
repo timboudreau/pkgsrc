@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.16 2016/09/19 13:04:28 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/07/04 13:40:35 jperkin Exp $
 #
 
 DISTNAME=	prelude-pflogger-0.9.0-rc2
 PKGNAME=	prelude-pflogger-0.9.0
-PKGREVISION=	9
+PKGREVISION=	10
 CATEGORIES=	security
-MASTER_SITES=	http://prelude-ids.org/download/releases/
+#MASTER_SITES=	http://prelude-ids.org/download/releases/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://prelude-ids.org/download/releases/
+#HOMEPAGE=	http://prelude-ids.org/download/releases/
 COMMENT=	Prelude sensor for Packet Filter (pf)
 
 .include "../../mk/bsd.prefs.mk"
@@ -43,13 +43,13 @@ MESSAGE_SUBST+=	PRELUDE_USER=${PRELUDE_USER:Q}
 MESSAGE_SUBST+=	PRELUDE_GROUP=${PRELUDE_GROUP:Q}
 
 SUBST_CLASSES+=		code
-SUBST_STAGE.code=	post-patch
+SUBST_STAGE.code=	pre-configure
 SUBST_FILES.code=	run-prelude-pflogger.c
 SUBST_SED.code=		-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.code+=	-e 's,@PRELUDE_USER@,${PRELUDE_USER},g'
 
 SUBST_CLASSES+=         make
-SUBST_STAGE.make=       post-patch
+SUBST_STAGE.make=       pre-configure
 SUBST_FILES.make=       Makefile.am
 SUBST_SED.make=         -e 's,@EGDIR@,${EGDIR},g'
 

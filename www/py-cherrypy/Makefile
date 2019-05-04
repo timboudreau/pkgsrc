@@ -1,25 +1,39 @@
-# $NetBSD: Makefile,v 1.21 2017/07/19 17:32:38 adam Exp $
+# $NetBSD: Makefile,v 1.38 2019/04/26 13:14:20 maya Exp $
 
-DISTNAME=	CherryPy-11.0.0
+DISTNAME=	CherryPy-18.1.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:tl}
 CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=C/CherryPy/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.cherrypy.org/
-COMMENT=	CherryPy is a pythonic, object-oriented HTTP framework
+COMMENT=	Pythonic, object-oriented HTTP framework
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=		# none
-
-REPLACE_PYTHON+=	cherrypy/test/sessiondemo.py
-
-DEPENDS+=	${PYPKGPREFIX}-cheroot>=5.2.0:../../www/py-cheroot
-DEPENDS+=	${PYPKGPREFIX}-simplejson-[0-9]*:../../converters/py-simplejson
+DEPENDS+=	${PYPKGPREFIX}-cheroot>=6.2.4:../../www/py-cheroot
+DEPENDS+=	${PYPKGPREFIX}-contextlib2-[0-9]*:../../devel/py-contextlib2
+DEPENDS+=	${PYPKGPREFIX}-more-itertools-[0-9]*:../../devel/py-more-itertools
 DEPENDS+=	${PYPKGPREFIX}-portend>=2.1.1:../../net/py-portend
-BUILD_DEPENDS+=	${PYPKGPREFIX}-coverage-[0-9]*:../../devel/py-coverage
+DEPENDS+=	${PYPKGPREFIX}-simplejson-[0-9]*:../../converters/py-simplejson
+DEPENDS+=	${PYPKGPREFIX}-six>=1.11.0:../../lang/py-six
+DEPENDS+=	${PYPKGPREFIX}-zc.lockfile-[0-9]*:../../devel/py-zc.lockfile
 BUILD_DEPENDS+=	${PYPKGPREFIX}-setuptools_scm-[0-9]*:../../devel/py-setuptools_scm
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-coverage-[0-9]*:../../devel/py-coverage
+TEST_DEPENDS+=	${PYPKGPREFIX}-path.py-[0-9]*:../../devel/py-path.py
+TEST_DEPENDS+=	${PYPKGPREFIX}-requests-toolbelt-[0-9]*:../../devel/py-requests-toolbelt
+TEST_DEPENDS+=	${PYPKGPREFIX}-test>=2.8:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-cov-[0-9]*:../../devel/py-test-cov
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-sugar-[0-9]*:../../devel/py-test-sugar
+
+USE_LANGUAGES=	# none
+
+PYTHON_VERSIONS_INCOMPATIBLE=	27
+
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && ${MV} cherryd cherryd-${PYVERSSUFFIX} || ${TRUE}
+
+do-test:
+	cd ${WRKSRC} && py.test-${PYVERSSUFFIX}
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.48 2017/06/05 14:23:39 ryoon Exp $
+# $NetBSD: Makefile,v 1.50 2019/01/26 07:42:00 wen Exp $
 
-DISTNAME=	Term-ReadLine-Gnu-1.35
+DISTNAME=	Term-ReadLine-Gnu-1.36
 PKGNAME=	p5-${DISTNAME:S/-Gnu//}
-PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Term/}
 

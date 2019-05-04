@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.10 2016/04/16 13:59:24 mef Exp $
+@comment $NetBSD: PLIST,v 1.13 2019/01/05 14:44:46 mef Exp $
 bin/evcd2vcd
 bin/fst2vcd
 bin/fstminer
@@ -13,9 +13,9 @@ bin/vcd2fst
 bin/vcd2lxt
 bin/vcd2lxt2
 bin/vcd2vzt
-bin/vermin
 bin/vzt2vcd
 bin/vztminer
+bin/xml2stems
 man/man1/evcd2vcd.1
 man/man1/fst2vcd.1
 man/man1/fstminer.1
@@ -30,9 +30,9 @@ man/man1/vcd2fst.1
 man/man1/vcd2lxt.1
 man/man1/vcd2lxt2.1
 man/man1/vcd2vzt.1
-man/man1/vermin.1
 man/man1/vzt2vcd.1
 man/man1/vztminer.1
+man/man1/xml2stems.1
 man/man5/gtkwaverc.5
 share/applications/gtkwave.desktop
 share/gtkwave/examples/des.fst
@@ -40,6 +40,7 @@ share/gtkwave/examples/des.gtkw
 share/gtkwave/examples/des.tcl
 share/gtkwave/examples/des.v
 share/gtkwave/examples/gtkwaverc
+share/gtkwave/examples/sst_exclusion_example.rc
 share/gtkwave/examples/transaction.c
 share/gtkwave/examples/transaction.fst
 share/gtkwave/examples/transaction.gtkw

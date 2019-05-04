@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.27 2015/04/25 14:23:02 tnn Exp $
-#
+# $NetBSD: Makefile,v 1.30 2018/07/04 13:40:19 jperkin Exp $
 
 DISTNAME=	powermanga-0.90
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	games
 MASTER_SITES=	http://linux.tlk.fr/games/Powermanga/download/
 
@@ -14,8 +13,8 @@ LICENSE=	gnu-gpl-v3
 USE_LANGUAGES=	c c++
 GNU_CONFIGURE=	yes
 
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE:Q}
-MAKE_ENV+=		TOUCH=${TOUCH:Q} WRKSRC=${WRKSRC:Q}
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
+MAKE_ENV+=		TOUCH=${TOUCH:Q} WRKSRC=${WRKSRC}
 LDFLAGS.DragonFly=	-lm
 LDFLAGS.SunOS+=		-lm
 
@@ -27,7 +26,7 @@ CONFIGURE_ARGS+=	--x-libraries=${PREFIX}/lib
 .endif
 
 SUBST_CLASSES+=		path
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_SED.path+=	-e "s,/games/powermanga,/powermanga,g"
 SUBST_MESSAGE.path=	Fixing support file installation paths.
 SUBST_FILES.path+=	data/Makefile.in
@@ -52,5 +51,5 @@ SUBST_FILES.path+=	texts/Makefile.in
 .include "../../devel/SDL/buildlink3.mk"
 .include "../../x11/libXxf86dga/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

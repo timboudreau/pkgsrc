@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.5 2016/07/09 06:38:30 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2018/08/22 09:45:27 wiz Exp $
 #
 
 DISTNAME=	minimalist-2.5.4-1
 PKGNAME=	minimalist-2.5.4.1
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	mail
-MASTER_SITES=	http://www.mml.org.ua/LIST/
+#MASTER_SITES=	http://www.mml.org.ua/LIST/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.mml.org.ua/
+#HOMEPAGE=	http://www.mml.org.ua/
 COMMENT=	Minimalistic Mailing Lists Manager
 LICENSE=	2-clause-bsd
 
@@ -23,14 +23,14 @@ CONF_FILES=	${EGDIR}/minimalist.conf ${PKG_SYSCONFDIR}/minimalist.conf
 WRKSRC=		${WRKDIR}/${DISTNAME:S/-1/.1/1}
 
 SUBST_CLASSES+=		path
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_FILES.path=	minimalist.conf-sample
 SUBST_FILES.path+=	minimalist.pl
 SUBST_FILES.path+=	contrib/minimalist_request.pl
 SUBST_SED.path=		-e 's,/usr/local,${PREFIX},'
 
 NO_BUILD=		yes
-INSTALLATION_DIRS=	bin ${PKG_SYSCONFDIR} ${EGDIR} share/doc/minimalist/FAQ
+INSTALLATION_DIRS=	bin ${EGDIR} share/doc/minimalist/FAQ
 
 do-install:
 	cd ${WRKSRC}; \

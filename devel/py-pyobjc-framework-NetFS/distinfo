@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:44 adam Exp $
+
+SHA1 (pyobjc-framework-NetFS-5.1.2.tar.gz) = 69cf5c9e91b349ed710e952769f58cc89236c325
+RMD160 (pyobjc-framework-NetFS-5.1.2.tar.gz) = 4c2adc402d700fcfb34e767474fb3260e803ade0
+SHA512 (pyobjc-framework-NetFS-5.1.2.tar.gz) = efc69aa65d7282c5ffd6c35ddf98c78394283da9c83ac747e78ef41c4c41488e5456729331906c8ec07c828a1a48ef62313e12ae3bb394fe9b11436afea3d765
+Size (pyobjc-framework-NetFS-5.1.2.tar.gz) = 12110 bytes

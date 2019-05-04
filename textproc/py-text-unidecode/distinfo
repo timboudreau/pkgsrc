@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/04/13 07:16:33 adam Exp $
+
+SHA1 (text-unidecode-1.2.tar.gz) = 25fae7026ef12767857cf6755b825691f3018e52
+RMD160 (text-unidecode-1.2.tar.gz) = ae8c051f0e013675a92d96f9b7a47538db8ffe73
+SHA512 (text-unidecode-1.2.tar.gz) = 1ba3309dfdf94a9293c2aae4f7fd53d74b3742e2432928124196a3db9b523edce5f71e55485135dec10362bf69580d9f83707c6b6ab0a8075523fdc1b640723e
+Size (text-unidecode-1.2.tar.gz) = 76872 bytes

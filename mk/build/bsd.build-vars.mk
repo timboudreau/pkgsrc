@@ -1,4 +1,4 @@
-# $NetBSD: bsd.build-vars.mk,v 1.11 2016/04/10 15:58:02 joerg Exp $
+# $NetBSD: bsd.build-vars.mk,v 1.13 2018/11/30 18:38:19 rillig Exp $
 #
 # Package-settable variables:
 #
@@ -24,6 +24,8 @@
 _VARGROUPS+=		build-vars
 _USER_VARS.build-vars=	# none
 _PKG_VARS.build-vars=	BUILD_DIRS MAKE_ENV MAKE_PROGRAM MAKE_FLAGS MAKE_FILE NO_BUILD
+_LISTED_VARS.build-vars=	BUILD_DIRS
+_SORTED_VARS.build-vars=	MAKE_ENV MAKE_FLAGS
 
 BUILD_DIRS?=	${CONFIGURE_DIRS}
 MAKE_ENV?=	# empty
@@ -32,7 +34,6 @@ MAKE_FILE?=	Makefile
 
 MAKE_ENV+=	${ALL_ENV}
 MAKE_ENV+=	${NO_EXPORT_CPP:D:UCPP=${CPP:Q}}
-MAKE_ENV+=	LINK_ALL_LIBGCC_HACK=${LINK_ALL_LIBGCC_HACK:Q}
 MAKE_ENV+=	LOCALBASE=${LOCALBASE:Q}
 MAKE_ENV+=	X11BASE=${X11BASE:Q}
 MAKE_ENV+=	PKGMANDIR=${PKGMANDIR:Q}

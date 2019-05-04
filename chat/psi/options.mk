@@ -1,7 +1,7 @@
-# $NetBSD: options.mk,v 1.2 2012/12/07 23:52:09 schnoebe Exp $
+# $NetBSD: options.mk,v 1.4 2019/03/03 21:05:57 nia Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.psi
-PKG_SUPPORTED_OPTIONS+=	aspell enchant dbus whiteboard xscreensaver
+PKG_SUPPORTED_OPTIONS+=	aspell enchant whiteboard xscreensaver
 PKG_SUGGESTED_OPTIONS+=	aspell enchant
 
 # from an idea stolen from ../../misc/openoffice3.
@@ -38,16 +38,9 @@ CONFIGURE_ARGS+=	--disable-aspell
 
 # enable enchant
 .if !empty(PKG_OPTIONS:Menchant)
-.include "../../textproc/enchant/buildlink3.mk"
+.include "../../textproc/enchant2/buildlink3.mk"
 .else
 CONFIGURE_ARGS+=	--disable-enchant
-.endif
-
-# enable qdbus
-.if !empty(PKG_OPTIONS:Mdbus)
-.include "../../x11/qt4-qdbus/buildlink3.mk"
-.else
-CONFIGURE_ARGS+=	--disable-qdbus
 .endif
 
 # enable whiteboarding

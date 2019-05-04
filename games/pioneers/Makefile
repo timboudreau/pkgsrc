@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.53 2017/02/12 06:25:22 ryoon Exp $
+# $NetBSD: Makefile,v 1.61 2018/11/29 11:21:51 prlw1 Exp $
 #
 
 DISTNAME=	pioneers-0.11.3
-PKGREVISION=	36
+PKGREVISION=	43
 CATEGORIES=	games gnome
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pio/}
 
@@ -18,7 +18,7 @@ USE_PKGLOCALEDIR=	YES
 BUILDLINK_DEPMETHOD.librsvg=	build	# generates icons
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_MESSAGE.paths=	Fixing hardcoded paths.
 SUBST_FILES.paths=	docs/*.6
 SUBST_SED.paths=	-e s,/usr/share/,${PREFIX}/share/,

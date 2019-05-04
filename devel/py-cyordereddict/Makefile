@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.2 2017/04/14 00:40:29 minskim Exp $
+# $NetBSD: Makefile,v 1.5 2019/04/26 12:44:43 roy Exp $
 
 DISTNAME=	cyordereddict-1.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
@@ -12,13 +12,8 @@ LICENSE=	mit
 
 USE_LANGUAGES=	c
 
-PLIST_VARS+=	python2
-
-.include "../../lang/python/pyversion.mk"
-
-.if !empty(PYVERSSUFFIX:M2.*)
-PLIST.python2=	yes
-.endif
+# python>=3.5 has OrderedDict written in C
+PYTHON_VERSIONS_ACCEPTED=	27
 
 .include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.1.1.1 2014/10/29 17:06:40 cheusov Exp $
+# $NetBSD: Makefile,v 1.3 2019/04/25 07:33:05 maya Exp $
 
 DISTNAME=	libshorttext-1.1
+PKGREVISION=	1
 CATEGORIES=	math textproc
-MASTER_SITES=	http://www.csie.ntu.edu.tw/~cjlin/libshorttext/
+MASTER_SITES=	https://www.csie.ntu.edu.tw/~cjlin/libshorttext/
 
 MAINTAINER=	cheusov@NetBSD.org
-HOMEPAGE=	http://www.csie.ntu.edu.tw/~cjlin/libshorttext/
+HOMEPAGE=	https://www.csie.ntu.edu.tw/~cjlin/libshorttext/
 COMMENT=	Library for short-text classification and analysis
 LICENSE=	modified-bsd
 

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.61 2017/04/22 21:03:53 adam Exp $
+# $NetBSD: Makefile,v 1.77 2019/04/26 14:12:44 maya Exp $
 
 DISTNAME=	gnome-packagekit-0.4.0
-PKGREVISION=	47
+PKGREVISION=	59
 CATEGORIES=	pkgtools gnome
 MASTER_SITES=	http://www.packagekit.org/releases/
 
@@ -10,21 +10,21 @@ HOMEPAGE=	http://www.packagekit.org/
 COMMENT=	GNOME frontend for PackageKit
 LICENSE=	gnu-gpl-v2
 
-GNU_CONFIGURE=	yes
-USE_LIBTOOL=	yes
-USE_TOOLS+=	pkg-config gmake intltool perl msgfmt
-USE_PKGLOCALEDIR= yes
+GNU_CONFIGURE=		yes
+USE_LIBTOOL=		yes
+USE_TOOLS+=		pkg-config gmake intltool perl msgfmt
+USE_PKGLOCALEDIR=	yes
 
 GCONF_SCHEMAS+=	gnome-packagekit.schemas
 
 PY_PATCHPLIST=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.4.0
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.4.0
 
 # needed for gnome-packagekit-0.4 and gtk2-2.20 -- remove on next update
-BUILDLINK_TRANSFORM+=	rm:-DG_DISABLE_DEPRECATED
-BUILDLINK_TRANSFORM+=	rm:-DGDK_DISABLE_DEPRECATED
-BUILDLINK_TRANSFORM+=	rm:-DGDK_PIXBUF_DISABLE_DEPRECATED
-BUILDLINK_TRANSFORM+=	rm:-DGTK_DISABLE_DEPRECATED
+BUILDLINK_TRANSFORM+=		rm:-DG_DISABLE_DEPRECATED
+BUILDLINK_TRANSFORM+=		rm:-DGDK_DISABLE_DEPRECATED
+BUILDLINK_TRANSFORM+=		rm:-DGDK_PIXBUF_DISABLE_DEPRECATED
+BUILDLINK_TRANSFORM+=		rm:-DGTK_DISABLE_DEPRECATED
 BUILDLINK_API_DEPENDS.glib2+=	glib2>=2.30.0
 
 .include "../../devel/GConf/schemas.mk"

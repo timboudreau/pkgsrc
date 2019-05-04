@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.4 2017/01/04 23:45:29 rodent Exp $
+# $NetBSD: Makefile,v 1.7 2019/04/26 13:14:22 maya Exp $
 TRYTON_MODULE_NAME=	trytond_webdav
 .include "../../devel/py-trytond/Makefile.common"
 CATEGORIES=	python www
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.tryton.org/
 COMMENT=	Webdav module of the Tryton application platform
 LICENSE=	gnu-gpl-v3
@@ -11,7 +11,7 @@ LICENSE=	gnu-gpl-v3
 DEPENDS+=	${PYPKGPREFIX}-pywebdav-[0-9]*:../../www/py-pywebdav
 DEPENDS+=	${PYPKGPREFIX}-trytond>=${TRYTON_BASEVER}:../../devel/py-trytond
 
-PYTHON_VERSIONS_INCOMPATIBLE=   34 35 36
+PYTHON_VERSIONS_INCOMPATIBLE=    36 37
 
 REPLACE_PYTHON+=	tests/test_webdav.py
 

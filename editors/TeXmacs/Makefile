@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.113 2016/09/16 09:42:25 wiz Exp $
+# $NetBSD: Makefile,v 1.124 2019/04/25 07:32:51 maya Exp $
 #
 # changelog at http://www.texmacs.org/tmweb/about/changes.en.html
 
 DISTNAME=		TeXmacs-1.99.5-src
 PKGNAME=		${DISTNAME:S/-src//}
-PKGREVISION=		1
+PKGREVISION=		11
 CATEGORIES=		editors
 MASTER_SITES=		ftp://ftp.texmacs.org/pub/TeXmacs/tmftp/source/
 MASTER_SITES+=		http://www.texmacs.org/Download/ftp/tmftp/source/
@@ -35,7 +35,7 @@ REPLACE_PYTHON+=	plugins/sage/bin/tm_sage
 REPLACE_PYTHON+=	plugins/mathematica/bin/realpath.py
 
 SUBST_CLASSES+=		init
-SUBST_STAGE.init=	post-patch
+SUBST_STAGE.init=	pre-configure
 SUBST_FILES.init=	plugins/python/progs/init-python.scm
 SUBST_SED.init=		-e 's,@PYTHONBIN@,${PYTHONBIN},g'
 

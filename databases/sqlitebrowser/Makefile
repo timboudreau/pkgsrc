@@ -1,10 +1,9 @@
-# $NetBSD: Makefile,v 1.22 2017/04/22 21:03:29 adam Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/03 00:32:32 ryoon Exp $
 
 DISTNAME=	sqlitebrowser-3.8.0
-PKGREVISION=	4
+PKGREVISION=	12
 CATEGORIES=	databases x11
 MASTER_SITES=	${MASTER_SITE_GITHUB:=sqlitebrowser/}
-GITHUB_PROJECT=	sqlitebrowser
 GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -16,6 +15,8 @@ USE_LANGUAGES=	c c++
 USE_CMAKE=	yes
 
 .include "../../databases/sqlite3/buildlink3.mk"
+.include "../../graphics/hicolor-icon-theme/buildlink3.mk"
+.include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../x11/qt4-libs/buildlink3.mk"
 .include "../../x11/qt4-tools/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

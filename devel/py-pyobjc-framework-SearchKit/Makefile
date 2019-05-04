@@ -1,20 +1,18 @@
-# $NetBSD: Makefile,v 1.2 2016/06/08 17:43:32 wiz Exp $
+# $NetBSD: Makefile,v 1.4 2019/01/08 12:08:46 adam Exp $
 
 .include "../../devel/py-pyobjc/Makefile.common"
 
 DISTNAME=	pyobjc-framework-SearchKit-${PYOBJC_VERS}
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pyobjc-framework-SearchKit/}
 
-MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://pythonhosted.org/pyobjc/
 COMMENT=	Bridge between Python and Objective-C (SearchKit framework)
-LICENSE=	mit
 
 USE_LANGUAGES=	c objc
 
 DEPENDS+=	${PYPKGPREFIX}-pyobjc-core>=${PYOBJC_VERS}:../../devel/py-pyobjc-core
+DEPENDS+=	${PYPKGPREFIX}-pyobjc-framework-CoreServices>=${PYOBJC_VERS}:../../devel/py-pyobjc-framework-CoreServices
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

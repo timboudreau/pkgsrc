@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.3 2017/06/21 07:24:07 markd Exp $
+# $NetBSD: Makefile,v 1.5 2018/05/06 12:00:22 markd Exp $
 
 DISTNAME=	inconsolata.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-1.112
-TEXLIVE_REV=	42871
+PKGNAME=	tex-${DISTNAME:S/./-/}-1.114
+TEXLIVE_REV=	46319
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/inconsolata

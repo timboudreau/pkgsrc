@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.39 2017/06/19 08:22:47 adam Exp $
+# $NetBSD: Makefile,v 1.48 2019/01/03 11:56:08 bsiegert Exp $
 
 PKGNAME=	${DISTNAME:S/ffmpeg/ffmpeg2/}
+PKGREVISION=	7
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ffmpeg.mplayerhq.hu/
 COMMENT=	Decoding, encoding and streaming software (v2.x)
@@ -51,6 +52,7 @@ CONFIGURE_ARGS+=	--disable-asm
 .  elif !empty(CC_VERSION:Mgcc-[456].*)
 CFLAGS+=		-mstackrealign -mpreferred-stack-boundary=4
 .  endif
+NOT_PAX_MPROTECT_SAFE+=	bin/ffmpeg2
 .endif
 
 .include "../../multimedia/ffmpeg2/Makefile.common"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.46 2017/04/22 21:04:02 adam Exp $
+# $NetBSD: Makefile,v 1.61 2019/04/03 00:33:11 ryoon Exp $
 
 .include "../../devel/xulrunner192/dist.mk"
 PKGNAME=	firefox36-${FIREFOX_VER}
-PKGREVISION=	29
+PKGREVISION=	43
 CATEGORIES=	www
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -16,7 +16,7 @@ CONFIGURE_ARGS+=	--enable-application=browser
 CONFIGURE_ARGS+=	--with-libxul-sdk=${PREFIX}/lib/xulrunner192-sdk
 CONFIGURE_ARGS+=	--with-system-libxul
 
-ALL_ENV+=		MOZILLA_PKG_NAME=firefox36
+ALL_ENV+=		MOZILLA_PKG_NAME=${PKGBASE}
 
 SUBST_CLASSES+=			fix-paths2
 SUBST_STAGE.fix-paths2=		pre-configure
@@ -30,7 +30,7 @@ SUBST_SED.fix-paths2=		-e 's,/etc/gre.d,${PREFIX}/lib/xulrunner192/gre.d,g'
 CONFIGURE_ARGS+=		--enable-chrome-format=jar
 .include "options.mk"
 
-MOZILLA=firefox36
+MOZILLA=	${PKGBASE}
 .if !empty(PKG_OPTIONS:Mofficial-mozilla-branding)
 MOZILLA_NAME=	Firefox 3.6
 MOZILLA_ICON=	${WRKSRC}/other-licenses/branding/firefox/default48.png

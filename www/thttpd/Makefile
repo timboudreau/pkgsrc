@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.46 2015/03/12 01:00:26 hiramatsu Exp $
+# $NetBSD: Makefile,v 1.51 2018/08/06 15:54:38 nia Exp $
 
-DISTNAME=	thttpd-2.26
+DISTNAME=	thttpd-2.29
 CATEGORIES=	www
-MASTER_SITES=	http://www.acme.com/software/thttpd/
+MASTER_SITES=	https://www.acme.com/software/thttpd/
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} \
 		${NETBSD_LOGO}
 DIST_SUBDIR=	${PKGNAME_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.acme.com/software/thttpd/
+HOMEPAGE=	https://www.acme.com/software/thttpd/
 COMMENT=	Tiny/turbo/throttling HTTP server
 
 EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
@@ -29,12 +29,12 @@ EGDIR=		${PREFIX}/share/examples
 CONF_FILES=	${EGDIR}/thttpd.conf ${PKG_SYSCONFDIR}/thttpd.conf
 RCD_SCRIPTS=	thttpd
 
-INSTALLATION_DIRS=	$(PKGMANDIR)/man1 share/thttpd ${EGDIR}
+INSTALLATION_DIRS=	${PKGMANDIR}/man1 share/thttpd ${EGDIR}
 
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	thttpd.conf
 SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 MAKE_JOBS_SAFE=	no
 

@@ -1,17 +1,23 @@
-# $NetBSD: Makefile,v 1.1 2016/01/21 20:26:50 jperkin Exp $
+# $NetBSD: Makefile,v 1.5 2018/12/02 16:37:17 adam Exp $
 
-DISTNAME=	livereload-2.4.1
-PKGNAME=	${PYPKGPREFIX}-${DISTNAME:tl:S/py//}
-CATEGORIES=	www
-MASTER_SITES=	${MASTER_SITE_GITHUB:=lepture/}
+DISTNAME=	livereload-2.6.0
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	www python
+MASTER_SITES=	${MASTER_SITE_PYPI:=l/livereload/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/lepture/python-livereload/
+HOMEPAGE=	https://github.com/lepture/python-livereload
 COMMENT=	Python web server for developers
 LICENSE=	2-clause-bsd
 
-GITHUB_PROJECT=	python-livereload
-GITHUB_TAG=	v${PKGVERSION_NOREV}
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+DEPENDS+=	${PYPKGPREFIX}-tornado-[0-9]*:../../www/py-tornado
+
+USE_LANGUAGES=	# none
+
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && \
+		${MV} livereload livereload-${PYVERSSUFFIX} || ${TRUE}
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

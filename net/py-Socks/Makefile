@@ -1,14 +1,16 @@
-# $NetBSD: Makefile,v 1.2 2017/04/07 03:42:13 adam Exp $
+# $NetBSD: Makefile,v 1.4 2018/06/16 14:19:42 bsiegert Exp $
 
-DISTNAME=	PySocks-1.6.7
+DISTNAME=	PySocks-1.6.8
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/Py//}
-CATEGORIES=	net
+CATEGORIES=	net python
 MASTER_SITES=	${MASTER_SITE_PYPI:=P/PySocks/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/Anorov/PySocks
-COMMENT=	Python Socks module
+COMMENT=	Python SOCKS client module
 LICENSE=	modified-bsd
+
+CONFLICTS=	${PYPKGPREFIX}-SocksiPy-branch-[0-9]*
 
 USE_LANGUAGES=	# none
 

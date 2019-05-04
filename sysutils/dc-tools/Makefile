@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.14 2017/01/19 18:52:25 agc Exp $
+# $NetBSD: Makefile,v 1.16 2018/08/01 15:50:16 tpaul Exp $
 
 DISTNAME=	dc-tools-1.6
+PKGREVISION=	1
 CATEGORIES=	sysutils
 MASTER_SITES=	http://mc.pp.se/dc/files/
 MASTER_SITES+=	https://github.com/abs0/dc-burn-netbsd/archive/
@@ -28,7 +29,7 @@ EXTRACT_CMD=	${CP} ${DISTDIR}/${DIST_SUBDIR}/scramble.c ${WRKSRC} && \
 	${TAR} -xzf ${DISTDIR}/${DIST_SUBDIR}/serial_slave.tar.gz -C serial
 
 SUBST_CLASSES+=		IP_TMPL
-SUBST_STAGE.IP_TMPL=	post-patch
+SUBST_STAGE.IP_TMPL=	pre-configure
 SUBST_FILES.IP_TMPL=	makeip.c
 SUBST_SED.IP_TMPL=	-e "s|"IP.TMPL"|"${PREFIX}/share/dc-tools/IP.TMPL"|"
 SUBST_MESSAGE.IP_TMPL=	Update path to IP.TMPL
@@ -47,8 +48,8 @@ NO_SRC_ON_FTP=		${RESTRICTED}
 NO_BIN_ON_FTP=		${RESTRICTED}
 
 do-build:
-	cd ${WRKSRC} && ${CC} ${CFLAGS} -o dc-makeip makeip.c
-	cd ${WRKSRC} && ${CC} ${CFLAGS} -o dc-scramble scramble.c
+	cd ${WRKSRC} && ${CC} ${CFLAGS} ${LDFLAGS} -o dc-makeip makeip.c
+	cd ${WRKSRC} && ${CC} ${CFLAGS} ${LDFLAGS} -o dc-scramble scramble.c
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/dc-makeip ${DESTDIR}${PREFIX}/bin

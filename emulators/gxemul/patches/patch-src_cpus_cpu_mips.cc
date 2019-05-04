@@ -1,10 +1,10 @@
-$NetBSD: patch-src_cpus_cpu_mips.cc,v 1.1 2016/03/29 19:03:07 mrg Exp $
+$NetBSD: patch-src_cpus_cpu_mips.cc,v 1.3 2019/01/04 13:35:16 ryoon Exp $
 
 implement trap with immediate instructions present in MIPS32.
 
---- src/cpus/cpu_mips.cc.orig	2014-08-17 01:45:15.000000000 -0700
-+++ src/cpus/cpu_mips.cc	2016-03-28 11:51:05.000000000 -0700
-@@ -1457,6 +1457,12 @@
+--- src/cpus/cpu_mips.cc.orig	2018-12-07 06:29:22.000000000 +0000
++++ src/cpus/cpu_mips.cc
+@@ -1462,6 +1462,12 @@ int mips_cpu_disassemble_instr(struct cp
  		case REGIMM_BLTZALL:
  		case REGIMM_BGEZAL:
  		case REGIMM_BGEZALL:

@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.147 2017/06/14 15:53:09 wiz Exp $
+# $NetBSD: Makefile,v 1.183 2019/04/07 21:36:25 wiz Exp $
 
-DISTNAME=		mpd-0.20.9
+DISTNAME=		mpd-0.21.7
 PKGNAME=		${DISTNAME:S/mpd/musicpd/}
 CATEGORIES=		audio
-MASTER_SITES=		http://www.musicpd.org/download/mpd/0.20/
+MASTER_SITES=		http://www.musicpd.org/download/mpd/0.21/
 #MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=musicpd/}
 EXTRACT_SUFX=		.tar.xz
 
@@ -12,18 +12,16 @@ HOMEPAGE=		http://musicpd.org/
 COMMENT=		Remote controllable audio player
 LICENSE=		gnu-gpl-v2
 
+TOOL_DEPENDS+=		${PYPKGPREFIX}-sphinx-[0-9]*:../../textproc/py-sphinx
+
 CONFLICTS=		mpd-[0-9]*
 
-GNU_CONFIGURE=		yes
-USE_LIBTOOL=		yes
 USE_TOOLS+=		pkg-config
 USE_LANGUAGES=		c c++
+MESON_ARGS+=		-Ddocumentation=true
 
 # c++14
-GCC_REQD+=		4.9
-
-# MacOS X audio output is no longer enabled by default.
-CONFIGURE_ARGS.Darwin+=	--enable-osx
+GCC_REQD+=		6
 
 CPPFLAGS.SunOS+=	-std=gnu99 -D_XOPEN_SOURCE=600 -D__EXTENSIONS__
 
@@ -36,9 +34,16 @@ RCD_SCRIPTS=		mpd
 FILES_SUBST+=		DEVOSSAUDIO=${DEVOSSAUDIO:Q}
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	mpd.conf
-SUBST_SED.paths=	-e 's,@DEVOSSAUDIO@,${DEVOSSAUDIO},'
+SUBST_MESSAGE.paths=	Fixing path to sound device in example config.
+SUBST_VARS.paths+=	DEVOSSAUDIO
+
+SUBST_CLASSES+=		sphinx
+SUBST_STAGE.sphinx=	pre-configure
+SUBST_FILES.sphinx=	doc/meson.build
+SUBST_MESSAGE.sphinx=	Fixing sphinx binary name.
+SUBST_SED.sphinx+=	-e "s,sphinx-build,sphinx-build${PYVERSSUFFIX},"
 
 LDFLAGS+=		${LIBOSSAUDIO}
 
@@ -49,10 +54,13 @@ post-extract:
 
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/mpd.conf ${DESTDIR}${EGDIR}
+	${INSTALL_DATA} ${WRKSRC}/doc/mpdconf.example ${DESTDIR}${EGDIR}
 
+.include "../../devel/py-meson/build.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
 .include "../../audio/libmad/buildlink3.mk"
+.include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 
 .include "../../mk/oss.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

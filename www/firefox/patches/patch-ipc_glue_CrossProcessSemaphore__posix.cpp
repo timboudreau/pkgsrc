@@ -1,9 +1,6 @@
-$NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:59 martin Exp $
+$NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.5 2019/01/29 16:28:22 ryoon Exp $
 
-- avoid use of sem_t on NetBSD
-  http://mail-index.netbsd.org/pkgsrc-bugs/2017/06/23/msg062225.html
-
---- ipc/glue/CrossProcessSemaphore_posix.cpp.orig	2017-06-25 05:29:49.000000000 +0000
+--- ipc/glue/CrossProcessSemaphore_posix.cpp.orig	2019-01-18 00:20:30.000000000 +0000
 +++ ipc/glue/CrossProcessSemaphore_posix.cpp
 @@ -9,6 +9,11 @@
  #include "nsDebug.h"
@@ -17,8 +14,8 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
  
  static const uint64_t kNsPerMs = 1000000;
  static const uint64_t kNsPerSec = 1000000000;
-@@ -17,7 +22,13 @@ namespace {
- 
+@@ -16,7 +21,13 @@ static const uint64_t kNsPerSec = 100000
+ namespace {
  
  struct SemaphoreData {
 +#if defined(__NetBSD__)
@@ -31,7 +28,7 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    mozilla::Atomic<int32_t> mRefCount;
    uint32_t mInitialValue;
  };
-@@ -44,13 +55,27 @@ CrossProcessSemaphore::Create(const char
+@@ -42,13 +53,27 @@ namespace mozilla {
      return nullptr;
    }
  
@@ -50,8 +47,8 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    CrossProcessSemaphore* sem = new CrossProcessSemaphore;
    sem->mSharedBuffer = sharedBuffer;
 +#if defined(__NetBSD__)
-+  sem->mMutex = &data->mMutex;  
-+  sem->mNotZero = &data->mNotZero;  
++  sem->mMutex = &data->mMutex;
++  sem->mNotZero = &data->mNotZero;
 +  sem->mValue = &data->mValue;
 +#else
    sem->mSemaphore = &data->mSemaphore;
@@ -59,7 +56,7 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    sem->mRefCount = &data->mRefCount;
    *sem->mRefCount = 1;
  
-@@ -84,24 +109,44 @@ CrossProcessSemaphore::Create(CrossProce
+@@ -83,23 +108,44 @@ namespace mozilla {
  
    int32_t oldCount = data->mRefCount++;
    if (oldCount == 0) {
@@ -82,8 +79,8 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    CrossProcessSemaphore* sem = new CrossProcessSemaphore;
    sem->mSharedBuffer = sharedBuffer;
 +#if defined(__NetBSD__)
-+  sem->mMutex = &data->mMutex;  
-+  sem->mNotZero = &data->mNotZero;  
++  sem->mMutex = &data->mMutex;
++  sem->mNotZero = &data->mNotZero;
 +  sem->mValue = &data->mValue;
 +#else
    sem->mSemaphore = &data->mSemaphore;
@@ -92,19 +89,20 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    return sem;
  }
  
- 
  CrossProcessSemaphore::CrossProcessSemaphore()
+-    : mSemaphore(nullptr), mRefCount(nullptr) {
 +#if defined(__NetBSD__)
 +  : mMutex (nullptr)
 +  , mNotZero (nullptr)
 +  , mValue (nullptr)
 +#else
-   : mSemaphore(nullptr)
++    : mSemaphore(nullptr)
 +#endif
-   , mRefCount(nullptr)
- {
++    , mRefCount(nullptr) {
    MOZ_COUNT_CTOR(CrossProcessSemaphore);
-@@ -113,17 +158,58 @@ CrossProcessSemaphore::~CrossProcessSema
+ }
+ 
+@@ -108,16 +154,57 @@ CrossProcessSemaphore::~CrossProcessSema
  
    if (oldCount == 0) {
      // Nothing can be done if the destroy fails so ignore return code.
@@ -137,10 +135,9 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
 +}
 +#endif
 +
- bool
- CrossProcessSemaphore::Wait(const Maybe<TimeDuration>& aWaitTime)
- {
-   MOZ_ASSERT(*mRefCount > 0, "Attempting to wait on a semaphore with zero ref count");
+ bool CrossProcessSemaphore::Wait(const Maybe<TimeDuration>& aWaitTime) {
+   MOZ_ASSERT(*mRefCount > 0,
+              "Attempting to wait on a semaphore with zero ref count");
    int ret;
 +#if defined(__NetBSD__)
 +  struct timespec ts = makeAbsTime(aWaitTime);
@@ -163,18 +160,17 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
    if (aWaitTime.isSome()) {
      struct timespec ts;
      if (clock_gettime(CLOCK_REALTIME, &ts) == -1) {
-@@ -142,6 +228,7 @@ CrossProcessSemaphore::Wait(const Maybe<
-       continue;
+@@ -134,13 +221,24 @@ bool CrossProcessSemaphore::Wait(const M
+     while ((ret = sem_wait(mSemaphore)) == -1 && errno == EINTR) {
      }
    }
 +#endif
    return ret == 0;
  }
  
-@@ -149,7 +236,17 @@ void
- CrossProcessSemaphore::Signal()
- {
-   MOZ_ASSERT(*mRefCount > 0, "Attempting to signal a semaphore with zero ref count");
+ void CrossProcessSemaphore::Signal() {
+   MOZ_ASSERT(*mRefCount > 0,
+              "Attempting to signal a semaphore with zero ref count");
 +#if defined(__NetBSD__)
 +  int ret;
 +  ret = pthread_mutex_lock(mMutex);
@@ -188,4 +184,4 @@ $NetBSD: patch-ipc_glue_CrossProcessSemaphore__posix.cpp,v 1.1 2017/06/29 08:07:
 +#endif
  }
  
- CrossProcessSemaphoreHandle
+ CrossProcessSemaphoreHandle CrossProcessSemaphore::ShareToProcess(

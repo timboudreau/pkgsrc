@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.14 2017/07/07 03:13:48 taca Exp $
+# $NetBSD: Makefile,v 1.21 2019/03/31 20:48:40 wiz Exp $
 
 #
 # We can't omit PKGNAME here to handle PKG_OPTIONS.
 #
 PKGNAME=		php-${PHP_VERSION}
+PKGREVISION=		1
 CATEGORIES=		lang
 
 HOMEPAGE=		http://www.php.net/
@@ -46,16 +47,6 @@ INSTALLATION_DIRS+=	${CGIDIR} ${PHP_EXTENSION_DIR} ${EGDIR} share/php
 .if !empty(MACHINE_PLATFORM:MDarwin-[0-8].*-*)
 CFLAGS+=	-DSQLITE_ENABLE_LOCKING_STYLE=0 -DSQLITE_WITHOUT_ZONEMALLOC
 .endif
-
-.include "../../mk/compiler.mk"
-
-.if ${OPSYS} == "SunOS" && ${PKGSRC_COMPILER} == "clang"
-CONFIGURE_ARGS+=	--disable-libgcc
-.endif
-
-post-extract:
-	cd ${WRKSRC} && \
-		${FIND} . -xdev -type f -name '*.orig' -exec ${RM} -f {} \;
 
 post-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/sapi/cli/php ${DESTDIR}${PREFIX}/bin/php

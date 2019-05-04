@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.6 2017/06/05 14:22:35 ryoon Exp $
+# $NetBSD: Makefile,v 1.8 2018/08/22 09:43:36 wiz Exp $
 
 GIT_COMMIT=	dd51ac5
 
 DISTNAME=	${GIT_COMMIT}
 PKGNAME=	p5-App-Prove-Plugin-ProgressBar-0.01
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	devel perl5
 MASTER_SITES=	-http://nodeload.github.com/Ovid/App-Prove-Plugin-ProgressBar/tar.gz/${GIT_COMMIT}
 
 MAINTAINER=	schmonz@NetBSD.org
-HOMEPAGE=	http://github.com/Ovid/App-Prove-Plugin-ProgressBar/
+HOMEPAGE=	https://github.com/Ovid/App-Prove-Plugin-ProgressBar/
 COMMENT=	Progress bar for Perl prove(1)
 LICENSE=	${PERL5_LICENSE}
 

@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.9 2017/06/20 14:50:04 youri Exp $
+# $NetBSD: Makefile,v 1.16 2019/01/18 13:27:09 youri Exp $
 
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-DISTNAME=	garcon-0.6.1
-PKGNAME=	xfce4-garcon-0.6.1
+DISTNAME=	garcon-0.6.2
+PKGNAME=	xfce4-garcon-0.6.2
 CATEGORIES=	x11
 MASTER_SITES=	http://archive.xfce.org/src/xfce/garcon/0.6/
 

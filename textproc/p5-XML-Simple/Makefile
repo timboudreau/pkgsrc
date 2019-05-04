@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.36 2017/06/05 14:24:58 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.38 2018/08/22 09:47:09 wiz Exp $
 
-DISTNAME=	XML-Simple-2.24
+DISTNAME=	XML-Simple-2.25
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	textproc perl5
@@ -12,8 +11,6 @@ HOMEPAGE=	http://search.cpan.org/dist/XML-Simple/
 COMMENT=	Easy Perl API to read/write XML
 LICENSE=	${PERL5_LICENSE}
 
-# well, XML::SAX >= 0.15 is required, and we distribute 0.99 after a lot of
-# out and back in of XML::SAX::Base I tend to require no specific version
 DEPENDS+=	p5-XML-SAX-[0-9]*:../../textproc/p5-XML-SAX
 DEPENDS+=	p5-XML-SAX-Expat-[0-9]*:../../textproc/p5-XML-SAX-Expat
 DEPENDS+=	p5-XML-Parser-[0-9]*:../../textproc/p5-XML-Parser

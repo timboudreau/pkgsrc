@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.11 2017/07/18 18:19:35 brook Exp $
+# $NetBSD: Makefile,v 1.22 2019/01/05 00:39:13 adam Exp $
 
 GCC_PKGNAME=		gcc7
 .include		"version.mk"
@@ -8,23 +8,22 @@ PKGNAME=	${GCC_PKGNAME}-${GCC7_DIST_VERSION}
 ## When bumping the PKGREVISION of this package the PKGREVISION of
 ## lang/gcc7-libs needs to be bump to be at least 1 more than the
 ## PKGREVISION of this package!
-PKGREVISION=	4
 CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_GNU:=gcc/gcc-${GCC7_DIST_VERSION}/}
-EXTRACT_SUFX=	.tar.bz2
+EXTRACT_SUFX=	.tar.xz
+EXTRACT_USING=	bsdtar
 
-MAINTAINER=	maya@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://gcc.gnu.org/
 COMMENT=	The GNU Compiler Collection (GCC) - 7.0 Release Series
 LICENSE=	gnu-gpl-v2 AND gnu-gpl-v3 AND gnu-lgpl-v2 AND gnu-lgpl-v3
 
 DISTFILES=		${DEFAULT_DISTFILES}
-EXTRACT_ONLY=		${DEFAULT_DISTFILES}
 
 NOT_FOR_PLATFORM=	Interix-*-*
 
 USE_LANGUAGES=		c c++
-USE_TOOLS+=		gmake makeinfo sed:run tar:build
+USE_TOOLS+=		gmake makeinfo perl sed:run tar:build
 USE_TOOLS.NetBSD+=	gsed
 
 GNU_CONFIGURE=		yes
@@ -45,7 +44,7 @@ SUBST_CLASSES+=		vars
 SUBST_MESSAGE.vars=	Setting target machine name path in ${SUBST_FILES.vars}
 SUBST_STAGE.vars=	pre-configure
 SUBST_FILES.vars=	gcc/Makefile.in
-SUBST_VARS.vars=	GCC_TARGET_MACHINE
+SUBST_VARS.vars=	MACHINE_GNU_PLATFORM
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -55,7 +54,7 @@ LANGS=			c
 LINKER_RPATH_FLAG:=	${LINKER_RPATH_FLAG:S/-rpath/& /}
 
 ## The Library rpath to use in end programs.
-LDFLAGS_FOR_TARGET=	${LDFLAGS:M${COMPILER_RPATH_FLAG}*:N*/usr/lib*}
+LDFLAGS_FOR_TARGET=	${LDFLAGS:M${COMPILER_RPATH_FLAG}*:N*/usr/lib*} ${LDFLAGS:M-Wl,-z*}
 
 # The "-static-libstdc++ -static-libgcc" flags are normally added to the
 # boot-ldflags by configure but because we are supply the boot-ldflags
@@ -66,15 +65,16 @@ BOOT_LDFLAGS+=		${LDFLAGS:M-Wl,-syslibroot*}
 # GCC does not understand this option; remove it, or stage build will fail
 BUILDLINK_TRANSFORM+=	rm:-stdlib=libc++
 
-.include "options.mk"
-
-## For graphite support.
-.if !empty(PKG_OPTIONS:Mgcc-graphite)
-
-post-extract:
-	${TAR} -jxf ${DISTDIR}/${ISL16}.tar.bz2 -C ${WRKSRC}
-	${MV} ${WRKSRC}/${ISL16} ${WRKSRC}/isl
+# Disable fixincludes on SmartOS, header changes result in broken includes
+# being generated, see https://github.com/joyent/pkgsrc-legacy/issues/270
+.if ${OS_VARIANT} == "SmartOS"
+SUBST_CLASSES+=		fixinc
+SUBST_STAGE.fixinc=	pre-configure
+SUBST_FILES.fixinc=	gcc/Makefile.in
+SUBST_SED.fixinc=	-e "s,\./fixinc.sh,-c true,"
 .endif
+
+.include "options.mk"
 
 .if !empty(MACHINE_PLATFORM:MNetBSD-*-*)
 # native SSP conflicts with gcc's libssp
@@ -126,7 +126,6 @@ CONFIGURE_ARGS+=	--with-arch=nocona --with-tune=nocona --with-fpmath=sse
 CONFIGURE_ARGS+=	--with-dwarf2
 .endif
 
-
 # ${WRKSRC}/fixincludes/ looks for sed and compiles the path to sed into
 # a binary so we need to make sure we give it the installed sed and not
 # the tool wrapped one.
@@ -165,14 +164,16 @@ pre-configure:
 	${RUN} cd ${WRKSRC} && ${MKDIR} ${OBJDIR}
 
 TEST_TARGET=	-k check || ${TRUE}
+
 pre-test:
 	${RUN} 							\
 	if runtest --version >/dev/null 2>/dev/null ; then	\
 		: ;						\
 	else							\
-	  ${ECHO} "ERROR: Please install devel/dejagnu in order to run the test suite." ; \
-	  exit 1 ;						\
+	  ${ECHO} "ERROR: Please install devel/dejagnu in order to run the test suite."; \
+	  exit 1;						\
 	fi
+
 post-test:
 	${RUN} cd ${WRKSRC} && cd ${OBJDIR} &&		\
 	${SHELL} ${WRKSRC}/contrib/test_summary >${WRKDIR}/test_summary.log
@@ -187,8 +188,8 @@ post-install:
 .endif
 
 GENERATE_PLIST+= \
-	cd ${DESTDIR}${PREFIX} && 					\
-	${FIND} ${GCC_SUBPREFIX} \( -type f -o -type l \) -print | ${SORT} ;
+	cd ${DESTDIR}${PREFIX} && \
+	${FIND} ${GCC_SUBPREFIX} \( -type f -o -type l \) -print | ${SORT};
 
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

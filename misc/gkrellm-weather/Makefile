@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.64 2017/02/12 06:25:44 ryoon Exp $
+# $NetBSD: Makefile,v 1.70 2018/11/14 22:22:02 kleink Exp $
 
 DISTNAME=	gkrellweather-2.0.7
 PKGNAME=	gkrellm-weather-2.0.7
-PKGREVISION=	35
+PKGREVISION=	40
 CATEGORIES=	misc
-MASTER_SITES=	http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/
+#MASTER_SITES=	http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	tripledes@eslack.org
-HOMEPAGE=	http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/
+#HOMEPAGE=	http://kmlinux.fjfi.cvut.cz/~makovick/gkrellm/
 COMMENT=	Gkrellm2 weather plugin
 
 DEPENDS+=	wget>=1.8:../../net/wget

@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.53 2017/06/20 22:38:16 joerg Exp $
+# $NetBSD: Makefile,v 1.60 2019/04/15 14:35:12 wiz Exp $
 
 DISTNAME=		${RUBY_DISTNAME}
 PKGNAME=		${RUBY_PKGPREFIX}-${RUBY_EXTNAME}-${RUBY_VERSION}
-PKGREVISION=		4
 RUBY_EXTNAME=		tk
 CATEGORIES=		x11 ruby
 MASTER_SITES=		${MASTER_SITE_RUBY}
@@ -12,7 +11,7 @@ HOMEPAGE=		${RUBY_HOMEPAGE}
 COMMENT=		Ruby interface to the Tk widget set
 
 # Ruby 2.4 and later do not bundle ruby-tk.
-RUBY_VERSIONS_ACCEPTED= 23 22
+RUBY_VERSIONS_ACCEPTED= 22
 
 USE_TOOLS+=		pax
 USE_RUBY_EXTCONF=	yes
@@ -39,11 +38,6 @@ post-install:
 
 .include "../../lang/ruby/modules.mk"
 .include "../../lang/ruby/Makefile.common"
-.if ${RUBY_VER} == "18"
-.include "../../lang/tcl85/buildlink3.mk"
-.include "../../x11/tk85/buildlink3.mk"
-.else
 .include "../../lang/tcl/buildlink3.mk"
 .include "../../x11/tk/buildlink3.mk"
-.endif
 .include "../../mk/bsd.pkg.mk"

@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.44 2017/01/19 18:52:24 agc Exp $
+# $NetBSD: Makefile,v 1.47 2018/07/04 13:40:35 jperkin Exp $
 #
 
 DISTNAME=		prelude-manager-0.9.15
-PKGREVISION=		10
+PKGREVISION=		11
 CATEGORIES=		security
 MASTER_SITES=		http://www.prelude-ids.com/download/releases/prelude-manager/
-MASTER_SITES+=		http://www.prelude-ids.org/download/releases/
-MASTER_SITES+=		http://www.prelude-ids.org/download/releases/old/
+#MASTER_SITES+=		http://www.prelude-ids.org/download/releases/
+#MASTER_SITES+=		http://www.prelude-ids.org/download/releases/old/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.prelude-ids.org/download/releases/
+#HOMEPAGE=		http://www.prelude-ids.org/download/releases/
 COMMENT=		Prelude IDS manager
 
 .include "../../mk/bsd.prefs.mk"
@@ -48,7 +48,7 @@ FILES_SUBST+=		PRELUDE_USER=${PRELUDE_USER:Q}
 FILES_SUBST+=		PRELUDE_GROUP=${PRELUDE_USER:Q}
 
 SUBST_CLASSES+=		code
-SUBST_STAGE.code=	post-patch
+SUBST_STAGE.code=	pre-configure
 SUBST_FILES.code=	run-prelude-manager.c
 SUBST_SED.code=		-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.code+=	-e 's,@PRELUDE_USER@,${PRELUDE_USER},g'

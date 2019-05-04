@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.5 2017/04/22 21:03:18 adam Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/25 21:10:45 markd Exp $
 
 DISTNAME=	kjs-${KF5VER}
-PKGREVISION=	4
 CATEGORIES=	www
 
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Support for JS scripting in applications
 LICENSE=	gnu-lgpl-v2.1
 
-.include "../../meta-pkgs/kf5/Makefile.common"
-MASTER_SITES=	${MASTER_SITE_KDE:=frameworks/5.25/portingAids/}
+.include "../../meta-pkgs/kde/kf5.mk"
+MASTER_SITES=	${MASTER_SITE_KDE:=frameworks/${KF5VER:R}/portingAids/}
 
 BUILD_DEPENDS+=	kdoctools>=${KF5VER}:../../devel/kdoctools
 

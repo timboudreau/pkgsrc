@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.58 2017/07/16 14:10:58 christos Exp $
+# $NetBSD: Makefile,v 1.64 2019/04/11 12:50:30 christos Exp $
 
-DISTNAME=	gxemul-0.6.0.1
-PKGREVISION=	5
+DISTNAME=	gxemul-0.6.1
+PKGREVISION=	2
 CATEGORIES=	emulators
-MASTER_SITES=	http://gxemul.sourceforge.net/src/
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gxemul/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://gxemul.sourceforge.net/
+HOMEPAGE=	http://gavare.se/gxemul/
 COMMENT=	Framework for full-system computer architecture emulation
 LICENSE=	modified-bsd
 
@@ -37,7 +37,7 @@ PKG_SUGGESTED_OPTIONS=	x11
 .if !empty(PKG_OPTIONS:Mx11)
 GLOBAL_LDFLAGS=		-L${X11BASE}/lib ${COMPILER_RPATH_FLAG}${X11BASE}/lib
 SUBST_CLASSES+=		x11
-SUBST_STAGE.x11=	post-patch
+SUBST_STAGE.x11=	pre-configure
 SUBST_FILES.x11=	configure
 SUBST_SED.x11=		-e 's|-L/usr/X11R6/lib|${GLOBAL_LDFLAGS:Q}|g'
 SUBST_SED.x11+=		-e 's|/usr/X11R6|${X11BASE}|g'

@@ -1,8 +1,11 @@
-$NetBSD: distinfo,v 1.34 2017/05/29 13:16:11 fhajny Exp $
+$NetBSD: distinfo,v 1.42 2018/09/17 18:07:37 fhajny Exp $
 
-SHA1 (rabbitmq-server-3.6.10.tar.xz) = 0d879f998683079a31c1e872ce4c5640ebd35406
-RMD160 (rabbitmq-server-3.6.10.tar.xz) = bd26f19a0c26d968b8b658dcbfc91a9e6eff8fe3
-SHA512 (rabbitmq-server-3.6.10.tar.xz) = 64e618e51ab259463029ad75b981dbf64687515e52d19854f225d4c68077e683ef56f0f6bb92cbbf91f140bc829d905473d687d083d12f36dd2cdfab3defaed6
-Size (rabbitmq-server-3.6.10.tar.xz) = 1426900 bytes
+SHA1 (rabbitmq-server-3.7.7.tar.xz) = 5cf046bd23bcb05354e1beeaf8f4997ee948f43b
+RMD160 (rabbitmq-server-3.7.7.tar.xz) = d02e1f6083ce0af5c729858b0816ad4d24818cf0
+SHA512 (rabbitmq-server-3.7.7.tar.xz) = b8ae8a71ab59f5e2e95286a782ed503eaf7371eb3fcf300723f2e581b9471f98bafdee6e6cf9a750c4beada956b80d289fb1cca0f62a9daca95aa3b2ddd954a2
+Size (rabbitmq-server-3.7.7.tar.xz) = 2517952 bytes
 SHA1 (patch-Makefile) = 088a3ed04dc72215f1ca3b34b49bb4047a531e89
 SHA1 (patch-deps_rabbit_scripts_rabbitmq-env) = e2b9846e9b161ea73d7338a162699efc06340215
+SHA1 (patch-deps_rabbitmq__cli_Makefile) = 45bfec63c47092122ad9051f2c9de4dd8333d4e7
+SHA1 (patch-deps_rabbitmq__cli_lib_rabbitmq_cli_core_parser.ex) = d0df9136fb13451bc0e2ae4254b9278ba593f90c
+SHA1 (patch-deps_rabbitmq__cli_mix.exs) = 06d658b332883f347ff8ead7d59416a655e2ce94

@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.10 2016/06/08 17:43:47 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2018/12/27 16:04:54 joerg Exp $
 
-DISTNAME=	Flask-Security-1.7.5
+DISTNAME=	Flask-Security-3.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:tl}
+PKGREVISION=	1
 CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=F/Flask-Security/}
 
@@ -10,13 +11,16 @@ HOMEPAGE=	http://pythonhosted.org/Flask-Security/
 COMMENT=	Simple security for Flask apps
 LICENSE=	mit
 
-DEPENDS+=	${PYPKGPREFIX}-flask>=0.9:../../www/py-flask
-DEPENDS+=	${PYPKGPREFIX}-flask-login>=0.2.3:../../www/py-flask-login
+BUILD_DEPENDS+=	${PYPKGPREFIX}-babel>=1.3:../../devel/py-babel
+BUILD_DEPENDS+=	${PYPKGPREFIX}-test-runner-[0-9]*:../../devel/py-test-runner
+DEPENDS+=	${PYPKGPREFIX}-flask>=0.11:../../www/py-flask
+DEPENDS+=	${PYPKGPREFIX}-flask-babelex>=0.9.3:../../www/py-flask-babelex
+DEPENDS+=	${PYPKGPREFIX}-flask-login>=0.3.0:../../www/py-flask-login
 DEPENDS+=	${PYPKGPREFIX}-flask-mail>=0.7.3:../../www/py-flask-mail
 DEPENDS+=	${PYPKGPREFIX}-flask-principal>=0.3.3:../../www/py-flask-principal
-DEPENDS+=	${PYPKGPREFIX}-flask-wtf>=0.8:../../www/py-flask-wtf
-DEPENDS+=	${PYPKGPREFIX}-itsdangerous>=0.17:../../security/py-itsdangerous
-DEPENDS+=	${PYPKGPREFIX}-passlib>=1.6.1:../../security/py-passlib
+DEPENDS+=	${PYPKGPREFIX}-flask-wtf>=0.13.1:../../www/py-flask-wtf
+DEPENDS+=	${PYPKGPREFIX}-itsdangerous>=0.21:../../security/py-itsdangerous
+DEPENDS+=	${PYPKGPREFIX}-passlib>=1.7:../../security/py-passlib
 
 USE_LANGUAGES=	# empty
 

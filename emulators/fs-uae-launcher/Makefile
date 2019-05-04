@@ -1,17 +1,19 @@
-# $NetBSD: Makefile,v 1.6 2017/01/01 14:43:38 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2019/04/26 12:44:43 roy Exp $
 
-DISTNAME=	fs-uae-launcher-2.6.2
+DISTNAME=	fs-uae-launcher-2.8.3
+PKGREVISION=	1
 CATEGORIES=	emulators
-MASTER_SITES=	http://fs-uae.net/fs-uae/stable/${PKGVERSION_NOREV}/
+MASTER_SITES=	https://fs-uae.net/fs-uae/stable/${PKGVERSION_NOREV}/
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://fs-uae.net/
+HOMEPAGE=	https://fs-uae.net/
 COMMENT=	Graphical launcher for FS-UAE, the Amiga Emulator
 LICENSE=	gnu-gpl-v2
 
 DEPENDS+=	fs-uae>=${PKGVERSION_NOREV}:../../emulators/fs-uae
-DEPENDS+=	${PYPKGPREFIX}-lhafile>=0.2.1:../../archivers/py-lhafile
-DEPENDS+=	${PYPKGPREFIX}-sqlite3>=1:../../databases/py-sqlite3
+DEPENDS+=	${PYPKGPREFIX}-lhafile-[0-9]*:../../archivers/py-lhafile
+DEPENDS+=	${PYPKGPREFIX}-setuptools-[0-9]*:../../devel/py-setuptools
+DEPENDS+=	${PYPKGPREFIX}-sqlite3-[0-9]*:../../databases/py-sqlite3
 DEPENDS+=	${PYPKGPREFIX}-qt5>=5.4:../../x11/py-qt5
 .include "../../mk/bsd.prefs.mk"
 .if ${OPSYS} == "Darwin"
@@ -22,15 +24,11 @@ DEPENDS+=	${PYPKGPREFIX}-pyobjc-framework-Quartz>=3:../../devel/py-pyobjc-framew
 INSTALL_TARGET=		install-data
 USE_TOOLS+=		gmake msgfmt
 
-# Imports urllib.parse which is 3+.
-PYTHON_VERSIONS_ACCEPTED=	34 35 36
-PYDISTUTILSPKG=		yes
+PYTHON_VERSIONS_ACCEPTED=	37 36 # import urllib.parse
 PYSETUPINSTALLARGS=	--install-lib=${PREFIX:Q}/share/fs-uae-launcher
 PYSETUPINSTALLARGS+=	--install-scripts=${PREFIX:Q}/share/fs-uae-launcher
 
 REPLACE_PYTHON+=	fs-uae-launcher
-REPLACE_PYTHON+=	OpenGL/arrays/_buffers.py
-REPLACE_PYTHON+=	OpenGL/arrays/buffers.py
 
 INSTALLATION_DIRS+=	bin
 
@@ -43,14 +41,13 @@ SUBST_FILES.prefix+=	game_center/gamecenterutil.py
 SUBST_SED.prefix=	-e 's,/usr/local,${PREFIX},'
 
 post-install:
-	cd ${WRKSRC} && env ${MAKE_ENV} ${MAKE_PROGRAM} ${INSTALL_MAKE_FLAGS} \
+	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${INSTALL_MAKE_FLAGS} \
 		-f ${MAKE_FILE} ${INSTALL_TARGET}
-	cd ${DESTDIR}${PREFIX}/bin && rm -f fs-uae-launcher && \
-		ln -s ../share/fs-uae-launcher/fs-uae-launcher \
-			${DESTDIR}${PREFIX}/bin/fs-uae-launcher
+	cd ${DESTDIR}${PREFIX}/bin && ${RM} -f fs-uae-launcher && \
+		${LN} -s ../share/fs-uae-launcher/fs-uae-launcher fs-uae-launcher
 
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../lang/python/application.mk"
-.include "../../lang/python/extension.mk"
+.include "../../lang/python/distutils.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../mk/bsd.pkg.mk"

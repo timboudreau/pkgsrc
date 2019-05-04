@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.56 2017/07/11 14:19:21 jaapb Exp $
+# $NetBSD: Makefile,v 1.78 2019/04/03 00:33:01 ryoon Exp $
 
 DISTNAME=	unison-2.32.52
-PKGREVISION=	57
-
+PKGREVISION=	77
 CATEGORIES=	net
 MASTER_SITES=	http://www.seas.upenn.edu/~bcpierce/unison/download/releases/stable/
 
@@ -17,7 +16,10 @@ BUILDLINK_API_DEPENDS.ocaml+=	ocaml>=3.08.2
 WRKSRC=		${WRKDIR}/${PKGNAME_NOREV}
 USE_TOOLS+=	gmake
 MAKE_FLAGS+=	CFLAGS=""
-MAKE_ENV+=	HOME=${WRKDIR:Q}
+MAKE_ENV+=	HOME=${WRKDIR}
+
+# with -j, runs only about half the build and then stops
+MAKE_JOBS_SAFE=	no
 
 .include "options.mk"
 .include "../../mk/bsd.prefs.mk"

@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.17 2017/03/13 16:18:34 taca Exp $
+# $NetBSD: Makefile,v 1.20 2019/01/20 13:48:30 taca Exp $
 
-DISTNAME=	ffi-1.9.18
+DISTNAME=	ffi-1.10.0
 CATEGORIES=	devel
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://wiki.github.com/ffi/ffi
+HOMEPAGE=	https://github.com/ffi/ffi/wiki
 COMMENT=	Loading dynamic libraries, binding functions within them
 LICENSE=	modified-bsd
 

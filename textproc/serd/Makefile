@@ -1,15 +1,17 @@
-# $NetBSD: Makefile,v 1.1 2015/04/19 23:10:52 rodent Exp $
+# $NetBSD: Makefile,v 1.5 2019/04/25 07:33:24 maya Exp $
 
-DISTNAME=	serd-0.20.0
+DISTNAME=	serd-0.30.0
+PKGREVISION=	1
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.drobilla.net/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://drobilla.net/software/serd/
 COMMENT=	Lightweight C library for RDF syntax
 LICENSE=	isc
 
+USE_LANGUAGES=	c99
 USE_TOOLS+=	gsed pkg-config
 
 PKGCONFIG_OVERRIDE+=	serd.pc.in

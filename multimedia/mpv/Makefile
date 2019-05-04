@@ -1,24 +1,29 @@
-# $NetBSD: Makefile,v 1.56 2017/07/16 12:06:25 leot Exp $
+# $NetBSD: Makefile,v 1.81 2019/04/25 07:33:09 maya Exp $
 
-DISTNAME=	mpv-0.25.0
-PKGREVISION=	1
+DISTNAME=	mpv-0.29.1
+PKGREVISION=	6
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_GITHUB:=mpv-player/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://mpv.io/
+HOMEPAGE=	https://mpv.io/
 COMMENT=	Video player based on MPlayer and mplayer2
 LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2.1
 
 # needs sem_timedwait(3)
-NOT_FOR_PLATFORM=	NetBSD-[1-6]*-*
+NOT_FOR_PLATFORM=	NetBSD-[1-6].*-*
 
 NOT_PAX_MPROTECT_SAFE+=	bin/mpv
 
-BUILD_DEPENDS+=	${PYPKGPREFIX}-docutils>=0.12:../../textproc/py-docutils
+TOOL_DEPENDS+=	${PYPKGPREFIX}-docutils>=0.12:../../textproc/py-docutils
 # ${WRKSRC}/bootstrap.py mentions needed version
-BUILD_DEPENDS+=	waf>=1.8.12:../../devel/waf
+TOOL_DEPENDS+=	waf>=2.0.9:../../devel/waf
+
+WAF_CONFIGURE_ARGS+=	--bindir=${PREFIX}/bin
+WAF_CONFIGURE_ARGS+=	--enable-dvdnav
+WAF_CONFIGURE_ARGS+=	--enable-dvdread
+WAF_CONFIGURE_ARGS+=	--disable-egl-x11
 
 PYTHON_FOR_BUILD_ONLY=	yes
 
@@ -30,7 +35,7 @@ CONF_FILES+=		share/examples/mpv/encoding-profiles.conf ${PKG_SYSCONFDIR}/mpv/en
 
 SUBST_CLASSES+=		audio
 SUBST_SED.audio+=	-e "s,/dev/dsp,${DEVOSSAUDIO},"
-SUBST_FILES.audio+=	stream/audio_in.c waftools/checks/custom.py wscript
+SUBST_FILES.audio+=	audio/out/ao_oss.c stream/ai_oss.c
 SUBST_STAGE.audio=	pre-configure
 SUBST_MESSAGE.audio=	Fixing path to audio device.
 
@@ -49,6 +54,7 @@ post-install:
 .include "../../mk/bsd.prefs.mk"
 .if ${OPSYS} != "Darwin"
 .include "../../graphics/MesaLib/buildlink3.mk"
+.include "../../x11/libdrm/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXrandr/buildlink3.mk"
 .include "../../x11/libXScrnSaver/buildlink3.mk"
@@ -60,11 +66,11 @@ post-install:
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/waf/waf.mk"
 .include "../../devel/zlib/buildlink3.mk"
+.include "../../graphics/lcms2/buildlink3.mk"
 .include "../../lang/python/application.mk"
 .include "../../multimedia/libdvdnav/buildlink3.mk"
 .include "../../multimedia/libdvdread/buildlink3.mk"
-BUILDLINK_API_DEPENDS.ffmpeg3+=	ffmpeg3>=3.2.2
-.include "../../multimedia/ffmpeg3/buildlink3.mk"
+.include "../../multimedia/ffmpeg4/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../mk/jpeg.buildlink3.mk"

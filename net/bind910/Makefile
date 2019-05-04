@@ -1,19 +1,21 @@
-# $NetBSD: Makefile,v 1.36 2017/07/08 04:29:00 taca Exp $
+# $NetBSD: Makefile,v 1.47 2018/09/23 14:27:07 taca Exp $
 
 DISTNAME=	bind-${BIND_VERSION}
 PKGNAME=	${DISTNAME:S/-P/pl/}
+PKGREVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.isc.org/isc/bind9/${BIND_VERSION}/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.isc.org/software/bind/
 COMMENT=	Berkeley Internet Name Daemon implementation of DNS, version 9.10
+LICENSE=	mpl-2.0
 
 CONFLICTS+=	host-[0-9]*
 
 MAKE_JOBS_SAFE=	no
 
-BIND_VERSION=	9.10.5-P3
+BIND_VERSION=	9.10.8-P1
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -21,7 +23,7 @@ BUILD_DEFS+=	BIND_DIR VARBASE
 
 .include "options.mk"
 
-USE_TOOLS+=		pax perl
+USE_TOOLS+=		pax perl pkg-config
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 #CONFIG_SHELL=		sh -x
@@ -32,7 +34,9 @@ CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
 CONFIGURE_ARGS+=	--disable-openssl-version-check
 CONFIGURE_ARGS+=	--with-openssl=${SSLBASE:Q}
 CONFIGURE_ARGS+=	--with-python=no
-.if ${MACHINE_PLATFORM:MNetBSD-*-mipsel} != ""
+.if !empty(MACHINE_PLATFORM:MNetBSD-*-m68k) || \
+    !empty(MACHINE_PLATFORM:MNetBSD-*-mipsel) || \
+    !empty(MACHINE_PLATFORM:MNetBSD-*-vax)
 CONFIGURE_ARGS+=	--disable-atomic
 .endif
 .if ${MACHINE_PLATFORM:MNetBSD-*-powerpc} != ""
@@ -49,7 +53,7 @@ PKG_USERS=		${BIND_USER}:${BIND_GROUP}
 PKG_GECOS.${BIND_USER}=	Named pseudo-user
 PKG_HOME.${BIND_USER}=	${BIND_DIR}
 
-DOCS=			CHANGES FAQ README
+DOCS=			CHANGES FAQ.xml README
 
 FILES_SUBST+=		BIND_GROUP=${BIND_GROUP} \
 			BIND_USER=${BIND_USER} PAX=${PAX:Q} \

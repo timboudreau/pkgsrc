@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.1 2016/09/12 22:13:54 maya Exp $
+# $NetBSD: buildlink3.mk,v 1.3 2018/01/07 13:04:19 rillig Exp $
 
 BUILDLINK_TREE+=	gcc6-libs
 
@@ -11,7 +11,7 @@ BUILDLINK_API_DEPENDS.gcc6-libs+=	gcc6-libs>=6.1.0
 BUILDLINK_API_DEPENDS.gcc6-libs+=	{gcc6,gcc6-libs}>=6.1.0
 .endif
 BUILDLINK_PKGSRCDIR.gcc6-libs=		../../lang/gcc6-libs
-BUILDLINK_DEPMETHOD.gcc6-libs?=	full
+BUILDLINK_DEPMETHOD.gcc6-libs?=		full
 
 BUILDLINK_PASSTHRU_DIRS+=	${BUILDLINK_PREFIX.gcc6-libs}/gcc6
 
@@ -29,7 +29,7 @@ GCC_TARGET_MACHINE?=	${MACHINE_GNU_PLATFORM}
 
 ${SPECS_LIBGCC}:
 	@${ECHO} "*link_libgcc:" >${SPECS_LIBGCC}
-	@${ECHO} "%D $(LINKER_RPATH_FLAG)${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib/%M" >>${SPECS_LIBGCC}
+	@${ECHO} "%D ${LINKER_RPATH_FLAG}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib/%M" >>${SPECS_LIBGCC}
 
 _WRAP_EXTRA_ARGS.CC+=	-specs=${SPECS_LIBGCC}
 _WRAP_EXTRA_ARGS.CXX+=	-specs=${SPECS_LIBGCC}

@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.15 2017/06/05 14:24:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.17 2019/02/24 05:15:18 mef Exp $
 
-DISTNAME=	GD-SecurityImage-1.73
+DISTNAME=	GD-SecurityImage-1.75
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
 CATEGORIES=	security perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=GD/}
 

@@ -181,7 +181,8 @@ enum {
 	OPTION_USE_COMPRESS_PROGRAM,
 	OPTION_UUENCODE,
 	OPTION_VERSION,
-	OPTION_XATTRS
+	OPTION_XATTRS,
+	OPTION_ZSTD,
 };
 
 int	bsdtar_getopt(struct bsdtar *);
@@ -189,7 +190,7 @@ void	do_chdir(struct bsdtar *);
 int	edit_pathname(struct bsdtar *, struct archive_entry *);
 int	need_report(void);
 int	pathcmp(const char *a, const char *b);
-void	safe_fprintf(FILE *, const char *fmt, ...);
+void	safe_fprintf(FILE *, const char *fmt, ...) __LA_PRINTF(2, 3);
 void	set_chdir(struct bsdtar *, const char *newdir);
 const char *tar_i64toa(int64_t);
 void	tar_mode_c(struct bsdtar *bsdtar);
@@ -197,8 +198,8 @@ void	tar_mode_r(struct bsdtar *bsdtar);
 void	tar_mode_t(struct bsdtar *bsdtar);
 void	tar_mode_u(struct bsdtar *bsdtar);
 void	tar_mode_x(struct bsdtar *bsdtar);
-void	usage(void);
-int	yes(const char *fmt, ...);
+void	usage(void) __LA_DEAD;
+int	yes(const char *fmt, ...) __LA_PRINTF(1, 2);
 
 #if defined(HAVE_REGEX_H) || defined(HAVE_PCREPOSIX_H)
 void	add_substitution(struct bsdtar *, const char *);

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.25 2016/03/05 11:27:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.27 2018/03/12 11:15:29 wiz Exp $
 
 PKGREVISION= 1
 .include "../../devel/libdbusmenu-qt/Makefile.common"

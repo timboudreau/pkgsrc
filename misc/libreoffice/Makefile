@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.115 2017/07/09 13:46:32 manu Exp $
+# $NetBSD: Makefile,v 1.191 2019/04/25 07:33:07 maya Exp $
 
-VERREL=		5.3.4
+VERREL=		6.2.3
 VERRC=		2
 VER=		${VERREL}.${VERRC}
 DISTNAME=	libreoffice-${VER}
@@ -10,7 +10,7 @@ MASTER_SITES=	http://download.documentfoundation.org/libreoffice/src/${VERREL}/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://www.libreoffice.org/
+HOMEPAGE=	https://www.libreoffice.org/
 COMMENT=	Office productivity suite from The Document Foundation
 LICENSE=	gnu-lgpl-v3
 
@@ -20,7 +20,9 @@ SUBST_CLASSES+=			use-bash
 SUBST_STAGE.use-bash=		pre-configure
 SUBST_MESSAGE.use-bash=		Using bash for configure script
 SUBST_FILES.use-bash+=		autogen.sh
+SUBST_FILES.use-bash+=		configure.ac
 SUBST_VARS.use-bash+=		BASH
+SUBST_VARS.use-bash+=		PREFIX
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -30,7 +32,7 @@ pre-build:
 .endif
 
 GCC_REQD+=	4.6
-PYTHON_VERSIONS_INCOMPATIBLE=	27
+PYTHON_VERSIONS_INCOMPATIBLE=	27 37
 
 CHECK_SHLIBS_SUPPORTED=	no
 # configure will be regenerated.
@@ -54,28 +56,23 @@ EXTRACT_ONLY+=		libreoffice-${component}-${VER}.tar.xz
 MORE_DISTFILES= \
 	breakpad.zip \
 	0168229624cfac409e766913506961a8-ucpp-1.3.2.tar.gz \
-	0279a21fab6f245e85a6f85fea54f511-source-code-font-1.009.tar.gz \
-	134d8262145fc793c6af494dcace3e71-liberation-fonts-ttf-1.07.4.tar.gz \
-	5c781723a0d9ed6188960defba8e91cf-liberation-fonts-ttf-2.00.1.tar.gz \
+	liberation-narrow-fonts-ttf-1.07.6.tar.gz \
+	liberation-fonts-ttf-2.00.4.tar.gz \
 	907d6e99f241876695c19ff3db0b8923-source-code-pro-2.030R-ro-1.050R-it.tar.gz \
-	86b1daaa438f5a7bea9a52d7b9799ac0-xmlsec1-1.2.23.tar.gz \
-	8ab049135b2d15313da5d9f0656894a1-commons-lang3-3.3.1-src.tar.gz \
-	2c9b0f83ed5890af02c0df1c1776f39b-commons-httpclient-3.1-src.tar.gz \
+	edc4d741888bc0d38e32dbaa17149596-source-sans-pro-2.010R-ro-1.065R-it.tar.gz \
+	source-serif-font-2.007R.tar.gz \
+	xmlsec1-1.2.27.tar.gz \
 	3404ab6b1792ae5f16bbd603bd1e1d03-libformula-1.1.7.zip \
 	35c94d2df8893241173de1d16b6034c0-swingExSrc.zip \
-	35efabc239af896dfb79be7ebdd6e6b9-gentiumbasic-fonts-1.10.zip \
 	39bb3fcea1514f1369fcfc87542390fd-sacjava-1.3.zip \
 	3bdf40c0d199af31923e900d082ca2dd-libfonts-1.1.6.zip \
 	commons-logging-1.2-src.tar.gz \
 	a8c2c5b8f09e7ede322d5c602ff6a4b6-mythes-1.2.4.tar.gz \
-	7a15edea7d415ac5150ea403e27401fd-open-sans-font-ttf-1.10.tar.gz \
 	8ce2fcd72becf06c41f7201d15373ed9-librepository-1.1.6.zip \
 	97b2d4dba862397f446b217e2b623e71-libloader-1.1.6.zip \
 	a7983f859eafb2677d7ff386a023bc40-xsltml_2.1.2.zip \
 	ace6ab49184e329db254e454a010f56d-libxml-1.1.7.zip \
-	048751f3271906db5126ab76870444c4-commons-codec-1.9-src.zip \
 	ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip \
-	c3c1a8ba7452950636e871d25020ce0d-pt-serif-font-1.0000W.tar.gz \
 	db60e4fde8dd6d6807523deb71ee34dc-liblayout-0.2.10.zip \
 	d8bd5eed178db6e2b18eeed243f85aa8-flute-1.1.6.zip \
 	beeca87be45ec87d241ddd0e1bad80c1-bsh-2.0b6-src.zip \
@@ -85,30 +82,40 @@ MORE_DISTFILES= \
 	f94d9870737518e3b597f9265f4e9803-libserializer-1.1.6.zip \
 	b63e6340a02ff1cacfeadb2c42286161-JLanguageTool-1.7.0.tar.bz2 \
 	a233181e03d3c307668b4c722d881661-mariadb_client-2.0.0-src.tar.gz \
-	d62650a6f908e85643e557a236ea989c-vigra1.6.0.tar.gz \
-	185d60944ea767075d27247c3162b3bc-unowinreg.dll \
-	c74b7223abe75949b4af367942d96c7a-crosextrafonts-carlito-20130920.tar.gz \
-	OpenCOLLADA-master-6509aa13af.tar.bz2 \
 	798b2ffdc8bcfe7bca2cf92b62caf685-rhino1_5R5.zip \
 	368f114c078f94214a308a74c7e991bc-crosextrafonts-20130214.tar.gz \
-	5d303fb955beb9bf112267316ca9d021-glyphy-0.2.0.tar.bz2 \
-	language-subtag-registry-2016-02-10.tar.bz2 \
+	language-subtag-registry-2018-04-23.tar.bz2 \
 	libeot-0.01.tar.bz2 \
-	7239a4430efd4d0189c4f24df67f08e5-mysql-connector-c++-1.1.4.tar.gz \
-	c0b4799ea9850eae3ead14f0a60e9418-postgresql-9.2.1.tar.bz2 \
-	edc4d741888bc0d38e32dbaa17149596-source-sans-pro-2.010R-ro-1.065R-it.tar.gz \
-	harfbuzz-1.3.2.tar.bz2 \
-	3069842a88b8f40c6b83ad2850cda293-graphite2-minimal-1.3.9.tgz \
+	postgresql-9.2.24.tar.bz2 \
+	graphite2-minimal-1.3.10.tgz \
 	1725634df4bb3dcb1b2c91a6175f8789-GentiumBasic_1102.zip \
-	EmojiOneColor-SVGinOT-1.3.tar.gz
+	EmojiOneColor-SVGinOT-1.3.tar.gz \
+	libjpeg-turbo-1.5.3.tar.gz \
+	alef-1.001.tar.gz \
+	c74b7223abe75949b4af367942d96c7a-crosextrafonts-carlito-20130920.tar.gz \
+	culmus-0.131.tar.gz \
+	ttf-kacst_2.01+mry.tar.gz \
+	libre-hebrew-1.0.tar.gz \
+	noto-fonts-20171024.tar.gz \
+	Scheherazade-2.100.zip \
+	lxml-4.1.1.tgz \
+	Amiri-0.111.zip \
+	ReemKufi-0.7.zip
 
 .for md in ${MORE_DISTFILES}
 DISTFILES+=		${md}
-SITES.${md}=		http://dev-www.libreoffice.org/src/
+SITES.${md}=		https://dev-www.libreoffice.org/src/
 .endfor
 
-DISTFILES+=185d60944ea767075d27247c3162b3bc-unowinreg.dll
-SITES.185d60944ea767075d27247c3162b3bc-unowinreg.dll=http://download.go-oo.org/extern/
+MORE_DISTFILES2+=		49a64f3bcf20a7909ba2751349231d6652ded9cd2840e961b5164d09de3ffa63-opens___.ttf
+SITES.49a64f3bcf20a7909ba2751349231d6652ded9cd2840e961b5164d09de3ffa63-opens___.ttf=	https://dev-www.libreoffice.org/extern/
+
+MORE_DISTFILES2+=		harfbuzz-2.4.0.tar.bz2
+SITES.harfbuzz-2.4.0.tar.bz2=	https://www.freedesktop.org/software/harfbuzz/release/
+
+.for md2 in ${MORE_DISTFILES2}
+DISTFILES+=		${md2}
+.endfor
 
 .include "options.mk"
 
@@ -131,14 +138,17 @@ WRAPPER_SKIP_TRANSFORM=yes
 LDFLAGS+=		-lboost_system
 
 USE_LIBTOOL=		yes
-# Use GNU find fron findutils.
+# Use GNU find from findutils.
 TOOLS_PLATFORM.find=	# empty
 # GUN tar is really needed. Some Makefiles depends on GNUTAR.
-USE_TOOLS+=		automake bash bison gmake gtar perl pkg-config unzip zip
+USE_TOOLS+=		automake bash bison gmake gtar
+USE_TOOLS+=		msgfmt perl pkg-config unzip zip
 PTHREAD_OPTS+=		require
 
 HAS_CONFIGURE=		yes
 #GNU_CONFIGURE=		yes
+
+CXXFLAGS.NetBSD+=	-DNO_CPLUSPLUS_ALLOCA
 
 # Do not use /tmp, outside of WRKSRC.
 CONFIGURE_ENV+=		TMPDIR=${WRKSRC}/tmp
@@ -155,27 +165,25 @@ CONFIGURE_ARGS+=	--with-parallelism=1
 CONFIGURE_ARGS+=	--prefix=${PREFIX}/${PKGNAME_NOREV}
 CONFIGURE_ARGS+=	--disable-ccache
 CONFIGURE_ARGS+=	--enable-dbus
-# We cannot use system collada2gltf, and NetBSD requires some patches (4.3.2.2)
-CONFIGURE_ARGS+=	--disable-collada
 CONFIGURE_ARGS+=	--disable-epm
 CONFIGURE_ARGS+=	--disable-fetch-external
 CONFIGURE_ARGS+=	--disable-firebird-sdbc
 CONFIGURE_ARGS+=	--disable-odk
-CONFIGURE_ARGS+=	--disable-systray
+CONFIGURE_ARGS+=	--disable-sdremote-bluetooth
 # Enabling GIO causes error. losessioninstall.component not found.
 CONFIGURE_ARGS+=	--disable-gio
+CONFIGURE_ARGS+=	--disable-pdfium
 CONFIGURE_ARGS+=	--enable-gstreamer-1-0
 CONFIGURE_ARGS+=	--enable-python=system
 #CONFIGURE_ARGS+=	--enable-release-build
 CONFIGURE_ARGS+=	--enable-ext-wiki-publisher
 CONFIGURE_ARGS+=	--enable-ext-nlpsolver
-CONFIGURE_ARGS+=	--enable-ext-mariadb-connector
-CONFIGURE_ARGS+=	--without-system-mysql-cppconn
+CONFIGURE_ARGS+=	--with-system-gpgmepp
+CONFIGURE_ARGS+=	--without-system-jpeg
 CONFIGURE_ARGS+=	--without-system-postgresql
-CONFIGURE_ARGS+=	--without-system-mariadb
-CONFIGURE_ARGS+=	--with-alloc=system
+CONFIGURE_ARGS+=	--without-system-xmlsec
 CONFIGURE_ARGS+=	--with-compat-oowrappers
-CONFIGURE_ARGS+=	--with-external-tar=${DISTDIR}/${DIST_SUBDIR}
+CONFIGURE_ARGS+=	--with-external-tar=${WRKSRC}/src
 CONFIGURE_ARGS+=	--with-fonts
 CONFIGURE_ARGS+=	--with-lang="ALL"
 CONFIGURE_ARGS+=	--with-myspell-dicts
@@ -183,13 +191,13 @@ CONFIGURE_ARGS+=	--with-boost-libdir=${BUILDLINK_PREFIX.boost-libs}/lib
 CONFIGURE_ARGS+=	--with-system-libs
 CONFIGURE_ARGS+=	--with-system-dicts
 CONFIGURE_ARGS+=	--with-vendor="pkgsrc"
+CONFIGURE_ARGS+=	--with-tls="nss"
 CONFIGURE_ARGS+=	--without-doxygen
 CONFIGURE_ARGS+=	--without-junit
 CONFIGURE_ARGS+=	--without-krb5
 CONFIGURE_ARGS+=	--without-gssapi
 CONFIGURE_ARGS+=	--without-system-apache-commons
 CONFIGURE_ARGS+=	--with-system-cppunit
-CONFIGURE_ARGS+=	--with-system-libgltf
 # gengal.bin segfault, in runtime same problem causes application error.
 #CONFIGURE_ARGS+=	--without-galleries
 # internal sane should be used because only header files are used.
@@ -208,7 +216,8 @@ REPLACE_PERL+=	sd/res/webview/savepic.pl
 REPLACE_PERL+=	sd/res/webview/show.pl
 REPLACE_PERL+=	sd/res/webview/webcast.pl
 
-LO_PROGRAMS=		sbase scalc sdraw simpress smath soffice swriter
+LO_PROGRAMS=		libreoffice lobase localc lodraw loffice
+LO_PROGRAMS+=		lofromtemplate loimpress lomath loweb lowriter
 # Base depends on java, we don't install the icon
 LO_DESKTOP_FILES=	calc.desktop draw.desktop impress.desktop math.desktop \
 			startcenter.desktop writer.desktop
@@ -226,7 +235,9 @@ MAKE_ENV+=		SHELL=${BASH}
 BUILD_MAKE_FLAGS+=	VERBOSE=true
 #BUILD_MAKE_FLAGS+=	GMAKE_OPTIONS+=-p
 
+.if ${OPSYS} != "Linux"
 BUILDLINK_TRANSFORM+=	rm:-ldl
+.endif
 
 INSTALLATION_DIRS=	bin share/applications
 
@@ -237,11 +248,18 @@ debugrun:
 
 post-extract:
 	${MKDIR} -p ${WRKSRC}/src
-.for md in ${MORE_DISTFILES}
+.for md in ${MORE_DISTFILES} ${MORE_DISTFILES2}
 	${LN} -s ${DISTDIR}/${DIST_SUBDIR}/${md} ${WRKSRC}/src/${md}
 .endfor
 	mkdir ${WRKSRC}/tmp
 #	mkdir ${WRKSRC}/${OBJDIR}
+
+pre-configure: provide-python3
+
+.PHONY: provide-python3
+provide-python3:
+	# install phase uses python3 command
+	${LN} -s ${PYTHONBIN} "${BUILDLINK_DIR}/bin/python3"
 
 do-install:
 	cd ${WRKSRC} && make DESTDIR="${DESTDIR}" PREFIXDIR="${PREFIX}" distro-pack-install
@@ -256,10 +274,10 @@ UNO_PATH=${PREFIX}/${PKGNAME}/lib/libreoffice/program
 BUILD_DEFS+=   UNO_PATH
 BUILD_DEFS+=   PYTHONBIN
 
-#post-install:
-#.for f in ${LO_PROGRAMS}
-#	cd ${DESTDIR}${PREFIX}/bin && ${LN} -s ../${PKGNAME_NOREV}/program/${f}
-#.endfor
+post-install:
+.for f in ${LO_PROGRAMS}
+	cd ${DESTDIR}${PREFIX}/bin && ${LN} -s ../${PKGNAME_NOREV}/bin/${f}
+.endfor
 #	${LN} -s ${DESTDIR}${PREFIX}/bin/soffice ${DESTDIR}${PREFIX}/bin/libreoffice
 #.for f in ${LO_DESKTOP_FILES}
 #	cd ${DESTDIR}${PREFIX}/share/applications && ${LN} -s ${DESTDIR}${PREFIX}/${PKGNAME_NOREV}/share/xdg/${f}
@@ -269,12 +287,14 @@ BUILD_DEFS+=   PYTHONBIN
 .include "../../converters/libabw/buildlink3.mk"
 .include "../../converters/libcdr/buildlink3.mk"
 .include "../../converters/libe-book/buildlink3.mk"
+.include "../../converters/libepubgen/buildlink3.mk"
 BUILDLINK_API_DEPENDS.libetonyek+=	libetonyek>=0.1.2
 .include "../../converters/libetonyek/buildlink3.mk"
 .include "../../converters/libfreehand/buildlink3.mk"
 .include "../../converters/librevenge/buildlink3.mk"
 .include "../../converters/libmspub/buildlink3.mk"
 .include "../../converters/libpagemaker/buildlink3.mk"
+.include "../../converters/libqxp/buildlink3.mk"
 .include "../../converters/libstaroffice/buildlink3.mk"
 .include "../../converters/libvisio/buildlink3.mk"
 .include "../../converters/libwpd/buildlink3.mk"
@@ -282,26 +302,29 @@ BUILDLINK_API_DEPENDS.libetonyek+=	libetonyek>=0.1.2
 .include "../../converters/libwps/buildlink3.mk"
 .include "../../converters/libmwaw/buildlink3.mk"
 .include "../../converters/libzmf/buildlink3.mk"
-.include "../../converters/orcus0.12/buildlink3.mk"
+.include "../../converters/orcus/buildlink3.mk"
 .include "../../databases/db4/buildlink3.mk"
+.include "../../databases/mysql57-client/buildlink3.mk"
 .include "../../databases/openldap-client/buildlink3.mk"
 .include "../../databases/shared-mime-info/buildlink3.mk"
 .include "../../databases/unixodbc/buildlink3.mk"
 .include "../../devel/apr-util/buildlink3.mk"
+.include "../../devel/boost-headers/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
 .include "../../devel/cppunit/buildlink3.mk"
 .include "../../devel/gperf/buildlink3.mk"
 .include "../../devel/libexecinfo/buildlink3.mk"
 .include "../../devel/liblangtag/buildlink3.mk"
-.include "../../devel/mdds1.2/buildlink3.mk"
+.include "../../devel/mdds/buildlink3.mk"
 .include "../../devel/nss/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"
 # hardbuzz with graphite2 support is required.
-BUILDLINK_API_DEPENDS.harfbuzz+=	harfbuzz>=1.4.2
-.include "../../fonts/harfbuzz/buildlink3.mk"
+#BUILDLINK_API_DEPENDS.harfbuzz+=	harfbuzz>=1.4.2
+#.include "../../fonts/harfbuzz/buildlink3.mk"
 .include "../../graphics/graphite2/buildlink3.mk"
-.include "../../mk/jpeg.buildlink3.mk"
+# Requires JCS_EXT_BGRA
+#.include "../../mk/jpeg.buildlink3.mk"
 .include "../../graphics/cairo/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/gdk-pixbuf2-xlib/buildlink3.mk"
@@ -309,7 +332,7 @@ BUILDLINK_API_DEPENDS.harfbuzz+=	harfbuzz>=1.4.2
 .include "../../graphics/glu/buildlink3.mk"
 .include "../../graphics/glm/buildlink3.mk"
 .include "../../graphics/lcms2/buildlink3.mk"
-.include "../../graphics/libgltf/buildlink3.mk"
+.include "../../graphics/libepoxy/buildlink3.mk"
 .include "../../graphics/librsvg/buildlink3.mk"
 .include "../../graphics/png/buildlink3.mk"
 #.include "../../graphics/sane-backends/buildlink3.mk"
@@ -317,16 +340,18 @@ BUILDLINK_API_DEPENDS.harfbuzz+=	harfbuzz>=1.4.2
 .include "../../lang/python/application.mk"
 .include "../../lang/python/tool.mk"
 .include "../../math/coinmp/buildlink3.mk"
+.include "../../math/libnumbertext/buildlink3.mk"
 .include "../../math/lp_solve/buildlink3.mk"
 .include "../../multimedia/gstreamer1/buildlink3.mk"
 .include "../../multimedia/gst-plugins1-base/buildlink3.mk"
 .include "../../net/libcmis/buildlink3.mk"
 .include "../../net/mDNSResponder/buildlink3.mk"
 .if !empty(PKG_OPTIONS:Mcups)
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .endif
 .include "../../print/poppler-cpp/buildlink3.mk"
 .include "../../print/poppler-includes/buildlink3.mk"
+.include "../../security/gpgme/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../sysutils/dbus/buildlink3.mk"
 .include "../../sysutils/dbus-glib/buildlink3.mk"

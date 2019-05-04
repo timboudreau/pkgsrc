@@ -1,17 +1,20 @@
-# $NetBSD: Makefile,v 1.3 2016/06/08 17:43:40 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.8 2018/11/21 11:00:05 adam Exp $
 
-DISTNAME=	Unidecode-0.04.9
+DISTNAME=	Unidecode-1.0.23
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	textproc
+CATEGORIES=	textproc python
 MASTER_SITES=	${MASTER_SITE_PYPI:=U/Unidecode/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://pypi.python.org/pypi/Unidecode/
+HOMEPAGE=	https://github.com/avian2/unidecode
 COMMENT=	ASCII transliterations of Unicode text
-LICENSE=	gnu-gpl-v2 # or newer
+LICENSE=	gnu-gpl-v2
 
 USE_LANGUAGES=	# none
 
-.include "../../lang/python/distutils.mk"
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && \
+		${MV} unidecode unidecode-${PYVERSSUFFIX} || ${TRUE}
+
+.include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

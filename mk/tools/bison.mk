@@ -1,4 +1,4 @@
-# $NetBSD: bison.mk,v 1.1 2012/01/14 00:47:53 hans Exp $
+# $NetBSD: bison.mk,v 1.3 2019/03/21 21:47:29 rillig Exp $
 #
 # Copyright (c) 2005 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -14,13 +14,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#        This product includes software developed by the NetBSD
-#        Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -50,10 +43,10 @@ _TOOLS_VERSION.bison!=							\
 	${SED} -n -e 's/^bison.* \([0-9]\..*\)/\1/p'
 _TOOLS_PKG.bison=		bison-${_TOOLS_VERSION.bison}
 _TOOLS_USE_PKGSRC.bison=	no
-.    for _dep_ in bison>=${BISON_REQD}
+.    for reqd in ${BISON_REQD}
 .      if !empty(_TOOLS_USE_PKGSRC.bison:M[nN][oO])
 _TOOLS_USE_PKGSRC.bison!=						\
-	if ${PKG_ADMIN} pmatch ${_dep_:Q} ${_TOOLS_PKG.bison:Q}; then \
+	if ${PKG_ADMIN} pmatch bison\>=${reqd:Q} ${_TOOLS_PKG.bison:Q}; then \
 		${ECHO} no;						\
 	else								\
 		${ECHO} yes;						\

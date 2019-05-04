@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.33 2013/02/16 11:23:32 wiz Exp $
+# $NetBSD: Makefile,v 1.36 2018/03/07 11:57:31 wiz Exp $
 
 DISTNAME=	fxtv-1.03
-PKGREVISION=	21
+PKGREVISION=	23
 CATEGORIES=	multimedia
 MASTER_SITES=	${HOMEPAGE:Q}
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://people.freebsd.org/~rhh/fxtv/
+HOMEPAGE=	https://people.freebsd.org/~rhh/fxtv/
 COMMENT=	TV display application for Brooktree 848 compatible TV cards
 
 USE_TOOLS+=	gmake
@@ -42,7 +42,7 @@ pre-configure:
 .include "../../x11/libXpm/buildlink3.mk"
 .include "../../x11/libXxf86dga/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/oss.buildlink3.mk"
 
 .include "../../mk/bsd.pkg.mk"

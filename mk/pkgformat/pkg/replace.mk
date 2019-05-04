@@ -1,4 +1,4 @@
-# $NetBSD: replace.mk,v 1.4 2016/09/19 12:26:08 gdt Exp $
+# $NetBSD: replace.mk,v 1.6 2019/01/22 14:29:44 roy Exp $
 #
 
 # _pkgformat-destdir-replace:
@@ -11,7 +11,6 @@
 # to installing the new package, should be one transaction.
 #
 _pkgformat-replace: \
-	replace-names \
 	replace-tarup \
 	replace-preserve-installed-info \
 	replace-preserve-required-by \
@@ -24,7 +23,6 @@ _pkgformat-replace: \
 
 # tarup is omitted for DESTDIR, because the benefits are very small
 _pkgformat-destdir-replace: \
-	replace-names \
 	replace-destdir \
 	.PHONY
 
@@ -90,13 +88,13 @@ undo-replace-install: .PHONY
 	@${PHASE_MSG} "Re-adding ${PKGNAME} from saved tar-up package."
 	${RUN} ${_REPLACE_OLDNAME_CMD};					\
 	${ECHO} "Installing saved package ${WRKDIR}/$${oldname}${PKG_SUFX}"; \
-	${PKG_ADD} ${WRKDIR}/$${oldname}${PKG_SUFX}
+	${SETENV} ${PKGTOOLS_ENV} ${PKG_ADD} ${WRKDIR}/$${oldname}${PKG_SUFX}
 
 undo-destdir-replace-install: .PHONY
 	@${PHASE_MSG} "Re-adding ${PKGNAME} from saved tar-up package."
 	${RUN} ${_REPLACE_OLDNAME_CMD};					\
 	${ECHO} "Installing saved package ${WRKDIR}/$${oldname}${PKG_SUFX}"; \
-	${PKG_ADD} -U -D ${WRKDIR}/$${oldname}${PKG_SUFX}
+	${SETENV} ${PKGTOOLS_ENV} ${PKG_ADD} -U -D ${WRKDIR}/$${oldname}${PKG_SUFX}
 
 # Computes and saves the full names of the installed package to be replaced
 # (oldname) and the package that will be installed (newname), so that these
@@ -202,12 +200,12 @@ replace-destdir: .PHONY
 	@${PHASE_MSG} "Updating using binary package of "${PKGNAME:Q}
 .if !empty(USE_CROSS_COMPILE:M[yY][eE][sS])
 	@${MKDIR} ${_CROSS_DESTDIR}${PREFIX}
-	${PKG_ADD} -U -D -m ${MACHINE_ARCH} -I -p ${_CROSS_DESTDIR}${PREFIX} ${STAGE_PKGFILE}
+	${SETENV} ${PKGTOOLS_ENV} ${PKG_ADD} -U -D -m ${MACHINE_ARCH} -I -p ${_CROSS_DESTDIR}${PREFIX} ${STAGE_PKGFILE}
 	@${ECHO} "Fixing recorded cwd..."
 	@${SED} -e 's|@cwd ${_CROSS_DESTDIR}|@cwd |' ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS > ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS.tmp
 	@${MV} ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS.tmp ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS
 .else
-	${PKG_ADD} -U -D ${STAGE_PKGFILE}
+	${SETENV} ${PKGTOOLS_ENV} ${PKG_ADD} -U -D ${STAGE_PKGFILE}
 .endif
 	${RUN}${_REPLACE_OLDNAME_CMD}; \
 	${PKG_INFO} -qR ${PKGNAME:Q} | while read pkg; do \

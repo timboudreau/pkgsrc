@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.107 2017/04/22 21:04:04 adam Exp $
+# $NetBSD: Makefile,v 1.128 2019/04/26 14:12:50 maya Exp $
 
 DISTNAME=	gnome-python-desktop-2.32.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/-python/2/}
-PKGREVISION=	49
+PKGREVISION=	64
 CATEGORIES=	sysutils gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-python-desktop/2.32/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Python modules for the GNOME desktop
 
 GNU_CONFIGURE=	yes
@@ -20,8 +20,7 @@ USE_TOOLS+=	pkg-config gmake
 
 PKGCONFIG_OVERRIDE+=	gnome-python-desktop-2.0.pc.in
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit via py-gnome2, py-gtk2
-PYTHON_VERSIONED_DEPENDENCIES=	cairo:link
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # py-ORBit via py-gnome2, py-gtk2
 
 .include "../../lang/python/pyversion.mk"
 
@@ -36,7 +35,7 @@ PYTHON_VERSIONS_ACCEPTED=	${PYTHON_VERSION_DEFAULT:M27}
 .include "../../lang/python/extension.mk"
 .include "../../devel/libwnck/buildlink3.mk"
 .include "../../graphics/librsvg/buildlink3.mk"
-.include "../../lang/python/versioned_dependencies.mk"
+.include "../../graphics/py-cairo/buildlink3.mk"
 .include "../../multimedia/gnome-media/buildlink3.mk"
 .include "../../multimedia/totem-pl-parser/buildlink3.mk"
 # works, but should better be in its own pkg to limit dependencies

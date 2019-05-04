@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.58 2017/07/11 14:19:21 jaapb Exp $
+# $NetBSD: Makefile,v 1.73 2019/04/25 07:33:22 maya Exp $
 
 VERSION=	4.2.5
 VERSION_IPXE=	1.0.0
 
 DISTNAME=		xen-${VERSION}
 PKGNAME=		xentools42-${VERSION}
-PKGREVISION=		22
+PKGREVISION=		31
 CATEGORIES=		sysutils
 MASTER_SITES=		https://downloads.xenproject.org/release/xen/${VERSION}/
 
@@ -20,22 +20,22 @@ LICENSE=		gnu-gpl-v2
 
 # XXX add version check: Xen requires dev86 >= 0.16.14
 BUILD_DEPENDS+= dev86-[0-9]*:../../devel/dev86 # needed to build firmware
-.if !exists(/usr/bin/iasl)
+#.if !exists(/usr/bin/iasl) # XXX broken with iasl 20171110
 BUILD_DEPENDS+= acpica-utils-[0-9]*:../../sysutils/acpica-utils
-.endif
+#.endif
 DEPENDS+=		${PYPKGPREFIX}-curses>=0nb4:../../devel/py-curses
 DEPENDS+=		${PYPKGPREFIX}-lxml-[0-9]*:../../textproc/py-lxml
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-xml
+PYTHON_VERSIONS_ACCEPTED=	27
 
 PKG_SYSCONFSUBDIR=	xen
 
 ONLY_FOR_PLATFORM=	Linux-2.6*-i386 Linux-2.6*-x86_64
 ONLY_FOR_PLATFORM+=	NetBSD-[5-9].*-x86_64 NetBSD-[5-9].*-i386
 
+SSP_SUPPORTED=		no
+
 CONFLICTS+=		libxen-[0-9]*
-CONFLICTS+=		xentools20-[0-9]*
-CONFLICTS+=		xentools3-[0-9]*
 CONFLICTS+=		xenstoretools-[0-9]*
 
 XENTOP=			${WRKDIR}/xen-${VERSION}
@@ -54,6 +54,7 @@ CONFIGURE_ARGS+=	--disable-seabios
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 
 MAKE_ENV+=		PREFIX=${prefix:Q} WRKSRC=${WRKSRC}
+MAKE_ENV+=		APPEND_LIB=${LDFLAGS:Q}
 MAKE_ENV+=		EGDIR=${EGDIR}
 MAKE_ENV+=		BASH_COMPLETION_DIR=${EGDIR}
 MAKE_ENV+=		MV=${MV:Q} PYTHON=${PYTHONBIN:Q} SED=${SED:Q}
@@ -256,6 +257,8 @@ EXTRA_CFLAGS+=	-Wno-error=ignored-attributes -no-integrated-as \
 BUILDLINK_TRANSFORM+=	rm:-falign-jumps=1 rm:-falign-loops=1 \
 			rm:-mpreferred-stack-boundary=2
 .endif
+
+BUILDLINK_TRANSFORM+=	rm:-Werror
 
 MAKE_ENV+=	EXTRA_HOSTCFLAGS=${EXTRA_HOSTCFLAGS:Q} EXTRA_CFLAGS=${EXTRA_CFLAGS:M*:Q}
 

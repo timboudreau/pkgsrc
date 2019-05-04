@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2017/06/21 06:13:16 markd Exp $
+# $NetBSD: Makefile,v 1.7 2019/01/26 02:02:25 markd Exp $
 
 DISTNAME=	fira
-PKGNAME=	tex-${DISTNAME}-4.2
-TEXLIVE_REV=	42501
+PKGNAME=	tex-${DISTNAME}-4.2.48488
+TEXLIVE_REV=	48488
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/fira
 COMMENT=	Fira fonts with LaTeX support
-LICENSE=	ofl-v1.1
+LICENSE=	ofl-v1.1 AND lppl-1.3c
 
 TEX_MAP_FILES+=	fira.map
 

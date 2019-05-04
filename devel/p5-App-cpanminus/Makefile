@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.44 2017/06/05 14:22:35 ryoon Exp $
+# $NetBSD: Makefile,v 1.46 2018/08/22 09:43:36 wiz Exp $
 
-DISTNAME=	App-cpanminus-1.7043
+DISTNAME=	App-cpanminus-1.7044
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.12 2016/08/24 09:59:31 wiz Exp $
+# $NetBSD: Makefile,v 1.14 2018/05/26 21:49:22 wiz Exp $
 
-DISTNAME=	id3-1.0.0
+DISTNAME=	id3-1.1.0
 CATEGORIES=	audio
 MASTER_SITES=	https://devel.ringlet.net/files/audio/id3/
 EXTRACT_SUFX=	.tar.xz

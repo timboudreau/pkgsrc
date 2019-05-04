@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.32 2017/06/05 14:23:03 ryoon Exp $
+# $NetBSD: Makefile,v 1.36 2018/08/22 09:44:04 wiz Exp $
 
-DISTNAME=	Getopt-Long-Descriptive-0.100
+DISTNAME=	Getopt-Long-Descriptive-0.103
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

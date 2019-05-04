@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.27 2017/07/13 12:16:27 wiz Exp $
+# $NetBSD: Makefile,v 1.32 2018/11/14 22:21:05 kleink Exp $
 
 DISTNAME=	sfxr-sdl-1.2.1
 PKGNAME=	${DISTNAME:S/-sdl//}
-PKGREVISION=	15
+PKGREVISION=	20
 CATEGORIES=	audio
 MASTER_SITES=	http://www.drpetter.se/files/
 

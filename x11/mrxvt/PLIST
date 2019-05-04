@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.5 2009/06/14 18:25:01 joerg Exp $
+@comment $NetBSD: PLIST,v 1.7 2017/11/27 08:05:24 maya Exp $
 bin/mrxvt
 man/man1/mrxvt.1
 share/doc/mrxvt/README.greek.bz2

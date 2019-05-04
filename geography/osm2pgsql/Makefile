@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.9 2017/06/13 19:00:50 wiedi Exp $
+# $NetBSD: Makefile,v 1.17 2018/12/13 19:51:58 adam Exp $
 
-DISTNAME=	osm2pgsql-0.92.1
+DISTNAME=	osm2pgsql-0.96.0
+PKGREVISION=	2
 CATEGORIES=	geography
 MASTER_SITES=	${MASTER_SITE_GITHUB:=openstreetmap/}
 GITHUB_TAG=	${PKGVERSION_NOREV}
@@ -20,7 +21,6 @@ CMAKE_ARG_PATH=	${WRKSRC}
 post-extract:
 	${RUN} mkdir -p ${WRKDIR}/build
 
-.include "../../geography/geos/buildlink3.mk"
 .include "../../geography/proj/buildlink3.mk"
 .include "../../archivers/bzip2/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"

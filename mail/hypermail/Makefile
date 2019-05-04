@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.19 2017/01/19 18:52:16 agc Exp $
+# $NetBSD: Makefile,v 1.21 2018/08/28 21:25:15 manu Exp $
 #
 
 DISTNAME=	hypermail-2.3.0
+PKGREVISION=	1
 CATEGORIES=	mail www
 MASTER_SITES=	${HOMEPAGE}
 MASTER_SITES+=	${MASTER_SITE_SOURCEFORGE:=hypermail/}
@@ -15,6 +16,7 @@ WRKSRC=		${WRKDIR}/${PKGBASE}
 
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		yacc
+FORTIFY_SUPPORTED=	no
 
 LDFLAGS+=		-liconv
 

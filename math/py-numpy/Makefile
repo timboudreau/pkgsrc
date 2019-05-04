@@ -1,16 +1,18 @@
-# $NetBSD: Makefile,v 1.43 2017/07/07 04:21:10 adam Exp $
+# $NetBSD: Makefile,v 1.60 2019/04/24 10:09:59 adam Exp $
 
-DISTNAME=	numpy-1.13.1
-GITHUB_PROJECT=	numpy
+DISTNAME=	numpy-1.16.3
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	math python
-MASTER_SITES=	${MASTER_SITE_GITHUB:=numpy/}
-GITHUB_TAG=	v${PKGVERSION_NOREV}
+MASTER_SITES=	${MASTER_SITE_PYPI:=n/numpy/}
+EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.numpy.org/
 COMMENT=	Array processing for numbers, strings, records, and objects
 LICENSE=	modified-bsd
+
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
 USE_LANGUAGES=		c fortran
 MAKE_ENV+=		ATLAS=None
@@ -39,8 +41,8 @@ LDFLAGS+=		${_COMPILER_ABI_FLAG.${ABI}}
 # Work around it on DragonFly by specifying the classic gnu linker
 MAKE_ENV.DragonFly+=	LDVER=ld.bfd
 
-# TEST_DEPENDS
-BUILD_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && ${RM} f2py || ${TRUE}
 
 do-test:
 	${RUN} PYTHONPATH=${DESTDIR}${PREFIX}/${PYSITELIB} ${PYTHONBIN} -c "import numpy; numpy.test()"

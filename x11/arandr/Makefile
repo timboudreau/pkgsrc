@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.10 2017/02/12 06:26:09 ryoon Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/25 07:33:29 maya Exp $
 
-DISTNAME=	arandr-0.1.9
-PKGREVISION=	2
+DISTNAME=	arandr-0.1.10
+PKGREVISION=	1
 CATEGORIES=	x11
 MASTER_SITES=	http://christian.amsuess.com/tools/arandr/files/
 
@@ -10,7 +10,8 @@ HOMEPAGE=	http://christian.amsuess.com/tools/arandr/
 COMMENT=	Designed to provide a simple visual front end for XRandR
 LICENSE=	gnu-gpl-v3
 
-DEPENDS+=	${PYPKGPREFIX}-docutils>=0.6:../../textproc/py-docutils
+BUILD_DEPENDS+=	${PYPKGPREFIX}-docutils>=0.6:../../textproc/py-docutils
+DEPENDS+=	${PYPKGPREFIX}-gobject3-[0-9]*:../../devel/py-gobject3
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -20,7 +21,7 @@ DEPENDS+=	xrandr>=1.2:../../x11/xrandr
 
 PY_PATCHPLIST=			YES
 PYSETUP=			setup.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2, py-docutils
+PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 # Adjust setup.py
 SUBST_CLASSES+=		setup
@@ -29,7 +30,6 @@ SUBST_MESSAGE.setup=	Fixing ${PYSETUP}
 SUBST_FILES.setup=	${PYSETUP}
 SUBST_SED.setup+=	-e 's,share/man/,${PKGMANDIR}/,g'
 
-.include "../../x11/py-gtk2/buildlink3.mk"
 .include "../../lang/python/distutils.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../mk/bsd.pkg.mk"

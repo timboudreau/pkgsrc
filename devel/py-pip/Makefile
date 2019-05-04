@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.19 2017/02/07 23:42:04 wiz Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/24 08:28:33 adam Exp $
 
-DISTNAME=	pip-9.0.1
+DISTNAME=	pip-19.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pip/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -10,17 +10,18 @@ HOMEPAGE=	http://www.pip-installer.org/
 COMMENT=	Installs Python packages as an easy_install replacement
 LICENSE=	mit
 
-REPLACE_PYTHON+=	pip/__init__.py pip/_vendor/requests/certs.py
-REPLACE_PYTHON+=	pip/_vendor/requests/packages/chardet/chardetect.py
+USE_LANGUAGES=	# none
+
+REPLACE_PYTHON+=	src/pip/_vendor/appdirs.py
+REPLACE_PYTHON+=	src/pip/_vendor/chardet/cli/chardetect.py
+REPLACE_PYTHON+=	src/pip/_vendor/requests/certs.py
 
 post-install:
-	${RM} -f ${DESTDIR}${PREFIX}/bin/pip
-	${RM} -f ${DESTDIR}${PREFIX}/bin/pip[2-3]
+	cd ${DESTDIR}${PREFIX}/bin && ${RM} -f pip pip[2-3]
 
-# tests not included in tarball
-# https://github.com/pypa/pip/issues/3370
-#do-test:
-#	cd ${WRKSRC} && py.test-${PYVERSSUFFIX}
+# no tests included
+do-test:
+	${DO_NADA}
 
 .include "../../lang/python/application.mk"
 .include "../../lang/python/egg.mk"

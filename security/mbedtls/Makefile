@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2016/07/09 06:38:55 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.7 2019/04/25 07:33:16 maya Exp $
 
-DISTNAME=		mbedtls-2.2.1-apache
+DISTNAME=		mbedtls-2.14.1-apache
 PKGNAME=		${DISTNAME:-apache=}
 PKGREVISION=		1
 CATEGORIES=		security devel

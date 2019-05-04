@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.3 2016/03/05 11:29:39 jperkin Exp $
+# $NetBSD: Makefile,v 1.5 2018/07/04 13:40:42 jperkin Exp $
 #
 
 DISTNAME=		siege-3.1.3
-PKGREVISION=		1
+PKGREVISION=		2
 CATEGORIES=		www
 MASTER_SITES=		http://download.joedog.org/siege/
 
@@ -25,29 +25,22 @@ CONF_FILES=		${EGDIR}/urls.txt ${PKG_SYSCONFDIR}/urls.txt
 CONF_FILES+=		${EGDIR}/siegerc ${PKG_SYSCONFDIR}/siegerc
 
 SUBST_CLASSES+=		siege
-SUBST_STAGE.siege=	post-patch
+SUBST_STAGE.siege=	pre-configure
 SUBST_FILES.siege=	doc/Makefile.am doc/Makefile.in
 SUBST_SED.siege+=	-e "s|@EGDIR@|${EGDIR}|g"
-
-SUBST_CLASSES+=		install
-SUBST_STAGE.install=	pre-install
-SUBST_MESSAGE.install=	correcting installation path
-SUBST_FILES.install=	${WRKSRC}/doc/Makefile
-SUBST_SED.install=	-e 's,${PREFIX}/etc,${EGDIR},g'
 
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ARGS+=	--localstatedir=${VARBASE}/log/
 CONFIGURE_ENV+=		PERL=${PERL5:Q}
 
 INSTALLATION_DIRS+=	${EGDIR} ${DOCDIR}
+INSTALL_MAKE_FLAGS+=	sysconfdir=${EGDIR:Q}
 NOT_FOR_PLATFORM+=	SunOS-*-*
 
 pre-configure:
 	cd ${WRKSRC} && autoconf
 
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/doc/urls.txt ${DESTDIR}${EGDIR}/urls.txt
-	${INSTALL_DATA} ${WRKSRC}/doc/siegerc ${DESTDIR}${EGDIR}/siegerc
 	${INSTALL_DATA} ${WRKSRC}/AUTHORS ${DESTDIR}${DOCDIR}/AUTHORS
 	${INSTALL_DATA} ${WRKSRC}/COPYING ${DESTDIR}${DOCDIR}/COPYING
 	${INSTALL_DATA} ${WRKSRC}/ChangeLog ${DESTDIR}${DOCDIR}/ChangeLog

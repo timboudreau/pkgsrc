@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.4 2016/09/24 17:17:47 jakllsch Exp $
+# $NetBSD: Makefile,v 1.6 2018/02/27 23:56:08 khorben Exp $
 #
 
 DISTNAME=	dfu-programmer-0.7.2
+PKGREVISION=	1
 CATEGORIES=	cross
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dfu-programmer/dfu-programmer/0.7.2/}
 
@@ -13,5 +14,5 @@ LICENSE=	gnu-gpl-v2
 GNU_CONFIGURE=	yes
 CONFIGURE_ARGS+= --disable-libusb_1_0
 
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

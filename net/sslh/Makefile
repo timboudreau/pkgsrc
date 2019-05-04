@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.10 2016/08/07 13:19:24 nils Exp $
+# $NetBSD: Makefile,v 1.13 2018/12/05 21:20:32 wiz Exp $
 
-DISTNAME=	sslh-1.18
+DISTNAME=	sslh-1.20
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_GITHUB:=yrutschle/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
@@ -41,5 +41,6 @@ do-install:
 
 .include "../../devel/libconfig/buildlink3.mk"
 .include "../../devel/libgetopt/buildlink3.mk"
+.include "../../devel/pcre/buildlink3.mk"
 .include "../../security/tcp_wrappers/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

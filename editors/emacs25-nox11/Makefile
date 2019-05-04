@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.2 2016/09/21 12:21:51 ryoon Exp $
+# $NetBSD: Makefile,v 1.6 2018/05/31 01:44:09 gdt Exp $
 
 PKGNAME=	${DISTNAME:S/emacs/emacs25/:S/-/-nox11-/}
 
@@ -14,5 +14,6 @@ CONFIGURE_ARGS+=	--without-dbus --without-m17n-flt --without-otf
 CONFIGURE_ARGS+=	--without-rsvg --without-x --without-xft
 CONFIGURE_ARGS+=	--without-gif --without-jpeg --without-png
 CONFIGURE_ARGS+=	--without-tiff --without-xpm
+CONFIGURE_ARGS+=	--without-ns
 
 .include "../../mk/bsd.pkg.mk"

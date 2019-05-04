@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2017/02/11 14:24:37 adam Exp $
+@comment $NetBSD: PLIST,v 1.5 2018/11/09 19:47:48 adam Exp $
 include/bitstream/atsc/a52.h
 include/bitstream/common.h
 include/bitstream/dvb/ci.h
@@ -87,12 +87,15 @@ include/bitstream/ieee/ethernet.h
 include/bitstream/ietf/ip.h
 include/bitstream/ietf/rfc4175.h
 include/bitstream/ietf/rtcp.h
+include/bitstream/ietf/rtcp3611.h
 include/bitstream/ietf/rtcp_fb.h
 include/bitstream/ietf/rtcp_rr.h
+include/bitstream/ietf/rtcp_sdes.h
 include/bitstream/ietf/rtcp_sr.h
 include/bitstream/ietf/rtp.h
 include/bitstream/ietf/rtp2250.h
 include/bitstream/ietf/rtp3551.h
+include/bitstream/ietf/rtp3640.h
 include/bitstream/ietf/rtp6184.h
 include/bitstream/ietf/rtp7587.h
 include/bitstream/ietf/udp.h
@@ -159,4 +162,6 @@ include/bitstream/smpte/2022_1_fec.h
 include/bitstream/smpte/2022_6_hbrmt.h
 include/bitstream/smpte/291.h
 include/bitstream/smpte/337.h
+include/bitstream/smpte/352.h
 include/bitstream/smpte/rdd08.h
+lib/pkgconfig/bitstream.pc

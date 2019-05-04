@@ -1,22 +1,22 @@
-# $NetBSD: Makefile,v 1.3 2016/06/08 17:43:39 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2018/08/22 12:59:55 adam Exp $
 
-DISTNAME=	kazoo-2.0
+DISTNAME=	kazoo-2.5.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	python sysutils
+CATEGORIES=	sysutils python
 MASTER_SITES=	${MASTER_SITE_PYPI:=k/kazoo/}
-EXTRACT_SUFX=	.zip
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://kazoo.readthedocs.org/
 COMMENT=	Higher level Zookeeper client
 LICENSE=	apache-2.0
 
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+TEST_DEPENDS+=	${PYPKGPREFIX}-coverage-[0-9]*:../../devel/py-coverage
+TEST_DEPENDS+=	${PYPKGPREFIX}-flake8-[0-9]*:../../devel/py-flake8
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+
 USE_LANGUAGES=	# none
-
-.include "options.mk"
-
-pre-install:
-	${CHMOD} -x ${WRKSRC}/kazoo.egg-info/*
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

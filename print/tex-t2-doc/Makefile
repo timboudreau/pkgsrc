@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.2 2016/01/26 11:01:33 markd Exp $
+# $NetBSD: Makefile,v 1.4 2019/01/24 10:45:19 markd Exp $
 
 DISTNAME=	t2.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-2010
-TEXLIVE_REV=	15878
+PKGNAME=	tex-${DISTNAME:S/./-/}-2018.47870
+TEXLIVE_REV=	47870
 
 MAINTAINER=	minskim@NetBSD.org
+HOMEPAGE=	http://ctan.org/pkg/t2
 COMMENT=	Documentation for tex-t2
 LICENSE=	lppl-1.3c
 

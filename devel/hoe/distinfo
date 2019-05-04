@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.37 2017/07/18 15:15:54 taca Exp $
+$NetBSD: distinfo,v 1.40 2018/09/23 14:15:49 taca Exp $
 
-SHA1 (hoe-3.16.1.gem) = 7f5793f827da1d00c16ddaa9f0e9a935faa6c835
-RMD160 (hoe-3.16.1.gem) = 44f34efa9309f9f0b1b9cb7fa1dac012162780aa
-SHA512 (hoe-3.16.1.gem) = 0174e18b75d9463c13ef2e430f127dd927edae2d70b45cd84bde86da95a93b9d65f1d89cf99539ce90e2f8fc963bd932dac14b4b8d53f0d8db01743f1a420d2e
-Size (hoe-3.16.1.gem) = 188416 bytes
+SHA1 (hoe-3.17.1.gem) = 3566567828aad6586093e2497d0ac9b54f7b5a5e
+RMD160 (hoe-3.17.1.gem) = 0b01dc12ec653cf641b4f2b825697d56ef818f9f
+SHA512 (hoe-3.17.1.gem) = 5e4b83309ed88da098a5ae8698f9686cea1657f4554fff72446bac46bc567125232a3c5a5b941bd6d5ea18dc53f3cbf5b329f2f0623ef74e81d81586edc63ca3
+Size (hoe-3.17.1.gem) = 188416 bytes

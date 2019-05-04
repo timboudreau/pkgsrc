@@ -1,23 +1,21 @@
-# $NetBSD: Makefile,v 1.3 2017/02/06 01:06:05 markd Exp $
+# $NetBSD: Makefile,v 1.5 2018/10/31 10:54:39 adam Exp $
 
-DISTNAME=	future-0.16.0
+DISTNAME=	future-0.17.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	1
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=f/future/}
 
 MAINTAINER=	gde@llew.me
-HOMEPAGE=	https://python-future.org/
+#HOMEPAGE=	https://python-future.org/
 COMMENT=	Clean single-source support for Python 3 and 2
 LICENSE=	mit
 
 USE_LANGUAGES=	# none
 
 post-install:
-	${MV} ${DESTDIR}${PREFIX}/bin/futurize \
-		${DESTDIR}${PREFIX}/bin/futurize-${PYVERSSUFFIX} || ${TRUE}
-	${MV} ${DESTDIR}${PREFIX}/bin/pasteurize \
-		${DESTDIR}${PREFIX}/bin/pasteurize-${PYVERSSUFFIX} || ${TRUE}
+	cd ${DESTDIR}${PREFIX}/bin && \
+		${MV} futurize futurize-${PYVERSSUFFIX} && \
+		${MV} pasteurize pasteurize-${PYVERSSUFFIX} || ${TRUE}
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

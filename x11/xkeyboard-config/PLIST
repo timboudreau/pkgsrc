@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.17 2017/06/01 12:27:37 wiz Exp $
+@comment $NetBSD: PLIST,v 1.19 2018/06/17 08:14:24 wiz Exp $
 share/X11/xkb/compat/README
 share/X11/xkb/compat/accessx
 share/X11/xkb/compat/basic
@@ -266,6 +266,7 @@ share/X11/xkb/symbols/th
 share/X11/xkb/symbols/tj
 share/X11/xkb/symbols/tm
 share/X11/xkb/symbols/tr
+share/X11/xkb/symbols/trans
 share/X11/xkb/symbols/tw
 share/X11/xkb/symbols/typo
 share/X11/xkb/symbols/tz
@@ -303,6 +304,7 @@ share/locale/eo/LC_MESSAGES/xkeyboard-config.mo
 share/locale/es/LC_MESSAGES/xkeyboard-config.mo
 share/locale/fi/LC_MESSAGES/xkeyboard-config.mo
 share/locale/fr/LC_MESSAGES/xkeyboard-config.mo
+share/locale/fur/LC_MESSAGES/xkeyboard-config.mo
 share/locale/gl/LC_MESSAGES/xkeyboard-config.mo
 share/locale/hr/LC_MESSAGES/xkeyboard-config.mo
 share/locale/hu/LC_MESSAGES/xkeyboard-config.mo

@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2019/04/07 16:12:56 adam Exp $
+
+SHA1 (pysmbc-1.0.16.tar.bz2) = 7dd3367688f980bbd1b19eb3405a8e6c18392044
+RMD160 (pysmbc-1.0.16.tar.bz2) = 0b7010a1788d5bfa077b4cd2698ad3a6e4830a79
+SHA512 (pysmbc-1.0.16.tar.bz2) = 4df1733fb6ad1499dc7b5385edb8acdeea753e7d749a5e01248eb9b7284418f498346ed475774003dcf6f7b30083935cfbe3cc5ab9dcc4da15c6d924f6e68197
+Size (pysmbc-1.0.16.tar.bz2) = 25523 bytes

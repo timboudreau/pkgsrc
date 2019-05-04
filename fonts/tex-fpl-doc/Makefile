@@ -1,14 +1,12 @@
-# $NetBSD: Makefile,v 1.3 2016/01/30 04:56:42 markd Exp $
+# $NetBSD: Makefile,v 1.5 2019/01/29 10:34:56 markd Exp $
 
 DISTNAME=	fpl.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-1.002
-TEXLIVE_REV=	15878
+PKGNAME=	tex-${DISTNAME:S/./-/}-1.003
+TEXLIVE_REV=	49603
 
 MAINTAINER=	minskim@NetBSD.org
 COMMENT=	Documentation for tex-fpl
-LICENSE=	gnu-gpl-v2
-
-CONFLICTS=	teTeX-texmf<=3.0nb29
+LICENSE=	gnu-gpl-v2 AND lppl-1.3c
 
 .include "../../print/texlive/package.mk"
 .include "../../mk/bsd.pkg.mk"

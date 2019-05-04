@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:40 adam Exp $
+
+SHA1 (pyobjc-framework-ColorSync-5.1.2.tar.gz) = e1795a233c245b04cbf819c573f6ae9bfc698e7a
+RMD160 (pyobjc-framework-ColorSync-5.1.2.tar.gz) = 4d83be82da519f9e420bc793832908894961e765
+SHA512 (pyobjc-framework-ColorSync-5.1.2.tar.gz) = 17d38f27806388ee24f0243a2a6e3e54460c2eaee1a8561a68f42c91e602aaeda94c566580221da5bd0777a0287d58c01df701de0469d15565d47318e37fd8c2
+Size (pyobjc-framework-ColorSync-5.1.2.tar.gz) = 15128 bytes

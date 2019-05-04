@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2012/10/31 11:16:55 asau Exp $
+# $NetBSD: Makefile,v 1.7 2019/03/28 02:12:45 mrg Exp $
 
 DISTNAME=		electric-fence_2.1.13-0.1
 PKGNAME=		electric-fence-2.1.13.0.1
-PKGREVISION=		1
+PKGREVISION=		2
 CATEGORIES=		devel
 MASTER_SITES=		http://perens.com/works/software/ElectricFence/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://perens.com/FreeSoftware/
+#HOMEPAGE=		http://perens.com/FreeSoftware/
 COMMENT=		Different kind of malloc() debugger
 
 CONFLICTS+=		ElectricFence-[0-9]*
@@ -27,6 +27,15 @@ AUTO_MKDIRS=		yes
 CFLAGS+=		-g -DPAGE_PROTECTION_VIOLATED_SIGNAL=SIGBUS
 .else
 CFLAGS+=		-g
+.endif
+
+.if ${OPSYS} == "NetBSD"
+CFLAGS+=	-fno-builtin-calloc \
+		-fno-builtin-malloc \
+		-fno-builtin-memalign \
+		-fno-builtin-realloc \
+		-fno-builtin-valloc \
+		-fno-builtin-free
 .endif
 
 .include "../../mk/pthread.buildlink3.mk"

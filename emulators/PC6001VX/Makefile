@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.9 2017/04/22 21:03:35 adam Exp $
+# $NetBSD: Makefile,v 1.32 2019/04/03 00:32:41 ryoon Exp $
 
-VERSION=		2.30.0
+VERSION=		3.1.2
 DISTNAME=		PC6001VX_${VERSION}_src
 PKGNAME=		${DISTNAME:S/_src//:S/_/-/}
-PKGREVISION=		7
+PKGREVISION=		1
+#PKGREVISION=		
 CATEGORIES=		emulators
 MASTER_SITES=		http://eighttails.up.seesaa.net/bin/
 
@@ -18,18 +19,19 @@ USE_LANGUAGES=		c c++
 
 INSTALLATION_DIRS+=	bin share/doc/PC6001VX
 
+.include "options.mk"
+
 do-configure:
-	cd ${WRKSRC} && ${QTDIR}/bin/qmake -o Makefile PC6001VX.pro
+	cd ${WRKSRC} && ${PKGSRC_SETENV} ${CONFIGURE_ENV} \
+		${QTDIR}/bin/qmake -o Makefile ${QMAKE_ARGS} PC6001VX.pro
 
 do-install:
-	cd ${WRKSRC} && ${INSTALL_PROGRAM} ${WRKSRC}/PC6001VX \
+	${INSTALL_PROGRAM} ${WRKSRC}/PC6001VX \
 	    ${DESTDIR}${PREFIX}/bin
-	cd ${WRKSRC} && ${INSTALL_DATA} ${WRKSRC}/README.html \
+	${INSTALL_DATA} ${WRKSRC}/README.html \
 	    ${DESTDIR}${PREFIX}/share/doc/PC6001VX
 
-.include "../../devel/SDL2/buildlink3.mk"
 .include "../../x11/qt5-qtbase/buildlink3.mk"
 .include "../../x11/qt5-qtmultimedia/buildlink3.mk"
 .include "../../x11/qt5-qtx11extras/buildlink3.mk"
-.include "../../multimedia/ffmpeg3/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

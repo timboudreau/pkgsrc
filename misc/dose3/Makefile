@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.10 2017/07/11 10:32:28 jaapb Exp $
+# $NetBSD: Makefile,v 1.16 2018/11/12 16:10:25 jaapb Exp $
 
 DISTNAME=	dose3-5.0.1
+PKGREVISION=	5
 CATEGORIES=	misc
 MASTER_SITES=	https://gforge.inria.fr/frs/download.php/file/36063/
 
 MAINTAINER=	jaapb@NetBSD.org
-HOMEPAGE=	http://gforge.inria.fr/projects/dose/
+HOMEPAGE=	https://gforge.inria.fr/projects/dose/
 COMMENT=	Package repository analysis toolkit
 LICENSE=	gnu-lgpl-v3
 
@@ -28,6 +29,6 @@ pre-configure:
 .include "../../devel/ocaml-re/buildlink3.mk"
 .include "../../devel/ocamlbuild/buildlink3.mk"
 .include "../../devel/ocamlgraph/buildlink3.mk"
-.include "../../lang/camlp4/buildlink3.mk"
+#.include "../../lang/camlp4/buildlink3.mk"
 .include "../../misc/ocaml-cudf/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2016/08/21 21:29:45 markd Exp $
+@comment $NetBSD: PLIST,v 1.4 2019/04/25 21:17:14 markd Exp $
 bin/kgendesignerplugin
 lib/cmake/KF5DesignerPlugin/KF5DesignerPluginConfig.cmake
 lib/cmake/KF5DesignerPlugin/KF5DesignerPluginConfigVersion.cmake
@@ -10,6 +10,7 @@ man/de/man1/kgendesignerplugin.1
 man/it/man1/kgendesignerplugin.1
 man/man1/kgendesignerplugin.1
 man/nl/man1/kgendesignerplugin.1
+man/pt/man1/kgendesignerplugin.1
 man/pt_BR/man1/kgendesignerplugin.1
 man/sv/man1/kgendesignerplugin.1
 man/uk/man1/kgendesignerplugin.1
@@ -48,7 +49,6 @@ share/kf5/widgets/pics/kurlrequester.png
 share/locale/af/LC_MESSAGES/kdesignerplugin5_qt.qm
 share/locale/ar/LC_MESSAGES/kdesignerplugin5_qt.qm
 share/locale/as/LC_MESSAGES/kdesignerplugin5_qt.qm
-share/locale/ast/LC_MESSAGES/kdesignerplugin5_qt.qm
 share/locale/be/LC_MESSAGES/kdesignerplugin5_qt.qm
 share/locale/be@latin/LC_MESSAGES/kdesignerplugin5_qt.qm
 share/locale/bg/LC_MESSAGES/kdesignerplugin5_qt.qm

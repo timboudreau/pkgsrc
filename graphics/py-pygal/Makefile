@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.8 2017/07/14 17:03:40 adam Exp $
+# $NetBSD: Makefile,v 1.10 2017/09/16 19:26:58 wiz Exp $
 
 DISTNAME=	pygal-2.4.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	graphics python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pygal/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://pygal.org/
 COMMENT=	Python SVG graph plotting library
 LICENSE=	gnu-lgpl-v3
@@ -16,6 +16,7 @@ BUILD_DEPENDS+=	${PYPKGPREFIX}-flask-[0-9]*:../../www/py-flask
 BUILD_DEPENDS+=	${PYPKGPREFIX}-pyquery-[0-9]*:../../textproc/py-pyquery
 BUILD_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 BUILD_DEPENDS+=	${PYPKGPREFIX}-test-cov-[0-9]*:../../devel/py-test-cov
+BUILD_DEPENDS+=	${PYPKGPREFIX}-test-runner-[0-9]*:../../devel/py-test-runner
 # more BUILD_DEPENDS needed
 
 USE_LANGUAGES=	# none

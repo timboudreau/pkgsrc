@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.31 2017/07/04 14:19:48 fhajny Exp $
+# $NetBSD: Makefile,v 1.47 2018/09/05 13:29:30 fhajny Exp $
 
-DISTNAME=	elasticsearch-5.4.3
+DISTNAME=	elasticsearch-6.4.0
 CATEGORIES=	textproc
 MASTER_SITES=	https://artifacts.elastic.co/downloads/elasticsearch/
 
@@ -9,11 +9,17 @@ HOMEPAGE=	http://www.elasticsearch.org/
 COMMENT=	Distributed RESTful Search Engine
 LICENSE=	apache-2.0
 
-USE_LANGUAGES=	# none
+# Build our own native JNA, the version should match the one that ES ships with
+JNA=			jna-4.5.1
+DISTFILES=		${DEFAULT_DISTFILES} ${JNA}.tar.gz
+SITES.${JNA}.tar.gz=	-${MASTER_SITE_GITHUB:=java-native-access/}jna/archive/${JNA:S/jna-//}.tar.gz
+
+BUILD_DEPENDS+=	apache-ant-[0-9]*:../../devel/apache-ant
+
+USE_LANGUAGES=	c c++
 USE_JAVA=	run
 USE_JAVA2=	8
-USE_TOOLS+=	bash:run pax
-NO_BUILD=	yes
+USE_TOOLS+=	bash:run gmake pax pkg-config
 
 PKG_SYSCONFSUBDIR=	elasticsearch
 EGDIR=			${PREFIX}/share/examples/elasticsearch
@@ -40,7 +46,7 @@ PKG_GROUPS_VARS+=	ES_GROUP
 PKG_GROUPS=		${ES_GROUP}
 PKG_USERS=		${ES_USER}:${ES_GROUP}
 
-FILES_SUBST+=		JAVA_HOME=${PKG_JAVA_HOME} ES_USER=${ES_USER}	\
+FILES_SUBST+=		JAVA_HOME=${PKG_JAVA_HOME:Q} ES_USER=${ES_USER}	\
 			ES_GROUP=${ES_GROUP} ES_BASEDIR=${ES_BASEDIR}	\
 			ES_LOGDIR=${ES_LOGDIR} ES_PIDDIR=${ES_PIDDIR}	\
 			ES_DBDIR=${ES_DBDIR} 				\
@@ -53,14 +59,23 @@ OWN_DIRS_PERMS+=	${ES_LOGDIR} ${ES_USER} ${ES_GROUP} 0700
 OWN_DIRS_PERMS+=	${ES_DBDIR} ${ES_USER} ${ES_GROUP} 0700
 MAKE_DIRS+=		${PKG_SYSCONFDIR}/scripts
 
-REPLACE_BASH+=		bin/elasticsearch bin/elasticsearch.in.sh bin/elasticsearch-plugin
+REPLACE_BASH+=		bin/elasticsearch*
 INSTALLATION_DIRS+=	bin ${ES_BASEDIR}/bin
 INSTALLATION_DIRS+=	${EGDIR} ${PREFIX}/share/doc/elasticsearch
 
 SUBST_CLASSES+=		paths
 SUBST_STAGE.paths=	pre-configure
-SUBST_FILES.paths=	bin/elasticsearch bin/elasticsearch-plugin config/elasticsearch.yml
+SUBST_FILES.paths=	bin/elasticsearch-env config/elasticsearch.yml
 SUBST_VARS.paths=	PKG_JAVA_HOME PKG_SYSCONFDIR ES_DBDIR ES_BASEDIR ES_LOGDIR
+
+post-extract:
+	${RM} ${WRKSRC}/lib/${JNA}.jar
+	${MV} ${WRKDIR}/${JNA} ${WRKSRC}/jna
+
+do-build:
+	# Override silly SunOS et al. assumptions.
+	cd ${WRKSRC}/jna && ${SETENV} ${MAKE_ENV} ant -Ddynlink.native=true -Dgrep=grep -Dmake.PATH=PATH=${PATH:Q} -Dmake=make native
+	cd ${WRKSRC}/jna/build/classes && ${SETENV} ${MAKE_ENV} jar cf ${WRKSRC}/lib/${JNA}.jar com/
 
 do-install:
 .for f in ${CONFS}
@@ -71,9 +86,20 @@ do-install:
 		${DESTDIR}${PREFIX}/share/doc/elasticsearch
 .endfor
 	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch ${DESTDIR}${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch-env ${DESTDIR}${ES_BASEDIR}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch-keystore ${DESTDIR}${ES_BASEDIR}/bin
 	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch-plugin ${DESTDIR}${PREFIX}/bin
-	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch.in.sh ${DESTDIR}${ES_BASEDIR}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/bin/elasticsearch-translog ${DESTDIR}${ES_BASEDIR}/bin
 	cd ${WRKSRC} && ${PAX} -rw -pp lib modules ${DESTDIR}${ES_BASEDIR}
+# Remove irrelevant precompiled binaries and libs
+	${RM} -rf ${DESTDIR}${ES_BASEDIR}/modules/x-pack-ml/platform/windows-x86_64
+.if empty(MACHINE_PLATFORM:MDarwin-*-x86_64)
+	${RM} -rf ${DESTDIR}${ES_BASEDIR}/modules/x-pack-ml/platform/darwin-x86_64
+.endif
+.if empty(MACHINE_PLATFORM:MLinux-*-x86_64)
+	${RM} -rf ${DESTDIR}${ES_BASEDIR}/modules/x-pack-ml/platform/linux-x86_64
+.endif
 
+.include "../../devel/libffi/buildlink3.mk"
 .include "../../mk/java-vm.mk"
 .include "../../mk/bsd.pkg.mk"

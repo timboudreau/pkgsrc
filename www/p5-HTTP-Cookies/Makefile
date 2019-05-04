@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:25:21 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:47:41 wiz Exp $
 
-DISTNAME=	HTTP-Cookies-6.03
+DISTNAME=	HTTP-Cookies-6.04
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	www perl5
@@ -10,8 +10,6 @@ MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://search.cpan.org/dist/HTTP-Cookies/
 COMMENT=	HTTP cookie jars
 LICENSE=	${PERL5_LICENSE}
-
-CONFLICTS+=	p5-libwww<6.00
 
 DEPENDS+=	p5-HTTP-Message>=6.02:../../www/p5-HTTP-Message
 DEPENDS+=	p5-HTTP-Date>=6:../../www/p5-HTTP-Date

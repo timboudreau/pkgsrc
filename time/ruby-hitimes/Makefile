@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2017/06/05 15:28:26 taca Exp $
+# $NetBSD: Makefile,v 1.7 2019/01/20 14:49:08 taca Exp $
 
-DISTNAME=	hitimes-1.2.5
+DISTNAME=	hitimes-1.3.1
 CATEGORIES=	time
 
 MAINTAINER=	pkgsrc-users@NetBSD.org

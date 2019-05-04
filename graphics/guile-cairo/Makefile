@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.22 2016/09/15 14:19:08 gdt Exp $
+# $NetBSD: Makefile,v 1.24 2018/11/14 22:21:42 kleink Exp $
 #
 
 DISTNAME=	guile-cairo-1.4.1
-PKGREVISION=	1
+PKGREVISION=	3
 CATEGORIES=	graphics
 MASTER_SITES=	http://download.gna.org/guile-cairo/
 # guile-cario has moved to savannah and is at 1.9.1, but that is

@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.6 2016/01/30 03:26:10 markd Exp $
+# $NetBSD: Makefile,v 1.9 2019/01/24 08:47:41 markd Exp $
 
 DISTNAME=	carlisle
-PKGNAME=	tex-${DISTNAME}-2010
-TEXLIVE_REV=	18258
+PKGNAME=	tex-${DISTNAME}-2018
+TEXLIVE_REV=	47876
 
 MAINTAINER=	minskim@NetBSD.org
+HOMEPAGE=	http://ctan.org/pkg/carlisle
 COMMENT=	LaTeX packages created by David Carlisle
 LICENSE=	lppl-1.3c
 
-CONFLICTS+=	teTeX-texmf<=3.0nb13
-DEPENDS+=	tex-latex-bin-[0-9]*:../../print/tex-latex-bin
 DEPENDS+=	tex-cm-[0-9]*:../../fonts/tex-cm
 DEPENDS+=	tex-graphics-[0-9]*:../../print/tex-graphics
 DEPENDS+=	tex-latex-[0-9]*:../../print/tex-latex

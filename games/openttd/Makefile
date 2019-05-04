@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.68 2017/07/19 00:18:05 dholland Exp $
+# $NetBSD: Makefile,v 1.78 2019/04/28 19:13:00 nia Exp $
 
-DISTNAME=	openttd-1.7.1-source
+DISTNAME=	openttd-1.9.1-source
 PKGNAME=	${DISTNAME:S/-source//}
 CATEGORIES=	games x11
-MASTER_SITES=	http://binaries.openttd.org/releases/${PKGVERSION_NOREV}/
+MASTER_SITES=	https://proxy.binaries.openttd.org/openttd-releases/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -28,9 +28,6 @@ CONFIGURE_ARGS+=	--man-dir=${PKGMANDIR}/man6
 CONFIGURE_ARGS+=	--menu-dir=share/applications
 CONFIGURE_ARGS+=	--personal-dir=.openttd
 CONFIGURE_ARGS+=	--shared-dir=${VARBASE}/games/openttd
-# Hack: built-in xz does not provide liblzma.pc, needed to configure
-PREFER_PKGSRC+=		xz
-
 CONFIGURE_ARGS+=	--with-iconv
 CONFIGURE_ARGS+=	--with-lzo2=${BUILDLINK_PREFIX.lzo}/lib
 
@@ -49,6 +46,7 @@ CONFIGURE_ARGS+=	--without-osx-sysroot
 
 .include "../../archivers/lzo/buildlink3.mk"
 .include "../../archivers/xz/buildlink3.mk"
+.include "../../audio/fluidsynth/buildlink3.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"

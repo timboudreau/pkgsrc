@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.2 2014/09/25 16:08:24 jperkin Exp $
+# $NetBSD: Makefile,v 1.4 2018/01/26 13:39:02 jperkin Exp $
 #
 
 DISTNAME=	paris-traceroute-0.92-dev
 PKGNAME=	paris-traceroute-0.92
 CATEGORIES=	net
-MASTER_SITES=	http://paris-traceroute.net/downloads/
+MASTER_SITES=	https://paris-traceroute.net/downloads/
 
 MAINTAINER=	imil@NetBSD.org
-HOMEPAGE=	http://paris-traceroute.net/
+HOMEPAGE=	https://paris-traceroute.net/
 COMMENT=	Traceroute-like network diagnosis and measurement tool
 LICENSE=	gnu-gpl-v2
 
 WRKSRC=			${WRKDIR}/paris-traceroute-current
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 
 LDFLAGS.SunOS+=	-lsocket -lnsl
 

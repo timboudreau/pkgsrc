@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.88 2017/02/12 06:25:05 ryoon Exp $
+# $NetBSD: Makefile,v 1.93 2018/11/14 22:21:05 kleink Exp $
 
 DISTNAME=		snd-16.9
-PKGREVISION=		2
+PKGREVISION=		6
 CATEGORIES=		audio
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=snd/}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://ccrma.stanford.edu/software/snd/
+HOMEPAGE=		https://ccrma.stanford.edu/software/snd/
 COMMENT=		X based sound editor
 LICENSE=		esdl-license
 

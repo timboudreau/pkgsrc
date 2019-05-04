@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.4 2015/11/04 02:47:36 agc Exp $
+$NetBSD: distinfo,v 1.7 2019/02/03 15:57:27 taca Exp $
 
-SHA1 (rack-contrib-1.4.0.gem) = 9ad051fb469d13d2b76ac04ead852964a245c56b
-RMD160 (rack-contrib-1.4.0.gem) = 9f0e96e6b6e7e16810f4a8e979874f3bd233bb41
-SHA512 (rack-contrib-1.4.0.gem) = 0c6ab932353195143bc0629e804d7c6ab54d5517b925aa383b7b289d4e5207002d7fd072b98290776a1e2190bfac823c59c06dfbbb7af46dbd1a90866ed60b90
-Size (rack-contrib-1.4.0.gem) = 29696 bytes
+SHA1 (rack-contrib-2.1.0.gem) = 282adb3f6bab48c47d2ca96b22e91894a8ff0bc6
+RMD160 (rack-contrib-2.1.0.gem) = 07f3a962346babd770314ea207a5746b65d69643
+SHA512 (rack-contrib-2.1.0.gem) = 4ef2059617844c18c238f8a9c296ff4afeb6f4f78b48864be1580aff59fc6569ae18fa0f99574179634d74627bc00e694eb8f659b33c8ee5dd641546c6acb9fe
+Size (rack-contrib-2.1.0.gem) = 26624 bytes

@@ -1,17 +1,15 @@
-# $NetBSD: Makefile,v 1.2 2016/08/22 13:30:40 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2019/02/18 11:47:11 adam Exp $
 
-DISTNAME=	pytest-httpbin-0.2.3
+DISTNAME=	pytest-httpbin-1.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
-CATEGORIES=	www
+CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pytest-httpbin/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://pypi.python.org/pypi/pytest-httpbin
+HOMEPAGE=	https://github.com/kevin1024/pytest-httpbin
 COMMENT=	Easily test your HTTP library against a local copy of httpbin
 LICENSE=	mit
 
-DEPENDS+=	${PYPKGPREFIX}-flask-[0-9]*:../../www/py-flask
-DEPENDS+=	${PYPKGPREFIX}-decorator-[0-9]*:../../devel/py-decorator
 DEPENDS+=	${PYPKGPREFIX}-httpbin-[0-9]*:../../www/py-httpbin
 DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
 DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test

@@ -1,15 +1,17 @@
-# $NetBSD: Makefile,v 1.71 2017/04/30 01:21:27 ryoon Exp $
+# $NetBSD: Makefile,v 1.90 2018/12/13 19:51:40 adam Exp $
 
 DISTNAME=	audacious-plugins-3.5.2
-PKGREVISION=	12
+PKGREVISION=	27
 CATEGORIES=	audio
 MASTER_SITES=	http://distfiles.audacious-media-player.org/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://audacious-media-player.org/
+HOMEPAGE=	https://audacious-media-player.org/
 COMMENT=	Plugins for Audacious media player
 LICENSE=	2-clause-bsd
+
+TOOL_DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
 
 USE_LANGUAGES=		c c++
 USE_TOOLS+=		gmake intltool pkg-config msgfmt
@@ -82,6 +84,7 @@ PLIST.oss=	yes
 .include "../../audio/libcddb/buildlink3.mk"
 .include "../../audio/libmad/buildlink3.mk"
 .include "../../audio/libmpcdec/buildlink3.mk"
+.include "../../audio/libsamplerate/buildlink3.mk"
 .include "../../audio/libsndfile/buildlink3.mk"
 .include "../../audio/libvorbis/buildlink3.mk"
 .include "../../audio/mpg123/buildlink3.mk"

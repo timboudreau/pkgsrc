@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.7 2009/08/21 15:39:09 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2018/08/19 20:16:40 wiz Exp $
 
 DISTNAME=	gnome-mobile-2.26.1.100
 CATEGORIES=	meta-pkgs x11 gnome
 MASTER_SITES=	# empty
 
-MAINTAINER=	drochner@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Meta-package for mobile support for the GNOME desktop
 
 META_PACKAGE=	yes

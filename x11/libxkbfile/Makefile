@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.8 2015/05/01 08:41:32 wiz Exp $
+# $NetBSD: Makefile,v 1.10 2019/03/17 08:13:53 wiz Exp $
 
-DISTNAME=		libxkbfile-1.0.9
+DISTNAME=		libxkbfile-1.1.0
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -16,7 +16,6 @@ USE_TOOLS+=		pkg-config
 
 .include "../../meta-pkgs/modular-xorg/hacks.mk"
 
-.include "../../x11/kbproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
-
 .include "../../mk/bsd.pkg.mk"

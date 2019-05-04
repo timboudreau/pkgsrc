@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.88 2017/04/30 01:22:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.98 2018/12/13 19:52:21 adam Exp $
 
 DISTNAME=		k3b-2.0.3a
-PKGREVISION=		12
+PKGREVISION=		21
 CATEGORIES=		sysutils
 MASTER_SITES=		${MASTER_SITE_KDE:=k3b/}
 EXTRACT_SUFX=		.tar.xz
@@ -25,7 +25,7 @@ CONF_FILES=		${PREFIX}/share/examples/kde4-dbus/org.kde.kcontrol.k3bsetup.conf \
 ONLY_FOR_PLATFORM=	FreeBSD-*-* Linux-*-* NetBSD-*-* DragonFly-*-*
 
 SUBST_CLASSES+=		pathfix
-SUBST_STAGE.pathfix=	post-patch
+SUBST_STAGE.pathfix=	pre-configure
 SUBST_MESSAGE.pathfix=	Add cdrtools path.
 SUBST_FILES.pathfix=	libk3b/core/k3bexternalbinmanager.cpp
 SUBST_SED.pathfix=	-e 's:"/usr/bin/":"${LOCALBASE}/bin", "/usr/bin/":g'

@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.2 2016/04/08 13:17:48 wiz Exp $
+# $NetBSD: Makefile,v 1.7 2019/04/04 09:30:05 adam Exp $
 
-DISTNAME=	pkgconfig-1.1.0
-PKGNAME=        ${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=        1
+DISTNAME=	pkgconfig-1.5.1
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pkgconfig/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/matze/pkgconfig
+HOMEPAGE=	https://github.com/matze/pkgconfig
 COMMENT=	Python wrapper for pkg-config
 LICENSE=	mit
 
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose>=1.0:../../devel/py-nose
+
+USE_LANGUAGES=	# none
 USE_TOOLS+=	pkg-config:run
 
-BUILD_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
-
-.include "../../lang/python/egg.mk"
+.include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

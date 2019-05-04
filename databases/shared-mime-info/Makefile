@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.64 2016/12/12 13:58:49 wiz Exp $
+# $NetBSD: Makefile,v 1.66 2018/08/16 12:45:23 wiz Exp $
 
-DISTNAME=	shared-mime-info-1.8
+DISTNAME=	shared-mime-info-1.10
 CATEGORIES=	databases
 MASTER_SITES=	http://people.freedesktop.org/~hadess/
 EXTRACT_SUFX=	.tar.xz

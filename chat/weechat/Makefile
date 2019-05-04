@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.75 2017/06/05 14:22:19 ryoon Exp $
+# $NetBSD: Makefile,v 1.93 2019/02/24 15:47:20 nia Exp $
 
-DISTNAME=	weechat-1.7.1
-PKGREVISION=	2
+DISTNAME=	weechat-2.4
 CATEGORIES=	chat
-MASTER_SITES=	http://www.weechat.org/files/src/
+MASTER_SITES=	https://www.weechat.org/files/src/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	tonio@NetBSD.org
-HOMEPAGE=	http://www.weechat.org/
+HOMEPAGE=	https://www.weechat.org/
 COMMENT=	Lightweight and user friendly curses based IRC client
 LICENSE=	gnu-gpl-v3
 
@@ -25,6 +24,7 @@ CMAKE_ARGS+=		-DENABLE_GUILE:BOOL=OFF
 CMAKE_ARGS+=		-DENABLE_TCL:BOOL=OFF
 CMAKE_ARGS+=		-DENABLE_MAN:BOOL=OFF # Requires ascii-doctor
 CMAKE_ARGS+=		-DENABLE_V8:BOOL=OFF
+CMAKE_ARGS+=		-DENABLE_PHP:BOOL=OFF
 CMAKE_ARGS+=		-DMANDIR:STRING=${PKGMANDIR}
 CMAKE_ARGS+=		-DLOCALEDIR:STRING=${PKGLOCALEDIR}/locale
 CMAKE_ARGS+=		-DENABLE_CHARSET:BOOL=ON

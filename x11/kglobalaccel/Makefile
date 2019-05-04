@@ -1,16 +1,25 @@
-# $NetBSD: Makefile,v 1.9 2017/04/22 21:03:20 adam Exp $
+# $NetBSD: Makefile,v 1.27 2019/04/25 21:17:14 markd Exp $
 
 DISTNAME=	kglobalaccel-${KF5VER}
-PKGREVISION=	6
 CATEGORIES=	x11
 
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Add support for global workspace shortcuts
 LICENSE=	gnu-lgpl-v2.1
 
-.include "../../meta-pkgs/kf5/Makefile.common"
+.include "../../meta-pkgs/kde/kf5.mk"
 
 USE_TOOLS+=	pkg-config
+
+SUBST_CLASSES+=		xdg
+SUBST_STAGE.xdg=	pre-configure
+SUBST_MESSAGE.xdg=	Install via examples dir.
+SUBST_FILES.xdg=	CMakeLists.txt
+SUBST_SED.xdg=		-e 's:{KDE_INSTALL_CONFDIR}:{KDE_INSTALL_XDG_EX_DIR}:'
+
+MAKE_DIRS+=	${PKG_SYSCONFDIR}/xdg
+CONF_FILES+=	${PREFIX}/share/examples/kde-xdg/kglobalaccel.categories \
+		${PKG_SYSCONFDIR}/xdg/kglobalaccel.categories
 
 .include "../../devel/kconfig/buildlink3.mk"
 .include "../../devel/kcrash/buildlink3.mk"

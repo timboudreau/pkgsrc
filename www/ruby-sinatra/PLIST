@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.11 2017/06/04 15:30:10 taca Exp $
+@comment $NetBSD: PLIST,v 1.13 2019/02/06 14:54:35 taca Exp $
 ${GEM_HOME}/cache/${GEM_NAME}.gem
 ${GEM_LIBDIR}/.yardopts
 ${GEM_LIBDIR}/AUTHORS.md
@@ -13,6 +13,7 @@ ${GEM_LIBDIR}/README.fr.md
 ${GEM_LIBDIR}/README.hu.md
 ${GEM_LIBDIR}/README.ja.md
 ${GEM_LIBDIR}/README.ko.md
+${GEM_LIBDIR}/README.malayalam.md
 ${GEM_LIBDIR}/README.md
 ${GEM_LIBDIR}/README.pt-br.md
 ${GEM_LIBDIR}/README.pt-pt.md
@@ -20,6 +21,7 @@ ${GEM_LIBDIR}/README.ru.md
 ${GEM_LIBDIR}/README.zh.md
 ${GEM_LIBDIR}/Rakefile
 ${GEM_LIBDIR}/SECURITY.md
+${GEM_LIBDIR}/VERSION
 ${GEM_LIBDIR}/examples/chat.rb
 ${GEM_LIBDIR}/examples/simple.rb
 ${GEM_LIBDIR}/examples/stream.ru

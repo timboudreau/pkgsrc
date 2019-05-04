@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.10 2017/06/29 12:20:05 fhajny Exp $
+# $NetBSD: Makefile.common,v 1.14 2018/10/01 20:55:36 triaxx Exp $
 # used by www/nginx/Makefile
 # used by www/nginx-devel/Makefile
 
@@ -6,13 +6,13 @@
 # Do *not* add any version-specific data here, any change
 # in this file will affect both packages
 
-CATEGORIES=		www
-MASTER_SITES=		http://nginx.org/download/
-DISTFILES=		${DEFAULT_DISTFILES}
+CATEGORIES=	www
+MASTER_SITES=	http://nginx.org/download/
+DISTFILES=	${DEFAULT_DISTFILES}
 
-HOMEPAGE=		http://nginx.org/
-COMMENT=		Lightweight HTTP server and mail proxy server
-LICENSE=		2-clause-bsd
+HOMEPAGE=	http://nginx.org/
+COMMENT=	Lightweight HTTP server and mail proxy server
+LICENSE=	2-clause-bsd
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -48,6 +48,7 @@ CONFIGURE_ARGS+=	--http-log-path=${NGINX_LOGDIR}/access.log
 CONFIGURE_ARGS+=	--http-client-body-temp-path=${NGINX_DATADIR}/client_body_temp
 CONFIGURE_ARGS+=	--http-proxy-temp-path=${NGINX_DATADIR}/proxy_temp
 CONFIGURE_ARGS+=	--http-fastcgi-temp-path=${NGINX_DATADIR}/fstcgi_temp
+CONFIGURE_ARGS+=	--http-scgi-temp-path=${NGINX_DATADIR}/scgi_temp
 
 PKG_SYSCONFSUBDIR=	nginx
 
@@ -59,9 +60,9 @@ EGFILES+=		fastcgi.conf fastcgi_params koi-utf koi-win \
 
 .for file in ${EGFILES}
 CONF_FILES+=	${EGDIR}/conf/${file} ${PKG_SYSCONFDIR}/${file}
-.	if !empty(PKG_OPTIONS:Mnaxsi)
+.  if !empty(PKG_OPTIONS:Mnaxsi)
 CONF_FILES+=	${EGDIR}/conf/naxsi_core.rules ${PKG_SYSCONFDIR}/naxsi_core.rules
-.	endif
+.  endif
 .endfor
 
 RCD_SCRIPTS=		nginx
@@ -75,9 +76,9 @@ OWN_DIRS_PERMS+=	${NGINX_DATADIR} ${NGINX_USER} ${NGINX_GROUP} 0700
 BUILD_TARGET=		build
 
 SUBST_CLASSES+=		prefix
-SUBST_STAGE.prefix+=	pre-configure
-SUBST_FILES.prefix+=	auto/lib/pcre/conf
-SUBST_SED.prefix+=	-e 's,@PREFIX@,${PREFIX},g'
+SUBST_STAGE.prefix=	pre-configure
+SUBST_FILES.prefix=	auto/lib/pcre/conf
+SUBST_SED.prefix=	-e 's,@PREFIX@,${PREFIX},g'
 
 SUBST_CLASSES+=		paths
 SUBST_STAGE.paths=	pre-configure
@@ -119,7 +120,5 @@ do-install:
 		${DESTDIR}${PERL5_INSTALLVENDORARCH}
 .endif
 
-
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"
-.include "../../www/nginx/Makefile.cflags"

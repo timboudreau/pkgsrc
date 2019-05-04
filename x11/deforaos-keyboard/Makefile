@@ -1,13 +1,14 @@
-# $NetBSD: Makefile,v 1.16 2017/04/13 00:59:37 khorben Exp $
+# $NetBSD: Makefile,v 1.21 2018/11/14 22:22:38 kleink Exp $
 #
 
 DISTNAME=	Keyboard-0.3.1
 PKGNAME=	deforaos-keyboard-0.3.1
+PKGREVISION=	4
 CATEGORIES=	x11
-MASTER_SITES=	http://www.defora.org/os/download/download/4453/
+MASTER_SITES=	https://www.defora.org/os/download/download/4453/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS desktop virtual keyboard
 
 LICENSE=	2-clause-bsd

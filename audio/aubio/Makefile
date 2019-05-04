@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.11 2017/01/01 14:43:22 wiz Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/26 14:12:31 maya Exp $
 
 DISTNAME=	aubio-0.3.2
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	audio
-MASTER_SITES=	http://aubio.org/pub/
+MASTER_SITES=	https://aubio.org/pub/
 
 MAINTAINER=	pho@cielonegro.org
-HOMEPAGE=	http://aubio.org/
+HOMEPAGE=	https://aubio.org/
 COMMENT=	Extracting annotations from audio signals
 LICENSE=	gnu-gpl-v2
 
@@ -19,7 +19,7 @@ PKGCONFIG_OVERRIDE+=	aubio.pc.in
 # Python related variables:
 PY_PATCHPLIST=			yes
 REPLACE_PYTHON=	python/aubiocut python/aubiopitch
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.3.2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.3.2
 
 CPPFLAGS.SunOS+=	-Du_int8_t=uint8_t -Du_int16_t=uint16_t -Du_int32_t=uint32_t -Du_int64_t=uint64_t
 

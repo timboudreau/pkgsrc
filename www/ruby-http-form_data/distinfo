@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.4 2017/06/05 15:33:26 taca Exp $
+$NetBSD: distinfo,v 1.7 2018/09/23 16:52:58 taca Exp $
 
-SHA1 (http-form_data-1.0.3.gem) = cc98987ba7d41c88ee26f90aacabdd1c0d53b336
-RMD160 (http-form_data-1.0.3.gem) = f73b7159f51334b2c432af882b240061651a2e55
-SHA512 (http-form_data-1.0.3.gem) = 6e438a1c0c56116555737785d9b0b624f2cbee010146d0683c94e72473ed6f8a872c2ecbd878bc71f4aa378ebcd820d2743e0f6236778b65aad99c14e9c79fdf
-Size (http-form_data-1.0.3.gem) = 14336 bytes
+SHA1 (http-form_data-2.1.1.gem) = 454ef4b48eadc5242b57e6c055c1ae3c42a3fe98
+RMD160 (http-form_data-2.1.1.gem) = c6a0909dbd0126b96de85db794fbbf186276b76e
+SHA512 (http-form_data-2.1.1.gem) = 43e1d9a522a748ab5d1633392225d87b5b178f6ae46a9bc4296b2a71b95b54d0a0c5fa1c3d8a8f48134df7c8c5893bfd7a5db060da275f49a147385cb4d04627
+Size (http-form_data-2.1.1.gem) = 16896 bytes

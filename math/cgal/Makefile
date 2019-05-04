@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.33 2017/04/30 01:21:23 ryoon Exp $
+# $NetBSD: Makefile,v 1.41 2018/12/13 19:51:35 adam Exp $
 
 PKGNAME=	cgal-3.9
 DISTNAME=	CGAL-3.9
-PKGREVISION=	29
+PKGREVISION=	36
 CATEGORIES=	math
 MASTER_SITES=	https://gforge.inria.fr/frs/download.php/29125/
 
@@ -12,7 +12,7 @@ COMMENT=	Computational Geometry Algorithms Library
 LICENSE=	gnu-lgpl-v3
 
 USE_CMAKE=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 pre-install:
 	find ${WRKSRC} -name \*.orig -exec rm {} \;

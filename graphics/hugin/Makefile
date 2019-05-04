@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.68 2017/07/16 11:37:52 wiz Exp $
+# $NetBSD: Makefile,v 1.87 2019/04/25 07:32:57 maya Exp $
 
-DISTNAME=	hugin-2017.0.0
+DISTNAME=	hugin-2018.0.0
+PKGREVISION=	13
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=hugin/}
 EXTRACT_SUFX=	.tar.bz2
@@ -20,6 +21,8 @@ USE_LANGUAGES=		c c++
 USE_TOOLS+=		msgfmt pkg-config
 CONFIGURE_ENV+=		MANDIR=${PKGMANDIR}
 
+CMAKE_ARGS+=		-DBUILD_HSI=ON
+
 PY_PATCHPLIST=		yes
 REPLACE_PYTHON+=	src/hugin_script_interface/*.py
 REPLACE_PYTHON+=	src/hugin_script_interface/plugins/*.py
@@ -35,6 +38,8 @@ SUBST_FILES.apple+=	src/hugin1/ptbatcher/CMakeLists.txt
 SUBST_FILES.apple+=	src/hugin1/stitch_project/CMakeLists.txt
 SUBST_SED.apple=	-e 's,(APPLE),(ELPPA),g'
 
+.include "../../mk/bsd.prefs.mk"
+
 .include "../../databases/sqlite3/buildlink3.mk"
 .include "../../devel/boost-headers/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
@@ -42,7 +47,9 @@ SUBST_SED.apple=	-e 's,(APPLE),(ELPPA),g'
 .include "../../devel/tclap/buildlink3.mk"
 .include "../../graphics/exiv2/buildlink3.mk"
 .include "../../graphics/glew/buildlink3.mk"
+.if ${OPSYS} != "Darwin"
 .include "../../graphics/glut/buildlink3.mk"
+.endif
 .include "../../graphics/gnome-icon-theme/buildlink3.mk"
 .include "../../graphics/lensfun/buildlink3.mk"
 .include "../../graphics/lcms2/buildlink3.mk"

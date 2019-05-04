@@ -1,8 +1,9 @@
-@comment $NetBSD: PLIST,v 1.2 2017/06/16 07:17:58 adam Exp $
+@comment $NetBSD: PLIST,v 1.6 2018/06/19 11:46:11 adam Exp $
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
 ${PYSITELIB}/${EGG_INFODIR}/not-zip-safe
+${PYSITELIB}/${EGG_INFODIR}/requires.txt
 ${PYSITELIB}/${EGG_INFODIR}/top_level.txt
 ${PYSITELIB}/django_countries/__init__.py
 ${PYSITELIB}/django_countries/__init__.pyc
@@ -27,6 +28,8 @@ ${PYSITELIB}/django_countries/ioc_data.pyc
 ${PYSITELIB}/django_countries/ioc_data.pyo
 ${PYSITELIB}/django_countries/locale/ar/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/ar/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/bg/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/bg/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/ca/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/ca/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/cs/LC_MESSAGES/django.mo
@@ -43,12 +46,20 @@ ${PYSITELIB}/django_countries/locale/es/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/es/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/et/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/et/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/eu/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/eu/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/eu_ES/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/eu_ES/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/fa/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/fa/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/fi/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/fi/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/fr/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/fr/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/he/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/he/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/he_IL/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/he_IL/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/hr/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/hr/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/hu/LC_MESSAGES/django.mo
@@ -59,6 +70,8 @@ ${PYSITELIB}/django_countries/locale/ja/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/ja/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/ko_KR/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/ko_KR/LC_MESSAGES/django.po
+${PYSITELIB}/django_countries/locale/lt/LC_MESSAGES/django.mo
+${PYSITELIB}/django_countries/locale/lt/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/lv/LC_MESSAGES/django.mo
 ${PYSITELIB}/django_countries/locale/lv/LC_MESSAGES/django.po
 ${PYSITELIB}/django_countries/locale/nb/LC_MESSAGES/django.mo
@@ -91,6 +104,9 @@ ${PYSITELIB}/django_countries/makesprite.pyo
 ${PYSITELIB}/django_countries/models.py
 ${PYSITELIB}/django_countries/models.pyc
 ${PYSITELIB}/django_countries/models.pyo
+${PYSITELIB}/django_countries/release.py
+${PYSITELIB}/django_countries/release.pyc
+${PYSITELIB}/django_countries/release.pyo
 ${PYSITELIB}/django_countries/serializer_fields.py
 ${PYSITELIB}/django_countries/serializer_fields.pyc
 ${PYSITELIB}/django_countries/serializer_fields.pyo
@@ -361,6 +377,9 @@ ${PYSITELIB}/django_countries/templatetags/countries.pyo
 ${PYSITELIB}/django_countries/tests/__init__.py
 ${PYSITELIB}/django_countries/tests/__init__.pyc
 ${PYSITELIB}/django_countries/tests/__init__.pyo
+${PYSITELIB}/django_countries/tests/apps.py
+${PYSITELIB}/django_countries/tests/apps.pyc
+${PYSITELIB}/django_countries/tests/apps.pyo
 ${PYSITELIB}/django_countries/tests/custom_countries.py
 ${PYSITELIB}/django_countries/tests/custom_countries.pyc
 ${PYSITELIB}/django_countries/tests/custom_countries.pyo

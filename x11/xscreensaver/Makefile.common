@@ -1,24 +1,18 @@
-# $NetBSD: Makefile.common,v 1.120 2016/10/19 20:10:20 wiz Exp $
+# $NetBSD: Makefile.common,v 1.128 2018/09/02 20:12:03 wiz Exp $
 #
 # used by x11/xscreensaver/Makefile
 # used by x11/xscreensaver-demo/Makefile
 
-# When updating the package,
-# please check kdeartwork3 -- it installs some extra
-# files depending on which screensavers it finds.
-DISTNAME=		xscreensaver-5.36
+DISTNAME=		xscreensaver-5.40
 CATEGORIES=		x11
 MASTER_SITES=		https://www.jwz.org/xscreensaver/
 DIST_SUBDIR=		xscreensaver
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.jwz.org/xscreensaver/
-
-BUILDLINK_API_DEPENDS.Xrandr+=	Xrandr>=1.0.2
+HOMEPAGE=		https://www.jwz.org/xscreensaver/
 
 USE_PKGLOCALEDIR=	yes
-USE_X11=		yes
-USE_TOOLS+=		msgfmt perl
+USE_TOOLS+=		gmake msgfmt perl pkg-config
 
 CHECK_PORTABILITY_SKIP+=	OSX/fuzztest.sh
 
@@ -26,7 +20,6 @@ GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-hackdir=${PREFIX}/libexec/xscreensaver
 CONFIGURE_ARGS+=	--with-jpeg=${JPEGBASE}
 #CONFIGURE_ARGS+=	--with-zippy=/usr/games/fortune
-
 CONFIGURE_ARGS+=	--without-motif
 CONFIGURE_ARGS+=	--with-pthread
 
@@ -50,20 +43,16 @@ PERL_VERSION_cmd=	if ${TEST} -x ${PERL5}; then			\
 			fi
 
 .if (${OPSYS} == "NetBSD")
-.  if defined(KERBEROS)
-CFLAGS+=		-I/usr/include/kerberosIV
-.  else
 CONFIGURE_ARGS+=	--without-kerberos
-.  endif
+.endif
+
+.if ${OPSYS} == "Darwin"
+PLIST_SRC+=	PLIST.Darwin
 .endif
 
 .include "../../mk/compiler.mk"
 .if !empty(CC_VERSION:Mgcc*)
 CFLAGS+=		-fno-strict-aliasing
-.endif
-
-.if ${MACHINE_ARCH} == "arm" || ${MACHINE_ARCH} == "arm32"
-GCC_REQD+=		2.95.3
 .endif
 
 .if !exists(/usr/bin/bc)
@@ -73,7 +62,9 @@ BUILD_DEPENDS+=		bc-[0-9]*:../../math/bc
 INSTALL_MAKE_FLAGS=	install_prefix=${DESTDIR}
 
 .include "../../devel/gettext-lib/buildlink3.mk"
+.include "../../graphics/png/buildlink3.mk"
 .include "../../mk/jpeg.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
+BUILDLINK_API_DEPENDS.Xrandr+=	Xrandr>=1.0.2
 .include "../../x11/libXrandr/buildlink3.mk"
 .include "../../x11/libXt/buildlink3.mk"

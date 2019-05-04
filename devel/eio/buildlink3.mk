@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.6 2017/04/30 01:21:21 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.12 2019/03/20 10:49:39 wiz Exp $
 
 BUILDLINK_TREE+=	eio
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	eio
 EIO_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.eio+=	eio>=1.7.7
-BUILDLINK_ABI_DEPENDS.eio?=	eio>=1.7.7nb5
+BUILDLINK_ABI_DEPENDS.eio?=	eio>=1.7.7nb11
 BUILDLINK_PKGSRCDIR.eio?=	../../devel/eio
 
 .include "../../converters/libiconv/buildlink3.mk"
@@ -18,7 +18,6 @@ BUILDLINK_PKGSRCDIR.eio?=	../../devel/eio
 .include "../../x11/libXcursor/buildlink3.mk"
 .include "../../x11/libXdamage/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
-.include "../../x11/libXp/buildlink3.mk"
 .include "../../x11/libXrandr/buildlink3.mk"
 .include "../../x11/libXrender/buildlink3.mk"
 .include "../../x11/libXtst/buildlink3.mk"

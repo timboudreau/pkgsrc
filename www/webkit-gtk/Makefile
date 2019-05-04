@@ -1,65 +1,89 @@
-# $NetBSD: Makefile,v 1.126 2017/05/03 08:38:45 jperkin Exp $
+# $NetBSD: Makefile,v 1.164 2019/04/26 14:12:49 maya Exp $
 
-DISTNAME=	webkitgtk-2.12.4
+DISTNAME=	webkitgtk-2.24.1
 PKGNAME=	${DISTNAME:S/webkitgtk/webkit-gtk/}
-PKGREVISION=	6
+PKGREVISION=	1
 CATEGORIES=	www
-MASTER_SITES=	http://www.webkitgtk.org/releases/
+MASTER_SITES=	https://www.webkitgtk.org/releases/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.webkitgtk.org/
+HOMEPAGE=	https://www.webkitgtk.org/
 COMMENT=	GTK port of the WebKit browser engine
 LICENSE=	2-clause-bsd AND gnu-lgpl-v2
 
 # shm_open(3) and shm_unlink(3) appeared in NetBSD 7.0
-NOT_FOR_PLATFORM=	NetBSD-[1-6]*-*
+NOT_FOR_PLATFORM=	NetBSD-[1-6].*-*
 
-BUILD_DEPENDS+=	gettext-tools>=0.18:../../devel/gettext-tools
+TOOL_DEPENDS+=	gettext-tools>=0.18:../../devel/gettext-tools
 
 USE_CMAKE=	yes
 USE_LANGUAGES=	c c++11
-#USE_LIBTOOL=	yes
-USE_TOOLS+=	automake bison gmake perl:build pkg-config msgfmt
+USE_TOOLS+=	automake bison flex gmake perl pkg-config msgfmt
 
-# GCC >= 4.7 or Clang >= 3.3
-# XXX: Kludge, upstream needs GCC 4.9.0 for IndexedDB support.
-# XXX: patches/patch-Source_cmake_OptionsGTK.cmake and
-# XXX: patches/patch-Source_WTF_wtf_Compiler.h disables that to
-# XXX: avoid requiring GCC 4.9.0.
-GCC_REQD+=	4.7
+# Enabling -gdwarf-2 hits GNU ar limits on file size.
+CTF_SUPPORTED=	no
+
+GCC_REQD+=		6
+USE_GCC_RUNTIME=	yes
 
 # Using ld.gold subverts Pkgsrc wrappers, and this package also crashes buggy
 # versions of ld.gold.
 CMAKE_ARGS+=	-DUSE_LD_GOLD=OFF
 
 PKGCONFIG_OVERRIDE+=	Source/JavaScriptCore/javascriptcoregtk.pc.in
-PKGCONFIG_OVERRIDE+=	Source/WebKit2/webkit2gtk.pc.in
-PKGCONFIG_OVERRIDE+=	Source/WebKit2/webkit2gtk-web-extension.pc.in
+PKGCONFIG_OVERRIDE+=	Source/WebKit/gtk/webkit2gtk-web-extension.pc.in
+PKGCONFIG_OVERRIDE+=	Source/WebKit/gtk/webkit2gtk.pc.in
 
+CMAKE_ARGS+=		-DCMAKE_BUILD_TYPE=Release
 CMAKE_ARGS+=		-DPORT=GTK
 CMAKE_ARGS+=		-DENABLE_X11_TARGET=ON
 CMAKE_ARGS+=		-DENABLE_MINIBROWSER=ON
 CMAKE_ARGS+=		-DENABLE_GEOLOCATION=OFF
+CMAKE_ARGS+=		-DUSE_GSTREAMER_GL=OFF
 CMAKE_ARGS+=		-DUSE_LIBHYPHEN=OFF
+CMAKE_ARGS+=		-DUSE_OPENJPEG=OFF
 
-REPLACE_PERL+=	Source/JavaScriptCore/create_hash_table \
-		Source/WebCore/bindings/scripts/*.pl \
-		Source/WebCore/bindings/scripts/InFilesCompiler.pm \
-		Source/WebCore/bindings/scripts/InFilesParser.pm \
-		Source/WebCore/css/*.pl \
-		Source/WebCore/dom/*.pl \
-		Source/WebCore/make-hash-tools.pl
+REPLACE_PERL+=	Source/JavaScriptCore/create_hash_table
+REPLACE_PERL+=	Source/WebCore/bindings/scripts/*.pl
+REPLACE_PERL+=	Source/WebCore/bindings/scripts/*.pm
+REPLACE_PERL+=	Source/WebCore/css/*.pl
+REPLACE_PERL+=	Source/WebCore/dom/*.pl
+REPLACE_PERL+=	Source/WebCore/make-hash-tools.pl
 
-REPLACE_PYTHON+=	Tools/gtk/*.py \
-			Tools/gtk/generate-gtkdoc
+REPLACE_PYTHON+=	Source/JavaScriptCore/Scripts/*.py
+REPLACE_PYTHON+=	Source/JavaScriptCore/Scripts/builtins/*.py
+REPLACE_PYTHON+=	Source/JavaScriptCore/generate-bytecode-files
+REPLACE_PYTHON+=	Source/JavaScriptCore/inspector/scripts/*.py
+REPLACE_PYTHON+=	Source/JavaScriptCore/inspector/scripts/codegen/*.py
+REPLACE_PYTHON+=	Source/JavaScriptCore/wasm/*.py
+REPLACE_PYTHON+=	Source/JavaScriptCore/yarr/create_regex_tables
+REPLACE_PYTHON+=	Source/JavaScriptCore/yarr/generateYarrCanonicalizeUnicode
+REPLACE_PYTHON+=	Source/ThirdParty/gtest/*.py
+REPLACE_PYTHON+=	Source/ThirdParty/gtest/scripts/*.py
+REPLACE_PYTHON+=	Source/ThirdParty/gtest/test/*.py
+REPLACE_PYTHON+=	Source/ThirdParty/gtest/xcode/Scripts/*.py
+REPLACE_PYTHON+=	Source/WebCore/PAL/*.py
+REPLACE_PYTHON+=	Source/WebCore/css/*.py
+REPLACE_PYTHON+=	Source/WebCore/html/parser/create-html-entity-table
+REPLACE_PYTHON+=	Source/WebCore/platform/network/create-http-header-name-table
+REPLACE_PYTHON+=	Source/WebKit/Scripts/*.py
+REPLACE_PYTHON+=	Tools/glib/*.py
+REPLACE_PYTHON+=	Tools/gtk/*.py
+REPLACE_PYTHON+=	Tools/gtk/generate-gtkdoc
+
+SUBST_CLASSES+=		python
+SUBST_FILES.python+=	Source/WebInspectorUI/Scripts/copy-user-interface-resources.pl
+SUBST_SED.python+=	-e 's,\(.\)python.;,\1${PYTHONBIN}\1;,'
+SUBST_STAGE.python=	pre-configure
+SUBST_MESSAGE.python=	Fixing path to python binary.
 
 .include "../../lang/ruby/rubyversion.mk"
-BUILD_DEPENDS+=	${RUBY_BASE}>=${RUBY_VERSION}:${RUBY_SRCDIR}
+TOOL_DEPENDS+=	${RUBY_BASE}>=${RUBY_VERSION}:${RUBY_SRCDIR}
 CMAKE_ARGS+=	-DRUBY_EXECUTABLE=${RUBY}
 
 PYTHON_FOR_BUILD_ONLY=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.10.2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.22.5
 .include "../../lang/python/application.mk"
 CMAKE_ARGS+=	-DPYTHON_EXECUTABLE=${PYTHONBIN}
 
@@ -70,24 +94,21 @@ CXXFLAGS.SunOS+=	-fpermissive
 CXXFLAGS+=	-Wno-c++11-narrowing
 .endif
 
-.if !empty(MACHINE_PLATFORM:MSunOS-*-x86_64) || !empty(MACHINE_PLATFORM:MNetBSD-*-*arm*)
-CMAKE_ARGS+=	-DUSE_SYSTEM_MALLOC=ON
-.endif
+# This does not disable optimisations, merely avoids #error if there are none.
+CFLAGS+=	-DRELEASE_WITHOUT_OPTIMIZATIONS
+
+NOT_PAX_MPROTECT_SAFE+=	libexec/webkit2gtk-4.0/WebKitWebProcess
+NOT_PAX_MPROTECT_SAFE+=	libexec/webkit2gtk-4.0/jsc
 
 .include "options.mk"
 
 BUILDLINK_API_DEPENDS.glib2+= glib2>=2.32.1
 .include "../../devel/glib2/buildlink3.mk"
-BUILDLINK_API_DEPENDS.gobject-introspection+=	gobject-introspection>=0.9.5
-BUILDLINK_DEPMETHOD.gobject-introspection+=	build
-.include "../../devel/gobject-introspection/buildlink3.mk"
-CMAKE_ARGS+=	-DENABLE_INTROSPECTION=ON
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../databases/sqlite3/buildlink3.mk"
-# A correct Webkit build requires flex 2.5.33
-.include "../../devel/flex/buildlink3.mk"
 .include "../../devel/gperf/buildlink3.mk"
 .include "../../devel/pango/buildlink3.mk"
+.include "../../fonts/woff2/buildlink3.mk"
 .include "../../graphics/cairo-gobject/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/libwebp/buildlink3.mk"

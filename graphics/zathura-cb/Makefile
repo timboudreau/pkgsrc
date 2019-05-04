@@ -1,19 +1,20 @@
-# $NetBSD: Makefile,v 1.7 2017/05/29 11:09:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.15 2018/11/14 22:21:48 kleink Exp $
 #
 
-DISTNAME=	zathura-cb-0.1.6
-PKGREVISION=	3
+DISTNAME=	zathura-cb-0.1.8
+PKGREVISION=	2
 CATEGORIES=	graphics
-MASTER_SITES=	http://pwmt.org/projects/zathura-cb/download/
+MASTER_SITES=	https://pwmt.org/projects/zathura-cb/download/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://pwmt.org/projects/zathura-cb/
+HOMEPAGE=	https://pwmt.org/projects/zathura-cb/
 COMMENT=	Adds comic book support to zathura
 LICENSE=	zlib
 
-USE_TOOLS+=	pkg-config gmake
-USE_LIBTOOL=	yes
+USE_TOOLS+=	pkg-config
 
+.include "../../devel/py-meson/build.mk"
 .include "../../archivers/libarchive/buildlink3.mk"
 .include "../../graphics/cairo/buildlink3.mk"
 .include "../../print/zathura/buildlink3.mk"

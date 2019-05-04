@@ -1,9 +1,9 @@
-$NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
+$NetBSD: patch-sshd.c,v 1.10 2019/01/18 20:13:37 tnn Exp $
 
 * Interix support
 * Revive tcp_wrappers support.
 
---- sshd.c.orig	2016-12-19 04:59:41.000000000 +0000
+--- sshd.c.orig	2018-10-17 00:01:20.000000000 +0000
 +++ sshd.c
 @@ -123,6 +123,13 @@
  #include "version.h"
@@ -19,7 +19,7 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  /* Re-exec fds */
  #define REEXEC_DEVCRYPTO_RESERVED_FD	(STDERR_FILENO + 1)
  #define REEXEC_STARTUP_PIPE_FD		(STDERR_FILENO + 2)
-@@ -220,7 +227,11 @@ int *startup_pipes = NULL;
+@@ -225,7 +232,11 @@ int *startup_pipes = NULL;
  int startup_pipe;		/* in child */
  
  /* variables used for privilege separation */
@@ -30,17 +30,8 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
 +#endif
  struct monitor *pmonitor = NULL;
  int privsep_is_preauth = 1;
- 
-@@ -541,7 +552,7 @@ privsep_preauth_child(void)
- 	demote_sensitive_data();
- 
- 	/* Demote the child */
--	if (getuid() == 0 || geteuid() == 0) {
-+	if (getuid() == ROOTUID || geteuid() == ROOTUID) {
- 		/* Change our root directory */
- 		if (chroot(_PATH_PRIVSEP_CHROOT_DIR) == -1)
- 			fatal("chroot(\"%s\"): %s", _PATH_PRIVSEP_CHROOT_DIR,
-@@ -552,10 +563,15 @@ privsep_preauth_child(void)
+ static int privsep_chroot = 1;
+@@ -556,10 +567,15 @@ privsep_preauth_child(void)
  		/* Drop our privileges */
  		debug3("privsep user:group %u:%u", (u_int)privsep_pw->pw_uid,
  		    (u_int)privsep_pw->pw_gid);
@@ -56,7 +47,7 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  	}
  }
  
-@@ -619,10 +635,17 @@ privsep_preauth(Authctxt *authctxt)
+@@ -623,10 +639,17 @@ privsep_preauth(Authctxt *authctxt)
  		/* Arrange for logging to be sent to the monitor */
  		set_log_handler(mm_log_handler, pmonitor);
  
@@ -74,7 +65,7 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  
  		return 0;
  	}
-@@ -634,7 +657,7 @@ privsep_postauth(Authctxt *authctxt)
+@@ -638,7 +661,7 @@ privsep_postauth(Authctxt *authctxt)
  #ifdef DISABLE_FD_PASSING
  	if (1) {
  #else
@@ -83,7 +74,7 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  #endif
  		/* File descriptor passing is broken or root login */
  		use_privsep = 0;
-@@ -1389,8 +1412,10 @@ main(int ac, char **av)
+@@ -1504,8 +1527,10 @@ main(int ac, char **av)
  	av = saved_argv;
  #endif
  
@@ -95,7 +86,16 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  
  	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
  	sanitise_stdfd();
-@@ -1766,7 +1791,7 @@ main(int ac, char **av)
+@@ -1730,7 +1755,7 @@ main(int ac, char **av)
+ 	);
+ 
+ 	/* Store privilege separation user for later use if required. */
+-	privsep_chroot = use_privsep && (getuid() == 0 || geteuid() == 0);
++	privsep_chroot = use_privsep && (getuid() == ROOTUID || geteuid() == ROOTUID);
+ 	if ((privsep_pw = getpwnam(SSH_PRIVSEP_USER)) == NULL) {
+ 		if (privsep_chroot || options.kerberos_authentication)
+ 			fatal("Privilege separation user %s does not exist",
+@@ -1871,7 +1896,7 @@ main(int ac, char **av)
  		    (st.st_uid != getuid () ||
  		    (st.st_mode & (S_IWGRP|S_IWOTH)) != 0))
  #else
@@ -104,7 +104,7 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
  #endif
  			fatal("%s must be owned by root and not group or "
  			    "world-writable.", _PATH_PRIVSEP_CHROOT_DIR);
-@@ -1789,8 +1814,10 @@ main(int ac, char **av)
+@@ -1899,8 +1924,10 @@ main(int ac, char **av)
  	 * to create a file, and we can't control the code in every
  	 * module which might be used).
  	 */
@@ -114,8 +114,8 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
 +#endif
  
  	if (rexec_flag) {
- 		rexec_argv = xcalloc(rexec_argc + 2, sizeof(char *));
-@@ -1972,6 +1999,25 @@ main(int ac, char **av)
+ 		if (rexec_argc < 0)
+@@ -2093,6 +2120,25 @@ main(int ac, char **av)
  	audit_connection_from(remote_ip, remote_port);
  #endif
  
@@ -138,6 +138,6 @@ $NetBSD: patch-sshd.c,v 1.8 2016/12/30 04:43:16 taca Exp $
 +	}
 +#endif /* LIBWRAP */
 +
+ 	rdomain = ssh_packet_rdomain_in(ssh);
+ 
  	/* Log the connection. */
- 	laddr = get_local_ipaddr(sock_in);
- 	verbose("Connection from %s port %d on %s port %d",

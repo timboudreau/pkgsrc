@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.10 2017/02/12 06:25:06 ryoon Exp $
+# $NetBSD: Makefile,v 1.19 2018/11/14 22:21:06 kleink Exp $
 
 DISTNAME=	spek-0.8.2
-PKGREVISION=	8
+PKGREVISION=	14
 CATEGORIES=	audio
-MASTER_SITES=	https://spek.googlecode.com/files/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=alexkay/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://spek.cc/
+HOMEPAGE=	http://spek.cc/
 COMMENT=	Acoustic Spectrum Analyzer
 LICENSE=	gnu-gpl-v3
 

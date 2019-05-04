@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.41 2017/06/27 20:08:59 joerg Exp $
+# $NetBSD: Makefile,v 1.53 2018/12/13 19:22:56 adam Exp $
 
-PKGREVISION=		2
 BOOST_PACKAGE=		headers
 BOOST_COMMENT=		(build-time headers)
 BOOST_CONFIG=		generate
 
 .include "../../meta-pkgs/boost/Makefile.common"
 
-BJAM_ARGS+=		--without-* # disable all libraries
+BJAM_ARGS+=		--without-\*
 
 NO_BUILD=		yes
 
@@ -15,9 +14,9 @@ NO_BUILD=		yes
 
 do-install: bjam-install
 	${FIND} ${DESTDIR}${PREFIX}/include/boost \
-		-type f -print | ${XARGS} ${CHOWN} ${SHAREOWN}:${SHAREGRP}
+		-type f -exec ${CHOWN} ${SHAREOWN}:${SHAREGRP} {} +
 	${FIND} ${DESTDIR}${PREFIX}/include/boost \
-		-type d -print | ${XARGS} ${CHMOD} ${PKGDIRMODE}
+		-type d -exec ${CHMOD} ${PKGDIRMODE} {} +
 
 PTHREAD_OPTS+=		require
 .include "../../mk/pthread.buildlink3.mk"

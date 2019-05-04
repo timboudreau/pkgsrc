@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/06/12 12:22:38 maya Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:43:38 wiz Exp $
 
-DISTNAME=	B-Hooks-OP-Check-EntersubForCV-0.09
+DISTNAME=	B-Hooks-OP-Check-EntersubForCV-0.10
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	6
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=B/}
 

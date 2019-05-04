@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.1 2017/06/22 09:37:23 markd Exp $
+# $NetBSD: Makefile,v 1.7 2019/01/27 09:59:14 markd Exp $
 
 DISTNAME=	collection-plaingeneric
-PKGNAME=	texlive-${DISTNAME}-2017pre1
+PKGNAME=	texlive-${DISTNAME}-2018pre3
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
-TEXLIVE_REV=	44177
+TEXLIVE_REV=	49271
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.tug.org/texlive/
@@ -23,6 +23,7 @@ DEPENDS+=	tex-apnum>=1.1:../../math/tex-apnum
 # depend catcodes
 # depend chronosys
 # depend colorsep
+# depend cweb-old
 # depend dinat
 # depend dirtree
 # depend docbytex
@@ -55,15 +56,16 @@ DEPENDS+=	tex-iftex-[0-9]*:../../print/tex-iftex
 # depend insbox
 DEPENDS+=	tex-js-misc-[0-9]*:../../print/tex-js-misc
 DEPENDS+=	tex-kastrup>=2010:../../math/tex-kastrup
-# depend lambda-lists
+DEPENDS+=	tex-lambda-lists-[0-9]*:../../print/tex-lambda-lists
 # depend langcode
 # depend lecturer
 # depend librarian
-# depend listofitems
+DEPENDS+=	tex-listofitems-[0-9]*:../../print/tex-listofitems
 DEPENDS+=	tex-mathdots-[0-9]*:../../print/tex-mathdots
 # depend metatex
 # depend midnight
 DEPENDS+=	tex-mkpattern-[0-9]*:../../print/tex-mkpattern
+# depend modulus
 DEPENDS+=	tex-multido>=1.42:../../devel/tex-multido
 # depend navigator
 DEPENDS+=	tex-newsletr-[0-9]*:../../print/tex-newsletr
@@ -82,21 +84,24 @@ DEPENDS+=	tex-present-[0-9]*:../../print/tex-present
 DEPENDS+=	tex-resumemac-[0-9]*:../../print/tex-resumemac
 # depend schemata
 # depend shade
+# depend simplekv
 # depend systeme
 # depend tabto-generic
 # depend termmenu
 DEPENDS+=	tex-tex-ps>=2010:../../graphics/tex-tex-ps
 DEPENDS+=	tex-tex4ht-[0-9]*:../../print/tex-tex4ht
 # depend texapi
+# depend texdate
 DEPENDS+=	tex-texinfo-[0-9]*:../../print/tex-texinfo
 DEPENDS+=	tex-timetable-[0-9]*:../../print/tex-timetable
-# depend tracklang
+DEPENDS+=	tex-tracklang-[0-9]*:../../print/tex-tracklang
 DEPENDS+=	tex-treetex-[0-9]*:../../print/tex-treetex
 # depend trigonometry
 DEPENDS+=	tex-ulem>=2013:../../print/tex-ulem
 # depend upca
 DEPENDS+=	tex-varisize-[0-9]*:../../print/tex-varisize
 # xii is a "fun" package and the only files are in tex-xii-doc
+# depend xii-lat
 #DEPENDS+=	tex-xii-[0-9]*:../../print/tex-xii
 # depend xlop
 # depend yax

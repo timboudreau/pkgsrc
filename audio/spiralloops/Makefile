@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.40 2016/04/20 12:10:32 nros Exp $
+# $NetBSD: Makefile,v 1.42 2018/07/18 00:06:11 joerg Exp $
 #
 
 DISTNAME=		SpiralLoops-2.0.0
 PKGNAME=		spiralloops-2.0.0
-PKGREVISION=		10
+PKGREVISION=		11
 CATEGORIES=		audio
 MASTER_SITES=		http://www.pawfal.org/Software/SpiralLoops/dload/
 
@@ -15,7 +15,7 @@ LICENSE=		gnu-gpl-v2
 # only runs correctly on little-endian machines
 BROKEN_EXCEPT_ON_PLATFORM=	${LITTLEENDIANPLATFORMS}
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 MAKE_ENV+=		CXXFLAGS=${CXXFLAGS:M*:Q}

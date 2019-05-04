@@ -1,10 +1,9 @@
-# $NetBSD: Makefile,v 1.240 2017/07/07 05:54:24 wiz Exp $
+# $NetBSD: Makefile,v 1.252 2019/04/23 09:27:46 adam Exp $
 
 .include "license.mk"
 .include "Makefile.common"
 
 COMMENT=	Practical Extraction and Report Language
-PKGREVISION=	2
 
 CONFLICTS+=	perl-base-[0-9]* perl-thread-[0-9]*
 
@@ -207,6 +206,7 @@ LIBSWANTED.HPUX=	cl pthread $$libswanted # see Perl's README.hpux
 LIBSWANTED.IRIX=	m crypt
 LIBSWANTED.Interix=	m dl
 LIBSWANTED.Linux=	m crypt dl nsl
+LIBSWANTED.Minix=	m crypt c
 LIBSWANTED.MirBSD=	m crypt
 LIBSWANTED.NetBSD=	m crypt
 LIBSWANTED.OpenBSD=	m crypt
@@ -226,6 +226,7 @@ SYSLIBPATH.Darwin=	/usr/lib
 SYSLIBPATH.DragonFly=	/usr/lib
 SYSLIBPATH.FreeBSD=	/usr/lib
 SYSLIBPATH.Interix=	/usr/lib
+SYSLIBPATH.Minix=	/usr/lib
 SYSLIBPATH.MirBSD=	/usr/lib
 SYSLIBPATH.NetBSD=	/usr/lib
 SYSLIBPATH.OpenBSD=	/usr/lib
@@ -238,7 +239,7 @@ SUBST_VARS.policysh+=	SYSLIBPATH
 .include "../../mk/dlopen.buildlink3.mk"
 .include "options.mk"
 
-.if !empty(MACHINE_PLATFORM:MMirBSD*)
+.if !empty(MACHINE_PLATFORM:MMirBSD)
 SUBST_CLASSES+=			mirbsd-paths
 SUBST_STAGE.mirbsd-paths=	pre-configure
 SUBST_FILES.mirbsd-paths=	hints/mirbsd.sh
@@ -279,7 +280,7 @@ SUBST_SED.cpprun=	-e "s/cpprun=''/cpprun='cc -E'/"
 # let's substitute what pkgsrc says instead.
 #
 SUBST_CLASSES+=		dirmode
-SUBST_STAGE.dirmode=	post-patch
+SUBST_STAGE.dirmode=	pre-configure
 SUBST_FILES.dirmode=	installhtml install_lib.pl
 SUBST_SED.dirmode=	-e "s/755/${PKGDIRMODE}/g;/umask(/d"
 
@@ -289,9 +290,11 @@ post-extract:
 		${WRKSRC}/cpan/DB_File/hints/netbsd.pl
 	cp ${FILESDIR}/cpan-DB_File-hints-openbsd.pl \
 		${WRKSRC}/cpan/DB_File/hints/openbsd.pl
+	cp ${FILESDIR}/cpan-DB_File-hints-minix.pl \
+		${WRKSRC}/cpan/DB_File/hints/minix.pl
 
 pre-configure:
-	cd ${WRKSRC} && find `pwd` -name "*.orig" -type f -exec ${RM} -f {} \;
+	find ${WRKSRC} -name "*.orig" -type f -delete
 
 post-build:
 	${SED}	-e "s,@PERL5@,"${PERL5:Q}",g"				\

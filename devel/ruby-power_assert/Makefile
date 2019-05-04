@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.14 2017/06/04 16:06:01 taca Exp $
+# $NetBSD: Makefile,v 1.17 2018/09/23 15:10:19 taca Exp $
 
-DISTNAME=	power_assert-1.0.2
+DISTNAME=	power_assert-1.1.3
 CATEGORIES=	devel
 
 MAINTAINER=	pkgsrc-users@NetBSD.org

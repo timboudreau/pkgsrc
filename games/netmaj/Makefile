@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.24 2016/07/09 06:38:18 wiz Exp $
+# $NetBSD: Makefile,v 1.26 2018/08/22 09:45:09 wiz Exp $
 #
 
 DISTNAME=		netmaj-2.0.7
-PKGREVISION=		9
+PKGREVISION=		10
 CATEGORIES=		games
 MASTER_SITES=		http://www.sfc.wide.ad.jp/~kusune/netmaj/files/
 
@@ -13,7 +13,7 @@ COMMENT=		Mahjongg game with network and 1-4 player(s) support
 WRKSRC=			${WRKDIR}/netmaj
 USE_TOOLS+=		perl:run
 HAS_CONFIGURE=		yes
-CONFIGURE_ENV+=		OPSYS=${OPSYS:Q}
+CONFIGURE_ENV+=		OPSYS=${OPSYS}
 CONFIGURE_ENV+=		CURSES_LIBS=${BUILDLINK_LDADD.ncursesw:Q}
 
 INSTALL_MAKE_FLAGS+=	PERL=${PERL5:Q}

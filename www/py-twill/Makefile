@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.11 2017/02/05 10:20:50 leot Exp $
+# $NetBSD: Makefile,v 1.14 2019/04/26 13:14:22 maya Exp $
 
 DISTNAME=	twill-1.8.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
@@ -6,7 +6,7 @@ PKGREVISION=	1
 CATEGORIES=	python www
 MASTER_SITES=	${MASTER_SITE_PYPI:=t/twill/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://twill.idyll.org/
 COMMENT=	Python package for the twill Web browsing language
 LICENSE=	mit
@@ -15,7 +15,7 @@ DEPENDS+=	${PYPKGPREFIX}-cssselect-[0-9]*:../../textproc/py-cssselect
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # setup fails for 1.8.0
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # setup fails for 1.8.0
 
 post-install:
 	${MV} ${DESTDIR}${PREFIX}/bin/twill-fork \

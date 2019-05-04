@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.22 2017/01/01 14:43:41 wiz Exp $
+# $NetBSD: Makefile,v 1.27 2019/04/26 13:13:59 maya Exp $
 
 DISTNAME=	PySolFC-2.0
 PKGNAME=	${DISTNAME:tl}
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	games python
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pysolfc/}
 EXTRACT_SUFX=	.tar.bz2
@@ -12,8 +12,8 @@ HOMEPAGE=	http://pysolfc.sourceforge.net/
 COMMENT=	Over 1000 solitaire games
 LICENSE=	gnu-gpl-v3
 
-PYDISTUTILSPKG=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-imaging
+PYDISTUTILSPKG=			yes
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-imaging
 
 REPLACE_PYTHON+= \
 	data/themes/clearlooks/create_imgs.py \
@@ -221,7 +221,7 @@ REPLACE_PYTHON+= \
 	pysollib/wizardutil.py
 
 SUBST_CLASSES+=			fix-paths
-SUBST_STAGE.fix-paths=		post-patch
+SUBST_STAGE.fix-paths=		pre-configure
 SUBST_MESSAGE.fix-paths=	Fixing absolute paths.
 SUBST_FILES.fix-paths=		pysollib/settings.py
 SUBST_SED.fix-paths=		-e s,@DATADIR@,${PREFIX}/share/PySolFC/,

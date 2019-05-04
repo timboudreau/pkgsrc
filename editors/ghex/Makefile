@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.41 2017/02/12 06:25:15 ryoon Exp $
+# $NetBSD: Makefile,v 1.50 2018/11/29 11:21:50 prlw1 Exp $
 #
 
 DISTNAME=	ghex-2.24.0
-PKGREVISION=	36
+PKGREVISION=	44
 CATEGORIES=	editors
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/ghex/2.24/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Hex editor
 
 GNU_CONFIGURE=	yes

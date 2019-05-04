@@ -1,7 +1,6 @@
-@comment $NetBSD: PLIST,v 1.3 2017/06/23 17:17:44 youri Exp $
+@comment $NetBSD: PLIST,v 1.6 2019/03/06 07:04:10 gutteridge Exp $
 bin/mate-about
 bin/mate-color-select
-include/mate-desktop-2.0/libmate-desktop/mate-aboutdialog.h
 include/mate-desktop-2.0/libmate-desktop/mate-bg-crossfade.h
 include/mate-desktop-2.0/libmate-desktop/mate-bg.h
 include/mate-desktop-2.0/libmate-desktop/mate-colorbutton.h
@@ -13,6 +12,7 @@ include/mate-desktop-2.0/libmate-desktop/mate-desktop-thumbnail.h
 include/mate-desktop-2.0/libmate-desktop/mate-desktop-utils.h
 include/mate-desktop-2.0/libmate-desktop/mate-desktop.h
 include/mate-desktop-2.0/libmate-desktop/mate-gsettings.h
+include/mate-desktop-2.0/libmate-desktop/mate-languages.h
 include/mate-desktop-2.0/libmate-desktop/mate-rr-config.h
 include/mate-desktop-2.0/libmate-desktop/mate-rr-labeler.h
 include/mate-desktop-2.0/libmate-desktop/mate-rr.h
@@ -27,6 +27,7 @@ share/glib-2.0/schemas/org.mate.accessibility-startup.gschema.xml
 share/glib-2.0/schemas/org.mate.applications-at-mobility.gschema.xml
 share/glib-2.0/schemas/org.mate.applications-at-visual.gschema.xml
 share/glib-2.0/schemas/org.mate.applications-browser.gschema.xml
+share/glib-2.0/schemas/org.mate.applications-calculator.gschema.xml
 share/glib-2.0/schemas/org.mate.applications-office.gschema.xml
 share/glib-2.0/schemas/org.mate.applications-terminal.gschema.xml
 share/glib-2.0/schemas/org.mate.background.gschema.xml
@@ -48,9 +49,11 @@ share/gtk-doc/html/mate-desktop/background.html
 share/gtk-doc/html/mate-desktop/home.png
 share/gtk-doc/html/mate-desktop/index.html
 share/gtk-doc/html/mate-desktop/intro.html
+share/gtk-doc/html/mate-desktop/languages.html
 share/gtk-doc/html/mate-desktop/left-insensitive.png
 share/gtk-doc/html/mate-desktop/left.png
 share/gtk-doc/html/mate-desktop/libmate.html
+share/gtk-doc/html/mate-desktop/mate-desktop-Language-Utilities.html
 share/gtk-doc/html/mate-desktop/mate-desktop-Miscellaneous-Functions.html
 share/gtk-doc/html/mate-desktop/mate-desktop-Miscellaneous-Thumbnail-Functions.html
 share/gtk-doc/html/mate-desktop/mate-desktop-mate-rr-config.html
@@ -115,6 +118,7 @@ share/locale/fi/LC_MESSAGES/mate-desktop.mo
 share/locale/fr/LC_MESSAGES/mate-desktop.mo
 share/locale/frp/LC_MESSAGES/mate-desktop.mo
 share/locale/fur/LC_MESSAGES/mate-desktop.mo
+share/locale/fy/LC_MESSAGES/mate-desktop.mo
 share/locale/ga/LC_MESSAGES/mate-desktop.mo
 share/locale/gl/LC_MESSAGES/mate-desktop.mo
 share/locale/gu/LC_MESSAGES/mate-desktop.mo
@@ -177,6 +181,7 @@ share/locale/te/LC_MESSAGES/mate-desktop.mo
 share/locale/th/LC_MESSAGES/mate-desktop.mo
 share/locale/tk/LC_MESSAGES/mate-desktop.mo
 share/locale/tr/LC_MESSAGES/mate-desktop.mo
+share/locale/tt/LC_MESSAGES/mate-desktop.mo
 share/locale/ug/LC_MESSAGES/mate-desktop.mo
 share/locale/uk/LC_MESSAGES/mate-desktop.mo
 share/locale/ur/LC_MESSAGES/mate-desktop.mo
@@ -184,6 +189,7 @@ share/locale/uz/LC_MESSAGES/mate-desktop.mo
 share/locale/vi/LC_MESSAGES/mate-desktop.mo
 share/locale/wa/LC_MESSAGES/mate-desktop.mo
 share/locale/xh/LC_MESSAGES/mate-desktop.mo
+share/locale/yi/LC_MESSAGES/mate-desktop.mo
 share/locale/yo/LC_MESSAGES/mate-desktop.mo
 share/locale/zh_CN/LC_MESSAGES/mate-desktop.mo
 share/locale/zh_HK/LC_MESSAGES/mate-desktop.mo

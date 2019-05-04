@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.17 2017/04/13 11:09:21 khorben Exp $
+# $NetBSD: Makefile,v 1.22 2018/11/14 22:21:01 kleink Exp $
 
 DISTNAME=	Mixer-0.2.2
 PKGNAME=	deforaos-mixer-0.2.2
+PKGREVISION=	4
 CATEGORIES=	audio
-MASTER_SITES=	http://www.defora.org/os/download/download/4456/
+MASTER_SITES=	https://www.defora.org/os/download/download/4456/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS desktop volume mixer
 
 LICENSE=	2-clause-bsd

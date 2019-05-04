@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.24 2017/06/14 16:25:17 prlw1 Exp $
+# $NetBSD: Makefile,v 1.27 2017/10/02 15:06:03 wiz Exp $
 
-DISTNAME=	hicolor-icon-theme-0.13
-PKGREVISION=	1
+DISTNAME=	hicolor-icon-theme-0.17
 CATEGORIES=	graphics
 MASTER_SITES=	http://icon-theme.freedesktop.org/releases/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://icon-theme.freedesktop.org/wiki/HicolorTheme
+HOMEPAGE=	https://www.freedesktop.org/wiki/Software/icon-theme/
 COMMENT=	Standard icon theme called hicolor
 LICENSE=	gnu-gpl-v2
 

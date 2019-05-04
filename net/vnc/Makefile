@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.56 2017/04/30 14:37:40 darcy Exp $
+# $NetBSD: Makefile,v 1.58 2018/08/22 09:46:08 wiz Exp $
 
 DISTNAME=		vnc-3.3.3r2
 PKGNAME=		vnc-3.3.3.2
-PKGREVISION=		10
+PKGREVISION=		11
 CATEGORIES=		net x11
 MASTER_SITES=		ftp://ftp.uk.research.att.com/pub/vnc/dist/
 DISTFILES=		vnc-3.3.3r2_unixsrc.tgz \
@@ -17,7 +17,6 @@ MAKE_JOBS_SAFE=		no
 DEPENDS+=		vncviewer-[0-9]*:../../net/vncviewer
 
 WRKSRC=			${WRKDIR}/vnc_unixsrc
-CRYPTO=			yes
 NO_INSTALL_MANPAGES=	yes
 USE_IMAKE=		yes
 USE_TOOLS+=		perl:run xauth:run

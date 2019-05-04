@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.7 2017/01/01 14:43:33 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2019/04/26 13:13:52 maya Exp $
 
-DISTNAME=	0.8.5
+DISTNAME=	0.8.10
 PKGNAME=	${PYPKGPREFIX}-hg-git-${DISTNAME}
 CATEGORIES=	devel scm
 MASTER_SITES=	https://bitbucket.org/durin42/hg-git/get/
@@ -14,11 +14,11 @@ LICENSE=	gnu-gpl-v2
 DEPENDS+=	${PYPKGPREFIX}-dulwich>=0.9.7:../../devel/py-dulwich
 
 DIST_SUBDIR=	hg-git
-WRKSRC=		${WRKDIR}/durin42-hg-git-53d514c9c7e6
+WRKSRC=		${WRKDIR}/durin42-hg-git-6ef27582bfa5
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 0.8.3
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # as of 0.8.3
 EGG_NAME=	hg_git-${DISTNAME}
 
 .include "../../lang/python/egg.mk"

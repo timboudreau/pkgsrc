@@ -1,0 +1,7 @@
+@comment $NetBSD: PLIST,v 1.2 2018/05/12 01:50:29 markd Exp $
+share/texmf-dist/doc/fonts/ptex-fontmaps/ChangeLog
+share/texmf-dist/doc/fonts/ptex-fontmaps/README
+share/texmf-dist/doc/fonts/ptex-fontmaps/examples/otf-sample-04.tex
+share/texmf-dist/doc/fonts/ptex-fontmaps/examples/otf-sample.tex
+share/texmf-dist/doc/fonts/ptex-fontmaps/examples/ptex-sample.tex
+share/texmf-dist/doc/fonts/ptex-fontmaps/examples/series-compare.tex

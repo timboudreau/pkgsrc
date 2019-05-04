@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.14 2017/05/29 12:20:24 wiz Exp $
+# $NetBSD: Makefile,v 1.24 2019/03/25 13:56:26 wiz Exp $
 
-DISTNAME=	gnome-sudoku-3.20.4
-PKGREVISION=	3
+DISTNAME=	gnome-sudoku-3.24.0
+PKGREVISION=	9
 CATEGORIES=	games gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-sudoku/${PKGVERSION_NOREV:R}/}
 EXTRACT_SUFX=	.tar.xz
@@ -13,9 +13,9 @@ LICENSE=	gnu-gpl-v3
 
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++11
 USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		gmake intltool msgfmt pkg-config
+USE_TOOLS+=		gmake pkg-config
 
 BUILD_DEPENDS+=	itstool-[0-9]*:../../textproc/itstool
 

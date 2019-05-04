@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.14 2017/07/18 18:38:48 leot Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/26 14:12:43 maya Exp $
 
 DISTNAME=	eventlib-0.1.5
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	net python
 MASTER_SITES=	${MASTER_SITE_PYPI:=e/eventlib/}
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://travis-ci.org/Yipit/eventlib/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://travis-ci.org/Yipit/eventlib/
 COMMENT=	Asynchronous event tracking app for Django
 LICENSE=	gnu-lgpl-v3
 
@@ -19,7 +19,7 @@ DEPENDS+=	${PYPKGPREFIX}-django>=1.4.1:../../www/py-django
 USE_LANGUAGES=	# none
 
 PY_PATCHPLIST=	yes
-PYTHON_VERSIONS_INCOMPATIBLE+=	34 35 36	# not yet ported as of 0.1.5
+PYTHON_VERSIONS_INCOMPATIBLE+=	36 37	# not yet ported as of 0.1.5
 
 post-install:
 	${MV} ${DESTDIR}${PREFIX}/bin/eventlib \

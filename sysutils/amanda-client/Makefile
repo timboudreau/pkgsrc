@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.62 2017/03/28 12:50:26 bouyer Exp $
+# $NetBSD: Makefile,v 1.65 2018/12/09 21:05:36 adam Exp $
 #
 
 PKGNAME=		amanda-client-${AMANDA_VERSION}
-PKGREVISION=		4
 
 COMMENT=		Client part of Amanda, a network backup system
 
@@ -38,6 +37,13 @@ DEPENDS+=		{samba>=2.0,ja-samba>=2.0}:../../net/samba
 
 .if !empty(PKG_OPTIONS:Mamanda-dump-snap)
 CONFIGURE_ARGS+=	--with-dump-use-snapshot --with-rundump
+.endif
+
+PLIST_VARS+=		amanda-bsdtar
+.if !empty(PKG_OPTIONS:Mamanda-bsdtar)
+MANPAGES+=		ambsdtar.8
+SPECIAL_PERMS+=		libexec/amanda/application/ambsdtar ${AM_PROG_PERMS}
+PLIST.amanda-bsdtar=	yes
 .endif
 
 SPECIAL_PERMS+=		libexec/amanda/application/amgtar ${AM_PROG_PERMS}

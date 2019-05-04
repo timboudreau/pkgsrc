@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.33 2017/01/06 21:12:39 tez Exp $
+# $NetBSD: Makefile,v 1.36 2018/07/04 13:40:44 jperkin Exp $
 
 DISTNAME=		xorg-cf-files-1.0.6
-PKGREVISION=		3
+PKGREVISION=		5
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=util/}
 EXTRACT_SUFX=		.tar.bz2
@@ -22,7 +22,7 @@ DARWIN_USE_QUARTZ?=	1
 DEPENDS+=		byacc-[0-9]*:../../devel/byacc
 DEPENDS+=		flex-[0-9]*:../../devel/flex
 SUBST_CLASSES+=		fixpaths
-SUBST_STAGE.fixpaths=	post-patch
+SUBST_STAGE.fixpaths=	pre-configure
 SUBST_MESSAGE.fixpaths=	Fixing compiler tool paths
 SUBST_FILES.fixpaths=	svr4.cf
 SUBST_SED.fixpaths+=	-e 's,/usr/ccs/bin/ar,/usr/bin/ar,g'
@@ -54,6 +54,5 @@ pre-configure:
 		${ECHO} '#define RealProjectRoot ${X11BASE}' >> ${WRKSRC}/host.def; \
 	fi
 
-.include "../../x11/xproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

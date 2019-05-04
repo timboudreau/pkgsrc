@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.29 2017/02/12 06:25:36 ryoon Exp $
+# $NetBSD: Makefile,v 1.35 2018/11/14 22:21:52 kleink Exp $
 #
 
 DISTNAME=		scim-anthy-1.2.7
-PKGREVISION=		25
+PKGREVISION=		30
 CATEGORIES=		inputmethod
 MASTER_SITES=		${MASTER_SITE_OSDN:=scim-imengine/37309/}
 
@@ -14,7 +14,7 @@ LICENSE=		gnu-gpl-v2
 DEPENDS+=		kasumi>=0.6:../../inputmethod/kasumi
 
 USE_PKGLOCALEDIR=	yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 USE_TOOLS+=		msgfmt pkg-config
 GNU_CONFIGURE=		yes

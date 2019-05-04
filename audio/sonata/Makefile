@@ -1,21 +1,21 @@
-# $NetBSD: Makefile,v 1.48 2017/02/12 06:25:06 ryoon Exp $
+# $NetBSD: Makefile,v 1.56 2019/04/26 13:13:43 maya Exp $
 
 EGG_NAME=	Sonata-1.6.2.1
 DISTNAME=	${EGG_NAME:tl}
-PKGREVISION=	20
+PKGREVISION=	25
 CATEGORIES=	audio
 MASTER_SITES=	http://download.berlios.de/sonata/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	jfranz@bsdprojects.net
-HOMEPAGE=	http://sonata.berlios.de/
+#HOMEPAGE=	http://sonata.berlios.de/
 COMMENT=	Elegant GTK2 client for the Music Player Daemon
 LICENSE=	gnu-gpl-v3
 
 DEPENDS+=	${PYPKGPREFIX}-SOAPpy-[0-9]*:../../net/py-soappy
 DEPENDS+=	${PYPKGPREFIX}-mpd-[0-9]*:../../audio/py-mpd
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-xml via py-soappy, py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-xml via py-soappy, py-gtk2
 
 USE_TOOLS+=	pkg-config msgfmt
 

@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2017/05/03 22:29:20 snj Exp $
+@comment $NetBSD: PLIST,v 1.6 2018/11/24 01:53:57 mrg Exp $
 bin/firefox52
 lib/firefox52/application.ini
 lib/firefox52/browser/blocklist.xml
@@ -1151,6 +1151,7 @@ lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/reac
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/react-redux.js
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/react-virtualized.js
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/react.js
+${PLIST.debug}lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/react-dev.js
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/redux.js
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/reselect.js
 lib/firefox52/browser/chrome/devtools/modules/devtools/client/shared/vendor/seamless-immutable.js
@@ -1939,14 +1940,12 @@ lib/firefox52/browser/chrome/en-US/locale/browser/searchbar.dtd
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/amazondotcom.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/bing.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/ddg.xml
-lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/google-nocodes.xml
+lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/google-2018.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/google.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/images/yandex-en.ico
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/list.json
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/twitter.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/wikipedia.xml
-lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/yahoo-en-CA.xml
-lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/yahoo.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/searchplugins/yandex-en.xml
 lib/firefox52/browser/chrome/en-US/locale/browser/setDesktopBackground.dtd
 lib/firefox52/browser/chrome/en-US/locale/browser/shellservice.properties
@@ -3513,9 +3512,9 @@ lib/firefox52/hyphenation/hyph_sv.dic
 lib/firefox52/hyphenation/hyph_tr.dic
 lib/firefox52/hyphenation/hyph_uk.dic
 lib/firefox52/liblgpllibs.so
-${PLIST.gtk3}lib/firefox52/libmozgtk.so
 ${PLIST.avx86}lib/firefox52/libmozavcodec.so
 ${PLIST.avx86}lib/firefox52/libmozavutil.so
+${PLIST.gtk3}lib/firefox52/libmozgtk.so
 lib/firefox52/libmozsqlite3.so
 lib/firefox52/libxul.so
 lib/firefox52/modules/AboutReader.jsm

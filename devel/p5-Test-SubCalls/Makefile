@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.15 2017/06/12 07:25:24 maya Exp $
+# $NetBSD: Makefile,v 1.17 2018/08/22 09:44:50 wiz Exp $
 
-DISTNAME=	Test-SubCalls-1.09
+DISTNAME=	Test-SubCalls-1.10
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	8
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Test/}
 

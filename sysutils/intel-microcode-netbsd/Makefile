@@ -1,16 +1,15 @@
-# $NetBSD: Makefile,v 1.14 2017/07/11 04:07:51 msaitoh Exp $
-#
+# $NetBSD: Makefile,v 1.28 2019/04/12 04:07:24 msaitoh Exp $
 
-DISTNAME=	microcode-20170707
-PKGNAME=	intel-microcode-netbsd-20170707
+DISTNAME=	microcode-20190312
+PKGNAME=	intel-microcode-netbsd-20190312
 CATEGORIES=	sysutils
-MASTER_SITES=	http://downloadmirror.intel.com/26925/eng/
-EXTRACT_SUFX=	.tgz
+MASTER_SITES=	https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/
+EXTRACT_SUFX=	.tar.gz
 
-MAINTAINER=	drochner@NetBSD.org
-HOMEPAGE=	https://downloadcenter.intel.com/download/26925/Linux-Processor-Microcode-Data-File
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://downloadcenter.intel.com/download/28727/Linux-Processor-Microcode-Data-File
 COMMENT=	Firmware updates for Intel x86 processors
-#LICENSE=	# TODO: (see mk/license.mk)
+LICENSE=	intel-microcode-license
 
 ONLY_FOR_PLATFORM+=	NetBSD-6.99.*-i386 \
 			NetBSD-6.99.*-x86_64 \
@@ -32,7 +31,13 @@ do-build:
 	cd ${WRKSRC} && ${CC} extract.c -o extract
 
 do-install:
-	cd ${DESTDIR}${PREFIX}/${FWDIR} && \
-		${WRKSRC}/extract ${WRKSRC}/microcode.dat
+	@(if [ -f ${WRKSRC}/microcode.dat ]; then \
+		cd ${DESTDIR}${PREFIX}/${FWDIR} && \
+			${WRKSRC}/extract ${WRKSRC}/microcode.dat ; \
+	else \
+		cd ${DESTDIR}${PREFIX}/${FWDIR} && \
+			${FIND} ${WRKSRC} -name '??-??-??' | xargs \
+				${WRKSRC}/extract ; \
+	fi)
 
 .include "../../mk/bsd.pkg.mk"

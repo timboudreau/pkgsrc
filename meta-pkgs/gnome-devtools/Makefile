@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.7 2009/05/21 11:38:50 wiz Exp $
+# $NetBSD: Makefile,v 1.10 2019/04/28 07:07:48 wiz Exp $
 
 DISTNAME=	gnome-devtools-2.26.1.99
+PKGREVISION=	1
 CATEGORIES=	meta-pkgs devel gnome
 MASTER_SITES=	# empty
 DISTFILES=	# empty
 
-MAINTAINER=	drochner@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Meta-package for utilities used for developing GNOME applications
 
 META_PACKAGE=	yes
@@ -18,8 +19,7 @@ DEPENDS+=	accerciser>=1.6.1:../../devel/accerciser
 DEPENDS+=	anjuta>=2.24.2:../../devel/anjuta
 DEPENDS+=	devhelp>=0.21:../../devel/devhelp
 DEPENDS+=	gdl>=2.26.2:../../devel/gdl
-#DEPENDS+=	glade3>=3.6.3:../../devel/glade3
-DEPENDS+=	glade3>=3.4.5:../../devel/glade3
+DEPENDS+=	glade>=3.4.5:../../devel/glade
 DEPENDS+=	gnome-devel-docs>=2.26.2:../../misc/gnome-devel-docs
 
 .include "../../mk/bsd.pkg.mk"

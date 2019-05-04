@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2016/07/17 21:59:33 wiz Exp $
+$NetBSD: distinfo,v 1.3 2019/01/25 20:02:03 markd Exp $
 
-SHA1 (tex-context-vim-37413/context-vim.tar.xz) = 6136024e384cc5f79498edeaec0bf8f66e6ca49d
-RMD160 (tex-context-vim-37413/context-vim.tar.xz) = dfaa120b5379aede6e66c3f8f8c5bbd3eaec5650
-SHA512 (tex-context-vim-37413/context-vim.tar.xz) = 3328ede15b02e1d086b145c8e33f900405301d54dae98c43db820aad25ab74a356160648795e48e1f899f57d98038f5b4af09897f6a28774db246bfd6ae469ed
-Size (tex-context-vim-37413/context-vim.tar.xz) = 8432 bytes
+SHA1 (tex-context-vim-48391/context-vim.tar.xz) = b0fd9804e2e4ecb769db63e4119a6d169a838347
+RMD160 (tex-context-vim-48391/context-vim.tar.xz) = 6fa1f46a52a6009ed5f3a14dd5283c38fb4fcafa
+SHA512 (tex-context-vim-48391/context-vim.tar.xz) = 630cf92427d777d48b52be13a8418e1be0d6cefb21303f3af4b9dac3ae976d59a1aebb312e010b63149ee23865e991baccc4cc5f5fcd552b0c7fe966f51aa7b7
+Size (tex-context-vim-48391/context-vim.tar.xz) = 8088 bytes

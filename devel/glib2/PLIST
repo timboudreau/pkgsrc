@@ -1,13 +1,11 @@
-@comment $NetBSD: PLIST,v 1.93 2017/07/11 11:52:42 jperkin Exp $
+@comment $NetBSD: PLIST,v 1.101 2018/08/19 18:32:27 wiz Exp $
 bin/gapplication
 bin/gdbus
 bin/gio
 bin/gio-querymodules
 bin/glib-compile-resources
 bin/glib-compile-schemas
-bin/glib-genmarshal
 bin/glib-gettextize
-bin/glib-mkenums
 bin/gobject-query
 bin/gresource
 bin/gsettings
@@ -292,8 +290,12 @@ lib/pkgconfig/gthread-2.0.pc
 share/aclocal/glib-2.0.m4
 share/aclocal/glib-gettext.m4
 share/aclocal/gsettings.m4
-share/gdb/auto-load${LOCALBASE}/lib/libglib-2.0.so.0.5200.3-gdb.py
-share/gdb/auto-load${LOCALBASE}/lib/libgobject-2.0.so.0.5200.3-gdb.py
+share/bash-completion/completions/gapplication
+share/bash-completion/completions/gdbus
+share/bash-completion/completions/gresource
+share/bash-completion/completions/gsettings
+share/gdb/auto-load${LOCALBASE}/lib/libglib-2.0.so.0.5600.2-gdb.py
+share/gdb/auto-load${LOCALBASE}/lib/libgobject-2.0.so.0.5600.2-gdb.py
 share/gettext/its/gschema.its
 share/gettext/its/gschema.loc
 share/glib-2.0/gdb/glib_gdb.py
@@ -382,6 +384,7 @@ share/gtk-doc/html/gio/GPollableOutputStream.html
 share/gtk-doc/html/gio/GPropertyAction.html
 share/gtk-doc/html/gio/GProxy.html
 share/gtk-doc/html/gio/GProxyAddress.html
+share/gtk-doc/html/gio/GProxyAddressEnumerator.html
 share/gtk-doc/html/gio/GProxyResolver.html
 share/gtk-doc/html/gio/GRemoteActionGroup.html
 share/gtk-doc/html/gio/GResolver.html
@@ -397,6 +400,7 @@ share/gtk-doc/html/gio/GSimplePermission.html
 share/gtk-doc/html/gio/GSimpleProxyResolver.html
 share/gtk-doc/html/gio/GSocket.html
 share/gtk-doc/html/gio/GSocketAddress.html
+share/gtk-doc/html/gio/GSocketAddressEnumerator.html
 share/gtk-doc/html/gio/GSocketClient.html
 share/gtk-doc/html/gio/GSocketConnectable.html
 share/gtk-doc/html/gio/GSocketConnection.html

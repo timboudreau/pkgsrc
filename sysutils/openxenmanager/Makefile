@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.21 2017/02/12 06:26:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.31 2019/04/26 13:14:15 maya Exp $
 
 DISTNAME=	openxenmanager_0.r80+dfsg.orig
 PKGNAME=	openxenmanager-0.0.80
-PKGREVISION=	14
+PKGREVISION=	21
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_DEBIAN:=pool/main/o/openxenmanager/}
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/openxenmanager/
+HOMEPAGE=	https://sourceforge.net/projects/openxenmanager/
 COMMENT=	Open source XenServer/Xen Cloud Platform interface
 LICENSE=	gnu-gpl-v2
 
@@ -21,7 +21,7 @@ DEPENDS+=	${PYPKGPREFIX}-httplib2>=0.7.7:../../www/py-httplib2
 INSTALLATION_DIRS=	bin share
 
 REPLACE_PYTHON=		openxenmanager/*py openxenmanager/pygtk_chart/*py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 OXMDIR=			${PREFIX}
 

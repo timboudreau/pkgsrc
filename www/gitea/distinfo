@@ -1,0 +1,14 @@
+$NetBSD: distinfo,v 1.2 2019/04/23 06:04:41 nia Exp $
+
+SHA1 (gitea-1.8.0.tar.gz) = 508213ca48042ad34aac7fc55d62426d4bd3dd29
+RMD160 (gitea-1.8.0.tar.gz) = 6f766c8c34bce085fb108e1ab03f9f087cb89471
+SHA512 (gitea-1.8.0.tar.gz) = eebbe2f77ed2e4c3562f48a6fa647e6f2a0492c5b6ea4f13542a5ef82e94a357a8d53897aa013107b5f735d2aff9d719893b5724de44831c43998c2e9c6e78d7
+Size (gitea-1.8.0.tar.gz) = 24268907 bytes
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_mmap.go) = fb6036fca52ad3ecf779080849a015fee640aba5
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_mmap__solaris.go) = f4341dfab2b452f926353350ce861aa75e3e47f9
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_mmap__sys.go) = 4e6121157bbd4072feaca297c081efa49379a57c
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_mmap__syscall.go) = 0f5df532a4a2210539af6b260ac556d864b3179d
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_mmap__unix.go) = 390a451fa1ed45755f5a4036c45ec3a2e4507c3b
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_msync__netbsd.go) = 13ac5d3f76a330f874002b18698ce5583c875239
+SHA1 (patch-vendor_github.com_edsrzf_mmap-go_msync__unix.go) = 3c3f67d09928abc49ed4b6386edd5cf579e045bf
+SHA1 (patch-vendor_gopkg.in_src-d_go-billy.v4_osfs_os__posix.go) = d8f2684acc2aeadd02761bff7506cb5789d92a72

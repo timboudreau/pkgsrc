@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.41 2017/07/06 13:34:46 taca Exp $
+# $NetBSD: Makefile,v 1.46 2019/02/07 13:40:57 taca Exp $
 #
 
-DISTNAME=	PEAR-1.10.5
+DISTNAME=	PEAR-1.10.7
 PKGNAME=	${PHP_PKG_PREFIX}-${DISTNAME:S/PEAR/pear/}
+PKGREVISION=	1
 CATEGORIES=	lang
 MASTER_SITES=	http://download.pear.php.net/package/
 EXTRACT_SUFX=	.tgz
@@ -33,7 +34,7 @@ PEAR_SRCS=		${DISTNAME}${EXTRACT_SUFX}
 DISTFILES+=		${PEAR_SRCS}
 EXTRACT_ONLY+=		${PEAR_SRCS}
 
-ARCHIVE_SRCS=		Archive_Tar-1.4.3${EXTRACT_SUFX}
+ARCHIVE_SRCS=		Archive_Tar-1.4.5${EXTRACT_SUFX}
 ARCHIVE_WRKSRC=		${WRKDIR}/${ARCHIVE_SRCS:S/${EXTRACT_SUFX}//}
 DISTFILES+=		${ARCHIVE_SRCS}
 EXTRACT_ONLY+=		${ARCHIVE_SRCS}
@@ -53,7 +54,7 @@ DISTFILES+=		${XMLUTIL_SRCS}
 # end of base components
 
 SUBST_CLASSES+=		config
-SUBST_STAGE.config=	post-patch
+SUBST_STAGE.config=	pre-configure
 SUBST_FILES.config=	install/go-pear.php
 SUBST_SED.config=	-e "s|@WRKSRC@|${WRKSRC}|g"
 SUBST_SED.config+=	-e "s|@PREFIX@|${PREFIX}|g"

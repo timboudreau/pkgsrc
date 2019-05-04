@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2017/01/31 10:11:17 leot Exp $
+$NetBSD: distinfo,v 1.4 2018/10/04 19:15:59 leot Exp $
 
-SHA1 (zathura-ps-0.2.4.tar.gz) = b1e39928d2f352e0d932dd65ab0a9ba49b664d52
-RMD160 (zathura-ps-0.2.4.tar.gz) = 5fb0f4db58e99a16adb97a7bd6eb59ceab4621d7
-SHA512 (zathura-ps-0.2.4.tar.gz) = c63cbd4ff032cffa85305393a8e7f2864986e3a8204832cd7f9f12878e2c69fd0393ace91dd7b0fa8829f3a785abc2675d2ecb99dfa71794d699b567be954922
-Size (zathura-ps-0.2.4.tar.gz) = 5980 bytes
+SHA1 (zathura-ps-0.2.6.tar.xz) = c780a9476204b1dbfc8113fbe871e0913812fe75
+RMD160 (zathura-ps-0.2.6.tar.xz) = de2ba957f476044820f9b11eb15d25796d6f5121
+SHA512 (zathura-ps-0.2.6.tar.xz) = 6631f9b1c951b6f91f2a5217c3de47176205102206f15b596fb21285dae8d01fd759cfaca1b8a23bf47166dfbc3f8cf6061ce5a4d7a1c3a2b671a3beef5a07bb
+Size (zathura-ps-0.2.6.tar.xz) = 4336 bytes

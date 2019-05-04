@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.41 2017/02/12 06:24:46 ryoon Exp $
+# $NetBSD: Makefile,v 1.46 2018/11/14 22:22:02 kleink Exp $
 #
 
 DISTNAME=		goffice-0.8.17
 PKGNAME=		${DISTNAME:S/goffice/goffice0.8/}
-PKGREVISION=		21
+PKGREVISION=		25
 CATEGORIES=		misc
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/goffice/0.8/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		Library of document-centric objects and utilities
 LICENSE=		gnu-gpl-v2
 

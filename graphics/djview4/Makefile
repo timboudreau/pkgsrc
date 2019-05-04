@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.36 2016/05/04 10:29:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.38 2018/07/04 13:40:20 jperkin Exp $
 #
 
 DISTNAME=	djview-4.10.6
 PKGNAME=	${DISTNAME:S/djview/djview4/}
+PKGREVISION=	1
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=djvu/}
 
@@ -17,7 +18,7 @@ USE_LIBTOOL=	yes
 USE_TOOLS+=	gmake pkg-config
 
 SUBST_CLASSES+=		nsdejavu
-SUBST_STAGE.nsdejavu=	post-patch
+SUBST_STAGE.nsdejavu=	pre-configure
 SUBST_MESSAGE.nsdejavu=	Fixing hardcoded paths.
 SUBST_FILES.nsdejavu=	nsdejavu/nsdejavu.c
 SUBST_SED.nsdejavu=	-e 's:/usr/local/lib:${LOCALBASE}/lib:'

@@ -1,18 +1,18 @@
-# $NetBSD: Makefile,v 1.4 2016/12/17 12:55:29 rillig Exp $
+# $NetBSD: Makefile,v 1.8 2019/01/13 22:06:42 bacon Exp $
 
 DISTNAME=	plinkseq-0.08
-PKGREVISION=	1
+PKGREVISION=	3
 CATEGORIES=	biology
-MASTER_SITES=	http://atgu.mgh.harvard.edu/plinkseq/dist/version-0.08/
+MASTER_SITES=	https://atgu.mgh.harvard.edu/plinkseq/dist/version-0.08/
 
-MAINTAINER=	jwbacon@tds.net
-HOMEPAGE=	http://atgu.mgh.harvard.edu/plinkseq/
+MAINTAINER=	bacon@NetBSD.org
+HOMEPAGE=	https://atgu.mgh.harvard.edu/plinkseq/
 COMMENT=	C/C++ library for working with human genetic variation data
 LICENSE=	gnu-gpl-v2	# Assuming same as plink.  No info on web.
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS=	bash:run
 REPLACE_BASH=	browser/pbrowse.in index/index.in
 

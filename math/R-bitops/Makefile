@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.2 2013/08/30 12:54:06 joerg Exp $
+# $NetBSD: Makefile,v 1.4 2018/07/28 14:40:47 brook Exp $
 
 CATEGORIES=		math
-MASTER_SITES=	${MASTER_SITE_R_CRAN:=contrib/}
 
-MAINTAINER=		alnsn@NetBSD.org
+MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		${R_HOMEPAGE_BASE}/bitops/
 COMMENT=		Functions for Bitwise operations on integer vectors
 LICENSE=		gnu-gpl-v2

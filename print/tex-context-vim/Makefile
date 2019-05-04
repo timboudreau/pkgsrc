@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.1 2016/07/17 21:59:33 wiz Exp $
+# $NetBSD: Makefile,v 1.3 2019/01/25 20:02:03 markd Exp $
 
 DISTNAME=	context-vim
-PKGNAME=	tex-${DISTNAME}-2015
-TEXLIVE_REV=	37413
+PKGNAME=	tex-${DISTNAME}-2018.48391
+TEXLIVE_REV=	48391
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/context-vim

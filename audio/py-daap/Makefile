@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.13 2017/01/01 14:43:23 wiz Exp $
+# $NetBSD: Makefile,v 1.17 2019/04/26 14:12:32 maya Exp $
 
 DISTNAME=	PythonDaap-0.7
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/PythonD/d/}
@@ -7,11 +7,11 @@ CATEGORIES=	audio python
 MASTER_SITES=	http://jerakeen.org/files/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://movieos.org/code/pythondaap/
+HOMEPAGE=	https://movieos.org/code/pythondaap/
 COMMENT=	Python binding for DAAP
 LICENSE=	gnu-lgpl-v2.1
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.7
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.7
 CONFLICTS=	${PYPKGPREFIX}-PythonDaap-[0-9]*
 
 .include "../../lang/python/distutils.mk"

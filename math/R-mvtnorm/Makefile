@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.12 2016/04/13 14:23:29 wen Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/30 12:52:22 wen Exp $
 
 CATEGORIES=	math
-MASTER_SITES=	${MASTER_SITE_R_CRAN:=contrib/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	${R_HOMEPAGE_BASE}/mvtnorm/
+HOMEPAGE=	http://mvtnorm.r-forge.r-project.org/
 COMMENT=	Computes the multivariate normal and t distribution
 LICENSE=	gnu-gpl-v2
 
 R_PKGNAME=	mvtnorm
-R_PKGVER=	1.0-5
+R_PKGVER=	1.0-8
 
 USE_LANGUAGES=	c fortran
 

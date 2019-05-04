@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.43 2017/06/05 14:22:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.47 2018/08/22 09:43:46 wiz Exp $
 
-DISTNAME=	Compress-Raw-Zlib-2.074
+DISTNAME=	Compress-Raw-Zlib-2.081
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

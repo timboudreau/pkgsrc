@@ -1,4 +1,4 @@
-# $NetBSD: help.mk,v 1.12 2016/02/01 18:47:23 leot Exp $
+# $NetBSD: help.mk,v 1.16 2018/12/20 16:57:04 rillig Exp $
 #
 
 # This is the integrated pkgsrc online help system. To query for the
@@ -25,17 +25,23 @@ TOPIC?=		${VARNAME}
 TOPIC?=		${topic}
 .endif
 
+.if !target(help)
 .PHONY: help
 help:
-.if !defined(TOPIC)
+.  if !defined(TOPIC)
 	@${ECHO} "usage: "${MAKE:Q}" help topic=<topic>"
 	@${ECHO} ""
 	@${ECHO} "	<topic> may be a variable name or a make target,"
-	@${ECHO} "	for example CONFIGURE_DIRS or patch. For convenience,"
-	@${ECHO} "	you don't need to use uppercase letters when typing"
-	@${ECHO} "	variable names."
+	@${ECHO} "	for example CONFIGURE_DIRS or patch."
 	@${ECHO} ""
-.else
-	${RUN} cd ${PKGSRCDIR};						\
-	env TOPIC=${TOPIC:Q} ${AWK} -f ${PKGSRCDIR}/mk/help/help.awk ${_HELP_FILES}
+	@${ECHO} "	For convenience, all-uppercase topics such as variable"
+	@${ECHO} "	names may also be given in all-lowercase."
+	@${ECHO} ""
+	@${ECHO} "	The special topic :index lists all available topics."
+	@${ECHO} ""
+.  else
+	${RUN} env TOPIC=${TOPIC:Q} ${AWK} -f ${PKGSRCDIR}/mk/help/help.awk \
+		${_HELP_FILES:S|^|${_PKGSRC_TOPDIR}/|:S|^${.CURDIR}|.|:S,^./,,} \
+	| $${PAGER:-cat}
+.  endif
 .endif

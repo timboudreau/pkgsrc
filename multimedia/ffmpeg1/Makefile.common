@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.6 2015/02/15 10:50:01 tnn Exp $
+# $NetBSD: Makefile.common,v 1.8 2018/07/04 13:40:26 jperkin Exp $
 # used by multimedia/ffplay1/Makefile
 # used by multimedia/ffmpeg1/Makefile
 
@@ -49,7 +49,7 @@ CONFIGURE_ENV+=		TMPDIR=${WRKSRC}/tmp
 
 .include "../../mk/compiler.mk"
 
-.if ${OPSYS} == "SunOS" && empty(CC_VERSION:Mgcc*)
+.if !empty(PKGSRC_COMPILER:Msunpro)
 SUBST_CLASSES+=		sunwspro
 SUBST_MESSAGE.sunwspro=	Fixing compiler options for SunStudio C compiler.
 SUBST_STAGE.sunwspro=	post-configure
@@ -66,7 +66,7 @@ REPLACE_PERL+=	doc/texi2pod.pl
 REPLACE_SH+=	configure version.sh
 
 SUBST_CLASSES+=		conf
-SUBST_STAGE.conf=	post-patch
+SUBST_STAGE.conf=	pre-configure
 SUBST_FILES.conf=	ffserver.c
 SUBST_SED.conf=		-e 's,/etc/ffserver.conf,${PKG_SYSCONFDIR}/ffserver.conf,g'
 SUBST_MESSAGE.conf=	Fixing configuration path.

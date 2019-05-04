@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.27 2016/03/05 11:28:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.30 2018/07/04 13:40:23 jperkin Exp $
 
 DISTNAME=	dk-milter-1.0.2
 PKGREVISION=	1
@@ -6,7 +6,7 @@ CATEGORIES=	mail
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dk-milter/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/dk-milter/
+HOMEPAGE=	https://sourceforge.net/projects/dk-milter/
 COMMENT=	Open source DomainKeys filter software from Sendmail, Inc
 LICENSE=	sendmail-open-source-license
 
@@ -18,7 +18,7 @@ USE_TOOLS+=		gm4
 .include "../../mk/bsd.prefs.mk"
 
 SUBST_CLASSES+=		libs
-SUBST_STAGE.libs=	post-patch
+SUBST_STAGE.libs=	pre-configure
 SUBST_FILES.libs=	site.config.m4.dist dk-filter/Makefile.m4 \
 			devtools/M4/header.m4
 SUBST_SED.libs=		-e 's|@SSLBASE@|${BUILDLINK_PREFIX.openssl}|g'
@@ -66,7 +66,7 @@ do-install:
 	cd ${WRKSRC} ;\
 	for f in FEATURES INSTALL KNOWNBUGS LICENSE README RELEASE_NOTES rfc4870.txt; do\
 	  ${INSTALL_DATA} $${f} ${DESTDIR}${PREFIX}/share/doc/dk-milter ;\
-	done 
+	done
 	cd ${WRKSRC}/libdk/docs; for file in *.html; do \
 	${INSTALL_DATA} $$file ${DESTDIR}${PREFIX}/share/doc/dk-milter/libdk; done
 

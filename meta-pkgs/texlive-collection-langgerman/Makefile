@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.9 2017/06/22 09:37:21 markd Exp $
+# $NetBSD: Makefile,v 1.12 2019/01/26 03:43:58 markd Exp $
 
 DISTNAME=	collection-langgerman
-PKGNAME=	texlive-${DISTNAME}-2017pre1
+PKGNAME=	texlive-${DISTNAME}-2018pre2
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
-TEXLIVE_REV=	42045
+TEXLIVE_REV=	48599
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.tug.org/texlive/
@@ -17,6 +17,7 @@ DEPENDS+=	tex-babel-german-[0-9]*:../../print/tex-babel-german
 DEPENDS+=	tex-bibleref-german-[0-9]*:../../print/tex-bibleref-german
 # booktabs-de is documentation only
 # csquotes-de is documentation only
+DEPENDS+=	tex-dehyph-[0-9]*:../../print/tex-dehyph
 DEPENDS+=	tex-dehyph-exptl-[0-9]*:../../print/tex-dehyph-exptl
 DEPENDS+=	tex-dhua-[0-9]*:../../print/tex-dhua
 # einfuehrung is documentation only
@@ -46,6 +47,7 @@ DEPENDS+=	tex-milog-[0-9]*:../../print/tex-milog
 DEPENDS+=	tex-r_und_s-[0-9]*:../../print/tex-r_und_s
 # templates-fenn is documentation only
 # templates-sommer is documentation only
+# depend termcal-de
 # texlive-de is documentation only
 # tipa-de is documentation only
 # translation-arsclassica-de is documentation only

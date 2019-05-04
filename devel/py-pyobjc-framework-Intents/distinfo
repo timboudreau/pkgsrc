@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:43 adam Exp $
+
+SHA1 (pyobjc-framework-Intents-5.1.2.tar.gz) = af1a67c3c21a4cb408eb36db08dd7e928f607dba
+RMD160 (pyobjc-framework-Intents-5.1.2.tar.gz) = 72d25e54fe7488116e8c339c726dea256b9ffd9f
+SHA512 (pyobjc-framework-Intents-5.1.2.tar.gz) = a699ccea01f3b4635d36f437b7a20dd6e031a7ae88f6f2c70b5eb540f7a20f0b8ff340fc567f9fc9a227cace9cc06699b620374d7b4f6b9dd03e79227cac4abb
+Size (pyobjc-framework-Intents-5.1.2.tar.gz) = 31504 bytes

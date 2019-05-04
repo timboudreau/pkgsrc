@@ -1,18 +1,21 @@
-# $NetBSD: Makefile,v 1.1 2016/09/16 15:20:31 prlw1 Exp $
+# $NetBSD: Makefile,v 1.6 2018/12/03 20:41:44 adam Exp $
 
-DISTNAME=	lmfit-0.9.5
+DISTNAME=	lmfit-0.9.12
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	math
+CATEGORIES=	math python
 MASTER_SITES=	${MASTER_SITE_PYPI:=l/lmfit/}
 
 MAINTAINER=	prlw1@cam.ac.uk
-HOMEPAGE=	https://pypi.python.org/pypi/lmfit/
+HOMEPAGE=	http://lmfit.github.io/lmfit-py/
 COMMENT=	Least-squares minimization with bounds and constraints
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=	# none
+DEPENDS+=	${PYPKGPREFIX}-asteval>=0.9.12:../../math/py-asteval
+DEPENDS+=	${PYPKGPREFIX}-numpy>=1.10:../../math/py-numpy
+DEPENDS+=	${PYPKGPREFIX}-scipy>=0.17:../../math/py-scipy
+DEPENDS+=	${PYPKGPREFIX}-six>=1.11.0:../../lang/py-six
 
-DEPENDS+=	${PYPKGPREFIX}-scipy-[0-9]*:../../math/py-scipy
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

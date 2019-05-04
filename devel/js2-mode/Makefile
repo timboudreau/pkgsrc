@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.8 2017/04/14 00:31:41 pho Exp $
-#
+# $NetBSD: Makefile,v 1.12 2018/09/13 12:56:36 jperkin Exp $
 
 DISTNAME=	js2-20080406
 PKGREVISION=	2
@@ -8,7 +7,7 @@ MASTER_SITES=	http://js2-mode.googlecode.com/files/
 EXTRACT_SUFX=	.el
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/js2-mode/
+HOMEPAGE=	https://code.google.com/archive/p/js2-mode/
 COMMENT=	Improved JavaScript mode for GNU Emacs
 
 WRKSRC=		${WRKDIR}
@@ -16,7 +15,8 @@ USE_LANGUAGES=	# none
 MESSAGE_SUBST+=	LISPDIR=${EMACS_LISPPREFIX:Q}
 
 # no xemacs at all; emacs21 doesn't support full functionality
-EMACS_VERSIONS_ACCEPTED=	emacs25 emacs24 emacs23 emacs22 emacs22nox
+EMACS_VERSIONS_ACCEPTED=	emacs25 emacs25nox
+EMACS_VERSIONS_ACCEPTED+=	emacs26 emacs26nox
 
 do-build:
 	cd ${WRKSRC} && ${EMACS_BIN} -batch -f batch-byte-compile ${DISTNAME}.el

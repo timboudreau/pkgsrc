@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.28 2017/02/12 06:25:52 ryoon Exp $
+# $NetBSD: Makefile,v 1.33 2018/11/14 22:22:12 kleink Exp $
 
 DISTNAME=	mbrowse-0.4.3
-PKGREVISION=	19
+PKGREVISION=	23
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mbrowse/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.kill-9.org/mbrowse/
+#HOMEPAGE=	http://www.kill-9.org/mbrowse/
 COMMENT=	Graphical SNMP MIB browser
 LICENSE=	gnu-gpl-v2
 

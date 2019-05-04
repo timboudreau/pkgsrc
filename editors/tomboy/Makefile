@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.77 2017/04/22 21:03:35 adam Exp $
+# $NetBSD: Makefile,v 1.94 2019/04/03 00:32:41 ryoon Exp $
 
 DISTNAME=		tomboy-1.2.1
-PKGREVISION=		51
+PKGREVISION=		66
 CATEGORIES=		editors misc
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/tomboy/1.2/}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/projects/tomboy
+HOMEPAGE=		https://www.gnome.org/projects/tomboy
 COMMENT=		Gnome desktop note application
 LICENSE=		gnu-lgpl-v2.1
 
@@ -21,7 +21,7 @@ PKGCONFIG_OVERRIDE+=	data/tomboy-addins.pc.in
 REPLACE_BASH+=		Tomboy/tomboy.in Tomboy/tomboy-panel.in
 
 SUBST_CLASSES+=		fix-mcs
-SUBST_STAGE.fix-mcs=	post-patch
+SUBST_STAGE.fix-mcs=	pre-configure
 SUBST_MESSAGE.fix-mcs=	Fix compiler name
 SUBST_FILES.fix-mcs=	configure
 SUBST_SED.fix-mcs=	-e 's,gmcs,mcs,'

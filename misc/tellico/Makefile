@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.119 2017/05/02 13:37:31 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.137 2019/04/25 07:33:08 maya Exp $
 
 DISTNAME=	tellico-2.3.9
-PKGREVISION=	25
+PKGREVISION=	42
 CATEGORIES=	misc
 MASTER_SITES=	http://tellico-project.org/files/
 EXTRACT_SUFX=	.tar.bz2
@@ -13,6 +12,8 @@ COMMENT=	Collection manager for KDE
 LICENSE=	gnu-gpl-v2
 
 BUILD_DEPENDS+=	automoc4-[0-9]*:../../devel/automoc4
+
+BROKEN=		Needs poppler with qt4 support.
 
 REPLACE_PERL+=		src/core/tellico-1-3-update.pl
 REPLACE_PYTHON+=	src/fetch/scripts/*.py
@@ -39,7 +40,7 @@ pre-build:
 .include "../../multimedia/libkcompactdisc/buildlink3.mk"
 .include "../../multimedia/libkcddb/buildlink3.mk"
 .include "../../net/yaz/buildlink3.mk"
-.include "../../print/poppler-qt4/buildlink3.mk"
+#.include "../../print/poppler-qt4/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../x11/kdelibs4/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

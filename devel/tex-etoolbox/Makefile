@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.5 2017/06/21 06:13:15 markd Exp $
+# $NetBSD: Makefile,v 1.7 2019/01/26 01:30:03 markd Exp $
 
 DISTNAME=	etoolbox
-PKGNAME=	tex-${DISTNAME}-2.4
-TEXLIVE_REV=	42855
+PKGNAME=	tex-${DISTNAME}-2.5f
+TEXLIVE_REV=	48436
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/etoolbox

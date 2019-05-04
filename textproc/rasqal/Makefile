@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.28 2017/04/30 01:21:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.36 2018/12/13 19:51:38 adam Exp $
 
 DISTNAME=	rasqal-0.9.33
-PKGREVISION=	4
+PKGREVISION=	10
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.librdf.org/source/
 
@@ -15,6 +15,12 @@ GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 
 PKGCONFIG_OVERRIDE+=	rasqal.pc.in
+
+# XXX: Kludge to avoid uncoditionally pick up some gtkdoc-* tools if gtk-doc
+# XXX: package is installed and then fails in the installation phase.
+CONFIGURE_ENV+=		ac_cv_path_GTKDOC_CHECK= \
+			ac_cv_path_GTKDOC_REBASE= \
+			ac_cv_path_GTKDOC_MKPDF=
 
 .include "../../devel/gmp/buildlink3.mk"
 .include "../../math/mpfr/buildlink3.mk"

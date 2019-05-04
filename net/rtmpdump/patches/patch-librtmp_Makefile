@@ -1,13 +1,17 @@
-$NetBSD: patch-librtmp_Makefile,v 1.4 2017/07/13 13:19:59 wiz Exp $
+$NetBSD: patch-librtmp_Makefile,v 1.6 2018/09/23 21:09:33 wiz Exp $
 
+Use PREFIX and PKGMANDIR.
+Remove OPT.
 Libtoolize
+Choose gnutls.
 
---- librtmp/Makefile.orig	2011-07-12 00:24:33.000000000 +0000
+--- librtmp/Makefile.orig	2018-09-23 10:40:58.000000000 +0000
 +++ librtmp/Makefile
 @@ -1,11 +1,11 @@
  VERSION=v2.4
  
- prefix=/usr/local
+-prefix=/usr/local
++prefix=${PREFIX}
  
  incdir=$(prefix)/include/librtmp
  bindir=$(prefix)/bin
@@ -17,12 +21,24 @@ Libtoolize
  BINDIR=$(DESTDIR)$(bindir)
  INCDIR=$(DESTDIR)$(incdir)
  LIBDIR=$(DESTDIR)$(libdir)
-@@ -68,28 +68,40 @@ SO_INST=$(SOINST_$(SHARED))
+@@ -16,8 +16,8 @@ LD=$(CROSS_COMPILE)ld
+ AR=$(CROSS_COMPILE)ar
+ 
+ SYS=posix
+-CRYPTO=OPENSSL
+-#CRYPTO=GNUTLS
++#CRYPTO=OPENSSL
++CRYPTO=GNUTLS
+ DEF_POLARSSL=-DUSE_POLARSSL
+ DEF_OPENSSL=-DUSE_OPENSSL
+ DEF_GNUTLS=-DUSE_GNUTLS
+@@ -73,30 +73,42 @@ SO_LIB=$(SOLIB_$(SHARED))
+ SO_INST=$(SOINST_$(SHARED))
+ 
  DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
- OPT=-O2
+-OPT=-O2
  CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT) $(SO_DEF)
--LDFLAGS=$(XLDFLAGS)
-+LDFLAGS+=$(XLDFLAGS)
+ LDFLAGS=$(XLDFLAGS)
  
  
  OBJS=rtmp.o log.o amf.o hashswf.o parseurl.o
@@ -31,18 +47,20 @@ Libtoolize
 +all:	librtmp.la
  
  clean:
- 	rm -f *.o *.a *.$(SOX) *.$(SO_EXT)
+ 	rm -f *.o *.a *.$(SOX) *$(SO_EXT) librtmp.pc
  
 -librtmp.a: $(OBJS)
 -	$(AR) rs $@ $?
+-
+-librtmp$(SO_EXT): $(OBJS)
+-	$(CC) $(SO_LDFLAGS) $(LDFLAGS) -o $@ $^ $> $(CRYPTO_LIB)
 +librtmp.la: $(OBJS)
 +	${LIBTOOL} --mode=link --tag=CC \
 +		${CC} ${LDFLAGS} -o ${.TARGET:.a=.la} \
 +			${OBJS:.o=.lo} \
 +			-rpath ${PREFIX}/lib
- 
- librtmp.$(SO_EXT): $(OBJS)
--	$(CC) $(SO_LDFLAGS) $(LDFLAGS) -o $@ $^ $> $(CRYPTO_LIB)
++
++librtmp.$(SO_EXT): $(OBJS)
 +	${LIBTOOL} --mode=link --tag=CC \
 +		${CC} ${LDFLAGS} -o ${.TARGET:.a=.la} \
 +		${OBJS:.o=.lo} \
@@ -60,11 +78,12 @@ Libtoolize
 +	${LIBTOOL} --mode=compile --tag=CC ${CC} ${CFLAGS} -c hashswf.c
  parseurl.o: parseurl.c rtmp.h rtmp_sys.h log.h Makefile
 +	${LIBTOOL} --mode=compile --tag=CC ${CC} ${CFLAGS} -c parseurl.c
++
  
  librtmp.pc: librtmp.pc.in Makefile
  	sed -e "s;@prefix@;$(prefix);" -e "s;@libdir@;$(libdir);" \
-@@ -97,12 +109,12 @@ librtmp.pc: librtmp.pc.in Makefile
- 		-e "s;@CRYPTO_REQ@;$(CRYPTO_REQ);" \
+@@ -105,12 +117,12 @@ librtmp.pc: librtmp.pc.in Makefile
+ 		-e "s;@PUBLIC_LIBS@;$(PUBLIC_LIBS);" \
  		-e "s;@PRIVATE_LIBS@;$(PRIVATE_LIBS);" librtmp.pc.in > $@
  
 -install:	install_base $(SO_INST)
@@ -72,7 +91,7 @@ Libtoolize
  
 -install_base:	librtmp.a librtmp.pc
 +install_base:	librtmp.la librtmp.pc
- 	-mkdir -p $(INCDIR) $(LIBDIR)/pkgconfig $(MANDIR)/man3
+ 	-mkdir -p $(INCDIR) $(LIBDIR)/pkgconfig $(MANDIR)/man3 $(SODIR)
  	cp amf.h http.h log.h rtmp.h $(INCDIR)
 -	cp librtmp.a $(LIBDIR)
 +	${LIBTOOL} --mode=install ${BSD_INSTALL_LIB} librtmp.la $(LIBDIR)

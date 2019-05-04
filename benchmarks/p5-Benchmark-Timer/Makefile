@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.6 2017/06/05 14:22:18 ryoon Exp $
+# $NetBSD: Makefile,v 1.8 2018/08/22 09:42:58 wiz Exp $
 
-DISTNAME=	Benchmark-Timer-0.7107
+DISTNAME=	Benchmark-Timer-0.7112
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Benchmark/}
 
@@ -11,7 +11,7 @@ HOMEPAGE=	http://search.cpan.org/dist/Benchmark-Timer/
 COMMENT=	Benchmarking with statistical confidence
 LICENSE=	gnu-gpl-v2
 
-DEPENDS+=	p5-Statistics-TTest-[0-9]*:../../math/p5-Statistics-TTest
+DEPENDS+=	p5-Time-HiRes-[0-9]*:../../time/p5-Time-HiRes
 # for make test
 BUILD_DEPENDS+=	p5-URI-Escape-XS-[0-9]*:../../www/p5-URI-Escape-XS
 

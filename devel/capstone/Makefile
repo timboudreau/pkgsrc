@@ -1,8 +1,6 @@
-# $NetBSD: Makefile,v 1.9 2016/06/13 01:51:04 kamil Exp $
+# $NetBSD: Makefile,v 1.11 2018/11/12 14:40:21 jperkin Exp $
 
 .include "Makefile.common"
-
-PKGREVISION=	2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Lightweight multi-platform, multi-architecture disassembly framework
@@ -16,5 +14,7 @@ TEST_TARGET=			check
 
 # Don't use FreeBSD/DragonFly specific paths
 ALL_ENV+=	USE_GENERIC_LIBDATADIR=yes
+
+CTF_SUPPORTED=	no # https://smartos.org/bugview/OS-6510
 
 .include "../../mk/bsd.pkg.mk"

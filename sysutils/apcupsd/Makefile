@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.84 2017/02/28 15:20:09 ryoon Exp $
+# $NetBSD: Makefile,v 1.86 2018/11/12 14:40:22 jperkin Exp $
 
 DISTNAME=		apcupsd-3.14.13r2365
-PKGREVISION=		2
+PKGREVISION=		3
 CATEGORIES=		sysutils
 #MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=apcupsd/}
 MASTER_SITES=		${MASTER_SITE_LOCAL}
@@ -18,6 +18,8 @@ GNU_CONFIGURE=		yes
 
 PKG_SYSCONFSUBDIR=	apcupsd
 WRKSRC=			${WRKDIR}/apcupsd
+
+CTF_SUPPORTED=		no # https://smartos.org/bugview/OS-6533
 
 .include "options.mk"
 

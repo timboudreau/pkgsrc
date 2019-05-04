@@ -1,11 +1,9 @@
-# $NetBSD: Makefile,v 1.5 2017/06/05 14:24:14 ryoon Exp $
+# $NetBSD: Makefile,v 1.8 2018/11/10 09:54:12 wen Exp $
 
-DISTNAME=	Business-ISMN-1.131
+DISTNAME=	Business-ISMN-1.201
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	1
 CATEGORIES=	misc
-MASTER_SITES=	http://search.cpan.org/CPAN/authors/id/B/BD/BDFOY/
-MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Business/}
+MASTER_SITES+=	${MASTER_SITE_PERL_CPAN:=Business/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://search.cpan.org/~bdfoy/Business-ISMN/

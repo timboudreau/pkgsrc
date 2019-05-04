@@ -1,17 +1,15 @@
-# $NetBSD: Makefile,v 1.85 2017/02/12 06:26:06 ryoon Exp $
+# $NetBSD: Makefile,v 1.91 2019/01/04 03:29:34 tnn Exp $
 
-DISTNAME=		sawfish-1.10
-PKGREVISION=		6
+DISTNAME=		sawfish_1.12.0
+PKGNAME=		${DISTNAME:S/_/-/}
 CATEGORIES=		x11 wm
 MASTER_SITES=		http://download.tuxfamily.org/sawfish/
-EXTRACT_SUFX=		.tar.bz2
+EXTRACT_SUFX=		.tar.xz
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://sawfish.wikia.com/
+HOMEPAGE=		https://sawfish.tuxfamily.org/
 COMMENT=		Extensible window manager that is fully configurable in Lisp
-
-CONFLICTS+=		sawfish-replibs-[0-9]*
-CONFLICTS+=		sawfish-themes-[0-9]*
+LICENSE=		gnu-gpl-v2
 
 GNU_CONFIGURE=		yes
 INFO_FILES=		YES
@@ -34,7 +32,7 @@ SUBST_SED.env=		-e 's,exec rep,exec env ${REP_ENV_PKGSRC} rep,g'
 
 .include "../../mk/bsd.prefs.mk"
 
-.if ${OPSYS} == "NetBSD" && empty(${OS_VERSION:M1.*})
+.if ${OPSYS} == "NetBSD" && empty(OS_VERSION:M1.*)
 REP_ENV_PKGSRC=		LD_PRELOAD=/usr/lib/libpthread.so
 .else
 REP_ENV_PKGSRC=

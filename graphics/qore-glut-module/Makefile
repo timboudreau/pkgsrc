@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.5 2016/08/07 11:44:43 nros Exp $
+# $NetBSD: Makefile,v 1.8 2018/06/08 20:49:41 nros Exp $
 
 DISTNAME=	qore-glut-module-0.0.3
-PKGREVISION=	6
+PKGREVISION=	9
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qore/}
 
@@ -12,7 +12,7 @@ LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 PTHREAD_OPTS+=	native
 
 CONFIGURE_ARGS+=--with-glut=${BUILDLINK_PREFIX.glut}

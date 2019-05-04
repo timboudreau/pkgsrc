@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.149 2017/06/24 13:10:44 schmonz Exp $
+# $NetBSD: Makefile,v 1.163 2019/04/25 07:33:27 maya Exp $
 #
 
-DISTNAME=		ikiwiki_3.20170622
-PKGNAME=		${DISTNAME:S/_/-/}
+DISTNAME=		ikiwiki_3.20190228.orig
+PKGNAME=		${DISTNAME:S/_/-/:S/.orig//}
+PKGREVISION=		1
 CATEGORIES=		www textproc
 MASTER_SITES=		${MASTER_SITE_DEBIAN:=pool/main/i/ikiwiki/}
 EXTRACT_SUFX=		.tar.xz
@@ -11,10 +12,6 @@ MAINTAINER=		schmonz@NetBSD.org
 HOMEPAGE=		https://ikiwiki.info/
 COMMENT=		Flexible static site generator with dynamic features
 LICENSE=		gnu-gpl-v2
-
-# ./pm_filter /usr/pkg 3.20141016 /usr/pkg/lib/perl5/vendor_perl/5.20.0 < ikiwiki.in > ikiwiki.out
-# sh: ./pm_filter: not found
-MAKE_JOBS_SAFE=		no
 
 DEPENDS+=		p5-Text-Markdown-Discount-[0-9]*:../../textproc/p5-Text-Markdown-Discount
 DEPENDS+=		p5-URI>=1.36:../../www/p5-URI
@@ -34,15 +31,15 @@ DEPENDS+=		p5-XML-RSS-[0-9]*:../../textproc/p5-XML-RSS
 DEPENDS+=		p5-File-MimeInfo-[0-9]*:../../devel/p5-File-MimeInfo
 DEPENDS+=		p5-gettext-[0-9]*:../../devel/p5-gettext
 DEPENDS+=		p5-YAML-LibYAML-[0-9]*:../../textproc/p5-YAML-LibYAML
+DEPENDS+=		p5-LWPx-ParanoidAgent-[0-9]*:../../www/p5-LWPx-ParanoidAgent
 
-WRKSRC=			${WRKDIR}/${PKGNAME_NOREV}
+WRKSRC=			${WRKDIR}/${PKGNAME_NOREV:S/ikiwiki-/IkiWiki-/}
 PERL5_PACKLIST=		auto/IkiWiki/.packlist
 USE_LANGUAGES=		c
 USE_TOOLS+=		gmake msgfmt perl:run xgettext
 
 REPLACE_PYTHON+=	plugins/proxy.py plugins/pythondemo plugins/rst
-
-BUILD_TARGET=		extra_build all
+REPLACE_PERL+=		pm_filter
 
 MAKE_FLAGS+=		W3M_CGI_BIN=${PREFIX:Q}/libexec/w3m/cgi-bin
 MAKE_FLAGS+=		SYSCONFDIR=${PKG_SYSCONFDIR:Q}
@@ -55,8 +52,6 @@ EGDIR=			${PREFIX}/share/examples/${PKGBASE}
 .for f in auto.setup auto-blog.setup wikilist
 CONF_FILES+=		${EGDIR}/${f} ${PKG_SYSCONFDIR}/${f}
 .endfor
-
-#SPECIAL_PERMS+=		${PREFIX}/bin/ikiwiki-update-wikilist ...
 
 TEST_TARGET=		test
 

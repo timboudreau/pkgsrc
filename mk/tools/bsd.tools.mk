@@ -1,4 +1,4 @@
-# $NetBSD: bsd.tools.mk,v 1.55 2015/11/25 13:05:47 jperkin Exp $
+# $NetBSD: bsd.tools.mk,v 1.58 2019/03/22 16:17:50 rillig Exp $
 #
 # Copyright (c) 2005, 2006 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -14,13 +14,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#        This product includes software developed by the NetBSD
-#        Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -172,7 +165,7 @@ _VARGROUPS+=		tools
 _USER_VARS.tools=	TOOLS_SHELL
 _PKG_VARS.tools=	USE_TOOLS TOOLS_BROKEN TOOLS_CREATE \
 	TOOLS_FAIL TOOLS_GNU_MISSING TOOLS_NOOP
-.for t in ${USE_TOOLS:C/:.*//} # XXX: There should be a variable _ALL_TOOLS
+.for t in ${USE_TOOLS:C/:.*//:O:u}
 .  for pv in \
 	TOOLS_ALIASES \
 	TOOLS_ARGS \
@@ -188,3 +181,4 @@ _PKG_VARS.tools=	USE_TOOLS TOOLS_BROKEN TOOLS_CREATE \
 _SYS_VARS.tools+=	${pv}.${t}
 .  endfor
 .endfor
+_SORTED_VARS.tools=	USE_TOOLS TOOLS_CREATE TOOLS_GNU_MISSING

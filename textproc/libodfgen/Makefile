@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.14 2017/04/30 01:21:24 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2018/12/13 19:51:37 adam Exp $
 
 DISTNAME=	libodfgen-0.1.6
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	textproc
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=libwpd/libodfgen/libodfgen-${PKGVERSION_NOREV}/}
 EXTRACT_SUFX=	.tar.xz
@@ -25,6 +25,11 @@ PKGCONFIG_OVERRIDE+=	libodfgen.pc.in
 CONFIGURE_ARGS+=	--with-sharedptr=c++11
 .else
 CONFIGURE_ARGS+=	--with-sharedptr=tr1
+.endif
+
+# Avoid erroring out due to multiple -Werror=parentheses with gcc8
+.if !empty(CC_VERSION:Mgcc-[89]*)
+CONFIGURE_ARGS+=--disable-werror
 .endif
 
 .include "../../converters/libetonyek/buildlink3.mk"

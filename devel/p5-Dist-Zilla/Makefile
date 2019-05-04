@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.27 2017/06/05 14:22:54 ryoon Exp $
+# $NetBSD: Makefile,v 1.31 2018/08/22 09:43:56 wiz Exp $
 
-DISTNAME=	Dist-Zilla-6.009
+DISTNAME=	Dist-Zilla-6.012
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

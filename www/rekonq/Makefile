@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.9 2017/04/30 01:22:03 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2018/12/13 19:52:26 adam Exp $
 
 DISTNAME=		rekonq-2.4.2
-PKGREVISION=		7
+PKGREVISION=		13
 CATEGORIES=		www kde
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=rekonq/2.0/}
 EXTRACT_SUFX=		.tar.xz
 
 MAINTAINER=		markd@NetBSD.org
-HOMEPAGE=		http://rekonq.kde.org/
+HOMEPAGE=		https://rekonq.kde.org/
 COMMENT=		web browser for KDE based on WebKit
 LICENSE=		gnu-gpl-v2
 

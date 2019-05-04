@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2019/03/03 12:26:45 adam Exp $
+
+SHA1 (parameterized-0.7.0.tar.gz) = ad2d6e11885bb3ca9a87543e9192c0bee3f5ffad
+RMD160 (parameterized-0.7.0.tar.gz) = 03f016fca3efcaa1d556625dab260fc3754d759a
+SHA512 (parameterized-0.7.0.tar.gz) = b76e18a7eee62fcab4385fd5d053253c096d4c3fc3a6300e8539afc4d8decc995e533085297c52f8a26411d2591a326033a740cc30a250d510aa1c11ee904246
+Size (parameterized-0.7.0.tar.gz) = 20751 bytes

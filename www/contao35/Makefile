@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.31 2017/07/12 14:42:55 taca Exp $
+# $NetBSD: Makefile,v 1.44 2019/04/14 09:23:06 taca Exp $
 #
 
 DISTNAME=	contao-${CT_PKGVER}
@@ -19,12 +19,10 @@ DEPENDS+=	${PHP_PKG_PREFIX}-mysqli>=5.4.0:../../databases/php-mysqli
 DEPENDS+=	${PHP_PKG_PREFIX}-soap>=5.4.0:../../net/php-soap
 DEPENDS+=	${PHP_PKG_PREFIX}-curl>=5.4.0:../../www/php-curl
 DEPENDS+=	${PHP_PKG_PREFIX}-zlib>=5.4.0:../../archivers/php-zlib
-DEPENDS+=	bash>=4.0:../../shells/bash
 
-CT_VERSION=	3.5.28
-USE_TOOLS=	bash pax
+CT_VERSION=	3.5.40
+USE_TOOLS=	bash:run pax
 NO_BUILD=	yes
-FILESDIR?=	${.CURDIR}/files
 
 EG_CONFIG=	ace.php agents.php constants.php countries.php \
 		languages.php mimetypes.php tcpdf.php timezones.php \
@@ -72,8 +70,7 @@ REPLACE_FILES.php=	system/bin/automator system/bin/filesync \
 
 SUBST_CLASSES+=		conf
 SUBST_FILES.conf+=	${WRKDIR}/contao.conf
-SUBST_SED.conf+=        -e 's|@PREFIX@|${PREFIX:Q}|g'
-SUBST_SED.conf+=        -e 's|@CT_WEBDIR@|${CT_WEBDIR:Q}|g'
+SUBST_VARS.conf+=       PREFIX CT_WEBDIR
 SUBST_STAGE.conf=	post-configure
 
 WWW_FILES=	.htaccess.default README.md assets contao \

@@ -1,29 +1,30 @@
-# $NetBSD: Makefile,v 1.28 2017/06/14 14:41:26 fhajny Exp $
+# $NetBSD: Makefile,v 1.46 2019/04/03 00:32:47 ryoon Exp $
 
-DISTNAME=	tesseract-3.05.01
+DISTNAME=	tesseract-4.0.0
+PKGREVISION=	5
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_GITHUB:=tesseract-ocr/}
 DISTFILES=	${DEFAULT_DISTFILES}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/tesseract-ocr/tesseract/
-COMMENT=	Tesseract Open Source OCR Engine
+HOMEPAGE=	https://github.com/tesseract-ocr/tesseract
+COMMENT=	Open Source OCR Engine
 LICENSE=	apache-2.0
 
-LANGVER=				3.04.00
-DISTFILES+=				tessdata-${LANGVER}${EXTRACT_SUFX}
+LANGVER=	4.0.0
+DISTFILES+=	tessdata-${LANGVER}${EXTRACT_SUFX}
 SITES.tessdata-${LANGVER}.tar.gz=	-${MASTER_SITES:Q}tessdata/archive/${LANGVER}.tar.gz
+
+BUILD_DEPENDS+=		asciidoc-[0-9]*:../../textproc/asciidoc
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
-USE_TOOLS+=		autoconf automake make pax pkg-config
+USE_TOOLS+=		autoconf automake bash gmake pax pkg-config
 GNU_CONFIGURE=		yes
-
 CONFIGURE_ENV+=		LIBLEPT_HEADERSDIR=${BUILDLINK_PREFIX.leptonica}/include
 
 INSTALL_TARGET=		install training-install
-
-INSTALLATION_DIRS=	libexec share/doc/tesseract share/tesseract
+REPLACE_BASH+=		${WRKSRC}/src/training/*.sh
 
 post-extract:
 	${MV} ${WRKDIR}/tessdata-${LANGVER}/* ${WRKSRC}/tessdata

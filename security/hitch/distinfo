@@ -1,8 +1,8 @@
-$NetBSD: distinfo,v 1.7 2017/07/03 13:03:02 joerg Exp $
+$NetBSD: distinfo,v 1.9 2019/03/04 13:56:19 tnn Exp $
 
-SHA1 (hitch-1.4.6.tar.gz) = 4dbf533706129bfd7a45f6dff020e2ba281a4abc
-RMD160 (hitch-1.4.6.tar.gz) = eb576b1b878d7184c3dc143c8b4d954e52ec03c3
-SHA512 (hitch-1.4.6.tar.gz) = e1dbbbeda4cfcd2d8afeba94f48bc7094e767aa9d18c778cee994c9bf5508cd503a99dc23cbe327df0e042e86d57d8d60f36143f9c1545f2f98ba5b9d6511842
-Size (hitch-1.4.6.tar.gz) = 308210 bytes
-SHA1 (patch-hitch.conf.example) = 1c922c2e294362ef009ff60bfe43f746de596087
+SHA1 (hitch-1.5.0.tar.gz) = e2f77a3213d6fe3d1b8cd212cd6bf2e0dc4c4698
+RMD160 (hitch-1.5.0.tar.gz) = 37758d95652dd4c6a224d8b369e6d8da05e93f58
+SHA512 (hitch-1.5.0.tar.gz) = 17991d9a82635456fcd0cebf0f1b067183bc0a02eaf0d1437ba3369674a2a9880ca8774afde984710123c46b472bdbe3b1bf6770e7475d5d24170a7674a48be5
+Size (hitch-1.5.0.tar.gz) = 304169 bytes
+SHA1 (patch-hitch.conf.example) = 21840c6028994953d9b05632c55f2da81fd817b0
 SHA1 (patch-src_configuration.c) = 030ba883e99b1ce0ab13d54952dd53a94ff16cbd

@@ -1,4 +1,4 @@
-# $NetBSD: hacks.mk,v 1.1 2016/05/26 08:29:04 markd Exp $
+# $NetBSD: hacks.mk,v 1.3 2018/04/07 00:51:28 markd Exp $
 #
 .include "../../mk/bsd.fast.prefs.mk"
 

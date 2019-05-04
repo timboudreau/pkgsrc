@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2016/11/16 15:57:29 maya Exp $
+# $NetBSD: Makefile,v 1.31 2019/04/03 00:33:02 ryoon Exp $
 
 DISTNAME=	wpa_supplicant-2.6
 PKGNAME=	${DISTNAME:S/supplicant/gui/}
+PKGREVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	http://hostap.epitest.fi/releases/
 
@@ -17,6 +18,8 @@ USE_TOOLS+=	gmake
 
 LRELEASE=	${QTDIR}/bin/lrelease
 MAKE_ENV+=	LRELEASE=${LRELEASE}
+QMAKE=		${QTDIR}/bin/qmake
+MAKE_ENV+=	QMAKE=${QMAKE}
 
 INSTALLATION_DIRS=	sbin ${PKGMANDIR}/man8
 
@@ -26,6 +29,8 @@ do-install:
 	${INSTALL_MAN} ${WRKSRC}/wpa_supplicant/doc/docbook/wpa_gui.8 \
                 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man8/
 
-.include "../../x11/qt4-tools/buildlink3.mk"
-.include "../../x11/qt4-libs/buildlink3.mk"
+.include "../../x11/qt5-qtbase/buildlink3.mk"
+.include "../../x11/qt5-qtsvg/buildlink3.mk"
+BUILDLINK_DEPMETHOD.qt5-qttools=	build
+.include "../../x11/qt5-qttools/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

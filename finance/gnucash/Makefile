@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.248 2017/07/03 11:49:37 wiz Exp $
+# $NetBSD: Makefile,v 1.277 2019/04/25 07:32:53 maya Exp $
 
-DISTNAME=		gnucash-2.6.17
+DISTNAME=		gnucash-3.5
+PKGREVISION=		2
 CATEGORIES=		finance
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=gnucash/}
 EXTRACT_SUFX=		.tar.bz2
@@ -10,56 +11,73 @@ HOMEPAGE=		http://www.gnucash.org/
 COMMENT=		Personal or business finance management program
 LICENSE=		gnu-gpl-v3
 
-DEPENDS+=		guile-slib>=3.2.1:../../devel/guile-slib
+DEPENDS+=		guile22-slib>=3.2.1:../../devel/guile22-slib
 DEPENDS+=		p5-Finance-Quote-[0-9]*:../../finance/p5-Finance-Quote
 DEPENDS+=		p5-Date-Manip-[0-9]*:../../devel/p5-Date-Manip
-DEPENDS+=		${PYPKGPREFIX}-gtk2-[0-9]*:../../x11/py-gtk2
-# /usr/pkg/share/gnucash/python/pycons/console.py imports readline
-DEPENDS+=		${PYPKGPREFIX}-readline-[0-9]*:../../devel/py-readline
 DEPENDS+=		dconf-[0-9]*:../../devel/dconf
+# instead of USE_TOOLS+=msgfmt, since we need a newer version
+TOOL_DEPENDS+=		gettext-tools>=0.19.6:../../devel/gettext-tools
 
+USE_LANGUAGES=		c c++
+USE_CMAKE=		yes
 USE_LIBTOOL=		yes
-USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		gmake intltool makeinfo msgfmt perl:run pkg-config
-GNU_CONFIGURE=		yes
-INFO_FILES=		YES
+INFO_FILES=		yes
+USE_TOOLS+=		perl:run pkg-config
+# remove when using ninja
+USE_TOOLS+=		gmake
 
-CONFIGURE_ARGS+=	--with-html-engine=webkit
-CONFIGURE_ARGS+=	--enable-python
-CONFIGURE_ARGS+=	--with-xdg-data-dirs=${PREFIX}/share
-#CONFIGURE_ARGS+=	GUILE=${PREFIX}/${GUILE20_SUBDIR}/bin/guile
+# build failure in test-tx_import and a couple test failures
+# https://bugzilla.gnome.org/show_bug.cgi?id=795251
+TEST_TARGET=		check
 
-REPLACE_PERL+=		src/quotes/gnc-fq-dump
-REPLACE_PERL+=		src/backend/xml/test/grab-types.pl
-REPLACE_PERL+=		src/quotes/Quote_example.pl
-REPLACE_PERL+=		src/gnc-test-env.pl
+LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib/gnucash
+CXXFLAGS+=		-Wno-deprecated-declarations
+# https://bugs.gnucash.org/show_bug.cgi?id=797039
+CFLAGS+=		-Wno-char-subscripts
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.6.1
-REPLACE_PYTHON+=	src/python/pycons/*.py src/python/pycons/pycons
-PY_PATCHPLIST=		yes
+MAKE_ENV+=		GUILE_AUTO_COMPILE=0
+CMAKE_ARGS+=		-DWITH_AQBANKING=OFF
+CMAKE_ARGS+=		-DPERL_EXECUTABLE=${PERL5}
+CMAKE_ARGS+=		-DCOMPILE_GSCHEMAS=OFF
+#CMAKE_ARGS+=		-GNinja
+#BUILD_DEPENDS+=	ninja-build-[0-9]*:../../devel/ninja-build
+
+#do-build:
+#	cd ${WRKSRC}; ${SETENV} ${MAKE_ENV} ninja
+#do-install:
+#	cd ${WRKSRC}; ${SETENV} ${INSTALL_ENV} ninja install
+
+REPLACE_PERL+=		common/gnc-test-env.pl
+REPLACE_PERL+=		libgnucash/backend/xml/test/grab-types.pl
+REPLACE_PERL+=		libgnucash/quotes/gnc-fq-dump
+REPLACE_PERL+=		util/elegant-sort.pl
+
+PLIST_SRC=		PLIST
 
 PKG_SYSCONFSUBDIR=	gnucash
-CONF_FILES+=		${PREFIX}/share/examples/gnucash/gnucash/config ${PKG_SYSCONFDIR}/config
-CONF_FILES+=		${PREFIX}/share/examples/gnucash/gnucash/environment ${PKG_SYSCONFDIR}/environment
-INSTALL_MAKE_FLAGS+=	sysconfdir=${PREFIX}/share/examples/gnucash
+CONF_FILES+=		${PREFIX}/share/examples/gnucash/environment ${PKG_SYSCONFDIR}/environment
+INSTALLATION_DIRS=	share/examples/gnucash
+
+post-install:
+	${MV} ${DESTDIR}${PREFIX}/etc/gnucash/environment ${DESTDIR}${PREFIX}/share/examples/gnucash/environment
 
 .include "options.mk"
 
-BUILDLINK_API_DEPENDS.glib2+=	glib2>=2.28.0
+BUILDLINK_API_DEPENDS.glib2+=	glib2>=2.40.0
 .include "../../devel/glib2/schemas.mk"
 .include "../../devel/glib2/buildlink3.mk"
+BUILDLINK_API_DEPENDS.boost-headers+=   boost-headers>=1.64.0nb3
+.include "../../devel/boost-headers/buildlink3.mk"
+.include "../../devel/boost-libs/buildlink3.mk"
+.include "../../devel/googletest/buildlink3.mk"
+.include "../../devel/swig2/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../graphics/gdk-pixbuf2/buildlink3.mk"
-.include "../../graphics/libgnomecanvas/buildlink3.mk"
-.include "../../lang/guile20/buildlink3.mk"
-.include "../../lang/python/application.mk"
-.include "../../lang/python/extension.mk"
-.include "../../misc/goffice0.8/buildlink3.mk"
-BUILDLINK_API_DEPENDS.gnome-keyring+=	gnome-keyring>=0.6
-.include "../../security/gnome-keyring/buildlink3.mk"
+.include "../../lang/guile22/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
+.include "../../textproc/icu/buildlink3.mk"
 .include "../../textproc/libxml2/buildlink3.mk"
 .include "../../textproc/libxslt/buildlink3.mk"
-.include "../../www/webkit24-gtk/buildlink3.mk"
-.include "../../x11/gtk2/buildlink3.mk"
+.include "../../www/webkit-gtk/buildlink3.mk"
+.include "../../x11/gtk3/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

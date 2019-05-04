@@ -1,6 +1,7 @@
-$NetBSD: distinfo,v 1.2 2015/11/03 20:30:59 agc Exp $
+$NetBSD: distinfo,v 1.4 2019/02/01 09:53:20 nia Exp $
 
-SHA1 (fceumm-libretro-20150204.zip) = a56ceff1b9ae434c9fa83a55aa0e2dfd9baf523b
-RMD160 (fceumm-libretro-20150204.zip) = 707ad067145272a031db529c98a5695837e04882
-SHA512 (fceumm-libretro-20150204.zip) = c5038bae761e6d1dc092903da36bbf95856a99de3ba07eeacb5f66476a557151987e7cedc6682c43cbbd972d3c09428053086f3cbff6822471aebec82245410d
-Size (fceumm-libretro-20150204.zip) = 847075 bytes
+SHA1 (libretro-fceumm-20190106-3efe223f135e2da1bd04909b30cf480fa62fe9d4.tar.gz) = 15c5bff08b5291725df2c4cf515a5f7bb936a185
+RMD160 (libretro-fceumm-20190106-3efe223f135e2da1bd04909b30cf480fa62fe9d4.tar.gz) = 60e0b4f9385253ebf12788e28731354b0bf64097
+SHA512 (libretro-fceumm-20190106-3efe223f135e2da1bd04909b30cf480fa62fe9d4.tar.gz) = 5c5402c75148671f5a3e3d36f14502b548ad145297b6b71c763be5ff457cb930e7ce7fd5d0635f52235492a4c9c6966ee78e5e1f063dbd0e4da9a05f1552433b
+Size (libretro-fceumm-20190106-3efe223f135e2da1bd04909b30cf480fa62fe9d4.tar.gz) = 400855 bytes
+SHA1 (patch-Makefile.libretro) = c031f3ee2e6564ff82ffaf01406316e6009826a8

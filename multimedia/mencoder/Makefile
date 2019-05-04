@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.67 2016/02/25 15:49:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.70 2019/03/24 20:38:25 rhialto Exp $
 
 PKGNAME=	mencoder-${MPLAYER_VERSION}
+PKGREVISION=	3
 
 COMMENT=	Simple movie encoder for MPlayer-playable movies
 

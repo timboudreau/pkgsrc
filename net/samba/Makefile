@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.262 2017/06/01 13:30:26 jlam Exp $
+# $NetBSD: Makefile,v 1.273 2019/04/18 10:07:34 sborrill Exp $
 
 DISTNAME=	samba-${VERSION}
 CATEGORIES=	net
@@ -10,7 +10,7 @@ COMMENT=	SMB/CIFS protocol server suite
 LICENSE=	gnu-gpl-v3
 
 VERSION=	3.6.25
-PKGREVISION=	6
+PKGREVISION=	16
 
 CONFLICTS+=	ja-samba-[0-9]* pam-smbpass-[0-9]* winbind-[0-9]*
 
@@ -104,7 +104,7 @@ RCD_SCRIPTS+=	samba nmbd smbd ${WINBINDD_RCD_SCRIPT}
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Fixing paths.
 SUBST_FILES.paths=	${WRKDIR}/adduser.sh ${WRKDIR}/deluser.sh
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_VARS.paths+=	AWK CAT MKTEMP RM PWD_MKDB SH
 
 SUBST_CLASSES+=		def-cfg

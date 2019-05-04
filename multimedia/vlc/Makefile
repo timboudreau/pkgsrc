@@ -1,6 +1,8 @@
-# $NetBSD: Makefile,v 1.203 2017/05/26 13:26:37 maya Exp $
+# $NetBSD: Makefile,v 1.218 2018/11/27 18:28:48 maya Exp $
 
+# (Intended to be upgraded to vlc3 when dependencies resolved)
 DISTNAME=		vlc-${VLC_VERSION}
+PKGREVISION=		12
 CATEGORIES=		multimedia
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=vlc/}
 MASTER_SITES+=		http://download.videolan.org/pub/videolan/vlc/${VLC_VERSION}/
@@ -29,7 +31,6 @@ PLIST_VARS+=		altivec cdrom oss v4l2 x86simd
 .include "options.mk"
 
 BUILDLINK_API_DEPENDS.zlib+=		zlib>=1.2.0
-BUILDLINK_API_DEPENDS.vcdimager+=	vcdimager>=0.7.20nb1
 
 CONFIGURE_ARGS+=	--enable-dvdread
 CONFIGURE_ARGS+=	--enable-flac
@@ -65,7 +66,7 @@ CFLAGS+=		-fPIC
 CXXFLAGS+=		-fPIC
 
 # which platforms support OSSv4?
-.if ${MACHINE_PLATFORM:MNetBSD-[789]*-*}
+.if ${MACHINE_PLATFORM:MNetBSD-*-*}
 PLIST.oss=		yes
 .include "../../mk/oss.buildlink3.mk"
 .else

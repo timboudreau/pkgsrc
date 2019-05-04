@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.44 2017/01/05 23:16:43 roy Exp $
+# $NetBSD: Makefile,v 1.47 2018/06/03 07:49:27 leot Exp $
 
 PKGNAME=	${PYPKGPREFIX}-curses-${PY_DISTVERSION}
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	devel python
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.python.org/doc/current/lib/module-curses.html
+#HOMEPAGE=	https://www.python.org/doc/current/lib/module-curses.html
 COMMENT=	Curses module for Python
 
 EXTRACT_ELEMENTS=	${PYSUBDIR}/Modules/_cursesmodule.c

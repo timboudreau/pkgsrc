@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.30 2017/07/11 14:19:19 jaapb Exp $
+# $NetBSD: Makefile,v 1.36 2019/04/25 07:32:43 maya Exp $
 
 DISTNAME=	coccinelle-1.0.0-rc17
 PKGNAME=	${DISTNAME:S/-rc/rc/}
-PKGREVISION=	10
+PKGREVISION=	16
 CATEGORIES=	devel
 MASTER_SITES=	http://coccinelle.lip6.fr/distrib/
 EXTRACT_SUFX=	.tgz

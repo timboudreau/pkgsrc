@@ -1,4 +1,4 @@
-# $NetBSD: test.mk,v 1.18 2012/05/27 14:32:29 cheusov Exp $
+# $NetBSD: test.mk,v 1.20 2018/11/30 18:38:19 rillig Exp $
 #
 # After the "build" phase, many packages provide some sort of self-test
 # that can be run on the not-yet installed package. To enable these
@@ -41,6 +41,8 @@
 _VARGROUPS+=		test
 _USER_VARS.test=	PKGSRC_RUN_TEST
 _PKG_VARS.test=		TEST_DIRS TEST_ENV TEST_MAKE_FLAGS MAKE_FILE TEST_TARGET
+_SORTED_VARS.test=	*_ENV
+_LISTED_VARS.test=	*_DIRS *_FLAGS
 
 TEST_DIRS?=		${BUILD_DIRS}
 TEST_ENV+=		${MAKE_ENV}
@@ -58,6 +60,7 @@ TEST_MAKE_CMD= \
 ###
 _TEST_TARGETS+=	check-vulnerable
 _TEST_TARGETS+=	build
+_TEST_TARGETS+=	test-depends
 _TEST_TARGETS+=	acquire-test-lock
 _TEST_TARGETS+=	${_COOKIE.test}
 _TEST_TARGETS+=	release-test-lock

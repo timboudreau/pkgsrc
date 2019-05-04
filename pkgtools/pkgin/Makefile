@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.71 2017/05/29 11:09:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.88 2019/04/03 00:33:02 ryoon Exp $
 
-DISTNAME=		pkgin-0.9.4
-GITHUB_TAG=		v${PKGVERSION_NOREV}
-PKGREVISION=		6
+DISTNAME=		pkgin-0.11.7
+PKGREVISION=		1
 CATEGORIES=		pkgtools
 MASTER_SITES=		${MASTER_SITE_GITHUB:=NetBSDfr/}
+GITHUB_TAG=		v${PKGVERSION_NOREV}
 
-MAINTAINER=		imil@NetBSD.org
+MAINTAINER=		jperkin@joyent.com
 HOMEPAGE=		http://pkgin.net/
 COMMENT=		Apt / yum like tool for managing pkgsrc binary packages
 LICENSE=		modified-bsd
@@ -78,12 +78,6 @@ do-install:
 		${DESTDIR}${EGDIR}/repositories.conf.example
 	${INSTALL_DATA} ${WRKSRC}/preferred.conf			\
 		${DESTDIR}${EGDIR}/preferred.conf.example
-
-# libfetch has no builtin.mk and is included in NetBSD>=5
-.if ${OPSYS} != "NetBSD" || \
-	(${OPSYS} == "NetBSD" && !empty(OS_VERSION:M[0-4].*))
-.	include "../../net/libfetch/buildlink3.mk"
-.endif
 
 .include "../../archivers/libarchive/buildlink3.mk"
 .include "../../databases/sqlite3/buildlink3.mk"

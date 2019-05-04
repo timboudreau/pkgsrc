@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.40 2017/04/22 21:03:18 adam Exp $
+# $NetBSD: Makefile,v 1.47 2019/04/03 00:33:12 ryoon Exp $
 
 DISTNAME=	xsp-3.8
 PKGNAME=	mono-${DISTNAME}
-PKGREVISION=	4
+PKGREVISION=	10
 CATEGORIES=	www
 MASTER_SITES=	http://download.mono-project.com/sources/xsp/
 
@@ -25,7 +25,7 @@ SUBST_SED.unwrap_mk=		-e 's,^MAKEINFO = .*,MAKEINFO = makeinfo,'
 SUBST_SED.unwrap_mk+=		-e 's,^PKG_CONFIG = .*,PKG_CONFIG = ${PREFIX}/bin/pkg-config,'
 
 SUBST_CLASSES+=         fix-mcs
-SUBST_STAGE.fix-mcs=    post-patch
+SUBST_STAGE.fix-mcs=    pre-configure
 SUBST_MESSAGE.fix-mcs=  Fix compiler name
 SUBST_FILES.fix-mcs=    configure
 SUBST_SED.fix-mcs=      -e 's,gmcs,mcs,'

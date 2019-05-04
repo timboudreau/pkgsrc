@@ -1,12 +1,11 @@
-# $NetBSD: Makefile,v 1.2 2016/01/24 11:07:49 leot Exp $
-#
+# $NetBSD: Makefile,v 1.7 2018/08/13 05:32:48 wiz Exp $
 
-DISTNAME=	di-4.40
+DISTNAME=	di-4.47
 CATEGORIES=	sysutils
-MASTER_SITES=	http://gentoo.com/di/
+MASTER_SITES=	https://gentoo.com/di/
 
 MAINTAINER=	brad.lanam.di@gmail.com
-HOMEPAGE=	http://gentoo.com/di/
+HOMEPAGE=	https://gentoo.com/di/
 COMMENT=	Alternative df command
 LICENSE=	zlib
 
@@ -19,6 +18,9 @@ MAKE_ENV+=	prefix=${PREFIX} \
 		INSTALL_DIR=${DESTDIR}${PREFIX} \
 		INST_LOCALEDIR=${DESTDIR}${PREFIX}/${PKGLOCALEDIR}/locale \
 		DI_MANINSTDIR=${DESTDIR}${PREFIX}/${PKGMANDIR}
+
+# Leave pkgsrc to handle security features.
+MAKE_ENV+=	NO_PIE=yes
 
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

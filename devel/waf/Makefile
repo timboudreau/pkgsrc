@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.33 2017/06/14 12:15:43 wiz Exp $
+# $NetBSD: Makefile,v 1.46 2019/04/25 07:32:51 maya Exp $
 
-DISTNAME=	waf-1.9.12
+DISTNAME=	waf-2.0.15
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	https://waf.io/
 EXTRACT_SUFX=	.tar.bz2
@@ -10,6 +11,7 @@ HOMEPAGE=	https://waf.io/
 COMMENT=	Framework for configuring, compiling, and installing applications
 LICENSE=	modified-bsd
 
+USE_LANGUAGES=		# none
 REPLACE_PYTHON=		waf-light
 INSTALLATION_DIRS=	bin
 

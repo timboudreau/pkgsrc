@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.44 2017/02/12 06:24:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.51 2019/04/26 13:14:00 maya Exp $
 
 DISTNAME=	libscigraphica-2.1.1
-PKGREVISION=	30
+PKGREVISION=	35
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scigraphica/}
 
@@ -16,7 +16,7 @@ USE_TOOLS+=		pkg-config gmake intltool
 GNU_CONFIGURE=		yes
 
 PKGCONFIG_OVERRIDE+=	libscigraphica-2.0.pc.in
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-numarray
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-numarray
 
 pre-configure:
 	ln -s ${PYTHONBIN} ${TOOLS_DIR}/bin/python

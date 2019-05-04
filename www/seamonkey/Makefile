@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.160 2017/04/22 21:04:02 adam Exp $
+# $NetBSD: Makefile,v 1.188 2019/04/03 00:33:13 ryoon Exp $
 
 DISTNAME=	seamonkey-${SM_VER}.source
 PKGNAME=	seamonkey-${SM_VER:S/b/beta/}
-PKGREVISION=	8
-SM_VER=		2.46
+PKGREVISION=	6
+SM_VER=		2.49.4
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_MOZILLA:=seamonkey/releases/${SM_VER}/source/}
 EXTRACT_SUFX=	.tar.xz
@@ -18,12 +18,12 @@ PLIST_SRC+=	${PLIST_SRC_DFLT}
 USE_LANGUAGES+=	c c++
 USE_TOOLS+=	unzip pax
 
-NOT_PAX_MPROTECT_SAFE+=	lib/seamonkey/seamonkey
-NOT_PAX_MPROTECT_SAFE+=	lib/seamonkey/seamonkey-bin
+NOT_PAX_MPROTECT_SAFE+=	lib/${PKGBASE}/seamonkey
+NOT_PAX_MPROTECT_SAFE+=	lib/${PKGBASE}/seamonkey-bin
 
 .include "../../mk/bsd.prefs.mk"
 .include "options.mk"
-.include "../../www/firefox/mozilla-common.mk"
+.include "../../www/firefox52/mozilla-common.mk"
 
 # Workaround to fix pixman.h detection
 CFLAGS+=	-I${BUILDLINK_PREFIX.pixman}/include/pixman-1
@@ -33,7 +33,9 @@ CONFIG_SUB_OVERRIDE+=	ldap/sdks/c-sdk/config/autoconf/config.sub
 
 CONFIGURE_ARGS+=	--enable-application=suite
 
-ALL_ENV+=		MOZILLA_PKG_NAME=seamonkey
+ALL_ENV+=		MOZILLA_PKG_NAME=${PKGBASE}
+
+LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib/${PKGBASE}
 
 .include "../../mk/bsd.prefs.mk"
 

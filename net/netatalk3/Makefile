@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.5 2017/06/02 12:19:07 szptvlfn Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/25 07:33:11 maya Exp $
 
-DISTNAME=	netatalk-3.1.11
+DISTNAME=	netatalk-3.1.12
 PKGNAME=        ${DISTNAME:C/-/3-/}
+PKGREVISION=	2
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=netatalk/}
 EXTRACT_SUFX=	.tar.bz2
@@ -73,6 +74,8 @@ PLIST.ea=		yes
 .endif
 
 CONFIGURE_ARGS.NetBSD+=	--without-dtrace
+
+CHECK_SSP_SKIP+=	libexec/netatalk/uams/*.a
 
 .include "options.mk"
 

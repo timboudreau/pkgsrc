@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.16 2017/01/01 15:32:47 adam Exp $
+# $NetBSD: Makefile,v 1.18 2018/08/16 15:58:31 adam Exp $
 
 BOOST_PACKAGE=		docs
 BOOST_COMMENT=		(documentation)
@@ -8,10 +8,8 @@ USE_TOOLS+=	pax
 
 .include "../../meta-pkgs/boost/Makefile.common"
 
-DOCDIR=			${PREFIX}/share/doc/boost
-
-NO_BUILD=		yes
-
+DOCDIR=		${PREFIX}/share/doc/boost
+NO_BUILD=	yes
 PLIST_SRC=	PLIST ${WRKDIR}/PLIST.auto
 
 do-install:
@@ -24,11 +22,11 @@ do-install:
 		-s':^.*\.orig$$::' \
 		*.png *.css *.htm *.html libs more ${DESTDIR}${DOCDIR}
 	${FIND} ${DESTDIR}${DOCDIR} \
-		-type f -exec ${CHOWN} ${SHAREOWN}:${SHAREGRP} {} \;
+		-type f -exec ${CHOWN} ${SHAREOWN}:${SHAREGRP} {} +
 	${FIND} ${DESTDIR}${DOCDIR} \
-		-type d -exec ${CHMOD} ${PKGDIRMODE} {} \;
+		-type d -exec ${CHMOD} ${PKGDIRMODE} {} +
 	${FIND} ${DESTDIR}${DOCDIR} \
-		-type f -exec ${CHMOD} ${SHAREMODE} {} \;
+		-type f -exec ${CHMOD} ${SHAREMODE} {} +
 	cd ${DESTDIR}${PREFIX} && \
 		${FIND} share/doc/boost -type f -print > ${WRKDIR}/PLIST.auto
 

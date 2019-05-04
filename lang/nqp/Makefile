@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2017/04/22 21:03:12 adam Exp $
+# $NetBSD: Makefile,v 1.18 2019/02/16 19:39:02 bsiegert Exp $
 
-DISTNAME=	nqp-2013.08
-PKGREVISION=	11
+DISTNAME=	nqp-2018.12
 CATEGORIES=	lang perl6
 MASTER_SITES=	http://rakudo.org/downloads/nqp/
 
@@ -15,22 +14,14 @@ MAKE_JOBS_SAFE=	no
 .include "../../mk/bsd.prefs.mk"
 
 USE_LANGUAGES=		c c++
-USE_TOOLS+=		perl
-PLIST_SRC+=		${PLIST_SRC_DFLT}
-.if (${OPSYS} != "Darwin")
-PLIST_SRC+=		PLIST.shared
-.else
-USE_TOOLS+=		 gmake
-.endif
+USE_TOOLS+=		perl gmake
 
 HAS_CONFIGURE=		yes
 CONFIG_SHELL=		${PERL5}
 CONFIGURE_SCRIPT=	Configure.pl
 CONFIGURE_ARGS=		--prefix=${PREFIX:Q} \
-			--with-parrot=${PREFIX}/bin/parrot
+			--backends=moar
 
-PLIST_SUBST+=		PARROT_VERSION=${PARROT_VERSION:Q}
-PRINT_PLIST_AWK+=        { gsub(/${PARROT_VERSION}/, "$${PARROT_VERSION}") }
-
-.include "../../lang/parrot/buildlink3.mk"
+BUILDLINK_API_DEPENDS.MoarVM+=  MoarVM>=2017.07
+.include "../../devel/MoarVM/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

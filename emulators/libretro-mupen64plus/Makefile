@@ -1,19 +1,18 @@
-# $NetBSD: Makefile,v 1.8 2016/02/25 12:50:49 jperkin Exp $
+# $NetBSD: Makefile,v 1.16 2018/10/14 16:51:57 nia Exp $
 
-DISTNAME=	mupen64plus-libretro-20150204
-PKGNAME=	libretro-mupen64plus-20150204
-PKGREVISION=	1
+DISTNAME=	libretro-mupen64plus-20181013
 CATEGORIES=	emulators
-MASTER_SITES=	http://ftp.NetBSD.org/pub/NetBSD/misc/jmcneill/retroarch/
-EXTRACT_SUFX=	.zip
+MASTER_SITES=	${MASTER_SITE_GITHUB:=libretro/}
+GITHUB_PROJECT=	mupen64plus-libretro
+GITHUB_TAG=	e7ea1ae1f7a6e9913a46946e322d1a2f6d8c4ae0
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://github.com/libretro/mupen64plus-libretro
-COMMENT=	Libretro core based on the Mupen64 Plus emulator
+HOMEPAGE=	https://docs.libretro.com/library/mupen64plus/
+COMMENT=	Libretro core based on the Mupen64Plus emulator
 LICENSE=	gnu-gpl-v3
 
-WRKSRC=		${WRKDIR}/mupen64plus-libretro-master
-USE_LANGUAGES=	c c++
+EXTRACT_USING=	bsdtar
+USE_LANGUAGES=	c c++03
 USE_TOOLS+=	gmake
 
 SUBST_CLASSES+=		vc
@@ -22,9 +21,25 @@ SUBST_MESSAGE.vc=	Fixing path to VideoCore libraries.
 SUBST_FILES.vc=		Makefile
 SUBST_SED.vc+=		-e 's;/opt/vc;${PREFIX};g'
 
+MAKE_FLAGS+=		GIT_VERSION="-pkgsrc"
+
+.if !empty(MACHINE_ARCH:M*arm*)
+MAKE_FLAGS+=	WITH_DYNAREC=arm
+.elif ${MACHINE_ARCH} == "i386"
+MAKE_FLAGS+=	WITH_DYNAREC=x86
+BUILD_DEPENDS+=	nasm-[0-9]*:../../devel/nasm
+.elif ${MACHINE_ARCH} == "x86_64"
+MAKE_FLAGS+=	WITH_DYNAREC=x86_64
+.else
+MAKE_FLAGS+=	WITH_DYNAREC=
+.endif
+
+BUILDLINK_TRANSFORM.SunOS+=	rm:-Wl,--version-script=./libretro/link.T
+BUILDLINK_TRANSFORM.SunOS+=	rm:-Wl,--no-undefined
+
 INSTALLATION_DIRS+=	${PREFIX}/lib/libretro
 
-CFLAGS.NetBSD+=	-DHAVE_POSIX_MEMALIGN=1
+CFLAGS.NetBSD+=		-DHAVE_POSIX_MEMALIGN=1
 
 .include "options.mk"
 
@@ -32,4 +47,7 @@ do-install:
 	${INSTALL_LIB} ${WRKSRC}/mupen64plus_libretro.so \
 	    ${DESTDIR}${PREFIX}/lib/libretro/mupen64plus_libretro.so
 
+.include "../../devel/zlib/buildlink3.mk"
+.include "../../graphics/png/buildlink3.mk"
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.10 2017/03/04 11:05:35 wen Exp $
+# $NetBSD: Makefile,v 1.14 2019/03/16 23:12:54 wen Exp $
 
-DISTNAME=	obspy-1.0.3
+DISTNAME=	obspy-1.1.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	geography python
 MASTER_SITES=	${MASTER_SITE_PYPI:=o/obspy/}
@@ -11,11 +11,12 @@ HOMEPAGE=	http://www.obspy.org/
 COMMENT=	Python framework for seismological observatories
 LICENSE=	gnu-lgpl-v3
 
-DEPENDS+=	${PYPKGPREFIX}-scipy>=0.12.0:../../math/py-scipy
-DEPENDS+=	${PYPKGPREFIX}-lxml>=3.2.3:../../textproc/py-lxml
-DEPENDS+=	${PYPKGPREFIX}-future>=0.12.4:../../devel/py-future
-DEPENDS+=	${PYPKGPREFIX}-requests>=0:../../devel/py-requests
 DEPENDS+=	${PYPKGPREFIX}-decorator>=0:../../devel/py-decorator
+DEPENDS+=	${PYPKGPREFIX}-future>=0.12.4:../../devel/py-future
+DEPENDS+=	${PYPKGPREFIX}-lxml>=3.2.3:../../textproc/py-lxml
+DEPENDS+=	${PYPKGPREFIX}-matplotlib-[0-9]*:../../graphics/py-matplotlib
+DEPENDS+=	${PYPKGPREFIX}-requests>=0:../../devel/py-requests
+DEPENDS+=	${PYPKGPREFIX}-scipy>=0.12.0:../../math/py-scipy
 DEPENDS+=	${PYPKGPREFIX}-sqlalchemy>=0:../../databases/py-sqlalchemy
 
 USE_LANGUAGES=	c fortran
@@ -36,7 +37,6 @@ PRINT_PLIST_AWK+=       /^${PYPLATFORM:S|/|\\/|g}/ \
                         { gsub(/${PYPLATFORM:S|/|\\/|g}/, "$${PYPLATFORM}") }
 .endif
 
-.include "../../graphics/py-matplotlib/buildlink3.mk"
 .include "../../lang/python/egg.mk"
 .include "../../lang/python/tool.mk"
 .include "../../math/py-numpy/buildlink3.mk"

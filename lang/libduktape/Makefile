@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.1 2016/05/05 03:57:26 agc Exp $
+# $NetBSD: Makefile,v 1.3 2019/03/20 18:29:20 agc Exp $
 
-DISTNAME=	duktape-1.5.0
+DISTNAME=	duktape-2.3.0
 PKGNAME=	lib${DISTNAME}
 CATEGORIES=	devel
 MASTER_SITES=	http://duktape.org/

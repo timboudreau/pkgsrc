@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.21 2017/02/12 06:25:18 ryoon Exp $
+# $NetBSD: Makefile,v 1.29 2018/11/29 11:21:51 prlw1 Exp $
 #
 
 DISTNAME=	ski-1.3.2
-PKGREVISION=	6
+PKGREVISION=	13
 CATEGORIES=	emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ski/}
 
@@ -36,7 +36,7 @@ SUBST_FILES.xski-app=	Makefile.am
 SUBST_SED.xski-app=	-e 's,/etc/X11/app-defaults,${PREFIX}/lib/X11/app-defaults,g'
 
 SUBST_CLASSES+=		ssx-app
-SUBST_STAGE.ssx-app=	post-patch
+SUBST_STAGE.ssx-app=	pre-configure
 SUBST_MESSAGE.ssx-app=	Fixing X11 ssX.c app-default paths.
 SUBST_FILES.ssx-app=	src/ssX.c
 SUBST_SED.ssx-app=	-e 's,XSKI_RESOURCE_FILE,${PREFIX}/lib/X11/app-defaults/XSki,g'

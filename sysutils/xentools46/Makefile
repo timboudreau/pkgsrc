@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.17 2017/07/11 14:19:21 jaapb Exp $
+# $NetBSD: Makefile,v 1.37 2019/04/25 07:33:23 maya Exp $
 #
 # VERSION is set in version.mk as it is shared with other packages
 .include		"version.mk"
 
 DISTNAME=		xen-${VERSION}
 PKGNAME=		xentools46-${VERSION}
-PKGREVISION=		3
+PKGREVISION=		9
 CATEGORIES=		sysutils
 MASTER_SITES=		https://downloads.xenproject.org/release/xen/${VERSION}/
 
@@ -30,14 +30,15 @@ PKG_SYSCONFSUBDIR=	xen
 ONLY_FOR_PLATFORM=	Linux-2.6*-x86_64
 ONLY_FOR_PLATFORM+=	NetBSD-[5-9].*-x86_64
 
+SSP_SUPPORTED=		no
+
 CONFLICTS+=		libxen-[0-9]*
-CONFLICTS+=		xentools20-[0-9]*
-CONFLICTS+=		xentools3-[0-9]*
 CONFLICTS+=		xenstoretools-[0-9]*
 
 XENTOP=			${WRKDIR}/xen-${VERSION}
 WRKSRC=			${XENTOP}/tools
 CHECK_PORTABILITY_SKIP=	examples/*
+CHECK_RELRO_SKIP=	libexec/xen/boot/hvmloader
 
 EGDIR=			${PREFIX}/share/examples/xen
 MESSAGE_SUBST+=		EGDIR=${EGDIR}
@@ -52,6 +53,7 @@ CONFIGURE_ARGS+=	--disable-seabios
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 
 MAKE_ENV+=		PREFIX=${prefix:Q} WRKSRC=${WRKSRC}
+MAKE_ENV+=		APPEND_LIB=${LDFLAGS:Q}
 MAKE_ENV+=		XEN_EXAMPLES_DIR=${EGDIR}
 MAKE_ENV+=		MV=${MV:Q} PYTHON=${PYTHONBIN:Q} SED=${SED:Q}
 MAKE_ENV+=		V=YES
@@ -61,7 +63,7 @@ MAKE_ENV+=		NO_WERROR=1
 #MAKE_ENV+=		INSTALL_DATA=${BSD_INSTALL_DATA}
 #MAKE_ENV+=		INSTALL_PROG=${BSD_INSTALL_PROGRAM}
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+PYTHON_VERSIONS_ACCEPTED=	27
 
 PY_PATCHPLIST=		yes
 REPLACE_PYTHON+=	misc/xen-bugtool misc/xen-ringwatch misc/xencons

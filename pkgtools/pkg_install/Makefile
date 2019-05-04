@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.221 2017/04/20 14:38:40 joerg Exp $
+# $NetBSD: Makefile,v 1.225 2019/04/10 08:24:03 adam Exp $
 
 # Notes to package maintainers:
 #
@@ -14,7 +14,7 @@ HOMEPAGE=		http://www.pkgsrc.org/
 COMMENT=		Package management and administration tools for pkgsrc
 LICENSE=		modified-bsd
 
-BOOTSTRAP_PKG=	yes
+BOOTSTRAP_PKG=		yes
 SKIP_LICENSE_CHECK=	yes
 
 CONFLICTS+=		audit-packages-[0-9]*
@@ -114,12 +114,6 @@ BUILDLINK_API_DEPENDS.libarchive+=	libarchive>=3.3.1
 
 .include "options.mk"
 
-.if !empty(USE_BUILTIN.openssl:M[yY][eE][sS])
-CONFIGURE_ARGS+=	--with-ssl
-
-.include "../../security/openssl/buildlink3.mk"
-.endif
-
 .if empty(USE_BUILTIN.bzip2:M[yY][eE][sS]) || \
     empty(USE_BUILTIN.zlib:M[yY][eE][sS])
 USE_BUILTIN.libarchive=	no
@@ -143,12 +137,6 @@ LDFLAGS+=	-L${WRKDIR}/zlib
 CPPFLAGS+=	-I${WRKDIR}/libarchive/libarchive
 LDFLAGS+=	-L${WRKDIR}/libarchive/.libs
 
-# Until we support pkgsrc openssl at bootstrap time, disable it completely
-# if asked to avoid the builtin.
-.  if empty(USE_BUILTIN.openssl:M[Yy][Ee][Ss])
-LIBARCHIVE_CONFIGURE_ARGS+=	--without-openssl
-.  endif
-
 # Only use XZ if we actually have builtin support for it. Some systems
 # install the header, but without usable library or prefer to not use
 # the system version, so give them some control.
@@ -157,8 +145,8 @@ LIBARCHIVE_CONFIGURE_ARGS+=	--without-lzma
 .  endif
 
 LIBARCHIVE_LIBS=	${SED} -n -e 's/^Libs.private://p' \
-    ${WRKDIR}/libarchive/build/pkgconfig/libarchive.pc 2>/dev/null || echo
-LIBS+=		${LIBARCHIVE_LIBS:sh}
+	${WRKDIR}/libarchive/build/pkgconfig/libarchive.pc 2>/dev/null || echo
+LIBS+=			${LIBARCHIVE_LIBS:sh}
 
 CONFIG_GUESS_OVERRIDE+=	${WRKDIR}/libarchive/build/autoconf/config.guess \
 			${WRKSRC}/config.guess
@@ -214,7 +202,7 @@ pre-configure:
 		--disable-dependency-tracking --without-expat		\
 		--disable-maintainer-mode				\
 		--without-iconv --without-lzo2 --without-nettle		\
-		--without-xml2 --without-lz4				\
+		--without-xml2 --without-lz4 --without-zstd		\
 		${LIBARCHIVE_CONFIGURE_ARGS}
 	cd ${WRKDIR}/libarchive && ${BUILD_MAKE_CMD}
 .endif
@@ -242,10 +230,10 @@ update-catpages:
 	for f in lib/pkgsrc.7 add/pkg_add.1 admin/pkg_admin.1 \
 	    create/pkg_create.1 delete/pkg_delete.1 info/pkg_info.1 \
 	    lib/pkg_summary.5 lib/pkgsrc.7; do \
-		nroff -mdoc ${FILESDIR}/$$f > \
+	    mandoc -I os=pkgsrc -Tascii ${FILESDIR}/$$f > \
 		    ${FILESDIR}/$${f%%.[157]}.cat; \
 	done
-	nroff -mdoc ${FILESDIR}/lib/pkg_install.conf.5.in > \
+	mandoc -I os=pkgsrc -Tascii ${FILESDIR}/lib/pkg_install.conf.5.in > \
 	    ${FILESDIR}/lib/pkg_install.conf.cat.in
 
 .include "../../mk/bsd.pkg.mk"

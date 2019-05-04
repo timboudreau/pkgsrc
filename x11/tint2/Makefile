@@ -1,57 +1,42 @@
-# $NetBSD: Makefile,v 1.41 2017/02/12 06:26:15 ryoon Exp $
+# $NetBSD: Makefile,v 1.47 2019/01/02 15:35:12 tnn Exp $
 
-DISTNAME=		tint2-0.11
-PKGREVISION=		27
+DISTNAME=		tint2-v16.6.1
+PKGNAME=		${DISTNAME:S/-v/-/}
 CATEGORIES=		x11
-MASTER_SITES=		http://tint2.googlecode.com/files/
+MASTER_SITES=		https://gitlab.com/o9000/tint2/-/archive/v16.6.1/
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		fernandotcl@gmail.com
-HOMEPAGE=		http://code.google.com/p/tint2/
-COMMENT=		Tint2 is a simple panel/taskbar
+HOMEPAGE=		https://gitlab.com/o9000/tint2
+COMMENT=		Lightweight panel/taskbar for Linux and BSD
 LICENSE=		gnu-gpl-v2
 
 USE_LANGUAGES=		c c++ # XXX CMake. pkg does not really need c++
+USE_CMAKE=		yes
 USE_LIBTOOL=		yes
-USE_TOOLS+=		gmake pkg-config
+USE_TOOLS+=		pkg-config
 
 INSTALLATION_DIRS=	share/examples/tint2
 OWN_DIRS=		${PKG_SYSCONFDIR}/xdg/tint2
 CONF_FILES=		${PREFIX}/share/examples/tint2/tint2rc \
 			${PKG_SYSCONFDIR}/xdg/tint2/tint2rc
 
-REPLACE_PYTHON+=	src/tint2conf/tintwizard.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
-
-# XXX: why not use normal CMAKE_ARGS infrastructure?
-CMAKE_OPTS+=	-DCMAKE_INSTALL_PREFIX=${PREFIX}
-CMAKE_OPTS+=	-DSYSCONFDIR=${PKG_SYSCONFDIR}
-CMAKE_OPTS+=	-DMANDIR=${PKGMANDIR}
-# Below rpath fix is copypasted from graphics/vtk.
-CMAKE_OPTS+=	-DCMAKE_INSTALL_RPATH:STRING=${PREFIX}/lib:${X11BASE}/lib${LIBABISUFFIX:Q}	\
-CMAKE_OPTS+=	-DCMAKE_SKIP_BUILD_RPATH:BOOL=ON		\
-CMAKE_OPTS+=	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON	\
-CMAKE_OPTS+=	-DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON
-
-OPSYSVARS+=		CMAKE_OPTS
-CMAKE_OPTS.Linux=	-DENABLE_BATTERY=ON
-CMAKE_OPTS.*=		-DENABLE_BATTERY=OFF
-
-do-configure:
-	cd ${WRKSRC} && ${PREFIX}/bin/cmake ${CMAKE_OPTS} .
+CMAKE_ARGS.Linux=	-DENABLE_BATTERY=ON
+CMAKE_ARGS.*=		-DENABLE_BATTERY=OFF
 
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/sample/tint2rc \
+	${INSTALL_DATA} ${WRKSRC}/themes/tint2rc \
 		${DESTDIR}${PREFIX}/share/examples/tint2
 
 .include "../../devel/cmake/buildlink3.mk"
+.include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../graphics/imlib2/buildlink3.mk"
-.include "../../lang/python/application.mk"
+.include "../../graphics/librsvg/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../x11/gtk2/buildlink3.mk"
 .include "../../x11/libXcomposite/buildlink3.mk"
 .include "../../x11/libXdamage/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXrandr/buildlink3.mk"
-.include "../../x11/py-gtk2/buildlink3.mk"
+.include "../../x11/startup-notification/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

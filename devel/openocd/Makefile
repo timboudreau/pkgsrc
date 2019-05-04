@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.2 2015/10/01 23:06:37 rodent Exp $
+# $NetBSD: Makefile,v 1.5 2018/03/13 03:01:15 dholland Exp $
 
-DISTNAME=	openocd-0.9.0
+DISTNAME=	openocd-0.10.0
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openocd/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://openocd.org/
 COMMENT=	Open On-Chip Debugger
 LICENSE=	gnu-gpl-v2

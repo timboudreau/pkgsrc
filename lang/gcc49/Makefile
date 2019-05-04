@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.20 2017/07/10 15:55:40 maya Exp $
+# $NetBSD: Makefile,v 1.27 2018/08/22 09:45:19 wiz Exp $
 
 GCC_PKGNAME=	gcc49
 .include	"version.mk"
@@ -9,12 +9,12 @@ PKGNAME=	${GCC_PKGNAME}-${GCC49_DIST_VERSION}
 ## When bumping the PKGREVISION of this package the PKGREVISION of
 ## lang/gcc49-libs needs to be bump to be at least 1 more than the
 ## PKGREVISION of this package!
-PKGREVISION=	3
+PKGREVISION=	7
 CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_GNU:=gcc/gcc-${GCC49_DIST_VERSION}/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	maya@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://gcc.gnu.org/
 COMMENT=	The GNU Compiler Collection (GCC) - 4.9 Release Series
 LICENSE=	gnu-gpl-v2 AND gnu-gpl-v3 AND gnu-lgpl-v2 AND gnu-lgpl-v3
@@ -24,7 +24,7 @@ EXTRACT_ONLY=		${DEFAULT_DISTFILES}
 
 NOT_FOR_PLATFORM=	Interix-*-*
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake makeinfo sed:run
 USE_TOOLS.NetBSD+=	gsed
 
@@ -119,7 +119,7 @@ CONFIGURE_ARGS+=	--with-arch=i486 --with-tune=i486
 .endif
 
 # Disable fixincludes on SmartOS, header changes result in broken includes
-# being generated, see https://github.com/joyent/pkgsrc/issues/270
+# being generated, see https://github.com/joyent/pkgsrc-legacy/issues/270
 .if ${OS_VARIANT} == "SmartOS"
 SUBST_CLASSES+=		fixinc
 SUBST_STAGE.fixinc=	pre-configure

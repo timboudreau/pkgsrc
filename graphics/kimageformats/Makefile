@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2017/04/22 21:03:38 adam Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/25 20:53:51 markd Exp $
 
 DISTNAME=	kimageformats-${KF5VER}
-PKGREVISION=	4
 CATEGORIES=	graphics
 
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Image format plugins for Qt5
 LICENSE=	gnu-lgpl-v2.1
 
-.include "../../meta-pkgs/kf5/Makefile.common"
+.include "../../meta-pkgs/kde/kf5.mk"
 
 USE_TOOLS+=	pkg-config
 

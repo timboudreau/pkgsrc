@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2019/01/20 14:46:38 taca Exp $
+
+SHA1 (erubi-1.8.0.gem) = d9c2cae43ad52200626b7c783280d23e7f2498f6
+RMD160 (erubi-1.8.0.gem) = 4bff7fcf110833600136a5dbe821654c89dbeb16
+SHA512 (erubi-1.8.0.gem) = ca227cc10a3a77750a4e5184395709a032da6f15cb0fb5f9b8cc162e382b2ce49cd94023941439b05ee5b0c5d1b39114d68a0e7549910bceb1fdead6b9fd62e4
+Size (erubi-1.8.0.gem) = 13824 bytes

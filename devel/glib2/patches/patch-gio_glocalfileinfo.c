@@ -1,10 +1,10 @@
-$NetBSD: patch-gio_glocalfileinfo.c,v 1.1 2017/07/11 11:52:42 jperkin Exp $
+$NetBSD: patch-gio_glocalfileinfo.c,v 1.3 2018/05/21 08:39:38 jperkin Exp $
 
 Re-enable gdesktopappinfo on Darwin.
 
---- gio/glocalfileinfo.c.orig	2017-06-22 12:52:49.000000000 +0000
+--- gio/glocalfileinfo.c.orig	2018-01-08 21:34:19.000000000 +0000
 +++ gio/glocalfileinfo.c
-@@ -1259,7 +1259,7 @@ get_content_type (const char          *b
+@@ -1290,7 +1290,7 @@ get_content_type (const char          *b
  
        content_type = g_content_type_guess (basename, NULL, 0, &result_uncertain);
        

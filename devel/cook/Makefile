@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.29 2016/07/09 06:38:05 wiz Exp $
+# $NetBSD: Makefile,v 1.31 2018/08/22 09:43:28 wiz Exp $
 
 DISTNAME=	cook-2.26
-PKGREVISION=	7
+PKGREVISION=	8
 CATEGORIES=	devel
-MASTER_SITES=	http://miller.emu.id.au/pmiller/software/cook/
+#MASTER_SITES=	http://miller.emu.id.au/pmiller/software/cook/
 
 MAINTAINER=	groo@NetBSD.org
-HOMEPAGE=	http://miller.emu.id.au/pmiller/software/cook/
+#HOMEPAGE=	http://miller.emu.id.au/pmiller/software/cook/
 COMMENT=	More powerful replacement for the traditional make(1) tool
 
 USE_TOOLS+=	groff msgfmt yacc perl:run

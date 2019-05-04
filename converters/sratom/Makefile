@@ -1,16 +1,17 @@
-# $NetBSD: Makefile,v 1.5 2017/02/12 06:25:10 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2019/04/25 07:32:40 maya Exp $
 
-DISTNAME=	sratom-0.4.6
-PKGREVISION=	4
+DISTNAME=	sratom-0.6.2
+PKGREVISION=	1
 CATEGORIES=	converters
 MASTER_SITES=	http://download.drobilla.net/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://drobilla.net/software/sratom/
 COMMENT=	Library for serialising LV2 atoms to/from RDF
 LICENSE=	isc
 
+USE_LANGUAGES=	c99
 USE_TOOLS+=	gsed pkg-config
 
 PKGCONFIG_OVERRIDE+=	sratom.pc.in
@@ -30,11 +31,11 @@ do-build:
 do-install:
 	cd ${WRKSRC} && ${SETENV} ${INSTALL_ENV} ${PYTHONBIN} ./waf install
 
-BUILDLINK_API_DEPENDS.sord+=	sord>=0.12.0
+BUILDLINK_API_DEPENDS.sord+=	sord>=0.14.0
 .include "../../textproc/sord/buildlink3.mk"
-BUILDLINK_API_DEPENDS.serd+=	serd>=0.14.0
+BUILDLINK_API_DEPENDS.serd+=	serd>=0.30.0
 .include "../../textproc/serd/buildlink3.mk"
-BUILDLINK_API_DEPENDS.lv2+=	lv2>=1.8.1
+BUILDLINK_API_DEPENDS.lv2+=	lv2>=1.10.0
 .include "../../audio/lv2/buildlink3.mk"
 .include "../../lang/python/application.mk"
 .include "../../mk/bsd.pkg.mk"

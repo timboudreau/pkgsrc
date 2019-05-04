@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.10 2017/06/19 12:31:40 youri Exp $
+# $NetBSD: Makefile,v 1.18 2018/11/14 22:22:45 kleink Exp $
 
+PKGREVISION= 3
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-DISTNAME=	libxfce4ui-4.13.1
+DISTNAME=	libxfce4ui-4.13.4
 CATEGORIES=	x11
 MASTER_SITES+=	http://archive.xfce.org/src/xfce/libxfce4ui/4.13/
 
@@ -11,6 +12,7 @@ COMMENT=	Xfce widget library
 BUILD_DEFS+=		PKG_SYSCONFBASE
 
 CONFIGURE_ARGS+=	--enable-gtk3
+CONFIGURE_ARGS=		--with-vendor-info=${OPSYS}
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 
 PKG_SYSCONFSUBDIR=	xdg

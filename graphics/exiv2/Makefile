@@ -1,7 +1,4 @@
-# $NetBSD: Makefile,v 1.38 2015/10/05 08:42:25 richard Exp $
-
-# Race condition between exiv2.cpp and creation of exv_conf.h
-MAKE_JOBS_SAFE=	no
+# $NetBSD: Makefile,v 1.40 2019/02/23 09:00:25 tnn Exp $
 
 .include "Makefile.common"
 
@@ -11,6 +8,7 @@ PKGCONFIG_OVERRIDE=	config/exiv2.pc.in
 LDFLAGS.Linux+=		-ldl
 LIBS.SunOS+=	-lsocket -lnsl
 
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"

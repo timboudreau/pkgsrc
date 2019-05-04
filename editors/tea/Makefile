@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.41 2017/02/12 06:25:16 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.49 2018/11/14 22:21:24 kleink Exp $
 
 DISTNAME=		tea-16.0.5
-PKGREVISION=		34
+PKGREVISION=		41
 CATEGORIES=		editors
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=tea-editor/}
+#https://github.com/psemiletov/tea-qt
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://tea-editor.sourceforge.net/
-#HOMEPAGE=		http://tea.linux.kiev.ua/
+HOMEPAGE=		http://semiletov.org/tea/
 COMMENT=		Powerful, easy-to-use text editor for Gtk2
 
 USE_PKGLOCALEDIR=	yes

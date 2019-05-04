@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.27 2017/02/12 06:25:36 ryoon Exp $
+# $NetBSD: Makefile,v 1.33 2018/11/14 22:21:52 kleink Exp $
 #
 
 DISTNAME=	scim-array-1.0.1
-PKGREVISION=	24
+PKGREVISION=	29
 CATEGORIES=	inputmethod chinese
 MASTER_SITES=	http://of.openfoundry.org/download/scimarray/1.0.1/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://scimarray.openfoundry.org/index_en.html
+#HOMEPAGE=	http://scimarray.openfoundry.org/index_en.html
 COMMENT=	Array 30 Input Method Engine for SCIM
 LICENSE=	gnu-gpl-v2
 

@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.12 2016/07/09 06:39:04 wiz Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:46:44 wiz Exp $
 #
 
 DISTNAME=	Markdown_1.0.1
 PKGNAME=	Markdown-1.0.1
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	textproc converters
 MASTER_SITES=	http://daringfireball.net/projects/downloads/
 EXTRACT_SUFX=	.zip
 DIST_SUBDIR=	${PKGNAME_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://daringfireball.net/projects/markdown/
+HOMEPAGE=	https://daringfireball.net/projects/markdown/
 COMMENT=	Text-to-HTML conversion tool for web writers
 
 USE_LANGUAGES=	# none

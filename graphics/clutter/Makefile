@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.55 2017/02/12 06:24:43 ryoon Exp $
+# $NetBSD: Makefile,v 1.61 2018/11/14 22:21:35 kleink Exp $
 
-DISTNAME=	clutter-1.22.2
-PKGREVISION=	3
+DISTNAME=	clutter-1.26.2
+PKGREVISION=	2
 CATEGORIES=	graphics gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/clutter/${PKGVERSION_NOREV:R}/}
 EXTRACT_SUFX=	.tar.xz
@@ -18,6 +18,11 @@ USE_PKGLOCALEDIR=	yes
 
 PKGCONFIG_OVERRIDE+=	clutter/cally/cally.pc.in
 PKGCONFIG_OVERRIDE+=	clutter/clutter.pc.in
+
+# This requires cogl be built with EGL support, but EGL support is currently
+# optional in MesaLib and not enabled in cogl, so just explicitly disable
+# until this can be detected properly via various PKG_OPTIONS.
+CONFIGURE_ARGS+=	--disable-egl-backend
 
 .include "options.mk"
 

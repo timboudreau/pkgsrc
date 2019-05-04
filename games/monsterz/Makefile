@@ -1,23 +1,23 @@
-# $NetBSD: Makefile,v 1.16 2017/01/01 14:43:40 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/26 13:13:58 maya Exp $
 
 DISTNAME=		monsterz-0.7.1
-PKGREVISION=		4
+PKGREVISION=		5
 CATEGORIES=		games
 MASTER_SITES=		http://sam.zoy.org/monsterz/
 
-MAINTAINER=		wiz@NetBSD.org
+MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		http://sam.zoy.org/monsterz/
 COMMENT=		Puzzle game similar to the famous Bejeweled or Zookeeper
 
 DEPENDS+=		${PYPKGPREFIX}-game-[0-9]*:../../devel/py-game
 DEPENDS+=		${PYPKGPREFIX}-Numeric-[0-9]*:../../math/py-Numeric
 
-REPLACE_PYTHON=	monsterz.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-Numeric
+REPLACE_PYTHON=			monsterz.py
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-Numeric
 
 MAKE_ENV+=		GAMEOWN=${GAMEOWN:Q}
 MAKE_ENV+=		GAMEGRP=${GAMEGRP:Q}
-MAKE_ENV+=		VARBASE=${VARBASE:Q}
+MAKE_ENV+=		VARBASE=${VARBASE}
 
 SETGIDGAME=		yes
 CONF_FILES_PERMS+=	/dev/null ${VARBASE}/games/monsterz \

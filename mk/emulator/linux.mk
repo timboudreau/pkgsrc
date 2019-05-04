@@ -1,4 +1,4 @@
-# $NetBSD: linux.mk,v 1.29 2015/04/12 12:21:29 wiz Exp $
+# $NetBSD: linux.mk,v 1.32 2019/03/17 01:13:21 tsutsui Exp $
 #
 # Linux binary emulation framework
 #
@@ -63,7 +63,9 @@ _EMUL_TYPE?=		${EMUL_TYPE.linux}
 
 _EMUL_MODULES=		alsa
 _EMUL_MODULES+=		aspell
+_EMUL_MODULES+=		avahi
 _EMUL_MODULES+=		base
+_EMUL_MODULES+=		binutils
 _EMUL_MODULES+=		compat
 _EMUL_MODULES+=		cups
 _EMUL_MODULES+=		curl
@@ -74,6 +76,7 @@ _EMUL_MODULES+=		dbus-glib
 _EMUL_MODULES+=		expat
 _EMUL_MODULES+=		fontconfig
 _EMUL_MODULES+=		freetype2
+_EMUL_MODULES+=		gc
 _EMUL_MODULES+=		glib2
 _EMUL_MODULES+=		glx
 _EMUL_MODULES+=		gstreamer
@@ -84,13 +87,14 @@ _EMUL_MODULES+=		libSDL
 _EMUL_MODULES+=		libaudiofile
 _EMUL_MODULES+=		libesd
 _EMUL_MODULES+=		libffi
-_EMUL_MODULES+=		libjson
 _EMUL_MODULES+=		libidn
+_EMUL_MODULES+=		libjson
 _EMUL_MODULES+=		libsigc++2
 _EMUL_MODULES+=		libsndfile
 _EMUL_MODULES+=		libssh
 _EMUL_MODULES+=		libwrap
 _EMUL_MODULES+=		locale
+_EMUL_MODULES+=		lsb
 _EMUL_MODULES+=		motif
 _EMUL_MODULES+=		nspr
 _EMUL_MODULES+=		nss
@@ -126,9 +130,4 @@ EMULSUBDIR=		# empty
 .  for _mod_ in ${_EMUL_MODULES}
 DEPENDS_${EMUL_DISTRO}.${_mod_}=	# empty
 .  endfor
-.endif
-
-.if !defined(EMUL_IS_NATIVE)
-LDCONFIG_ADD_CMD?=	${EMULDIR}/sbin/ldconfig -r ${EMULDIR}
-LDCONFIG_REMOVE_CMD?=	${EMULDIR}/sbin/ldconfig -r ${EMULDIR}
 .endif

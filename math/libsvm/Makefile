@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.4 2015/04/11 03:25:43 rodent Exp $
-#
+# $NetBSD: Makefile,v 1.8 2019/04/25 07:33:05 maya Exp $
 
 DISTNAME=	libsvm-3.20
+PKGREVISION=	1
 CATEGORIES=	math
-MASTER_SITES=	http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+MASTER_SITES=	https://www.csie.ntu.edu.tw/~cjlin/libsvm/
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.csie.ntu.edu.tw/~cjlin/libsvm/
 COMMENT=	Library for Support Vector Machines
 LICENSE=	modified-bsd
 
@@ -28,6 +28,8 @@ SUBST_FILES.paths=	tools/grid.py tools/easy.py
 SUBST_STAGE.paths=	pre-build
 SUBST_MESSAGE.paths=	Fixing hardcoded paths.
 
+.include "../../mk/bsd.prefs.mk"
+
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/svm-predict ${DESTDIR}${PREFIX}/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/svm-scale ${DESTDIR}${PREFIX}/bin
@@ -47,6 +49,14 @@ do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/tools/easy.py ${DESTDIR}${PREFIX}/bin/svm-easy
 	${INSTALL_SCRIPT} ${WRKSRC}/tools/checkdata.py ${DESTDIR}${PREFIX}/bin/svm-checkdata
 	${INSTALL_SCRIPT} ${WRKSRC}/tools/subset.py ${DESTDIR}${PREFIX}/bin/svm-subset
+
+.if ${OPSYS} == "Darwin"
+.PHONY: fix-darwin-install-name
+post-install: fix-darwin-install-name
+fix-darwin-install-name:
+	install_name_tool -id ${PREFIX}/lib/libsvm.so.2 \
+		${DESTDIR}${PREFIX}/lib/libsvm.so.2
+.endif
 
 .include "../../lang/python/application.mk"
 .include "../../mk/bsd.pkg.mk"

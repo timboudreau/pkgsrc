@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.26 2017/01/26 12:03:15 wiz Exp $
+$NetBSD: distinfo,v 1.28 2018/07/14 18:45:51 adam Exp $
 
-SHA1 (bsddb3-6.2.4.tar.gz) = bd0f880ae55da05155bb02aa43b9d99deaa69a12
-RMD160 (bsddb3-6.2.4.tar.gz) = b544f3ee3b1fcf47805974fe56adafda5e6c675d
-SHA512 (bsddb3-6.2.4.tar.gz) = 15bb714242b05649a7c40ccd153979e596340ef039c89549b215fc5438a12fedb44150195063d2783c6c06ede3552506e31e8013b6b0431d27dd7e14975c08b0
-Size (bsddb3-6.2.4.tar.gz) = 242397 bytes
+SHA1 (bsddb3-6.2.6.tar.gz) = 6a779f6bd4546f0938b45be61faf98c03f5e3e4a
+RMD160 (bsddb3-6.2.6.tar.gz) = ba144c68564744d79d22574eca7ec8b946bcbc96
+SHA512 (bsddb3-6.2.6.tar.gz) = 764b70fbe3b8eef08527f3e5df56d7c032113e31b1df738819dab061cea2cf8aac901f30d5ff36c0fd066a785e0da6ab5693398804e2f37e9e973932dadd2fb7
+Size (bsddb3-6.2.6.tar.gz) = 239099 bytes

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.287 2017/06/14 16:25:17 prlw1 Exp $
+# $NetBSD: Makefile,v 1.305 2019/04/26 14:12:50 maya Exp $
 
-DISTNAME=	gtk+-2.24.31
+DISTNAME=	gtk+-2.24.32
 PKGNAME=	${DISTNAME:S/gtk/gtk2/}
-PKGREVISION=	4
+PKGREVISION=	8
 CATEGORIES=	x11 gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gtk+/2.24/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gtk.org/
+HOMEPAGE=	https://www.gtk.org/
 COMMENT=	GIMP Toolkit v2 - libraries for building X11 user interfaces
 LICENSE=	gnu-lgpl-v2.1
 
@@ -21,7 +21,7 @@ CONFLICTS+=		gail-[0-9]*
 SUPERSEDES=		gail-[0-9]*
 
 USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		gmake msgfmt perl pkg-config
+USE_TOOLS+=		ggrep gmake msgfmt perl pkg-config
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 PTHREAD_AUTO_VARS=	yes
@@ -59,13 +59,6 @@ CONFIGURE_ARGS.Darwin+=	--disable-visibility
 
 .include "../../mk/bsd.prefs.mk"
 
-# gtk/Makefile.am hardcodes 'grep -o' so require GNU grep on platforms
-# which do not have it.
-.if ${OPSYS} == "SunOS"
-BUILD_DEPENDS+=		grep-[0-9]*:../../textproc/grep
-TOOLS_PATH.grep=	${PREFIX}/bin/ggrep
-.endif
-
 CPPFLAGS+=		-DPREFIX="\"${PREFIX}\""
 
 #SUBST_CLASSES+=		pthread
@@ -80,7 +73,7 @@ SUBST_MESSAGE.iconcache=	Renaming gtk-icon-cache-update.
 SUBST_SED.iconcache=		-e 's,gtk-update-icon-cache,gtk2-update-icon-cache,g'
 SUBST_FILES.iconcache=		gtk/Makefile.in
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.24.22
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.24.22
 REPLACE_PYTHON=	gtk/gtk-builder-convert
 
 # We remove the module databases during post-install since we create them

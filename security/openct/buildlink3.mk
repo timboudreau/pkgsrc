@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.3 2009/12/15 22:10:39 joerg Exp $
+# $NetBSD: buildlink3.mk,v 1.5 2018/02/15 07:30:11 wiz Exp $
 
 BUILDLINK_TREE+=	openct
 
@@ -16,7 +16,7 @@ pkgbase := openct
 .endif
 
 .if !empty(PKG_BUILD_OPTIONS.openct:Mlibusb)
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .endif
 
 .include "../../devel/libltdl/buildlink3.mk"

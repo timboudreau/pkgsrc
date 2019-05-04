@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.10 2014/05/17 16:10:47 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2019/04/25 07:33:08 maya Exp $
 #
 
 DISTNAME=	Memo-1.9.5
 PKGNAME=	rox-memo-1.9.5
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	misc
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=rox/}
 EXTRACT_SUFX=	.tgz
@@ -27,7 +27,7 @@ INSTALLATION_DIRS=	share/rox/Memo
 
 SUBST_CLASSES+=		lib
 SUBST_MESSAGE.lib=	Fixing hardcoded paths for ROX-Lib.
-SUBST_STAGE.lib=	post-patch
+SUBST_STAGE.lib=	pre-configure
 SUBST_FILES.lib=	findrox.py
 SUBST_SED.lib=		-e 's,/usr/local/lib,${PREFIX}/share/rox,g'
 

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.1 2015/01/28 14:14:52 bouyer Exp $
+# $NetBSD: Makefile,v 1.3 2018/04/05 16:02:34 bouyer Exp $
 #
 
 VERSION=	2.2.4
@@ -11,7 +11,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=opencpnplugins/opencpn_packaging_data/}
 WRKSRC=		${WRKDIR}/opencpn/gshhs/
 
 MAINTAINER=	bouyer@NetBSD.org
-HOMEPAGE=	http://opencpn.org/ocpn/
+HOMEPAGE=	https://opencpn.org/
 COMMENT=	complete OpenCPN shoreline database
 LICENSE=	gnu-gpl-v2
 

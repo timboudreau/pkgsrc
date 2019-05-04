@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.33 2017/07/11 09:57:11 jaapb Exp $
+# $NetBSD: Makefile,v 1.42 2018/11/27 13:53:46 jaapb Exp $
 
-DISTNAME=		findlib-1.7.3
+DISTNAME=		findlib-1.8.0
 PKGNAME=		ocaml-${DISTNAME}
+PKGREVISION=		4
 CATEGORIES=		devel
 MASTER_SITES=		http://download.camlcity.org/download/
 
@@ -10,8 +11,8 @@ HOMEPAGE=		http://www.camlcity.org/
 COMMENT=		Library finder for OCaml
 LICENSE=		mit
 
-OCAML_FINDLIB_DIRS+=	bigarray bytes compiler-libs dynlink findlib graphics \
-			ocamldoc num-top num stdlib str threads unix
+OCAML_FINDLIB_DIRS+=	bigarray bytes compiler-libs dynlink findlib \
+			ocamldoc stdlib str threads unix
 
 .include "../../mk/ocaml.mk"
 

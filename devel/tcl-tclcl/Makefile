@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2014/10/09 14:06:31 wiz Exp $
+# $NetBSD: Makefile,v 1.31 2018/07/18 00:06:13 joerg Exp $
 
 DISTNAME=	tclcl-src-1.20
 PKGNAME=	tcl-${DISTNAME:S/-src//}
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=otcl-tclcl/}
 
@@ -10,7 +11,7 @@ HOMEPAGE=	http://otcl-tclcl.sourceforge.net/tclcl/
 COMMENT=	Tcl/C++ interface used by ns and nam
 
 WRKSRC=		${WRKDIR}/${DISTNAME:S/-src//}
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 
@@ -27,8 +28,8 @@ BUILDLINK_DEPMETHOD.libXt?=	build
 .include "../../lang/tcl/Makefile.version"
 .include "../../x11/tk/Makefile.version"
 
-CONFIGURE_ARGS+=--with-tcl-ver=$(TCL_VERSION)
-CONFIGURE_ARGS+=--with-tk-ver=$(TK_VERSION)
+CONFIGURE_ARGS+=--with-tcl-ver=${TCL_VERSION}
+CONFIGURE_ARGS+=--with-tk-ver=${TK_VERSION}
 
 .include "../../lang/tcl/buildlink3.mk"
 .include "../../lang/tcl-otcl/buildlink3.mk"

@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.3 2018/11/16 15:34:33 kleink Exp $
+
+SHA1 (piexif-1.1.2.zip) = 5178edc5c8fb87208f8b62c56a6391833f780ce4
+RMD160 (piexif-1.1.2.zip) = 1bc597137313f90688739a4ee41acf0148d368bd
+SHA512 (piexif-1.1.2.zip) = 045906fdbd49350866058bacafb61841030766bccb7d63ad3ee17ce9490858773c88e9fc86ca3e2985e752871e52b89778147d1b3d0abe5f1055d6cb02fc300d
+Size (piexif-1.1.2.zip) = 1011054 bytes

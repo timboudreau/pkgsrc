@@ -1,9 +1,9 @@
-$NetBSD: distinfo,v 1.7 2015/11/03 01:12:29 agc Exp $
+$NetBSD: distinfo,v 1.10 2017/12/01 11:00:03 adam Exp $
 
-SHA1 (faac-1.28.tar.gz) = d00b023a3642f81bb1fb13d962a65079121396ee
-RMD160 (faac-1.28.tar.gz) = 03902393488f04223aabdc804bfe77bb32a61c94
-SHA512 (faac-1.28.tar.gz) = 0ef721ad28835e95cad41afc0cb6130e1ebb634cb6dd4b40f649bc2269b7bb5bf2887f6d8f023c74628d521f8bdf55b4dd070f972ecff162a5fe0384e026235b
-Size (faac-1.28.tar.gz) = 678891 bytes
-SHA1 (patch-aa) = 5d3fa0d38721146aa3131b555ee4f1172ce119c4
-SHA1 (patch-ab) = 9598e987fc3cbde5923236e5264cb176f84c3ba6
-SHA1 (patch-ac) = feabc1f1ecbd98b6257184013a8785598e7ffa6a
+SHA1 (faac-1.29.9.2.tar.gz) = 35ed1059f34bd411c80e9a8745eddf16c112be69
+RMD160 (faac-1.29.9.2.tar.gz) = 5281fe9d905e7b749086232b5c6ced8c32d8d5c3
+SHA512 (faac-1.29.9.2.tar.gz) = 71aaf060d087e866700a3a7c7d447e85709f65709e148610c4b34f5a3e095fa4a5c19f49450610949fd7db12345422b8a116a1d061899c127ad9a1bc30e79c7c
+Size (faac-1.29.9.2.tar.gz) = 483826 bytes
+SHA1 (patch-configure.ac) = d29bb3379a47b62c739ef055db6acb175c4ed060
+SHA1 (patch-frontend_main.c) = 3b0327b636c60cf2a0466d3b38363e364bf504fe
+SHA1 (patch-frontend_mp4write.c) = 675cd3c56351e5630e055edc1d8aa893a6c6eb28

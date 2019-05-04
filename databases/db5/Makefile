@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.18 2017/01/19 18:52:05 agc Exp $
+# $NetBSD: Makefile,v 1.21 2019/02/19 15:18:38 hauke Exp $
 #
 # NOTE:
 # When updating this package, a change in the minor (5.n -> 5.(n+1))
@@ -8,13 +8,13 @@
 
 DISTNAME=	db-5.3.28
 PKGNAME=	${DISTNAME:S/db/db5/}
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	databases
 MASTER_SITES=	http://download.oracle.com/berkeley-db/
 MASTER_SITES+=	http://download-uk.oracle.com/berkeley-db/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.oracle.com/database/berkeley-db/db/index.html
+#HOMEPAGE=	https://www.oracle.com/database/berkeley-db/db/index.html
 COMMENT=	Berkeley DB version 5 from Oracle
 # NOTE: it is NOT a modified BSD in a common sense:
 LICENSE=	sleepycat-public

@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.45 2017/06/05 14:25:04 ryoon Exp $
+# $NetBSD: Makefile,v 1.53 2019/04/07 12:32:41 wen Exp $
 
-DISTNAME=	DateTime-Locale-1.16
+DISTNAME=	DateTime-Locale-1.24
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
 CATEGORIES=	time perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=DateTime/}
 
@@ -25,6 +24,7 @@ BUILD_DEPENDS+=	p5-File-ShareDir-Install>=0.06:../../devel/p5-File-ShareDir-Inst
 BUILD_DEPENDS+=	p5-Test-Requires-[0-9]*:../../devel/p5-Test-Requires
 BUILD_DEPENDS+=	p5-Test-Warnings-[0-9]*:../../devel/p5-Test-Warnings
 BUILD_DEPENDS+=	p5-Test-File-ShareDir-[0-9]*:../../devel/p5-Test-File-ShareDir
+BUILD_DEPENDS+=	p5-IPC-System-Simple>=0:../../devel/p5-IPC-System-Simple
 
 USE_LANGUAGES=		# empty
 PERL5_PACKLIST=		auto/DateTime/Locale/.packlist

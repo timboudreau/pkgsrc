@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.1 2017/06/22 09:37:23 markd Exp $
+# $NetBSD: Makefile,v 1.8 2019/01/30 09:54:20 markd Exp $
 
 DISTNAME=	collection-mathscience
-PKGNAME=	texlive-${DISTNAME}-2017pre1
+PKGNAME=	texlive-${DISTNAME}-2018pre2
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
-TEXLIVE_REV=	44396
+TEXLIVE_REV=	49722
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.tug.org/texlive/
-COMMENT=	Mathematics and science packages
+COMMENT=	Mathematics, natural sciences, computer science packages
 
 DEPENDS+=	texlive-collection-fontsrecommended-[0-9]*:../../meta-pkgs/texlive-collection-fontsrecommended
 DEPENDS+=	texlive-collection-latex-[0-9]*:../../meta-pkgs/texlive-collection-latex
@@ -17,9 +17,11 @@ DEPENDS+=	texlive-collection-latex-[0-9]*:../../meta-pkgs/texlive-collection-lat
 DEPENDS+=	tex-SIstyle-[0-9]*:../../print/tex-SIstyle
 DEPENDS+=	tex-SIunits-[0-9]*:../../print/tex-SIunits
 # depend alg
+# depend algobox
 DEPENDS+=	tex-algorithm2e-[0-9]*:../../print/tex-algorithm2e
 DEPENDS+=	tex-algorithmicx-[0-9]*:../../print/tex-algorithmicx
 DEPENDS+=	tex-algorithms-[0-9]*:../../print/tex-algorithms
+# depend aligned-overset
 DEPENDS+=	tex-amstex-[0-9]*:../../print/tex-amstex
 # depend apxproof
 # depend autobreak
@@ -36,16 +38,18 @@ DEPENDS+=	tex-amstex-[0-9]*:../../print/tex-amstex
 # depend bropd
 # depend bytefield
 # depend calculation
+# depend cascade
 DEPENDS+=	tex-ccfonts-[0-9]*:../../fonts/tex-ccfonts
 DEPENDS+=	tex-chemarrow-[0-9]*:../../print/tex-chemarrow
 # depend chemcompounds
 # depend chemcono
 # depend chemexec
 # depend chemformula
-# depend chemgreek
+DEPENDS+=	tex-chemgreek-[0-9]*:../../print/tex-chemgreek
 # depend chemmacros
 # depend chemnum
 # depend chemschemex
+# depend chemsec
 # depend chemstyle
 DEPENDS+=	tex-clrscode-[0-9]*:../../print/tex-clrscode
 # depend clrscode3e
@@ -58,23 +62,27 @@ DEPENDS+=	tex-concrete-[0-9]*:../../fonts/tex-concrete
 # depend correctmathalign
 # depend cryptocode
 # depend delim
-# depend delimset
 # depend delimseasy
+# depend delimset
 # depend diffcoeff
 # depend digiconfigs
+# depend dijkstra
 # depend drawmatrix
 # depend drawstack
 # depend dyntree
-# depend ebproof
+DEPENDS+=	tex-ebproof-[0-9]*:../../print/tex-ebproof
 # depend econometrics
 # depend eltex
 # depend emf
 # depend endiagram
 # depend engtlc
+# depend eqexpl
 # depend eqnarray
+# depend eqnnumwarn
 # depend extarrows
 # depend extpfeil
 # depend faktor
+# depend fascicules
 # depend fnspe
 # depend fouridx
 # depend functan
@@ -90,22 +98,27 @@ DEPENDS+=	tex-concrete-[0-9]*:../../fonts/tex-concrete
 # depend hepparticles
 # depend hepthesis
 # depend hepunits
+# depend includernw
 # depend interval
 # depend ionumbers
 # depend isomath
+# depend jkmath
 # depend karnaugh
 # depend karnaugh-map
 # depend karnaughmap
+# depend kvmap
 # depend logicproof
 # depend longdivision
 # depend lpform
 # depend lplfitch
 # depend lstbayes
 DEPENDS+=	tex-mathcomp-[0-9]*:../../print/tex-mathcomp
-# depend mathpartir
+# depend mathfixs
+DEPENDS+=	tex-mathpartir-[0-9]*:../../math/tex-mathpartir
 # depend mathpunctspace
 # depend matlab-prettifier
 # depend mattens
+# depend memorygraphs
 # depend mgltex
 DEPENDS+=	tex-mhchem-[0-9]*:../../print/tex-mhchem
 # depend mhequ
@@ -114,6 +127,7 @@ DEPENDS+=	tex-mhchem-[0-9]*:../../print/tex-mhchem
 # depend mychemistry
 # depend natded
 # depend nath
+# depend nicematrix
 # depend nuc
 # depend nucleardata
 # depend objectz
@@ -122,12 +136,15 @@ DEPENDS+=	tex-mhchem-[0-9]*:../../print/tex-mhchem
 DEPENDS+=	tex-oubraces-[0-9]*:../../print/tex-oubraces
 # depend perfectcut
 # depend physics
+# depend pm-isomath
+# depend polexpr
 # depend prftree
 # depend proba
 # depend prooftrees
 # depend pseudocode
-# depend pygmentex
 # depend pythonhighlight
+# depend qsharp
+# depend rank-2-roots
 # depend rec-thy
 # depend revquantum
 # depend ribbonproofs
@@ -135,6 +152,7 @@ DEPENDS+=	tex-oubraces-[0-9]*:../../print/tex-oubraces
 # depend sasnrdisplay
 # depend sciposter
 # depend sclang-prettifier
+# depend scratchx
 # depend sesamanuel
 # depend sfg
 # depend shuffle
@@ -146,8 +164,12 @@ DEPENDS+=	tex-siunitx-[0-9]*:../../print/tex-siunitx
 # depend stanli
 DEPENDS+=	tex-statex-[0-9]*:../../print/tex-statex
 # depend statex2
+# depend statistics
+# depend statistik
+# depend statmath
 # depend steinmetz
 DEPENDS+=	tex-stmaryrd-[0-9]*:../../fonts/tex-stmaryrd
+# depend structmech
 # depend struktex
 # depend substances
 # depend subsupscripts
@@ -166,6 +188,7 @@ DEPENDS+=	tex-stmaryrd-[0-9]*:../../fonts/tex-stmaryrd
 # depend ulqda
 # depend unitsdef
 # depend venn
+# depend witharrows
 # depend xymtex
 # depend yhmath
 # depend youngtab

@@ -1,13 +1,15 @@
-# $NetBSD: Makefile,v 1.10 2015/03/15 17:47:14 hiramatsu Exp $
+# $NetBSD: Makefile,v 1.15 2019/01/04 23:37:08 ryoon Exp $
 #
 
-DISTNAME=	libskk-1.0.2
-PKGREVISION=	1
+DISTNAME=	libskk-1.0.5
 CATEGORIES=	inputmethod
-MASTER_SITES=	https://github.com/ueno/libskk/releases/download/${PKGVERSION_NOREV}/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=ueno/}
+GITHUB_PROJECT=	${PKGBASE}
+GITHUB_RELEASE=	${PKGVERSION_NOREV}
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/ueno/libskk/
+HOMEPAGE=	https://github.com/ueno/libskk/
 COMMENT=	Library to deal with Japnese kana-to-kanji conversion method
 LICENSE=	gnu-gpl-v3
 
@@ -27,4 +29,5 @@ TEST_TARGET=		check
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../devel/libgee/buildlink3.mk"
 .include "../../textproc/json-glib/buildlink3.mk"
+.include "../../x11/libxkbcommon/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

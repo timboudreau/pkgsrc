@@ -1,21 +1,17 @@
-# $NetBSD: Makefile,v 1.4 2017/01/01 14:43:55 wiz Exp $
+# $NetBSD: Makefile,v 1.10 2018/08/07 08:23:09 adam Exp $
 
-DISTNAME=	gssapi-1.2.0
+DISTNAME=	gssapi-1.5.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	security
+CATEGORIES=	security python
 MASTER_SITES=	${MASTER_SITE_PYPI:=g/gssapi/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://pypi.python.org/pypi/gssapi
+HOMEPAGE=	https://github.com/pythongssapi/python-gssapi
 COMMENT=	Low-level and high-level wrappers around GSSAPI C libraries
 LICENSE=	modified-bsd
 
 DEPENDS+=	${PYPKGPREFIX}-decorator-[0-9]*:../../devel/py-decorator
-DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
-
-AUTO_MKDIRS=	yes
-
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 1.2.0, self tests don't run
+DEPENDS+=	${PYPKGPREFIX}-six>=1.4.0:../../lang/py-six
 
 .include "../../lang/python/distutils.mk"
 
@@ -23,5 +19,17 @@ PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 1.2.0, self tests don't run
 DEPENDS+=	${PYPKGPREFIX}-enum34-[0-9]*:../../devel/py-enum34
 .endif
 
-.include "../../mk/krb5.buildlink3.mk"
+.include "../../mk/bsd.prefs.mk"
+
+PLIST_VARS+=	mitkrb posix
+
+# On Darwin, py-gssapi uses -framework GSS
+.if ${OPSYS} != "Darwin"
+PLIST.posix=	yes
+.  include "../../mk/krb5.buildlink3.mk"
+.  if ${KRB5_TYPE} == "mit-krb5"
+PLIST.mitkrb=	yes
+.  endif
+.endif
+
 .include "../../mk/bsd.pkg.mk"

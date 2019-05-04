@@ -1,38 +1,57 @@
-# $NetBSD: Makefile,v 1.51 2017/02/12 06:25:18 ryoon Exp $
+# $NetBSD: Makefile,v 1.66 2019/04/25 07:32:53 maya Exp $
 
-DISTNAME=	snes9x-1.53-src
-PKGNAME=	snes9x-gtk-1.53.81
-PKGREVISION=	32
-CATEGORIES=	emulators
-MASTER_SITES=	http://snes9x-gtk.googlecode.com/files/
-EXTRACT_SUFX=	.tar.bz2
+PKGREVISION= 1
+.include "../../emulators/snes9x/Makefile.common"
 
-MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.snes9x.com/phpbb2/viewtopic.php?p=22874
-COMMENT=	SNES emulator with GTK frontend
-LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2.1
+PKGNAME=	snes9x-gtk-${SNES9X_VERSION}
 
-WRKSRC=		${WRKDIR}/${DISTNAME}/gtk
-GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++
-USE_TOOLS+=	intltool msgfmt msgmerge perl pkg-config xgettext
+MAINTAINER=	nia@NetBSD.org
+COMMENT=	Super Nintendo Entertainment System (SNES) emulator (GUI version)
 
-LDFLAGS.SunOS+=	-lsocket -lnsl
+USE_TOOLS+=	pkg-config
+USE_TOOLS+=	msgfmt xgettext msgmerge
+USE_TOOLS+=	gawk
 
-.include "options.mk"
+MESON_ARGS+=	-Dsystem-zip=false
+MESON_ARGS+=	-Dportaudio=false
 
-.if ${MACHINE_ARCH} == "i386"
-BUILD_DEPENDS+=		nasm>=0.98:../../devel/nasm
+BUILD_DEPENDS+=	gettext-m4-[0-9]*:../../devel/gettext-m4
+BUILD_DEPENDS+=	${PYPKGPREFIX}-meson-[0-9]*:../../devel/py-meson
+
+.include "../../mk/oss.buildlink3.mk"
+
+.if ${OSS_TYPE} != "none"
+SUBST_CLASSES+=		oss
+SUBST_STAGE.oss=	pre-configure
+SUBST_MESSAGE.oss=	Correct path to OSS device.
+SUBST_FILES.oss+=	gtk/src/gtk_sound_driver_oss.cpp
+SUBST_SED.oss=		-e "s,/dev/dsp,${DEVOSSAUDIO},g"
 .endif
 
-.include "../../audio/portaudio-devel/buildlink3.mk"
-.include "../../devel/SDL/buildlink3.mk"
-.include "../../devel/libglade/buildlink3.mk"
-.include "../../graphics/gtkglext/buildlink3.mk"
+LDFLAGS.SunOS+=		-lsocket -lnsl
+
+BUILDLINK_TRANSFORM+=	rm:-ldl
+
+do-configure:
+	cd ${WRKSRC}/gtk && ${SETENV} ${MAKE_ENV} meson --prefix ${PREFIX} --libdir lib --mandir ${PKGMANDIR} --buildtype=plain ${MESON_ARGS} . output
+
+do-build:
+	cd ${WRKSRC}/gtk && ${SETENV} ${MAKE_ENV} ninja -C output
+
+do-install:
+	cd ${WRKSRC}/gtk && ${SETENV} ${INSTALL_ENV} ninja -C output install
+
+PYTHON_VERSIONS_INCOMPATIBLE=	27
+
+.include "options.mk"
+.include "../../converters/libiconv/buildlink3.mk"
+.include "../../devel/SDL2/buildlink3.mk"
+.include "../../devel/gettext-lib/buildlink3.mk"
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
-.include "../../sysutils/desktop-file-utils/desktopdb.mk"
-BUILDLINK_API_DEPENDS.gtk2+=	gtk2+>=2.10.0
-.include "../../x11/gtk2/buildlink3.mk"
-.include "../../x11/libXtst/buildlink3.mk"
+.include "../../graphics/png/buildlink3.mk"
+.include "../../x11/libXrandr/buildlink3.mk"
+.include "../../x11/libXv/buildlink3.mk"
+.include "../../lang/python/application.mk"
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

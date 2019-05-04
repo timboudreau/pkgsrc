@@ -1,8 +1,8 @@
-$NetBSD: distinfo,v 1.9 2017/07/13 12:10:29 jaapb Exp $
+$NetBSD: distinfo,v 1.12 2019/01/24 09:58:18 jaapb Exp $
 
-SHA1 (lablgtk-2.18.5.tar.gz) = 8e0a64ba9c194a8affb03856a6acf6fcd06ad1e4
-RMD160 (lablgtk-2.18.5.tar.gz) = c9dcdff500a67b02b32ac8d2d965bd1bde6eaba3
-SHA512 (lablgtk-2.18.5.tar.gz) = 7b6ba1a4dfa82cc3bbc502082ff4fccc23cc06ee4f30d01a2e423f3f99e945a4befe450d230b5aa19c5b810e9f46f2838655099d49da2db7c8a2e52eac213024
-Size (lablgtk-2.18.5.tar.gz) = 808005 bytes
+SHA1 (lablgtk-2.18.7.tar.gz) = d8bca21927f0e3d9d1e352c4a8295585ef18c4fe
+RMD160 (lablgtk-2.18.7.tar.gz) = 5cf1d7c89302a54233f7e43e04748e1ed92da2f1
+SHA512 (lablgtk-2.18.7.tar.gz) = b5be516dc9deb89e5d097ddd700f1623df4949735ceff9e543559b4d997d1eaab4d9bc55f75d457db103dbcd122502eb60a96c96b7a08f28d002f9311459dff8
+Size (lablgtk-2.18.7.tar.gz) = 855211 bytes
 SHA1 (patch-configure) = a559be17f6687bfb4919617c01e5c28252bf9e99
-SHA1 (patch-src_Makefile) = 5cdcc55b1b2be61bf7303c1f5fb28bb02d931aae
+SHA1 (patch-src_Makefile) = 0150bef9c20e3475f4fb79d75a9a8d62314a78f0

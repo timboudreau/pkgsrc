@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.136 2017/02/12 06:24:53 ryoon Exp $
+# $NetBSD: Makefile,v 1.143 2019/04/25 07:33:29 maya Exp $
 #
 
 DISTNAME=		gnome-desktop-2.32.1
-PKGREVISION=		29
+PKGREVISION=		35
 CATEGORIES=		x11 gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gnome-desktop/2.32/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		Common GNOME2 desktop files and libgnome-desktop library
 
 GNU_CONFIGURE=		yes

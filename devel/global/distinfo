@@ -1,6 +1,8 @@
-$NetBSD: distinfo,v 1.32 2017/05/29 11:20:53 wiz Exp $
+$NetBSD: distinfo,v 1.35 2018/06/18 09:43:12 leot Exp $
 
-SHA1 (global-6.5.7.tar.gz) = db215a871483edda6855e1cdd3a37eb297658c02
-RMD160 (global-6.5.7.tar.gz) = 2e03a959f8014103b009e889e8906c7b738c103a
-SHA512 (global-6.5.7.tar.gz) = 0d33f718839e5e00bdd6d042b415a69c5e1f232d843610870505f8f20635b445810149b1b84ea8b77881f5f64814783ebe3cdcab2f84b8a085223b64293a9045
-Size (global-6.5.7.tar.gz) = 2940567 bytes
+SHA1 (global-6.6.2.tar.gz) = 27099afac1784e7d75e221f659154662fc54e727
+RMD160 (global-6.6.2.tar.gz) = 8019fac9289211f903b39659ae7bc549a9e08340
+SHA512 (global-6.6.2.tar.gz) = 9a58e4c2128bd420068754a5f93a472efa7ce12589dc291ebc0b6f4af8e2a5113d47ffa6887fc61ed1d6370529ced55826f25b484ac16416bced99235c01d744
+Size (global-6.6.2.tar.gz) = 2937594 bytes
+SHA1 (patch-configure) = 91803527b02b4ac2ff64c77a8bfb7f4eb96f30bd
+SHA1 (patch-libglibc_Makefile.in) = 1068764d2fc83ad4f1012c25d7dfd26da3022f98

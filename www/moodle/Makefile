@@ -1,26 +1,26 @@
-# $NetBSD: Makefile,v 1.57 2017/07/10 11:44:56 wen Exp $
+# $NetBSD: Makefile,v 1.72 2019/03/11 07:52:06 wen Exp $
 
-DISTNAME=	moodle-3.3.1
+DISTNAME=	moodle-3.6.3
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=moodle/}
 EXTRACT_SUFX=	.tgz
 
-MAINTAINER=	wenheping@gmail.com
+MAINTAINER=	wen@NetBSD.org
 HOMEPAGE=	http://www.moodle.org/
 COMMENT=	Course management system based on social constructionism
 LICENSE=	gnu-gpl-v3
 
-DEPENDS+=	${PHP_PKG_PREFIX}-gd>=5.4.4:../../graphics/php-gd
-DEPENDS+=	${PHP_PKG_PREFIX}-iconv>=5.4.4:../../converters/php-iconv
-DEPENDS+=	${PHP_PKG_PREFIX}-mbstring>=5.4.4:../../converters/php-mbstring
-DEPENDS+=	${PHP_PKG_PREFIX}-curl>=5.4.4:../../www/php-curl
-DEPENDS+=	${PHP_PKG_PREFIX}-xmlrpc>=5.4.4:../../net/php-xmlrpc
-DEPENDS+=	${PHP_PKG_PREFIX}-soap>=5.4.4:../../net/php-soap
-DEPENDS+=	${PHP_PKG_PREFIX}-json>=5.4.4:../../textproc/php-json
-DEPENDS+=	${PHP_PKG_PREFIX}-intl>=5.4.4:../../textproc/php-intl
-DEPENDS+=	${PHP_PKG_PREFIX}-zip>=5.4.4:../../archivers/php-zip
-DEPENDS+=	${PHP_PKG_PREFIX}-zlib>=5.4.4:../../archivers/php-zlib
-DEPENDS+=	${PHP_PKG_PREFIX}-opcache>=5.4.4:../../devel/php-opcache
+DEPENDS+=	${PHP_PKG_PREFIX}-gd>=7.0.0:../../graphics/php-gd
+DEPENDS+=	${PHP_PKG_PREFIX}-iconv>=7.0.0:../../converters/php-iconv
+DEPENDS+=	${PHP_PKG_PREFIX}-mbstring>=7.0.0:../../converters/php-mbstring
+DEPENDS+=	${PHP_PKG_PREFIX}-curl>=7.0.0:../../www/php-curl
+DEPENDS+=	${PHP_PKG_PREFIX}-xmlrpc>=7.0.0:../../net/php-xmlrpc
+DEPENDS+=	${PHP_PKG_PREFIX}-soap>=7.0.0:../../net/php-soap
+DEPENDS+=	${PHP_PKG_PREFIX}-json>=7.0.0:../../textproc/php-json
+DEPENDS+=	${PHP_PKG_PREFIX}-intl>=7.0.0:../../textproc/php-intl
+DEPENDS+=	${PHP_PKG_PREFIX}-zip>=7.0.0:../../archivers/php-zip
+DEPENDS+=	${PHP_PKG_PREFIX}-zlib>=7.0.0:../../archivers/php-zlib
+DEPENDS+=	${PHP_PKG_PREFIX}-opcache>=7.0.0:../../devel/php-opcache
 
 EGDIR=			share/examples/moodle
 MOODLEDIR=		${PREFIX}/share/moodle
@@ -31,6 +31,9 @@ INSTALLATION_DIRS=	${EGDIR} share/moodle
 
 .include "../../mk/bsd.prefs.mk"
 .include "options.mk"
+
+PHP_VERSIONS_INCOMPATIBLE=	56
+PHP_VERSIONS_ACCEPTED=	71 72
 
 PKG_GROUPS_VARS=	APACHE_GROUP
 PKG_USERS_VARS=		APACHE_USER
@@ -44,7 +47,7 @@ CONF_FILES=		${PREFIX}/${EGDIR}/moodle.conf \
 OWN_DIRS_PERMS+=	${MOODLEDATADIR} ${APACHE_USER} ${APACHE_GROUP} 0750
 
 USE_TOOLS+=		pax
-NO_CONFIGURE=		yes
+#NO_CONFIGURE=		yes
 NO_BUILD=		yes
 
 PLIST_SRC+=		${PKGDIR}/PLIST ${WRKDIR}/PLIST.AUTO
@@ -53,7 +56,7 @@ PLIST_SRC+=		${PKGDIR}/PLIST ${WRKDIR}/PLIST.AUTO
 
 SUBST_CLASSES+=		conf
 SUBST_MESSAGE.conf=	Fixing pathnames in configuration file.
-SUBST_STAGE.conf=	post-patch
+SUBST_STAGE.conf=	pre-configure
 SUBST_FILES.conf=	../moodle.conf
 SUBST_SED.conf=		-e "s,@MOODLEDIR@,${MOODLEDIR},g"
 SUBST_SED.conf+=	-e "s,@MOODLEDATADIR@,${MOODLEDATADIR},g"
@@ -64,7 +67,7 @@ SUBST_SED.conf+=	-e "s,Allow from all,Require all granted,g"
 
 SUBST_CLASSES+=		php
 SUBST_MESSAGE.php=	Fixing the path of php.
-SUBST_STAGE.php=	post-patch
+SUBST_STAGE.php=	pre-configure
 SUBST_FILES.php=	admin/cli/mysql_engine.php admin/cli/maintenance.php admin/cli/cron.php
 SUBST_FILES.php+=	admin/cli/reset_password.php admin/cli/automated_backups.php
 SUBST_FILES.php+=	admin/cli/install.php admin/cli/install_database.php admin/cli/upgrade.php
@@ -75,7 +78,7 @@ SUBST_SED.php=		-e "s,/usr/bin/php,${PREFIX}/bin/php,g"
 
 SUBST_CLASSES+=		perl
 SUBST_MESSAGE.perl=	Fixing the path of perl.
-SUBST_STAGE.perl=	post-patch
+SUBST_STAGE.perl=	pre-configure
 SUBST_FILES.perl=	filter/algebra/algebra2tex.pl
 SUBST_SED.perl=		-e "s,/usr/bin/perl,${PREFIX}/bin/perl,g"
 

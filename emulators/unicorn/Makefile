@@ -1,17 +1,15 @@
-# $NetBSD: Makefile,v 1.4 2017/01/01 14:43:39 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2019/04/26 13:13:56 maya Exp $
 
-DISTNAME=	unicorn-0.9
-CATEGORIES=	emulators
-MASTER_SITES=	${MASTER_SITE_GITHUB:=unicorn-engine/}
+PKGREVISION= 1
+.include "Makefile.common"
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.unicorn-engine.org/
 COMMENT=	CPU emulator engine framework based on QEMU
 LICENSE=	gnu-gpl-v2
 
 USE_TOOLS+=	gmake pkg-config
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 0.9
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # as of 1.0.1
 
 .include "../../lang/python/application.mk"
 

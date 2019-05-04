@@ -1,0 +1,48 @@
+#!/bin/sh
+
+. /etc/rc.subr
+
+run_all_rcd_scripts() {
+	action="$1"; shift
+
+	# mostly from NetBSD /etc/rc
+	contents=$(for rcd in @RCD_SCRIPTS_DIR@; do
+		test -d ${rcd} && echo ${rcd}/*;
+	done)
+
+	scripts=$(for rcd in ${contents}; do
+		test -f ${rcd} && echo ${rcd};
+	done)
+
+	rcd_scripts=$(for s in ${scripts}; do
+		@GREP@ -q '^# PROVIDE: ' ${s} && echo ${s};
+	done)
+
+	files=$(@RCORDER@ -s nostart ${rcd_scripts})
+	if [ "${action}" = stop ]; then
+		files=$(reverse_list ${files})
+	fi
+
+	for _rc_elem in $files; do
+		if [ "${action}" = list ]; then
+			echo $_rc_elem
+		else
+			$_rc_elem ${action}
+		fi
+	done
+}
+
+usage() {
+	echo >&2 "usage: $0 <start|stop>"
+	exit 1
+}
+
+main() {
+	[ $# -eq 1 ] || usage
+	action="$1"; shift
+
+	run_all_rcd_scripts "${action}"
+}
+
+main "$@"
+exit $?

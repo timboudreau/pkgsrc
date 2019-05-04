@@ -1,23 +1,22 @@
-# $NetBSD: Makefile,v 1.18 2017/02/02 10:16:30 fhajny Exp $
+# $NetBSD: Makefile,v 1.24 2019/03/08 13:41:09 adam Exp $
 
-DISTNAME=	pyzmq-16.0.2
-PKGNAME=        ${DISTNAME:S/py/${PYPKGPREFIX}-/1}
+DISTNAME=	pyzmq-18.0.1
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/^py//}
 CATEGORIES=	net python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pyzmq/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://github.com/zeromq/pyzmq/
+HOMEPAGE=	https://github.com/zeromq/pyzmq
 COMMENT=	Python bindings for zeromq
 LICENSE=	gnu-lgpl-v3 AND modified-bsd
 
-PYSETUPBUILDARGS+=	--zmq=${BUILDLINK_PREFIX.zeromq:Q}
-REPLACE_PYTHON+=	zmq/eventloop/minitornado/ioloop.py
-REPLACE_PYTHON+=	zmq/eventloop/minitornado/platform/auto.py
-REPLACE_PYTHON+=	zmq/eventloop/minitornado/platform/interface.py
-REPLACE_PYTHON+=	zmq/eventloop/minitornado/platform/posix.py
-REPLACE_PYTHON+=	zmq/eventloop/minitornado/stack_context.py
+DEPENDS+=	${PYPKGPREFIX}-cython-[0-9]*:../../devel/py-cython
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
-.include "../../lang/python/application.mk"
+USE_TOOLS+=	pkg-config
+
+PYSETUPBUILDARGS+=	--zmq=${BUILDLINK_PREFIX.zeromq:Q}
+
 .include "../../lang/python/distutils.mk"
 .include "../../net/zeromq/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

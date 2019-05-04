@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.4 2016/08/27 15:45:19 wiz Exp $
+@comment $NetBSD: PLIST,v 1.6 2018/08/07 06:09:09 adam Exp $
 bin/change_tz-${PYVERSSUFFIX}
 bin/ics_diff-${PYVERSSUFFIX}
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO

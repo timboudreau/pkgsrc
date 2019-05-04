@@ -1,36 +1,23 @@
-# $NetBSD: Makefile,v 1.91 2017/04/30 01:21:22 ryoon Exp $
+# $NetBSD: Makefile,v 1.113 2019/04/03 00:32:44 ryoon Exp $
 
-DISTNAME=	gdal-2.0.3
+PKGREVISION=	2
+.include "../../geography/gdal-lib/Makefile.common"
 PKGNAME=	${DISTNAME:S/gdal/gdal-lib/}
-PKGREVISION=	3
-CATEGORIES=	geography
-MASTER_SITES=	http://download.osgeo.org/gdal/${PKGVERSION_NOREV}/
 
-MAINTAINER=	brook@nmsu.edu
-#MAINTAINER+=	gdt@NetBSD.org
 HOMEPAGE=	http://www.gdal.org/
 COMMENT=	Translator library for raster geospatial data formats
 LICENSE=	mit
 
-# This package links against the geos C++ library.  geos regards this
-# as a bug and changes the C++ shlib version every release.  Therefore
-# this package needs revbumping on every geos update.
+USE_LANGUAGES+=	c99 c++11
 
-USE_LANGUAGES=		c99 c++
-USE_LIBTOOL=		yes
-USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		gmake
-GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--with-geos
-CONFIGURE_ARGS+=	--with-libjson-c=internal
-CONFIGURE_ARGS+=	--with-libtiff=${BUILDLINK_PREFIX.tiff}
-CONFIGURE_ARGS+=	--with-libz=${BUILDLINK_PREFIX.zlib}/include
-CONFIGURE_ARGS+=	--with-netcdf=${BUILDLINK_PREFIX.netcdf}
-CONFIGURE_ARGS+=	--with-webp=${BUILDLINK_PREFIX.libwebp}
-CONFIGURE_ARGS+=	--with-xerces
-CONFIGURE_ARGS+=	--with-xerces-inc=${BUILDLINK_PREFIX.xerces-c}/include
-CONFIGURE_ARGS+=	--with-xerces-lib=-L${BUILDLINK_PREFIX.xerces-c}/lib\ -lxerces-c
+# This package intends to link against only libgeos_c, but ends up
+# also linking to the C++ library libgeos, apparently because of a
+# libtool problem.
+# Therefore this package needs revbumping on every geos update.
+
 CONFIGURE_ARGS+=	--without-python
+
+CONFIGURE_ARGS+=	--with-proj
 
 MAKE_FILE=		GNUmakefile
 

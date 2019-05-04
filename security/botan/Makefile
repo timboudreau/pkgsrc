@@ -1,25 +1,27 @@
-# $NetBSD: Makefile,v 1.43 2017/04/10 20:26:31 joerg Exp $
+# $NetBSD: Makefile,v 1.51 2019/04/26 14:12:44 maya Exp $
 
-DISTNAME=	Botan-1.10.16
+DISTNAME=	Botan-1.10.17
 PKGNAME=	${DISTNAME:tl}
+PKGREVISION=	1
 CATEGORIES=	security
-MASTER_SITES=	http://botan.randombit.net/releases/
+MASTER_SITES=	https://botan.randombit.net/releases/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://botan.randombit.net/
+HOMEPAGE=	https://botan.randombit.net/
 COMMENT=	Portable, easy to use, and efficient C++ crypto library
 LICENSE=	2-clause-bsd
 
 HAS_CONFIGURE=		yes
-USE_LANGUAGES=		c++
+USE_LANGUAGES=		c++03
 
 PYTHON_FOR_BUILD_ONLY=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.8.14; 1.10 is supposedly better
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.8.14; 1.10 is supposedly better
 
 CONFIG_SHELL=		${PYTHONBIN}
 CONFIGURE_SCRIPT=	./configure.py
 CONFIGURE_ARGS+=	--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--docdir=share/doc
 CONFIGURE_ARGS+=	--without-sphinx
 
 MAKE_FLAGS+=	LIB_OPT=${CXXFLAGS:Q}

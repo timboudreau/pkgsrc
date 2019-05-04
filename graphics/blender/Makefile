@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.133 2017/07/01 22:12:13 joerg Exp $
+# $NetBSD: Makefile,v 1.146 2019/04/28 11:56:00 markd Exp $
 
-DISTNAME=	blender-2.77a
-PKGREVISION=	6
+DISTNAME=	blender-2.79b
+PKGREVISION=	4
 CATEGORIES=	graphics
 MASTER_SITES=	http://download.blender.org/source/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.blender.org/
+HOMEPAGE=	https://www.blender.org/
 COMMENT=	Fully integrated 3D graphics creation suite
 LICENSE=	gnu-gpl-v2
 
@@ -14,13 +14,15 @@ USE_TOOLS+=		gmake sed
 USE_CMAKE=		yes
 USE_LANGUAGES=		c c++11
 CMAKE_OPTS+=		-DWITH_OPENAL:BOOL=OFF
+CMAKE_OPTS+=		-DWITH_MEM_JEMALLOC:BOOL=OFF
+CMAKE_OPTS+=		-DWITH_SYSTEM_OPENJPEG:BOOL=ON
 CMAKE_OPTS+=		-DPYVERSSUFFIX:STRING=${PYVERSSUFFIX}
 CMAKE_OPTS+=		-DPYTHON_VERSION:STRING=${PYVERSSUFFIX}
 CMAKE_OPTS+=		-DPYTHON_ROOT_DIR:STRING=${PREFIX}
 CMAKE_OPTS+=		-DPYTHON_INCLUDE_DIR:STRING=${PREFIX}/${PYINC}
 CMAKE_OPTS+=		-DPYTHON_INCLUDE_CONFIG_DIR:STRING=${PREFIX}/${PYINC}
 CMAKE_OPTS+=		-DPYTHON_EXECUTABLE:FILEPATH=${PYTHONBIN}
-CMAKE_OPTS+=		-DPYTHON_LIBRARY:FILEPATH=${PREFIX}/lib/libpython${PYVERSSUFFIX}.so
+CMAKE_OPTS+=		-DWITH_PYTHON_INSTALL:BOOL=OFF
 CMAKE_OPTS+=		-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX}/share/blender
 CMAKE_OPTS+=		-DCMAKE_MODULE_PATH:PATH=${_CMAKE_DIR}
 CMAKE_OPTS+=		-DCMAKE_SKIP_RPATH:BOOL=TRUE
@@ -48,6 +50,7 @@ REPLACE_PYTHON=		release/bin/blender-thumbnailer.py
 INSTALLATION_DIRS=	bin share/blender
 
 PLIST_SUBST+=	PYVERSSUFFIX=${PYVERSSUFFIX}
+PLIST_SUBST+=	M=${M}
 PLIST_SUBST+=	BLENDERVER=${PKGVERSION_NOREV:C/[a-z]//}
 
 .if !empty(MACHINE_PLATFORM:MNetBSD-8.*)
@@ -57,8 +60,6 @@ PLIST_SUBST+=	NETBSDVER=netbsd7
 .else
 PLIST_SUBST+=	NETBSDVER=netbsd6
 .endif
-
-PLIST_VARS+=	py34 py35 py36
 
 OBJDIR=		../build
 CONFIGURE_DIRS=	${OBJDIR}
@@ -74,8 +75,10 @@ do-configure:
 		${PREFIX}/bin/cmake ${CMAKE_OPTS} ${CMAKE_ARG_PATH}
 
 post-install:
-	${LN} -sf ${PREFIX}/share/blender/blender \
-		${DESTDIR}${PREFIX}/bin
+	${ECHO} '#! ${SH}' > ${DESTDIR}${PREFIX}/bin/blender
+	${ECHO} '${PREFIX}/share/blender/blender "$$@"' >> \
+		${DESTDIR}${PREFIX}/bin/blender
+	${CHMOD} 755 ${DESTDIR}${PREFIX}/bin/blender
 
 .include "../../devel/SDL/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
@@ -95,13 +98,5 @@ post-install:
 .include "../../security/openssl/buildlink3.mk"
 
 .include "../../lang/python/application.mk"
-
-.if ${PYVERSSUFFIX} == "3.4"
-PLIST.py34=	yes
-.elif ${PYVERSSUFFIX} == "3.5"
-PLIST.py35=	yes
-.elif ${PYVERSSUFFIX} == "3.6"
-PLIST.py36=	yes
-.endif
 
 .include "../../mk/bsd.pkg.mk"

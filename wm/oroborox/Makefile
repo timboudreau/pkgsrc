@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.50 2017/02/12 06:26:06 ryoon Exp $
+# $NetBSD: Makefile,v 1.57 2019/04/25 07:33:26 maya Exp $
 #
 
 DISTNAME=	OroboROX-0.9.8
 PKGNAME=	oroborox-0.9.8
-PKGREVISION=	30
+PKGREVISION=	35
 CATEGORIES=	wm
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=rox/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	rxg@NetBSD.org
-HOMEPAGE=	http://roscidus.com/desktop/OroboROX
+#HOMEPAGE=	http://roscidus.com/desktop/OroboROX
 COMMENT=	The lightweight Window Manager for the ROX Desktop
 
 DEPENDS+=	rox-lib>=2.0.2nb2:../../devel/rox-lib
@@ -33,19 +33,19 @@ INSTALLATION_DIRS=	share/rox/OroboROX
 
 SUBST_CLASSES+=		bin
 SUBST_MESSAGE.bin=	Fixing binary path.
-SUBST_STAGE.bin=	post-patch
+SUBST_STAGE.bin=	pre-configure
 SUBST_FILES.bin=	AppRun
 SUBST_SED.bin=		-e 's,BIN="$$APP_DIR/$$PLATFORM,BIN="${PREFIX}/libexec/rox,g'
 
 SUBST_CLASSES+=		path
 SUBST_MESSAGE.path=	Fixing hardcoded paths.
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_FILES.path=	AppRun
 SUBST_SED.path=		-e 's,/usr/local,${PREFIX},g'
 
 SUBST_CLASSES+=		lib
 SUBST_MESSAGE.lib=	Fixing hardcoded paths for ROX-Lib.
-SUBST_STAGE.lib=	post-patch
+SUBST_STAGE.lib=	pre-configure
 SUBST_FILES.lib=	Configure/Keybindings/findrox.py
 SUBST_FILES.lib+=	Configure/Windows/findrox.py
 SUBST_FILES.lib+=	Configure/Workspaces/findrox.py
@@ -54,7 +54,7 @@ SUBST_SED.lib=		-e 's,/usr/local/lib,${PREFIX}/share/rox,g'
 
 SUBST_CLASSES+=		py
 SUBST_MESSAGE.py=	Replace shell magic by python version.
-SUBST_STAGE.py=		post-patch
+SUBST_STAGE.py=		pre-configure
 SUBST_FILES.py=		Configure/Keybindings/AppRun
 SUBST_FILES.py+=	Configure/Keybindings/Messages/update-po
 SUBST_FILES.py+=	Configure/Windows/Messages/update-po

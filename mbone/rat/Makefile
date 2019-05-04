@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.45 2015/07/04 16:18:37 joerg Exp $
+# $NetBSD: Makefile,v 1.48 2018/03/12 11:17:04 wiz Exp $
 #
 
 DISTNAME=	rat-3.0.28
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	mbone
 MASTER_SITES=	http://www-mice.cs.ucl.ac.uk/multimedia/software/rat/3.0.28/
 
@@ -10,7 +10,6 @@ MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www-mice.cs.ucl.ac.uk/multimedia/software/rat/
 COMMENT=	Robust Audio Tool - multicast audioconferencing
 
-CRYPTO=		yes
 USE_TOOLS+=	gmake
 
 USER=		build
@@ -24,6 +23,7 @@ post-patch:
 	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_NetBSD_5
 	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_NetBSD_6
 	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_NetBSD_7
+	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_NetBSD_8
 	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_DragonFly_2
 	${CP} ${WRKSRC}/Makefile_NetBSD_1 ${WRKSRC}/Makefile_DragonFly_3
 

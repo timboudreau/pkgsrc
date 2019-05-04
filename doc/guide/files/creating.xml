@@ -1,4 +1,4 @@
-<!-- $NetBSD: creating.xml,v 1.24 2017/02/20 23:42:25 wiz Exp $ -->
+<!-- $NetBSD: creating.xml,v 1.27 2018/06/04 23:55:00 minskim Exp $ -->
 
 <chapter id="creating">
 <title>Creating a new pkgsrc package from scratch</title>
@@ -121,16 +121,6 @@ package from the set of installed files.</para></step>
 
 </sect2>
 
-<sect2 id="creating.kde-app">
-<title>KDE3 & KDE4 applications</title>
-
-<para>KDE3 applications should always include
-<filename>meta-pkgs/kde3/kde3.mk</filename>, which contains numerous
-settings that are typical of KDE3 packages and KDE4 applications should
-always include <filename>meta-pkgs/kde4/kde4.mk</filename>, respectively.</para>
-
-</sect2>
-
 <sect2 id="creating.python-module">
 <title>Python modules and programs</title>
 
@@ -190,7 +180,7 @@ packages that should be depended upon and include
 then the pkgsrc infrastructure will depend on the appropriate package
 version. For example:
 <programlisting>
-PYTHON_VERSIONED_DEPENDENCIES=gobject
+PYTHON_VERSIONED_DEPENDENCIES=dialog
 </programlisting>
 Look inside <filename>versioned_dependencies.mk</filename> for a list
 of supported packages.</para>
@@ -421,7 +411,7 @@ large, I didn't want to fix it. So I added the following to the package
 
 <programlisting>
 CPPFLAGS+=              -I${BUILDLINK_PREFIX.libIDL}/include/libIDL-2.0
-BUILDLINK_TRANSFORM+=   -l:IDL:IDL-2
+BUILDLINK_TRANSFORM+=   l:IDL:IDL-2
 </programlisting>
 
 <para>The latter line is needed because the package expects the library

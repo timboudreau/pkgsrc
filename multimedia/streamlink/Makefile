@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.9 2017/04/27 16:02:29 maya Exp $
+# $NetBSD: Makefile,v 1.17 2019/04/25 07:33:09 maya Exp $
 
-DISTNAME=	streamlink-0.5.0
+DISTNAME=	streamlink-0.14.2
+PKGREVISION=	1
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_GITHUB:=streamlink/}
 GITHUB_TAG=	${PKGVERSION_NOREV}
@@ -17,11 +18,17 @@ PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 DEPENDS+=	${PYPKGPREFIX}-cryptodome>=3.4.3:../../security/py-cryptodome
 DEPENDS+=	${PYPKGPREFIX}-requests-[0-9]*:../../devel/py-requests
+DEPENDS+=	${PYPKGPREFIX}-isodate-[0-9]*:../../time/py-isodate
 DEPENDS+=	${PYPKGPREFIX}-iso-639-[0-9]*:../../devel/py-iso-639
 DEPENDS+=	${PYPKGPREFIX}-iso3166-[0-9]*:../../devel/py-iso3166
+DEPENDS+=	${PYPKGPREFIX}-websocket-client-[0-9]*:../../www/py-websocket-client
+DEPENDS+=	${PYPKGPREFIX}-urllib3-[0-9]*:../../www/py-urllib3
+DEPENDS+=	${PYPKGPREFIX}-Socks-[0-9]*:../../net/py-Socks
+TEST_DEPENDS+=	${PYPKGPREFIX}-freezegun-[0-9]*:../../devel/py-freezegun
+TEST_DEPENDS+=	${PYPKGPREFIX}-requests-mock-[0-9]*:../../devel/py-requests-mock
+
 
 EGG_NAME=	${PKGNAME_NOREV}
-
 
 REPLACE_PYTHON+=	src/streamlink/packages/flashmedia/flv.py
 REPLACE_PYTHON+=	src/streamlink/packages/flashmedia/tag.py

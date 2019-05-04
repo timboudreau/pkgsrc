@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:46 adam Exp $
+
+SHA1 (pyobjc-framework-SpriteKit-5.1.2.tar.gz) = 840578e967c348639f2f18f6ac7b83460c263016
+RMD160 (pyobjc-framework-SpriteKit-5.1.2.tar.gz) = 8338dd92bb51a81b46c5057f830467d72db00227
+SHA512 (pyobjc-framework-SpriteKit-5.1.2.tar.gz) = d8c43f2555575627b658c9ceeffc8990583062ea4f0b9e7f1d8615ff599db3434b8cc8db2b95d393db913cfd247217ea522c4c82bf8b9e8cd70c573caae01bd5
+Size (pyobjc-framework-SpriteKit-5.1.2.tar.gz) = 36927 bytes

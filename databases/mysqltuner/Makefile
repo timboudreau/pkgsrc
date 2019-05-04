@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.2 2016/07/09 06:38:00 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2018/08/22 09:43:12 wiz Exp $
 
 GITHUB_PROJECT=	MySQLTuner-perl
-DISTNAME=	1.6.0
+DISTNAME=	1.7.2
 PKGNAME=	mysqltuner-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_GITHUB:=major/}
 DIST_SUBDIR=	${PKGBASE}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://mysqltuner.com/
 COMMENT=	Perl script that assists in MySQL configuration
 LICENSE=	gnu-gpl-v3
@@ -26,7 +26,7 @@ SUBST_CLASSES+=		docdir
 SUBST_FILES.docdir=	mysqltuner.pl
 SUBST_MESSAGE.docdir=	Fixing DOCDIR.
 SUBST_SED.docdir=	-e "s|/usr/share/mysqltuner|${PREFIX}/${PKGDOCDIR}|1"
-SUBST_STAGE.docdir=	post-patch
+SUBST_STAGE.docdir=	pre-configure
 
 INSTALLATION_DIRS+=	bin ${PKGDOCDIR}
 

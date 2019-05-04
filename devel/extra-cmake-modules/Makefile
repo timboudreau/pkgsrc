@@ -1,16 +1,14 @@
-# $NetBSD: Makefile,v 1.6 2016/08/21 21:12:42 markd Exp $
+# $NetBSD: Makefile,v 1.12 2019/04/25 20:36:40 markd Exp $
 
-DISTNAME=	extra-cmake-modules-5.25.0
+DISTNAME=	extra-cmake-modules-5.57.0
 CATEGORIES=	devel kde
-MASTER_SITES=	${MASTER_SITE_KDE:=frameworks/5.25/}
+MASTER_SITES=	${MASTER_SITE_KDE:=frameworks/${PKGVERSION:R}/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	markd@NetBSD.org
 HOMEPAGE=	https://community.kde.org/Frameworks
 COMMENT=	Extra modules and scripts for CMake
 LICENSE=	modified-bsd
-
-#BUILD_DEPENDS+=	${PYPKGPREFIX}-sphinx>=1.2:../../textproc/py-sphinx
 
 USE_CMAKE=	yes
 USE_LANGUAGES=	c c++
@@ -20,10 +18,10 @@ CONFIGURE_DIRS=	_KDE_build
 CMAKE_ARGS+=	-DBUILD_TESTING=OFF
 CMAKE_ARGS+=	-DBUILD_HTML_DOCS=OFF
 CMAKE_ARGS+=	-DBUILD_MAN_DOCS=OFF
+CMAKE_ARGS+=	-DBUILD_QTHELP_DOCS=OFF
 
 pre-configure:
 	${MKDIR} ${WRKSRC}/_KDE_build
 	${FIND} ${WRKSRC} -name \*.orig -exec rm {} \;
 
-#.include "../../lang/python/pyversion.mk"
 .include "../../mk/bsd.pkg.mk"

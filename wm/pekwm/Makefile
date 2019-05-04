@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.54 2017/05/12 11:55:32 jperkin Exp $
+# $NetBSD: Makefile,v 1.56 2018/07/18 00:06:25 joerg Exp $
 
 DISTNAME=	pekwm-0.1.17
+PKGREVISION=	1
 CATEGORIES=	wm
 MASTER_SITES=	http://www.pekwm.org/projects/pekwm/files/
 EXTRACT_SUFX=	.tar.bz2
@@ -12,7 +13,7 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=	yes
 USE_TOOLS+=	gmake pkg-config
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASEDIR}
 

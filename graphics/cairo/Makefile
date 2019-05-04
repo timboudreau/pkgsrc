@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.140 2015/11/06 11:15:51 wiz Exp $
+# $NetBSD: Makefile,v 1.144 2018/11/14 23:12:51 kleink Exp $
 
 .include "../../graphics/cairo/Makefile.common"
 

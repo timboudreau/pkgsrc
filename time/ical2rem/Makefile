@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.7 2016/07/09 06:39:08 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.9 2018/08/22 09:47:14 wiz Exp $
 
 DISTNAME=	ical2rem.pl
 PKGNAME=	ical2rem-0.5.2
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	time
-MASTER_SITES=	http://jalcorn.net/
+#MASTER_SITES=	http://jalcorn.net/
 EXTRACT_SUFX=	.txt
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://jalcorn.net/
+#HOMEPAGE=	http://jalcorn.net/
 COMMENT=	Convert iCal files to remind format
 LICENSE=	gnu-gpl-v2
 

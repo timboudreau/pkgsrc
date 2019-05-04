@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.65 2014/01/11 14:42:04 adam Exp $
+# $NetBSD: Makefile,v 1.67 2018/07/18 00:06:21 joerg Exp $
 #
 
 DISTNAME=		vatsrc-4.0b2
 PKGNAME=		${DISTNAME:S/src//}
-PKGREVISION=		8
+PKGREVISION=		9
 CATEGORIES=		mbone
 MASTER_SITES=		ftp://ftp.ee.lbl.gov/conferencing/vat/alpha-test/
 
@@ -17,7 +17,7 @@ WRKSRC=			${WRKDIR}/${PKGNAME_NOREV}
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-tcl=${PREFIX:Q} --with-tk=${PREFIX:Q}
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 
 CPPFLAGS+=		-I${LOCALBASE}/include -I${LOCALBASE}/include/gsm
 

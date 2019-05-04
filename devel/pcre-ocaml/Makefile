@@ -1,18 +1,21 @@
-# $NetBSD: Makefile,v 1.28 2017/07/11 12:31:37 jaapb Exp $
+# $NetBSD: Makefile,v 1.36 2019/03/05 18:23:31 jaapb Exp $
 
-DISTNAME=		pcre-ocaml-7.2.3
+VERSION=		7.4.1
+DISTNAME=		pcre-${VERSION}
+PKGNAME=		pcre-ocaml-${VERSION}
 CATEGORIES=		devel
 MASTER_SITES=          ${MASTER_SITE_GITHUB:=mmottl/}
-GITHUB_RELEASE=                v${PKGVERSION_NOREV}
 
 MAINTAINER=		jaapb@NetBSD.org
-HOMEPAGE=		http://github.com/mmottl/pcre-ocaml
+HOMEPAGE=		https://github.com/mmottl/pcre-ocaml
 COMMENT=		Perl compatible regular expressions for OCaml
 LICENSE=	gnu-lgpl-v2.1
 
-OCAML_USE_OASIS=	yes
+WRKSRC=	${WRKDIR}/pcre-ocaml-${VERSION}
+
+OCAML_USE_DUNE=	yes
+OPAM_INSTALL_FILES=	pcre
 USE_TOOLS=	pax
-MAKE_JOBS_SAFE=	no
 
 .include "../../mk/bsd.prefs.mk"
 .include "../../mk/ocaml.mk"
@@ -24,5 +27,8 @@ OCAML_FINDLIB_DIRS=	pcre
 post-install:
 	cd ${WRKSRC}/examples && pax -rw -pm . ${DESTDIR}${EGDIR}
 
+.include "../../devel/ocaml-base/buildlink3.mk"
+.include "../../devel/ocaml-configurator/buildlink3.mk"
+.include "../../devel/ocaml-stdio/buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

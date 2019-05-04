@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.6 2017/07/11 14:19:19 jaapb Exp $
+# $NetBSD: Makefile,v 1.12 2018/11/12 16:10:18 jaapb Exp $
 
 DISTNAME=	pgocaml-2.3
-PKGREVISION=	2
+PKGREVISION=	8
 CATEGORIES=	databases
 MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/1597/
 EXTRACT_SUFX=	.tgz
@@ -19,7 +19,6 @@ OCAML_USE_OASIS= yes
 
 .include "../../mk/ocaml.mk"
 
-.include "../../devel/ocaml-batteries/buildlink3.mk"
 .include "../../devel/ocaml-re/buildlink3.mk"
 .include "../../lang/camlp4/buildlink3.mk"
 .include "../../textproc/ocaml-csv/buildlink3.mk"

@@ -1,20 +1,22 @@
-# $NetBSD: Makefile,v 1.21 2017/04/22 21:03:48 adam Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/03 00:32:57 ryoon Exp $
 #
 
 DISTNAME=	grilo-plugins-0.2.9
-PKGREVISION=	9
+PKGREVISION=	16
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.gnome.org/pub/gnome/sources/grilo-plugins/0.2/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Plugins for grilo media browser
 LICENSE=	gnu-lgpl-v2
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config intltool xgettext
+
+CONFIGURE_ARGS+=	--disable-bliptv
 
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../net/grilo/buildlink3.mk"

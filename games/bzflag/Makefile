@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.57 2017/04/30 01:21:36 ryoon Exp $
+# $NetBSD: Makefile,v 1.65 2018/12/13 19:51:51 adam Exp $
 
 DISTNAME=	bzflag-2.4.2
-PKGREVISION=	12
+PKGREVISION=	18
 CATEGORIES=	games x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=bzflag/}
 
@@ -20,11 +20,11 @@ USE_CURSES=	resizeterm
 .include "../../mk/bsd.prefs.mk"
 
 .if ${OPSYS} !=  "Linux"
-SUBST_CLASSES+=	    fixme
-SUBST_STAGE.fixme=  post-patch
-SUBST_FILES.fixme=  src/platform/Makefile.in
-SUBST_SED.fixme=    -e "s|@LINUX_TRUE@||g"
-SUBST_SED.fixme+=   -e "s|@LINUX_FALSE@|\#|g"
+SUBST_CLASSES+=		fixme
+SUBST_STAGE.fixme=	pre-configure
+SUBST_FILES.fixme=	src/platform/Makefile.in
+SUBST_SED.fixme=	-e "s|@LINUX_TRUE@||g"
+SUBST_SED.fixme+=	-e "s|@LINUX_FALSE@|\#|g"
 .endif
 
 CONFIGURE_ARGS+=	--with-ncurses

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2017/06/20 21:31:04 youri Exp $
+$NetBSD: distinfo,v 1.4 2019/03/09 19:38:43 gutteridge Exp $
 
-SHA1 (xfce4-calculator-plugin-0.6.0.tar.bz2) = a4ea1273695cc474f5ddad85946b3173814ea8c3
-RMD160 (xfce4-calculator-plugin-0.6.0.tar.bz2) = d6a25a799fc16eb640bb8a8ccba2932e342b0787
-SHA512 (xfce4-calculator-plugin-0.6.0.tar.bz2) = 67da3b10db8d05958193c39d9c0fb35c5efaca8f34d6093cec0a57280abda55366e2184056bac045952ffdc8876780696d9b8f9edccdf459fd1f3a53fb0dfb09
-Size (xfce4-calculator-plugin-0.6.0.tar.bz2) = 386342 bytes
+SHA1 (xfce4-calculator-plugin-0.7.0.tar.bz2) = 43f19cd7202c1ee5e721e2a24e3cafb85033741c
+RMD160 (xfce4-calculator-plugin-0.7.0.tar.bz2) = 67256869f24913a88b769befbae01b030eb0f515
+SHA512 (xfce4-calculator-plugin-0.7.0.tar.bz2) = cf5a1005d03163a2b44440bd2ac3a40ae2bf5d217893cb11e96b83ccdf621195dd38f315e762d1edc7570c9fde5568a1517f4e3abe6f9c74daa6c027e276c2c9
+Size (xfce4-calculator-plugin-0.7.0.tar.bz2) = 384634 bytes

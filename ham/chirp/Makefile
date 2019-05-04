@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.7 2017/02/12 06:25:32 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.15 2019/04/28 07:15:11 wiz Exp $
 
 DISTNAME=	chirp-0.4.1
-PKGREVISION=	4
+PKGREVISION=	9
 CATEGORIES=	ham
-MASTER_SITES=	http://chirp.danplanet.com/download/${PKGVERSION}/
+MASTER_SITES=	https://chirp.danplanet.com/download/${PKGVERSION}/
 
 MAINTAINER=	dbj@NetBSD.org
-HOMEPAGE=	http://chirp.danplanet.com/
+HOMEPAGE=	https://chirp.danplanet.com/projects/chirp/wiki/Home
 COMMENT=	Tool for programming Amateur Radio HTs
 LICENSE=	gnu-gpl-v3
 
@@ -16,16 +15,18 @@ REPLACE_PYTHON= *.py chirp/*.py chirpui/*.py
 
 DEPENDS+=       ${PYPKGPREFIX}-serial>=2.7:../../comms/py-serial
 
+PYTHON_VERSIONS_ACCEPTED=	27 # py-gtk2
+
 .include "../../mk/bsd.prefs.mk"
 
 SUBST_CLASSES+=			fix-manpaths
-SUBST_STAGE.fix-manpaths=	post-patch
+SUBST_STAGE.fix-manpaths=	pre-configure
 SUBST_MESSAGE.fix-manpaths=	Fixing man paths
 SUBST_FILES.fix-manpaths=	setup.py
 SUBST_SED.fix-manpaths=		-e 's,share/man/man1,${PKGMANDIR}/man1,g'
 
 SUBST_CLASSES+=			fix-sharepaths
-SUBST_STAGE.fix-sharepaths=	post-patch
+SUBST_STAGE.fix-sharepaths=	pre-configure
 SUBST_MESSAGE.fix-sharepaths=	Fixing /usr/share paths
 SUBST_FILES.fix-sharepaths=	chirpw
 SUBST_FILES.fix-sharepaths+=	chirp/generic_xml.py

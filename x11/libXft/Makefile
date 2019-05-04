@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.17 2014/10/09 14:07:14 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2019/03/17 08:09:42 wiz Exp $
 
-DISTNAME=	libXft-2.3.2
+DISTNAME=	libXft-2.3.3
 CATEGORIES=	fonts x11
 MASTER_SITES=	${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=	.tar.bz2
@@ -22,6 +22,5 @@ BUILDLINK_API_DEPENDS.fontconfig+=	fontconfig>=2.6
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../x11/libXrender/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

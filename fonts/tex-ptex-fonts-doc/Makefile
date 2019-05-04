@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.2 2017/06/21 11:46:00 markd Exp $
+# $NetBSD: Makefile,v 1.4 2018/05/12 01:53:38 markd Exp $
 
 DISTNAME=	ptex-fonts.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-2017
-TEXLIVE_REV=	42950
+PKGNAME=	tex-${DISTNAME:S/./-/}-2018
+TEXLIVE_REV=	46940
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/ptex-fonts

@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.88 2017/06/23 04:15:52 kamil Exp $
+# $NetBSD: Makefile,v 1.94 2019/01/21 10:04:45 markd Exp $
 
-DISTNAME=		bochs-2.6.8
-PKGREVISION=		4
+DISTNAME=		bochs-2.6.9
 CATEGORIES=		emulators
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=bochs/}
 
@@ -93,6 +92,13 @@ CONFIGURE_ARGS+=	--without-x11
 CONFIGURE_ARGS+=	--with-term
 .else
 PLIST.x11=		yes
+.endif
+
+.if ${OPSYS} == "Linux"
+SUBST_CLASSES+=		nobpf
+SUBST_FILES.nobpf=	config.h
+SUBST_SED.nobpf=	-e 's:BX_NETMOD_FBSD 1:BX_NETMOD_FBSD 0:'
+SUBST_STAGE.nobpf=	post-configure
 .endif
 
 OPSYSVARS+=		BOCHSRC_SUBST

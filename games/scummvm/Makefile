@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.79 2016/07/21 13:48:49 adam Exp $
+# $NetBSD: Makefile,v 1.81 2017/12/30 09:06:42 adam Exp $
 
-DISTNAME=	scummvm-1.8.1
-PKGREVISION=	1
+DISTNAME=	scummvm-2.0.0
 CATEGORIES=	games
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=scummvm/}
+MASTER_SITES=	https://www.scummvm.org/frs/scummvm/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://scummvm.sourceforge.net/
+HOMEPAGE=	https://www.scummvm.org/
 COMMENT=	LucasArts Script Creation Utility for Maniac Mansion
 LICENSE=	gnu-gpl-v2
 
@@ -24,7 +23,7 @@ UNLIMIT_RESOURCES=	datasize
 EXTRACT_USING=		bsdtar
 
 BUILDLINK_API_DEPENDS.zlib+=	zlib>=1.2.1
-.include "../../devel/SDL/buildlink3.mk"
+.include "../../devel/SDL2/buildlink3.mk"
 .include "../../audio/faad2/buildlink3.mk"
 .include "../../audio/flac/buildlink3.mk"
 .include "../../audio/fluidsynth/buildlink3.mk"

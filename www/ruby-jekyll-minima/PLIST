@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.1 2017/04/22 17:09:17 taca Exp $
+@comment $NetBSD: PLIST,v 1.3 2018/09/23 17:14:53 taca Exp $
 ${GEM_HOME}/cache/${GEM_NAME}.gem
 ${GEM_LIBDIR}/LICENSE.txt
 ${GEM_LIBDIR}/README.md
@@ -11,6 +11,7 @@ ${GEM_LIBDIR}/_includes/icon-github.html
 ${GEM_LIBDIR}/_includes/icon-github.svg
 ${GEM_LIBDIR}/_includes/icon-twitter.html
 ${GEM_LIBDIR}/_includes/icon-twitter.svg
+${GEM_LIBDIR}/_includes/social.html
 ${GEM_LIBDIR}/_layouts/default.html
 ${GEM_LIBDIR}/_layouts/home.html
 ${GEM_LIBDIR}/_layouts/page.html
@@ -20,4 +21,5 @@ ${GEM_LIBDIR}/_sass/minima/_base.scss
 ${GEM_LIBDIR}/_sass/minima/_layout.scss
 ${GEM_LIBDIR}/_sass/minima/_syntax-highlighting.scss
 ${GEM_LIBDIR}/assets/main.scss
+${GEM_LIBDIR}/assets/minima-social-icons.svg
 ${GEM_HOME}/specifications/${GEM_NAME}.gemspec

@@ -1,13 +1,11 @@
-# $NetBSD: Makefile,v 1.36 2017/04/25 12:16:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.40 2018/04/18 19:25:27 kamil Exp $
 
-DISTNAME=	keychain-2.8.3
-PKGREVISION=	1
+DISTNAME=	keychain-2.8.5
 CATEGORIES=	security
-MASTER_SITES=	http://www.funtoo.org/archive/keychain/
-EXTRACT_SUFX=	.tar.bz2
+MASTER_SITES=	${MASTER_SITE_GITHUB:=funtoo/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.funtoo.org/Keychain
+HOMEPAGE=	https://www.funtoo.org/Keychain
 COMMENT=	Nice ssh-agent front-end
 LICENSE=	gnu-gpl-v2
 
@@ -15,11 +13,7 @@ LICENSE=	gnu-gpl-v2
 DEPENDS+=	openssh-[0-9]*:../../security/openssh
 .endif
 
-USE_TOOLS+=	bash:run
 NO_BUILD=	yes
-
-# Uses the "local" keyword which is not supported by ksh.
-REPLACE_BASH+=	keychain
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1 share/doc/${PKGBASE}
 

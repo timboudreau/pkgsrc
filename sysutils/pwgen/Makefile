@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.10 2015/01/16 11:41:00 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2018/05/29 02:57:56 ginsbach Exp $
 
-DISTNAME=	pwgen-2.07
+DISTNAME=	pwgen-2.08
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pwgen/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/pwgen/
+HOMEPAGE=	https://sourceforge.net/projects/pwgen/
 COMMENT=	Generate pronounceable passwords
 LICENSE=	gnu-gpl-v2
 

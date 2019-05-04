@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.14 2017/03/13 09:20:24 wiz Exp $
+@comment $NetBSD: PLIST,v 1.17 2019/01/18 22:28:38 bsiegert Exp $
 bin/mc
 bin/mcdiff
 bin/mcedit
@@ -157,6 +157,7 @@ share/mc/hints/mc.hint.ar
 share/mc/hints/mc.hint.az
 share/mc/hints/mc.hint.be
 share/mc/hints/mc.hint.bg
+share/mc/hints/mc.hint.br
 share/mc/hints/mc.hint.ca
 share/mc/hints/mc.hint.cs
 share/mc/hints/mc.hint.da
@@ -172,7 +173,9 @@ share/mc/hints/mc.hint.fa
 share/mc/hints/mc.hint.fi
 share/mc/hints/mc.hint.fr
 share/mc/hints/mc.hint.fr_CA
+share/mc/hints/mc.hint.ga
 share/mc/hints/mc.hint.gl
+share/mc/hints/mc.hint.he
 share/mc/hints/mc.hint.hr
 share/mc/hints/mc.hint.hu
 share/mc/hints/mc.hint.ia
@@ -263,6 +266,7 @@ share/mc/syntax/fortran.syntax
 share/mc/syntax/glsl.syntax
 share/mc/syntax/go.syntax
 share/mc/syntax/haskell.syntax
+share/mc/syntax/hive.syntax
 share/mc/syntax/html.syntax
 share/mc/syntax/idl.syntax
 share/mc/syntax/ini.syntax
@@ -278,6 +282,8 @@ share/mc/syntax/lua.syntax
 share/mc/syntax/m4.syntax
 share/mc/syntax/mail.syntax
 share/mc/syntax/makefile.syntax
+share/mc/syntax/markdown.syntax
+share/mc/syntax/meson.syntax
 share/mc/syntax/ml.syntax
 share/mc/syntax/named.syntax
 share/mc/syntax/nemerle.syntax
@@ -292,10 +298,12 @@ share/mc/syntax/po.syntax
 share/mc/syntax/povray.syntax
 share/mc/syntax/procmail.syntax
 share/mc/syntax/properties.syntax
+share/mc/syntax/protobuf.syntax
 share/mc/syntax/puppet.syntax
 share/mc/syntax/python.syntax
 share/mc/syntax/r.syntax
 share/mc/syntax/ruby.syntax
+share/mc/syntax/rust.syntax
 share/mc/syntax/sh.syntax
 share/mc/syntax/slang.syntax
 share/mc/syntax/smalltalk.syntax
@@ -306,6 +314,7 @@ share/mc/syntax/swig.syntax
 share/mc/syntax/syntax.syntax
 share/mc/syntax/tcl.syntax
 share/mc/syntax/texinfo.syntax
+share/mc/syntax/ts.syntax
 share/mc/syntax/tt.syntax
 share/mc/syntax/unknown.syntax
 share/mc/syntax/verilog.syntax

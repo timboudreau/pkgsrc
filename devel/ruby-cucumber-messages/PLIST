@@ -1,0 +1,10 @@
+@comment $NetBSD: PLIST,v 1.2 2019/01/20 13:36:40 taca Exp $
+${GEM_HOME}/cache/${GEM_NAME}.gem
+${GEM_LIBDIR}/LICENSE
+${GEM_LIBDIR}/README.md
+${GEM_LIBDIR}/lib/cucumber/messages.rb
+${GEM_LIBDIR}/lib/cucumber/messages_pb.rb
+${GEM_LIBDIR}/spec/capture_warnings.rb
+${GEM_LIBDIR}/spec/coverage.rb
+${GEM_LIBDIR}/spec/cucumber/messages/messages_spec.rb
+${GEM_HOME}/specifications/${GEM_NAME}.gemspec

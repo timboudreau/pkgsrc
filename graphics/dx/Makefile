@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.85 2017/04/30 01:21:42 ryoon Exp $
+# $NetBSD: Makefile,v 1.100 2019/03/18 16:17:47 gdt Exp $
 
 DISTNAME=	dx-4.4.4
-PKGREVISION=	36
+PKGREVISION=	49
 CATEGORIES=	graphics
 MASTER_SITES=	http://opendx.npaci.edu/source/
 
@@ -11,11 +11,11 @@ COMMENT=	Open Visualization Data Explorer
 
 MAKE_JOBS_SAFE=		no
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake lex yacc sh
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--without-javadx
-CONFIGURE_ENV+=		bsh_path=${TOOLS_SH:Q}
+CONFIGURE_ENV+=		bsh_path=${TOOLS_SH}
 
 # Ensure we export symbols in the linked shared object.
 LDFLAGS+=		${EXPORT_SYMBOLS_LDFLAGS}

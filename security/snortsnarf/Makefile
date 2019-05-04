@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.24 2016/07/09 06:38:57 wiz Exp $
+# $NetBSD: Makefile,v 1.27 2018/08/22 09:46:29 wiz Exp $
 #
 
 DISTNAME=	SnortSnarf-050314.1
 PKGNAME=	${DISTNAME:S/SnortSnarf-/snortsnarf-20/}
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	security net
-MASTER_SITES=	http://www.snort.org/dl/contrib/data_analysis/snortsnarf/
+MASTER_SITES=	https://www.snort.org/dl/contrib/data_analysis/snortsnarf/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.silicondefense.com/software/snortsnarf/
@@ -20,7 +20,7 @@ REPLACE_PERL=	snortsnarf.pl include/ann_xml.pl include/web_utils.pl	\
 		include/xml_help.pl
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	snortsnarf.pl
 SUBST_SED.paths=	-e "s|./include|${PREFIX}/share/snortsnarf|g"
 SUBST_MESSAGE.paths=	Fixing paths.

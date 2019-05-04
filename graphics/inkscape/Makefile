@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.148 2017/05/03 08:38:42 jperkin Exp $
+# $NetBSD: Makefile,v 1.186 2019/04/25 07:32:58 maya Exp $
 
-DISTNAME=	inkscape-0.92.1
-PKGREVISION=	4
+DISTNAME=	inkscape-0.92.3
+PKGREVISION=	5
 CATEGORIES=	graphics
 MASTER_SITES=	https://media.inkscape.org/dl/resources/file/
 EXTRACT_SUFX=	.tar.bz2
@@ -53,6 +53,11 @@ SUBST_FILES.pycmd+=	share/symbols/CMakeLists.txt
 SUBST_FILES.pycmd+=	share/templates/CMakeLists.txt
 SUBST_SED.pycmd=	-e "s,COMMAND python,COMMAND ${PYTHONBIN},g"
 
+SUBST_CLASSES+=		bool
+SUBST_STAGE.bool=	pre-configure
+SUBST_FILES.bool+=	src/extension/internal/pdfinput/pdf-parser.*
+SUBST_SED.bool=		-e 's|gTrue|true|g' -e 's|gFalse|false|g' -e 's|GBool|bool|g'
+
 REPLACE_PYTHON+=	cxxtest/cxxtestgen.py
 REPLACE_PYTHON+=	share/extensions/*.py
 REPLACE_PYTHON+=	share/extensions/Barcode/*.py
@@ -66,7 +71,7 @@ CHECK_PORTABILITY_SKIP+=packaging/macosx/ScriptExec/launcher-quartz-no-macintegr
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.inkscape
 PKG_SUPPORTED_OPTIONS=	gnome
-PKG_SUGGESTED_OPTIONS=	gnome
+PKG_SUGGESTED_OPTIONS=
 
 .include "../../mk/bsd.options.mk"
 

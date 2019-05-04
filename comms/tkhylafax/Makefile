@@ -1,14 +1,12 @@
-# $NetBSD: Makefile,v 1.32 2012/10/03 11:24:45 asau Exp $
+# $NetBSD: Makefile,v 1.34 2018/04/21 13:38:04 wiz Exp $
 
 DISTNAME=	tkhylafax-3.1
 PKGREVISION=	4
 CATEGORIES=	comms
 MASTER_SITES=	ftp://ftp.sgi.com/sgi/fax/contrib/tkhylafax/
-#		ftp://ftp.tuwien.ac.at/infosys/fax/hylafax/contrib/tkhylafax/ \
-#		http://gd.tuwien.ac.at/infosys/fax/hylafax/contrib/tkhylafax/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.elgro.demon.co.uk/resources.html
+#HOMEPAGE=	http://www.elgro.demon.co.uk/resources.html
 COMMENT=	Tcl/tk interface to Sam Leffler's fax package
 
 DEPENDS+=	gv>=3.5.8nb1:../../print/gv

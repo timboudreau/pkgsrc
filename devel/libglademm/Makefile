@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.43 2017/05/03 08:38:40 jperkin Exp $
+# $NetBSD: Makefile,v 1.48 2018/11/14 22:21:16 kleink Exp $
 
 DISTNAME=	libglademm-2.6.7
-PKGREVISION=	25
+PKGREVISION=	29
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/libglademm/2.6/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://www.gtkmm.org/
+HOMEPAGE=	https://www.gtkmm.org/
 COMMENT=	C++ bindings for libglade
 
 USE_LANGUAGES=		c c++11

@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.21 2017/02/12 06:25:11 ryoon Exp $
+# $NetBSD: Makefile,v 1.26 2018/11/14 22:21:14 kleink Exp $
 
 DISTNAME=	Coder-0.2.0
 PKGNAME=	deforaos-coder-0.2.0
-PKGREVISION=	5
+PKGREVISION=	9
 CATEGORIES=	devel
-MASTER_SITES=	http://www.defora.org/os/download/download/4420/
+MASTER_SITES=	https://www.defora.org/os/download/download/4420/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS Coder
 
 LICENSE=	gnu-gpl-v3

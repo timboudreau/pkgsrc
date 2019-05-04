@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.77 2017/04/30 01:21:26 ryoon Exp $
+# $NetBSD: Makefile,v 1.96 2019/04/25 07:33:30 maya Exp $
 
 DISTNAME=	kde-runtime-15.12.0
 PKGNAME=	${DISTNAME:S/-1/4-1/}
-PKGREVISION=	14
+PKGREVISION=	32
 CATEGORIES=	x11
 COMMENT=	Runtime requirements for the KDE integrated X11 desktop
 MASTER_SITES=	${MASTER_SITE_KDE:=applications/15.12.0/src/}
@@ -44,7 +44,7 @@ PLIST.x11=	yes
 .endif
 
 SUBST_CLASSES+=		htdig
-SUBST_STAGE.htdig=	post-patch
+SUBST_STAGE.htdig=	pre-configure
 SUBST_MESSAGE.htdig=	Fix htdig paths.
 SUBST_FILES.htdig=	khelpcenter/searchhandlers/khc_htsearch.pl
 SUBST_SED.htdig=	-e s:/srv/www/cgi-bin:${PREFIX}/libexec/cgi-bin:
@@ -52,7 +52,7 @@ SUBST_SED.htdig=	-e s:/srv/www/cgi-bin:${PREFIX}/libexec/cgi-bin:
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	kioslave/info/kde-info2html.conf
 SUBST_SED.paths=	-e 's,@LOCALBASE@,${LOCALBASE},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 REPLACE_PERL+= \
 	khelpcenter/searchhandlers/khc_docbookdig.pl.cmake \

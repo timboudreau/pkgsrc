@@ -1,28 +1,27 @@
-$NetBSD: patch-setup.py,v 1.13 2017/07/03 21:51:57 adam Exp $
+$NetBSD: patch-setup.py,v 1.18 2019/04/03 08:05:44 adam Exp $
 
-Prevent to detect optional tkinter.
-Disable demo programs.
+Disable mp_compile hack; it has problems with native parallel building.
 
---- setup.py.orig	2017-07-01 15:55:53.000000000 +0000
+--- setup.py.orig	2019-04-02 04:19:42.000000000 +0000
 +++ setup.py
-@@ -104,11 +104,7 @@ def get_version():
-         exec(compile(f.read(), version_file, 'exec'))
-     return locals()['__version__']
+@@ -22,7 +22,6 @@ from setuptools import Extension, setup
  
--try:
--    import _tkinter
--except (ImportError, OSError):
--    # pypy emits an oserror
--    _tkinter = None
-+_tkinter = None
+ # monkey patch import hook. Even though flake8 says it's not used, it is.
+ # comment this out to disable multi threaded builds.
+-import mp_compile
  
- NAME = 'Pillow'
- PILLOW_VERSION = get_version()
-@@ -768,7 +764,6 @@ try:
-           ext_modules=[Extension("PIL._imaging", ["_imaging.c"])],
-           include_package_data=True,
-           packages=find_packages(),
--          scripts=glob.glob("Scripts/*.py"),
-           install_requires=['olefile'],
-           test_suite='nose.collector',
-           keywords=["Imaging", ],
+ 
+ if sys.platform == "win32" and sys.version_info >= (3, 8):
+@@ -265,12 +264,6 @@ class pil_build_ext(build_ext):
+         if self.debug:
+             global DEBUG
+             DEBUG = True
+-        if sys.version_info.major >= 3 and not self.parallel:
+-            # For Python 2.7, we monkeypatch distutils to have parallel
+-            # builds. If --parallel (or -j) wasn't specified, we want to
+-            # reproduce the same behavior as before, that is, auto-detect the
+-            # number of jobs.
+-            self.parallel = mp_compile.MAX_PROCS
+         for x in self.feature:
+             if getattr(self, 'disable_%s' % x):
+                 setattr(self.feature, x, False)

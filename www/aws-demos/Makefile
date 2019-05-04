@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.19 2016/11/26 18:34:47 marino Exp $
-#
+# $NetBSD: Makefile,v 1.22 2018/07/04 13:40:40 jperkin Exp $
 
 DISTNAME=	aws-${AWS_VERSION}
 PKGNAME=	aws-demos-${AWS_VERSION}
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	www
 MASTER_SITES=	http://downloads.dragonlace.net/src/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	draco@marino.st
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://libre.adacore.com/libre/tools/aws/
 COMMENT=	Adacore Ada Web Server demonstration programs
 LICENSE=	gnu-gpl-v2
@@ -33,7 +32,7 @@ CONFIGURE_ARGS+=	LPATH=${BUILDLINK_PREFIX.openssl}/lib
 CONFIGURE_ARGS+=	ZPATH=${BUILDLINK_PREFIX.zlib}/lib
 
 SUBST_CLASSES+= 	lpath
-SUBST_STAGE.lpath=	post-patch
+SUBST_STAGE.lpath=	pre-configure
 SUBST_MESSAGE.lpath=	Add library path for ldap
 SUBST_FILES.lpath=	demos/test_ldap/test_ldap.gpr
 SUBST_SED.lpath=	-e 's|@PREFIX@|${PREFIX}|g'

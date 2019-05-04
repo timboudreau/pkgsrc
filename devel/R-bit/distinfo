@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/07/04 08:13:59 wen Exp $
+
+SHA1 (R/bit_1.1-14.tar.gz) = 453ff3bd2adbbf2a426a3007c684433d46eb85ab
+RMD160 (R/bit_1.1-14.tar.gz) = 935de899df19c04d9ee3e71bcf9b7500560cfb94
+SHA512 (R/bit_1.1-14.tar.gz) = b840d1469f5fce1ff8028992c19a4ca9bba9f84d073ccca7fab83fd172adbbe37a75fad23da73ea88c6ca90ba134f280f407ca86664563966d3e30cd6e8ea9e3
+Size (R/bit_1.1-14.tar.gz) = 54779 bytes

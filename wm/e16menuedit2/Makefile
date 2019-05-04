@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.48 2017/02/12 06:26:05 ryoon Exp $
+# $NetBSD: Makefile,v 1.53 2018/11/14 22:22:33 kleink Exp $
 #
 
 DISTNAME=		e16menuedit2-0.0.3
-PKGREVISION=		27
+PKGREVISION=		31
 CATEGORIES=		wm x11
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=enlightenment/}
 
 MAINTAINER=		chriswareham@chriswareham.demon.co.uk
-HOMEPAGE=		http://www.enlightenment.org/
+HOMEPAGE=		https://www.enlightenment.org/
 COMMENT=		Menu editor for the Enlightenment window manager
 
 DEPENDS+=		enlightenment-0.16.*:../../wm/enlightenment

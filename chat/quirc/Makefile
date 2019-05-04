@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.27 2014/02/04 00:12:07 joerg Exp $
+# $NetBSD: Makefile,v 1.32 2018/12/05 18:42:06 scole Exp $
 #
 
 DISTNAME=	quirc-0.9.84
-PKGREVISION=	8
+PKGREVISION=	10
 CATEGORIES=	chat
-MASTER_SITES=	http://quirc.org/
+#MASTER_SITES=	http://quirc.org/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://quirc.org/
+#HOMEPAGE=	http://quirc.org/
 COMMENT=	Stable and powerful graphical IRC client
 
 GNU_CONFIGURE=	YES
@@ -19,15 +19,28 @@ CONFIGURE_ARGS+=	--with-wish=${TOOLS_PATH.wish}
 MAKE_FLAGS+=	docdir=${PREFIX}/share/doc/quirc
 
 SUBST_CLASSES+=		T86
-SUBST_STAGE.T86=	post-patch
+SUBST_STAGE.T86=	pre-configure
 SUBST_FILES.T86=	configure configure.in
 SUBST_MESSAGE.T86=	Changing tcl/tk 8.3 search into tcl/tk 8.6 search
 SUBST_SED.T86=		-e 's,8_3,8_6,g'
 SUBST_SED.T86+=		-e 's,8.3,8.6,g'
 SUBST_SED.T86+=		-e 's,83,86,g'
 
+INSTALLATION_DIRS=	bin
+INSTALLATION_DIRS+=	share/doc/quirc
+INSTALLATION_DIRS+=	share/quirc
+INSTALLATION_DIRS+=	share/quirc/common
+INSTALLATION_DIRS+=	share/quirc/themes
+
 pre-configure:
 	cd ${WRKSRC} && autoreconf -i
+
+# move default.tcl to themes/default.tcl and install to common/install.tcl
+post-install:
+	${MV} ${DESTDIR}${PREFIX}/share/quirc/default.tcl \
+		${DESTDIR}${PREFIX}/share/quirc/themes
+	${MV} ${DESTDIR}${PREFIX}/share/quirc/install.tcl \
+		${DESTDIR}${PREFIX}/share/quirc/common
 
 BUILDLINK_DEPMETHOD.libXt?=	build
 

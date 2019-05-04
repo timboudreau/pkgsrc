@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.26 2017/07/11 14:19:47 jaapb Exp $
+# $NetBSD: Makefile,v 1.35 2019/01/29 12:47:02 jaapb Exp $
 #
 
-VERSION=	2.8
+VERSION=	2.11.0
 GITHUB_PROJECT=	ocsigenserver
-PKGREVISION=	2
 PKGNAME=	ocsigen-${VERSION}
 DISTNAME=	${GITHUB_PROJECT}-${VERSION}
 CATEGORIES=	www
@@ -66,14 +65,20 @@ BUILDLINK_API_DEPENDS.ocaml+=   ocaml>=3.12.0
 CONFIGURE_ARGS+=		--disable-natdynlink
 .endif
 
+post-extract:
+	${RUN} ${CP} ${FILESDIR}/ocsigen_getcommandline.mli ${WRKSRC}/src/baselib/commandline
+	${RUN} ${CP} ${FILESDIR}/ocsigen_getcommandline.mli ${WRKSRC}/src/baselib/nocommandline
+
 .include "options.mk"
 .include "../../mk/pthread.buildlink3.mk"
-.include "../../devel/ocaml-lwt/buildlink3.mk"
+.include "../../devel/ocaml-lwt_log/buildlink3.mk"
+.include "../../devel/ocaml-lwt_react/buildlink3.mk"
+.include "../../devel/ocaml-lwt_ssl/buildlink3.mk"
 .include "../../devel/pcre-ocaml/buildlink3.mk"
-.include "../../lang/camlp4/buildlink3.mk"
 .include "../../net/ocaml-ipaddr/buildlink3.mk"
 .include "../../net/ocamlnet/buildlink3.mk"
 .include "../../security/ocaml-cryptokit/buildlink3.mk"
 .include "../../security/ocaml-ssl/buildlink3.mk"
 .include "../../textproc/ocaml-tyxml/buildlink3.mk"
+.include "../../textproc/ocaml-xml-light/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

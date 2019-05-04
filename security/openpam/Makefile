@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.24 2016/07/09 06:38:56 wiz Exp $
+# $NetBSD: Makefile,v 1.29 2018/08/27 08:59:52 triaxx Exp $
 
-DISTNAME=	openpam-20140912
-PKGREVISION=	2
+DISTNAME=	openpam-20170430
+PKGREVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openpam/}
 
 MAINTAINER=	joerg@NetBSD.org
-HOMEPAGE=	http://www.openpam.org/
+HOMEPAGE=	https://www.openpam.org/
 COMMENT=	Open-source PAM library
 LICENSE=	modified-bsd
 
@@ -15,13 +15,32 @@ CONFLICTS+=	PAM-[0-9]*
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR:Q}
-CONFIGURE_ARGS+=	--without-pam-su
 CONFIGURE_ARGS+=	--with-pam-unix
 CONFIGURE_ARGS+=	--with-modules-dir=${PREFIX}/lib/security
 
-CPPFLAGS+=		-DSYSCONFDIR=\"$(PKG_SYSCONFDIR)\"
+CPPFLAGS+=		-DSYSCONFDIR=\"${PKG_SYSCONFDIR}\"
+
+EGDIR=			${PREFIX}/share/examples/${PKGBASE}
+CONF_FILES+=		${EGDIR}/pam.d/other ${PKG_SYSCONFDIR}/pam.d/other
+CONF_FILES+=		${EGDIR}/pam.d/sudo ${PKG_SYSCONFDIR}/pam.d/sudo
 
 OWN_DIRS=		${PKG_SYSCONFDIR}/pam.d
+INSTALLATION_DIRS+=	${EGDIR}/pam.d
+
+SUBST_CLASSES+=		man
+SUBST_MESSAGE.man=	Fixing hardcoded paths in manpages.
+SUBST_STAGE.man=	post-build
+SUBST_FILES.man=	doc/man/pam.conf.5
+SUBST_VARS.man=		PKG_SYSCONFDIR PREFIX
+
+post-extract:
+	${MKDIR} -p ${WRKSRC}/doc/pam.d
+	${CP} ${FILESDIR}/other ${WRKSRC}/doc/pam.d/other
+	${CP} ${FILESDIR}/sudo ${WRKSRC}/doc/pam.d/sudo
+
+post-install:
+	${INSTALL_DATA} ${WRKSRC}/doc/pam.d/other ${DESTDIR}${EGDIR}/pam.d/other
+	${INSTALL_DATA} ${WRKSRC}/doc/pam.d/sudo ${DESTDIR}${EGDIR}/pam.d/sudo
 
 .include "../../mk/dlopen.buildlink3.mk"
 

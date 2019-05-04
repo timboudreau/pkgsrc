@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.18 2017/06/05 14:22:58 ryoon Exp $
+# $NetBSD: Makefile,v 1.20 2018/08/22 09:44:00 wiz Exp $
 
-DISTNAME=	File-ConfigDir-0.018
+DISTNAME=	File-ConfigDir-0.021
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5
@@ -14,6 +14,9 @@ LICENSE=	${PERL5_LICENSE}
 # recommended modules ...
 DEPENDS+=	p5-File-HomeDir>=0.50:../../devel/p5-File-HomeDir
 DEPENDS+=	p5-List-MoreUtils>=0.22:../../devel/p5-List-MoreUtils
+
+# TEST_DEPENDS
+BUILD_DEPENDS+=	p5-Test-Without-Module-[0-9]*:../../devel/p5-Test-Without-Module
 
 USE_LANGUAGES=		# empty
 PERL5_PACKLIST=		auto/File/ConfigDir/.packlist

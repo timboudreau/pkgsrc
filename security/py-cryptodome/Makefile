@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.6 2017/03/07 16:28:17 maya Exp $
+# $NetBSD: Makefile,v 1.23 2019/04/05 09:18:33 adam Exp $
 
-DISTNAME=	pycryptodome-3.4.5
+DISTNAME=	pycryptodome-3.8.1
 PKGNAME=	${DISTNAME:S/^py/${PYPKGPREFIX}-/}
 CATEGORIES=	security python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pycryptodome/}
@@ -10,11 +10,10 @@ HOMEPAGE=	https://www.pycryptodome.org/
 COMMENT=	Cryptographic and hash functions for Python
 LICENSE=	public-domain AND python-software-foundation
 
-do-test:
-	${RUN}cd ${WRKSRC};${SETENV} ${TEST_ENV} ${PYTHONBIN} ${PYSETUP} test
-
 # XXX is this needed?
 CFLAGS.SunOS+=	-std=c99 -D_XOPEN_SOURCE=600
+
+CHECK_PORTABILITY_SKIP=	appveyor/get_wheels.sh
 
 BUILDLINK_API_DEPENDS.gmp+=	gmp>=5.0
 .include "../../devel/gmp/buildlink3.mk"

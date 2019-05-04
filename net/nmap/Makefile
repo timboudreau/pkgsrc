@@ -1,14 +1,9 @@
-# $NetBSD: Makefile,v 1.135 2017/06/14 09:26:29 adam Exp $
+# $NetBSD: Makefile,v 1.140 2018/04/14 13:04:33 adam Exp $
 
-DISTNAME=	nmap-7.50
-CATEGORIES=	net security
-MASTER_SITES=	http://nmap.org/dist/
-EXTRACT_SUFX=	.tar.bz2
+.include "Makefile.common"
 
-MAINTAINER=	pettai@NetBSD.org
-HOMEPAGE=	http://insecure.org/nmap/
+PKGREVISION=	1
 COMMENT=	Network/port scanner with OS detection
-LICENSE=	gnu-gpl-v2
 
 BUILDLINK_API_DEPENDS.libpcap+=	libpcap>=1.0.0
 BUILDLINK_API_DEPENDS.libpcre+=	libpcre>=7.6
@@ -22,11 +17,13 @@ CONFIGURE_ARGS+=	--with-liblinear=${BUILDLINK_PREFIX.liblinear}
 CONFIGURE_ARGS+=	--with-libpcap=${BUILDLINK_PREFIX.libpcap}
 CONFIGURE_ARGS+=	--with-libpcre=${BUILDLINK_PREFIX.pcre}
 CONFIGURE_ARGS+=	--with-openssl=${BUILDLINK_PREFIX.openssl}
+CONFIGURE_ARGS+=	--without-ndiff # provided by net/ndiff
 CONFIGURE_ARGS+=	--without-subversion
+CONFIGURE_ARGS+=	--without-zenmap # provided by net/zenmap
 
 BUILD_DEFS+=		IPV6_READY
 
-TEST_TARGET+=		check
+TEST_TARGET=		check
 
 .include "options.mk"
 
@@ -70,5 +67,4 @@ post-install:
 .include "../../math/liblinear/buildlink3.mk"
 .include "../../net/libpcap/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
-#.include "../../devel/subversion-base/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

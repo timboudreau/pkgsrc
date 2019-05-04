@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.24 2016/04/20 12:10:31 nros Exp $
+# $NetBSD: Makefile,v 1.26 2018/02/27 23:56:07 khorben Exp $
 #
 
 DISTNAME=	rioutil-1.5.0
+PKGREVISION=	1
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=rioutil/}
 
@@ -20,5 +21,5 @@ ONLY_FOR_PLATFORM+=	NetBSD-1.5Z-* NetBSD-1.5Z[A-Z]-*
 ONLY_FOR_PLATFORM+=	DragonFly-*-* FreeBSD-*-* OpenBSD-*-*
 
 .include "../../audio/id3lib/buildlink3.mk"
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

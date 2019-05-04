@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.10 2013/10/21 09:50:36 fhajny Exp $
+# $NetBSD: Makefile,v 1.12 2018/07/04 13:40:18 jperkin Exp $
 
 DISTNAME=	0verkill-0.16
 PKGREVISION=	1
@@ -7,7 +7,7 @@ MASTER_SITES=	http://artax.karlin.mff.cuni.cz/~brain/0verkill/release/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://artax.karlin.mff.cuni.cz/~brain/0verkill/
+#HOMEPAGE=	http://artax.karlin.mff.cuni.cz/~brain/0verkill/
 COMMENT=	0verkill is bloody 2D action deathmatch-like game in ASCII-ART
 
 HAS_CONFIGURE=		yes
@@ -16,13 +16,13 @@ INSTALLATION_DIRS=	bin share/0verkill share/doc/0verkill
 INSTALLATION_DIRS+=	share/0verkill/data share/0verkill/grx
 
 SUBST_CLASSES+=		grx
-SUBST_STAGE.grx=	post-patch
+SUBST_STAGE.grx=	pre-configure
 SUBST_MESSAGE.grx=	Fix game data paths
 SUBST_FILES.grx=	data/sprites.dat data/level1.sp data/level2.sp
 SUBST_SED.grx=		-e "s|grx/|${PREFIX}/share/0verkill/grx/|g"
 
 SUBST_CLASSES+=		prefix
-SUBST_STAGE.prefix=	post-patch
+SUBST_STAGE.prefix=	pre-configure
 SUBST_MESSAGE.prefix=	Fix game configuration path prefix
 SUBST_FILES.prefix=	cfg.h
 SUBST_SED.prefix=	-e "s|@PREFIX@|${PREFIX}|g"

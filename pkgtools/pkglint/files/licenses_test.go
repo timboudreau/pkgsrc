@@ -1,30 +1,30 @@
-package main
+package pkglint
 
 import (
-	check "gopkg.in/check.v1"
+	"gopkg.in/check.v1"
 )
 
-func (s *Suite) Test_checklineLicense(c *check.C) {
-	s.Init(c)
-	s.CreateTmpFile("licenses/gnu-gpl-v2", "Most software \u2026")
-	mkline := NewMkLine(NewLine("Makefile", 7, "LICENSE=dummy", nil))
-	G.globalData.Pkgsrcdir = s.tmpdir
-	G.CurrentDir = s.tmpdir
+func (s *Suite) Test_LicenseChecker_Check(c *check.C) {
+	t := s.Init(c)
 
-	licenseChecker := &LicenseChecker{mkline}
+	t.CreateFileLines("licenses/gnu-gpl-v2",
+		"The licenses for most software are designed to take away ...")
+	mkline := t.NewMkLine("Makefile", 7, "LICENSE=dummy")
+
+	licenseChecker := LicenseChecker{nil, mkline}
 	licenseChecker.Check("gpl-v2", opAssign)
 
-	s.CheckOutputLines(
+	t.CheckOutputLines(
 		"WARN: Makefile:7: License file ~/licenses/gpl-v2 does not exist.")
 
 	licenseChecker.Check("no-profit shareware", opAssign)
 
-	s.CheckOutputLines(
+	t.CheckOutputLines(
 		"ERROR: Makefile:7: Parse error for license condition \"no-profit shareware\".")
 
 	licenseChecker.Check("no-profit AND shareware", opAssign)
 
-	s.CheckOutputLines(
+	t.CheckOutputLines(
 		"WARN: Makefile:7: License file ~/licenses/no-profit does not exist.",
 		"ERROR: Makefile:7: License \"no-profit\" must not be used.",
 		"WARN: Makefile:7: License file ~/licenses/shareware does not exist.",
@@ -32,14 +32,34 @@ func (s *Suite) Test_checklineLicense(c *check.C) {
 
 	licenseChecker.Check("gnu-gpl-v2", opAssign)
 
-	s.CheckOutputEmpty()
+	t.CheckOutputEmpty()
 
 	licenseChecker.Check("gnu-gpl-v2 AND gnu-gpl-v2 OR gnu-gpl-v2", opAssign)
 
-	s.CheckOutputLines(
+	t.CheckOutputLines(
 		"ERROR: Makefile:7: AND and OR operators in license conditions can only be combined using parentheses.")
 
 	licenseChecker.Check("(gnu-gpl-v2 OR gnu-gpl-v2) AND gnu-gpl-v2", opAssign)
 
-	s.CheckOutputEmpty()
+	t.CheckOutputEmpty()
+}
+
+func (s *Suite) Test_LicenseChecker_checkName__LICENSE_FILE(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpPkgsrc()
+	t.SetUpPackage("category/package",
+		"LICENSE=\tmy-license",
+		"",
+		"LICENSE_FILE=\tmy-license")
+	t.CreateFileLines("category/package/my-license",
+		"An individual license file.")
+
+	t.Main(t.File("category/package"))
+
+	// There is no warning about the unusual file name in the package directory.
+	// If it were not mentioned in LICENSE_FILE, the file named my-license
+	// would be warned about.
+	t.CheckOutputLines(
+		"Looks fine.")
 }

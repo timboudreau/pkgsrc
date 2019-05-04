@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.3 2017/06/24 07:13:05 adam Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/26 13:13:54 maya Exp $
 
-DISTNAME=	uvloop-0.8.0
+DISTNAME=	uvloop-0.12.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=u/uvloop/}
@@ -12,9 +12,7 @@ LICENSE=	mit AND apache-2.0
 
 BUILD_DEPENDS+=	${PYPKGPREFIX}-cython-[0-9]*:../../devel/py-cython
 
-PYTHON_VERSIONS_ACCEPTED=	36 35
-
-USE_LANGUAGES=		c
+PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 .include "../../devel/libuv/buildlink3.mk"
 .include "../../lang/python/egg.mk"

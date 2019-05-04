@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.8 2017/05/19 13:18:18 prlw1 Exp $
+# $NetBSD: buildlink3.mk,v 1.17 2019/03/18 16:17:50 gdt Exp $
 
 BUILDLINK_TREE+=	ghostscript-gpl
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	ghostscript-gpl
 GHOSTSCRIPT_GPL_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.ghostscript-gpl+=	ghostscript-gpl>=8.63nb1
-BUILDLINK_ABI_DEPENDS.ghostscript-gpl+=	ghostscript-gpl>=9.06nb8
+BUILDLINK_ABI_DEPENDS.ghostscript-gpl+=	ghostscript-gpl>=9.06nb28
 BUILDLINK_PKGSRCDIR.ghostscript-gpl?=	../../print/ghostscript-gpl
 
 .include "../../graphics/png/buildlink3.mk"
@@ -16,7 +16,7 @@ pkgbase := ghostscript-gpl
 .include "../../mk/pkg-build-options.mk"
 
 .if !empty(PKG_BUILD_OPTIONS.ghostscript-gpl:Mcups)
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .endif
 
 .if !empty(PKG_BUILD_OPTIONS.ghostscript-gpl:Mfontconfig)

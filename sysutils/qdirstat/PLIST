@@ -1,0 +1,5 @@
+@comment $NetBSD: PLIST,v 1.2 2018/11/17 20:02:41 bsiegert Exp $
+bin/qdirstat
+bin/qdirstat-cache-writer
+share/applications/qdirstat.desktop
+share/pixmaps/qdirstat.png

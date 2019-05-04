@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.30 2013/02/17 19:18:01 dholland Exp $
-#
+# $NetBSD: Makefile,v 1.32 2018/02/06 16:42:22 jperkin Exp $
 
 DISTNAME=	semantic-1.4.4
 PKGNAME=	${EMACS_PKGNAME_PREFIX}${DISTNAME}

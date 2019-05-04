@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.19 2017/01/19 18:52:26 agc Exp $
+# $NetBSD: Makefile,v 1.22 2018/08/22 09:46:36 wiz Exp $
 
 DISTNAME=	mc-4.6.1
-PKGREVISION=	20
+PKGREVISION=	22
 CATEGORIES=	sysutils
 MASTER_SITES=	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/
 MASTER_SITES+=	${MASTER_SITE_SUNSITE:=utils/file/managers/mc/}
@@ -30,7 +30,7 @@ PLIST_SRC+=		${PKGDIR}/PLIST
 
 PKG_SYSCONFSUBDIR=	mc
 SUBST_CLASSES+=		conf
-SUBST_STAGE.conf=	post-patch
+SUBST_STAGE.conf=	pre-configure
 SUBST_FILES.conf=	vfs/extfs.c vfs/sfs.c
 SUBST_VARS.conf=	PKG_SYSCONFDIR
 

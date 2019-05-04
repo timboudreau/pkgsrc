@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.80 2017/04/22 21:03:31 adam Exp $
+# $NetBSD: Makefile,v 1.96 2019/04/03 00:32:38 ryoon Exp $
 
 DISTNAME=	mono-tools-3.10
-PKGREVISION=	9
+PKGREVISION=	24
 CATEGORIES=	devel
 MASTER_SITES=	http://download.mono-project.com/sources/mono-tools/
 
@@ -20,7 +20,7 @@ MAKE_JOBS_SAFE=		no
 CONFIGURE_ARGS+=	--mandir=${PKGMANDIR}
 
 SUBST_CLASSES+=		fix-mcs
-SUBST_STAGE.fix-mcs=	post-patch
+SUBST_STAGE.fix-mcs=	pre-configure
 SUBST_MESSAGE.fix-mcs=	Fix compiler name
 SUBST_FILES.fix-mcs=	configure
 SUBST_SED.fix-mcs=	-e 's,gmcs,mcs,'

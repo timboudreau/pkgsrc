@@ -1,8 +1,9 @@
-@comment $NetBSD: PLIST,v 1.4 2017/02/28 14:40:47 ryoon Exp $
+@comment $NetBSD: PLIST,v 1.7 2018/11/20 17:26:19 adam Exp $
 bin/cwebp
 bin/dwebp
 bin/gif2webp
 bin/img2webp
+bin/webpinfo
 bin/webpmux
 include/webp/decode.h
 include/webp/demux.h
@@ -21,4 +22,7 @@ lib/pkgconfig/libwebpmux.pc
 man/man1/cwebp.1
 man/man1/dwebp.1
 man/man1/gif2webp.1
+man/man1/img2webp.1
+man/man1/webpinfo.1
 man/man1/webpmux.1
+share/doc/libwebp/COPYING

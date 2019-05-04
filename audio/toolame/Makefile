@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.21 2012/10/02 23:48:11 asau Exp $
+# $NetBSD: Makefile,v 1.23 2018/07/04 13:40:09 jperkin Exp $
 
 DISTNAME=	toolame-02l
 PKGREVISION=	4
@@ -7,7 +7,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=toolame/}
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/toolame/
+HOMEPAGE=	https://sourceforge.net/projects/toolame/
 COMMENT=	Optimized MPEG 1/2 layer 2 audio encoder
 LICENSE=	gnu-lgpl-v2.1
 
@@ -25,7 +25,7 @@ INSTALLATION_DIRS=	bin share/doc/toolame
 .if !empty(PKGSRC_COMPILER:Msunpro)
 SUBST_CLASSES+=		inline
 SUBST_MESSAGE.inline=	Disable inline on Sun Studio
-SUBST_STAGE.inline=	post-patch
+SUBST_STAGE.inline=	pre-configure
 SUBST_FILES.inline=	Makefile
 SUBST_SED.inline=	-e 's,INLINE=inline,INLINE=,'
 .endif

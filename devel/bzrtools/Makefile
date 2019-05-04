@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.26 2017/01/01 14:43:29 wiz Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/26 14:12:34 maya Exp $
 
 PKGNAME=	bzrtools-${VER}
+PKGREVISION=	1
 DISTNAME=	bzrtools-${VER:R}
 CATEGORIES=	devel scm
 MASTER_SITES=	http://launchpad.net/bzrtools/stable/${VER:R}/+download/
@@ -12,7 +13,7 @@ COMMENT=	Collection of plugins for Bazaar
 LICENSE=	gnu-gpl-v2
 
 REPLACE_PYTHON= check-release.py test.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.5.0
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.5.0
 
 WRKSRC=		${WRKDIR}/bzrtools
 

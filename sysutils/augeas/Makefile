@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.2 2015/01/06 22:59:07 joerg Exp $
+# $NetBSD: Makefile,v 1.4 2019/02/12 12:21:00 adam Exp $
 
-DISTNAME=	augeas-1.3.0
+DISTNAME=	augeas-1.11.0
 CATEGORIES=	sysutils
 MASTER_SITES=	http://download.augeas.net/
 
@@ -9,12 +9,12 @@ HOMEPAGE=	http://augeas.net/
 COMMENT=	Tool for editing configuration programmatically
 LICENSE=	gnu-lgpl-v2.1
 
-GNU_CONFIGURE=	yes
-USE_TOOLS+=	pkg-config
-USE_LIBTOOL=	yes
-
+USE_LIBTOOL=		yes
+USE_TOOLS+=		pkg-config
+GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE+=	augeas.pc.in
+TEST_TARGET=		check
 
-.include "../../mk/readline.buildlink3.mk"
 .include "../../textproc/libxml2/buildlink3.mk"
+.include "../../mk/readline.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.10 2017/06/29 17:19:13 schmonz Exp $
+# $NetBSD: Makefile,v 1.14 2018/10/07 10:52:40 schmonz Exp $
 #
 
-DISTNAME=	etckeeper_1.18.5.orig
-PKGNAME=	${DISTNAME:S/_/-/:S/.orig$/.1/}
-PKGREVISION=	2
+DISTNAME=	etckeeper_1.18.8.orig
+PKGNAME=	${DISTNAME:S/_/-/:S/.orig$//}
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_DEBIAN:=pool/main/e/etckeeper/}
 
@@ -14,18 +13,13 @@ LICENSE=	gnu-gpl-v2
 
 WRKSRC=		${WRKDIR}/${PKGNAME_NOREV:S/.1$//}
 USE_LANGUAGES=	# none
-USE_TOOLS+=	sed perl:run
+USE_TOOLS+=	gawk perl:run
 
 NO_CONFIGURE=	yes
 NO_BUILD=	yes
 AUTO_MKDIRS=	yes
 
 BUILD_DEFS+=	VARBASE
-
-ETCKEEPER_PATCH=etckeeper_1.18.5-1.diff.gz
-PATCHFILES+=	${ETCKEEPER_PATCH}
-SITES.${ETCKEEPER_PATCH}=	${MASTER_SITES}
-PATCH_DIST_STRIP.${ETCKEEPER_PATCH}=	-p1
 
 .include "cf-files.mk"
 
@@ -74,11 +68,12 @@ do-install:
 	${INSTALL_DATA} ${WRKSRC}/bash_completion \
 			${DESTDIR}${PREFIX}/share/bash-completion.d/etckeeper
 
-.PHONY:gen-cf-files
-gen-cf-files:
-	grep '[$$]NetBSD' >cf-files.mk
-	${ECHO} '#'		>>cf-files.mk
-	${SH} -c 'cd ${WRKSRC} && ${LS} -1 *.d/*' | 			\
-	${SED} -e'/\.orig$$/d' -e's@^@CF_FILES+= @' >>cf-files.mk
+gen-cf-files: .PHONY
+	{ \
+	${ECHO} '# $$''NetBSD$$'; \
+	${ECHO} '#'; \
+	(cd ${WRKSRC} && ${LS} -1 *.d/*) \
+	| ${AWK} '!/\.orig$$/ { print "CF_FILES+=\t" $$0 }'; \
+	} >cf-files.mk
 
 .include "../../mk/bsd.pkg.mk"

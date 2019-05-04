@@ -1,14 +1,14 @@
-# $NetBSD: Makefile.common,v 1.9 2017/05/03 08:38:45 jperkin Exp $
+# $NetBSD: Makefile.common,v 1.14 2019/04/26 14:12:49 maya Exp $
 # used by www/webkit24-gtk/Makefile
 # used by www/webkit24-gtk3/Makefile
 
 DISTNAME=	webkitgtk-2.4.11
 CATEGORIES=	www
-MASTER_SITES=	http://www.webkitgtk.org/releases/
+MASTER_SITES=	https://www.webkitgtk.org/releases/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.webkitgtk.org/
+HOMEPAGE=	https://www.webkitgtk.org/
 LICENSE=	2-clause-bsd AND gnu-lgpl-v2
 
 DISTINFO_FILE=		${.CURDIR}/../../www/webkit24-gtk/distinfo
@@ -18,6 +18,9 @@ USE_LANGUAGES=	c c++11
 USE_LIBTOOL=	yes
 USE_TOOLS+=	automake bison gmake perl:build pkg-config msgfmt
 USE_TOOLS+=	msgmerge xgettext
+
+# Enabling -gdwarf-2 hits GNU ar limits on file size.
+CTF_SUPPORTED=	no
 
 # GCC >= 4.8 (for std::this_thread::yield() at least) or Clang >= 3.3
 GCC_REQD+=	4.8
@@ -59,7 +62,7 @@ BUILD_DEPENDS+=	${RUBY_BASE}>=${RUBY_VERSION}:${RUBY_SRCDIR}
 CONFIGURE_ENV+=	RUBY=${RUBY}
 
 PYTHON_FOR_BUILD_ONLY=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.10.2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.10.2
 .include "../../lang/python/application.mk"
 CONFIGURE_ENV+=	PYTHON=${PYTHONBIN}
 

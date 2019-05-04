@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.89 2017/02/12 06:24:49 ryoon Exp $
+# $NetBSD: Makefile,v 1.96 2018/12/29 16:00:38 triaxx Exp $
 .include "Makefile.common"
 
-PKGREVISION=		30
+PKGREVISION=		36
 
 GKRELLM_PKGBASE=	gkrellm
 WRKSRC=			${GKRELLM_SRCDIR}
@@ -34,7 +34,7 @@ MAKE_FLAGS+=		BINOWNER=${BINOWN} BINGROUP=${BINGRP}
 INSTALL_MAKE_FLAGS+=	MANDIR=${DESTDIR}${PREFIX}/${PKGMANDIR}/man1
 INSTALL_MAKE_FLAGS+=	SMANDIR=${DESTDIR}${PREFIX}/${PKGMANDIR}/man8
 
-SUBST_STAGE.gkprefix=	post-patch
+SUBST_STAGE.gkprefix=	pre-configure
 SUBST_FILES.gkprefix=	src/gkrellm.h
 SUBST_SED.gkprefix=	-e '/SYSTEM_/{s!/usr!${PREFIX}!;}'
 SUBST_CLASSES+=		gkprefix

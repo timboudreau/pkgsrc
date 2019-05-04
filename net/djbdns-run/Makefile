@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.27 2017/06/23 15:39:44 schmonz Exp $
+# $NetBSD: Makefile,v 1.33 2019/01/08 18:19:27 schmonz Exp $
 #
 
-DISTNAME=		djbdns-run-20170623
+DISTNAME=		djbdns-run-20190108
 CATEGORIES=		net
 MASTER_SITES=		# empty
 DISTFILES=		# empty
@@ -10,10 +10,8 @@ MAINTAINER=		schmonz@NetBSD.org
 COMMENT=		Configures djbdns to cache and serve queries
 LICENSE=		2-clause-bsd
 
-DEPENDS_DJBDNS=		djbdns>=1.05nb5:../../net/djbdns
 DEPENDS+=		${DEPENDS_DJBDNS}
 DEPENDS+=		daemontools-[0-9]*:../../sysutils/daemontools
-DEPENDS+=		ucspi-tcp-[0-9]*:../../net/ucspi-tcp
 
 WRKSRC=			${WRKDIR}
 NO_BUILD=		yes
@@ -38,10 +36,17 @@ FILES_SUBST+=		DJBDNS_RBL_USER=${DJBDNS_RBL_USER:Q}
 FILES_SUBST+=		DJBDNS_TINY_USER=${DJBDNS_TINY_USER:Q}
 FILES_SUBST+=		PKGNAME=${PKGNAME:Q}
 
-INSTALLATION_DIRS=	share/doc/djbdns-run
+INSTALLATION_DIRS=	share/doc/djbdns-run share/examples/djbdns-run
 BUILD_DEFS+=		DJBDNS_AXFR_USER DJBDNS_CACHE_USER DJBDNS_LOG_USER
 BUILD_DEFS+=		DJBDNS_RBL_USER DJBDNS_TINY_USER
 BUILD_DEFS+=		DJBDNS_DJBDNS_GROUP
+
+CONF_FILES+=		${PREFIX}/share/examples/${PKGBASE}/dnsroots.global \
+			${PKG_SYSCONFDIR}/dnscache/servers/@
+CONF_FILES+=		${PREFIX}/share/examples/${PKGBASE}/axfrdns-tcp \
+			${PKG_SYSCONFDIR}/axfrdns/tcp
+
+.include "options.mk"
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -60,5 +65,8 @@ MAKEVARS+=	PKG_SYSCONFDIR.djbdns-run
 
 do-install:
 	${INSTALL_DATA} ${FILESDIR}/README.pkgsrc ${DESTDIR}${PREFIX}/share/doc/djbdns-run
+	${INSTALL_DATA} ${FILESDIR}/axfrdns-tcp ${DESTDIR}${PREFIX}/share/examples/djbdns-run
+	${INSTALL_DATA} ${FILESDIR}/dnscache-ip ${DESTDIR}${PREFIX}/share/examples/djbdns-run
+	${INSTALL_DATA} ${PREFIX}/${DNSROOTS_GLOBAL} ${DESTDIR}${PREFIX}/share/examples/djbdns-run
 
 .include "../../mk/bsd.pkg.mk"

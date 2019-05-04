@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.13 2017/04/22 21:03:13 adam Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:45:22 wiz Exp $
 
 DISTNAME=	rakudo-star-2013.08
-PKGREVISION=	11
+PKGREVISION=	13
 CATEGORIES=	lang perl6
 MASTER_SITES=	http://rakudo.org/downloads/star/
 

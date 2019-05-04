@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.21 2014/10/09 14:06:08 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.24 2018/02/06 13:33:36 jperkin Exp $
 
 DISTNAME=	chmlib-0.40
+PKGREVISION=	1
 CATEGORIES=	devel
-MASTER_SITES=	http://morte.jedrea.com/~jedwin/projects/chmlib/
+MASTER_SITES=	http://www.jedrea.com/chmlib/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://morte.jedrea.com/~jedwin/projects/chmlib/
+HOMEPAGE=	http://www.jedrea.com/chmlib/
 COMMENT=	Library for dealing with Microsoft ITSS/CHM format files
 LICENSE=	gnu-lgpl-v2.1
 
@@ -17,8 +17,9 @@ GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 
 CONFIGURE_ARGS+=	--disable-io64
+CONFIGURE_ARGS+=	--enable-examples
 
-INSTALLATION_DIRS=	include lib
+LIBS.SunOS+=	-lnsl -lsocket
 
 .include "../../mk/pthread.buildlink3.mk"
 

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2015/08/18 07:31:05 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2019/04/25 07:32:48 maya Exp $
 #
 
 DISTNAME=		ncc-2.8
-PKGREVISION=		7
+PKGREVISION=		8
 CATEGORIES=		devel
 MASTER_SITES=		http://students.ceid.upatras.gr/~sxanth/ncc/
 
@@ -13,7 +13,7 @@ COMMENT=		Compiler that produces program analysis information
 BUILD_TARGET=		tout
 CFLAGS+=		-DNOGNU='"${PREFIX}/share/ncc/nognu"'
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 
 SUBST_CLASSES+=		prefix
 SUBST_STAGE.prefix=	pre-configure

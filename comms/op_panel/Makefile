@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.10 2016/07/09 06:37:55 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2018/08/22 09:43:04 wiz Exp $
 #
 
 DISTNAME=	op_panel-0.29
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	comms
 MASTER_SITES=	http://www.asternic.org/files/
 
@@ -54,7 +54,7 @@ SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.paths+=	-e 's,@SMDIR@,${SMDIR},g'
 SUBST_SED.paths+=	-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
 SUBST_SED.paths+=	-e 's,@PERL5@,${PERL5},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 INSTALLATION_DIRS+=	share/examples/${FOP}
 INSTALLATION_DIRS+=	share/${FOP}

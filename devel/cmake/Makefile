@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.133 2017/06/01 20:47:25 adam Exp $
+# $NetBSD: Makefile,v 1.160 2019/02/27 13:18:01 maya Exp $
 
 .include "Makefile.version"
 
@@ -12,7 +12,8 @@ COMMENT=	Cross platform make
 LICENSE=	modified-bsd
 
 USE_TOOLS+=		gmake
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++11
+GCC_REQD+=		4.8
 HAS_CONFIGURE=		yes
 CONFIGURE_SCRIPT=	bootstrap
 
@@ -26,6 +27,7 @@ CONFIGURE_ARGS+=	--system-libs
 # jsoncpp requires cmake to build, so use the one provided with cmake
 CONFIGURE_ARGS+=	--no-system-jsoncpp
 
+LDFLAGS.Darwin+=	-framework CoreServices # for LSOpenCFURLRef()
 LDFLAGS.SunOS+=		-lsocket -lnsl
 
 .include "../../mk/bsd.prefs.mk"
@@ -49,21 +51,18 @@ SUBST_FILES.cmake+=	Modules/FindX11.cmake
 SUBST_FILES.cmake+=	Modules/Platform/UnixPaths.cmake
 SUBST_VARS.cmake=	LOCALBASE X11BASE
 
-SUBST_CLASSES+=		flags
-SUBST_STAGE.flags=	pre-configure
-SUBST_MESSAGE.flags=	Fixing compiler flags.
-SUBST_FILES.flags=	Modules/Compiler/*.cmake
-SUBST_SED.flags=	-e 's,-O.,,'
-
 pre-configure:
-	${RM} -f ${WRKSRC}/Modules/*.orig ${WRKSRC}/Modules/Platform/*.orig
+	${CP} ${FILESDIR}/Source_Checks_cm_cxx_cbegin.cxx ${WRKSRC}/Source/Checks/cm_cxx_cbegin.cxx
+	${CP} ${FILESDIR}/Source_Checks_cm_cxx_cend.cxx ${WRKSRC}/Source/Checks/cm_cxx_cend.cxx
+	${CP} ${FILESDIR}/Source_Checks_cm_cxx_size_t.cxx ${WRKSRC}/Source/Checks/cm_cxx_size_t.cxx
+	${RM} -f ${WRKSRC}/Modules/*.orig ${WRKSRC}/Modules/Compiler/*.orig ${WRKSRC}/Modules/Platform/*.orig
 	${LN} -f ${WRKSRC}/Modules/Platform/OpenBSD.cmake ${WRKSRC}/Modules/Platform/MirBSD.cmake
 .for lang in C CXX Fortran
 	${LN} -f ${WRKSRC}/Modules/Platform/SunOS-GNU-${lang}.cmake \
 	    ${WRKSRC}/Modules/Platform/SunOS-Clang-${lang}.cmake
 .endfor
 
-INCOMPAT_CURSES=	NetBSD-[0-6].*-*
+USE_CURSES=		wsyncup
 
 BUILDLINK_API_DEPENDS.libarchive+=	libarchive>=3.0.0
 .include "../../archivers/libarchive/buildlink3.mk"
@@ -80,4 +79,5 @@ CFLAGS+=	-I${BUILDLINK_INCDIRS.curses}/ncurses
 CXXFLAGS+=	-I${BUILDLINK_INCDIRS.curses}/ncurses
 .endif
 
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

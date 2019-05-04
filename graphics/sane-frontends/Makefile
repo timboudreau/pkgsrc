@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.72 2017/02/12 06:25:31 ryoon Exp $
+# $NetBSD: Makefile,v 1.77 2018/11/14 22:21:46 kleink Exp $
 
 .include "../../graphics/sane-backends/Makefile.common"
 
 DISTNAME=	sane-frontends-${SANE_VERSION}
 SANE_MICRO=	14
-PKGREVISION=	36
+PKGREVISION=	41
 
 COMMENT=	Frontends for access to scanners, digital cameras, frame grabbers etc
 

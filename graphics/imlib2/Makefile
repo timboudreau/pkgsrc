@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.72 2016/05/01 20:58:41 leot Exp $
+# $NetBSD: Makefile,v 1.76 2018/11/29 13:58:58 leot Exp $
 
-DISTNAME=	imlib2-1.4.9
+DISTNAME=	imlib2-1.5.1
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=enlightenment/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://docs.enlightenment.org/api/imlib2/html/
+HOMEPAGE=	https://docs.enlightenment.org/api/imlib2/html/
 COMMENT=	Image manipulation library
 LICENSE=	mit	# with some modifications
 
@@ -27,7 +27,7 @@ SHLIB_SUFFIX=		so
 .endif
 
 SUBST_CLASSES+=		shlib rpath
-SUBST_STAGE.shlib=	post-patch
+SUBST_STAGE.shlib=	pre-configure
 SUBST_MESSAGE.shlib=	Replacing shared library suffix
 SUBST_FILES.shlib+=	src/lib/image.c
 SUBST_SED.shlib+=	-e 's,"\.so",".${SHLIB_SUFFIX}",'

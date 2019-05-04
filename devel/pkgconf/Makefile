@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/05/29 13:23:41 wiz Exp $
+# $NetBSD: Makefile,v 1.14 2019/03/11 14:21:01 ryoon Exp $
 
-DISTNAME=	pkgconf-1.3.5
+DISTNAME=	pkgconf-1.6.0
 CATEGORIES=	devel
-MASTER_SITES=	http://rabbit.dereferenced.org/~nenolod/distfiles/
+MASTER_SITES=	https://distfiles.dereferenced.org/pkgconf/
 
 MAINTAINER=	nico@orgrim.net
 HOMEPAGE=	https://github.com/pkgconf/pkgconf
@@ -28,6 +28,9 @@ PKGCONFIG_PATHS+=	${X11BASE}/lib/pkgconfig
 .endif
 
 CONFIGURE_ARGS+=	--with-pkg-config-dir='${PKGCONFIG_PATHS:ts::Q}'
+
+# configure script incorrectly sets only _FILE_OFFSET_BITS=64
+CPPFLAGS.SunOS+=	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 post-install:
 	${LN} -s ${DESTDIR}${PREFIX}/bin/pkgconf ${DESTDIR}${PREFIX}/bin/pkg-config

@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2017/05/12 19:37:55 adam Exp $
+@comment $NetBSD: PLIST,v 1.6 2019/02/17 08:26:13 adam Exp $
 bin/clusterdb
 bin/createdb
 bin/createlang
@@ -41,6 +41,7 @@ include/pg_config.h
 include/pg_config_ext.h
 include/pg_config_manual.h
 include/pg_config_os.h
+include/pgtypes.h
 include/pgtypes_date.h
 include/pgtypes_error.h
 include/pgtypes_interval.h
@@ -293,6 +294,7 @@ include/postgresql/server/executor/spi_priv.h
 include/postgresql/server/executor/tqueue.h
 include/postgresql/server/executor/tstoreReceiver.h
 include/postgresql/server/executor/tuptable.h
+include/postgresql/server/fe_utils/connect.h
 include/postgresql/server/fe_utils/mbprint.h
 include/postgresql/server/fe_utils/print.h
 include/postgresql/server/fe_utils/psqlscan.h
@@ -359,6 +361,7 @@ include/postgresql/server/optimizer/geqo_recombination.h
 include/postgresql/server/optimizer/geqo_selection.h
 include/postgresql/server/optimizer/joininfo.h
 include/postgresql/server/optimizer/orclauses.h
+include/postgresql/server/optimizer/paramassign.h
 include/postgresql/server/optimizer/pathnode.h
 include/postgresql/server/optimizer/paths.h
 include/postgresql/server/optimizer/placeholder.h
@@ -699,11 +702,13 @@ share/locale/cs/LC_MESSAGES/ecpg-9.6.mo
 share/locale/cs/LC_MESSAGES/ecpglib6-9.6.mo
 share/locale/cs/LC_MESSAGES/initdb-9.6.mo
 share/locale/cs/LC_MESSAGES/libpq5-9.6.mo
+share/locale/cs/LC_MESSAGES/pg_basebackup-9.6.mo
 share/locale/cs/LC_MESSAGES/pg_config-9.6.mo
 share/locale/cs/LC_MESSAGES/pg_controldata-9.6.mo
 share/locale/cs/LC_MESSAGES/pg_ctl-9.6.mo
 share/locale/cs/LC_MESSAGES/pg_dump-9.6.mo
 share/locale/cs/LC_MESSAGES/pg_resetxlog-9.6.mo
+share/locale/cs/LC_MESSAGES/pg_rewind-9.6.mo
 share/locale/cs/LC_MESSAGES/pgscripts-9.6.mo
 share/locale/cs/LC_MESSAGES/psql-9.6.mo
 share/locale/de/LC_MESSAGES/ecpg-9.6.mo
@@ -825,17 +830,33 @@ share/locale/ru/LC_MESSAGES/pg_resetxlog-9.6.mo
 share/locale/ru/LC_MESSAGES/pg_rewind-9.6.mo
 share/locale/ru/LC_MESSAGES/pgscripts-9.6.mo
 share/locale/ru/LC_MESSAGES/psql-9.6.mo
+share/locale/sv/LC_MESSAGES/ecpg-9.6.mo
+share/locale/sv/LC_MESSAGES/ecpglib6-9.6.mo
 share/locale/sv/LC_MESSAGES/initdb-9.6.mo
+share/locale/sv/LC_MESSAGES/libpq5-9.6.mo
+share/locale/sv/LC_MESSAGES/pg_basebackup-9.6.mo
 share/locale/sv/LC_MESSAGES/pg_config-9.6.mo
 share/locale/sv/LC_MESSAGES/pg_controldata-9.6.mo
 share/locale/sv/LC_MESSAGES/pg_ctl-9.6.mo
+share/locale/sv/LC_MESSAGES/pg_dump-9.6.mo
 share/locale/sv/LC_MESSAGES/pg_resetxlog-9.6.mo
+share/locale/sv/LC_MESSAGES/pg_rewind-9.6.mo
 share/locale/sv/LC_MESSAGES/pgscripts-9.6.mo
+share/locale/sv/LC_MESSAGES/psql-9.6.mo
 share/locale/ta/LC_MESSAGES/pg_config-9.6.mo
 share/locale/tr/LC_MESSAGES/ecpg-9.6.mo
 share/locale/tr/LC_MESSAGES/ecpglib6-9.6.mo
+share/locale/tr/LC_MESSAGES/initdb-9.6.mo
 share/locale/tr/LC_MESSAGES/libpq5-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_basebackup-9.6.mo
 share/locale/tr/LC_MESSAGES/pg_config-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_controldata-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_ctl-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_dump-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_resetxlog-9.6.mo
+share/locale/tr/LC_MESSAGES/pg_rewind-9.6.mo
+share/locale/tr/LC_MESSAGES/pgscripts-9.6.mo
+share/locale/tr/LC_MESSAGES/psql-9.6.mo
 share/locale/zh_CN/LC_MESSAGES/ecpg-9.6.mo
 share/locale/zh_CN/LC_MESSAGES/ecpglib6-9.6.mo
 share/locale/zh_CN/LC_MESSAGES/initdb-9.6.mo

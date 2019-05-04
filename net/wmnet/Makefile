@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.21 2015/08/06 22:29:04 khorben Exp $
+# $NetBSD: Makefile,v 1.23 2017/10/25 21:51:02 khorben Exp $
 
 DISTNAME=	wmnet-1.06
 PKGREVISION=	5
 CATEGORIES=	net x11
-MASTER_SITES=	http://www.katharineosborne.com/wmnet/
+#MASTER_SITES=	http://www.katharineosborne.com/wmnet/
 
 # Random patches:
 # http://www.rampant.org/~dp/software/wmnet.solaris.patch -- included
@@ -11,12 +11,13 @@ MASTER_SITES=	http://www.katharineosborne.com/wmnet/
 # http://mail.afterstep.org/pipermail/as-users/2004-December/001457.html
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.katharineosborne.com/wmnet/
+#HOMEPAGE=	http://www.katharineosborne.com/wmnet/
 COMMENT=	Dockable network monitor
 
 USE_IMAKE=	YES
 
-MAKE_FLAGS+=	CDEBUGFLAGS=${CFLAGS:Q}
+MAKE_FLAGS+=	CCOPTIONS=${CFLAGS:Q}
+MAKE_FLAGS+=	LOCAL_LDFLAGS=${LDFLAGS:Q}
 
 .include "../../mk/bsd.prefs.mk"
 

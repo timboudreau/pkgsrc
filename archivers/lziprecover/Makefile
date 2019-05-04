@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.7 2016/12/16 14:01:07 mef Exp $
+# $NetBSD: Makefile,v 1.9 2019/01/18 10:05:39 adam Exp $
 
-DISTNAME=	lziprecover-1.18
+DISTNAME=	lziprecover-1.21
 CATEGORIES=	archivers
 MASTER_SITES=	http://download.savannah.gnu.org/releases/lzip/lziprecover/
 
@@ -14,6 +14,12 @@ HAS_CONFIGURE=		yes
 CONFIGURE_ARGS=		--prefix=${PREFIX}
 CONFIGURE_ARGS+=	--infodir=${PREFIX}/${PKGINFODIR}
 CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
-INFO_FILES=		YES
+INFO_FILES=		yes
+TEST_TARGET=		check
+
+MAKE_FLAGS+=		CXX=${CXX:Q}
+MAKE_FLAGS+=		CPPFLAGS=${CPPFLAGS:Q}
+MAKE_FLAGS+=		CXXFLAGS=${CXXFLAGS:Q}
+MAKE_FLAGS+=		LDFLAGS=${LDFLAGS:Q}
 
 .include "../../mk/bsd.pkg.mk"

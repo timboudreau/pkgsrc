@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.22 2017/02/12 06:24:52 ryoon Exp $
+# $NetBSD: Makefile,v 1.28 2018/11/14 22:22:39 kleink Exp $
 
 DISTNAME=	Locker-0.4.0
 PKGNAME=	deforaos-locker-0.4.0
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	x11
-MASTER_SITES=	http://www.defora.org/os/download/download/4424/
+MASTER_SITES=	https://www.defora.org/os/download/download/4424/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS desktop screensaver
 
 LICENSE=	gnu-gpl-v3
@@ -32,8 +32,8 @@ LDFLAGS.SunOS+=	-lXext
 post-install:
 	${MV} ${DESTDIR}${PREFIX}/share/man/man1/locker.1 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1/locker.1
 	${MV} ${DESTDIR}${PREFIX}/share/man/man1/lockerctl.1 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1/lockerctl.1
-	${MV} ${DESTDIR}${PREFIX}/share/man/html1/locker.html ${DESTDIR}${PREFIX}/share/doc/html/Locker/locker.html
-	${MV} ${DESTDIR}${PREFIX}/share/man/html1/lockerctl.html ${DESTDIR}${PREFIX}/share/doc/html/Locker/lockerctl.html
+	${MV} ${DESTDIR}${PREFIX}/share/man/html1/locker.html ${DESTDIR}${PREFIX}/share/doc/${PKGBASE}/locker.html
+	${MV} ${DESTDIR}${PREFIX}/share/man/html1/lockerctl.html ${DESTDIR}${PREFIX}/share/doc/${PKGBASE}/lockerctl.html
 	${RMDIR} ${DESTDIR}${PREFIX}/share/man/man1
 	${RMDIR} ${DESTDIR}${PREFIX}/share/man/html1
 	${RMDIR} ${DESTDIR}${PREFIX}/share/man

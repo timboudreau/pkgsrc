@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.7 2015/06/08 15:09:20 taca Exp $
+# $NetBSD: Makefile,v 1.9 2018/09/23 16:00:49 taca Exp $
 
-DISTNAME=	snmp-1.2.0
+DISTNAME=	snmp-1.3.1
 CATEGORIES=	net
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://snmplib.rubyforge.org/
+#HOMEPAGE=	http://snmplib.rubyforge.org/
 COMMENT=	SNMP library in pure Ruby
 LICENSE=	mit
 

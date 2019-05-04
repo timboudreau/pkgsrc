@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.11 2016/01/24 05:03:24 tsutsui Exp $
+@comment $NetBSD: PLIST,v 1.13 2018/06/09 03:36:09 tsutsui Exp $
 ${GEM_HOME}/cache/${GEM_NAME}.gem
 ${GEM_EXTSDIR}/gem.build_complete
 ${GEM_EXTSDIR}/gtk2.${RUBY_DLEXT}
@@ -7,7 +7,8 @@ ${GEM_EXTSDIR}/rbgdkconversions.h
 ${GEM_EXTSDIR}/rbgtk.h
 ${GEM_EXTSDIR}/rbgtkconversions.h
 ${GEM_EXTSDIR}/rbgtkmacros.h
-${GEM_LIBDIR}/README
+${GEM_LIBDIR}/COPYING.LIB
+${GEM_LIBDIR}/README.md
 ${GEM_LIBDIR}/Rakefile
 ${GEM_LIBDIR}/ext/gtk2/depend
 ${GEM_LIBDIR}/ext/gtk2/extconf.rb
@@ -261,6 +262,7 @@ ${GEM_LIBDIR}/ext/gtk2/rbgtkwidget.c
 ${GEM_LIBDIR}/ext/gtk2/rbgtkwindow.c
 ${GEM_LIBDIR}/ext/gtk2/rbgtkwindowgroup.c
 ${GEM_LIBDIR}/extconf.rb
+${GEM_LIBDIR}/gtk2.gemspec
 ${GEM_LIBDIR}/lib/gtk2.rb
 ${GEM_LIBDIR}/lib/gtk2.${RUBY_DLEXT}
 ${GEM_LIBDIR}/lib/gtk2/base.rb
@@ -481,6 +483,7 @@ ${GEM_LIBDIR}/test/test_gtk_image.rb
 ${GEM_LIBDIR}/test/test_gtk_infobar.rb
 ${GEM_LIBDIR}/test/test_gtk_list_store.rb
 ${GEM_LIBDIR}/test/test_gtk_menu_item.rb
+${GEM_LIBDIR}/test/test_gtk_object.rb
 ${GEM_LIBDIR}/test/test_gtk_rc_style.rb
 ${GEM_LIBDIR}/test/test_gtk_recent_data.rb
 ${GEM_LIBDIR}/test/test_gtk_recent_filter_info.rb

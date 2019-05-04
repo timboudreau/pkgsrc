@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.66 2017/02/24 19:08:30 tsutsui Exp $
+# $NetBSD: Makefile,v 1.68 2018/02/11 15:36:27 wiz Exp $
 
 DISTNAME=		fp_${FLASH_VERSION}_archive
 PKGNAME=		adobe-flash-plugin-${FLASH_VERSION}
@@ -7,7 +7,7 @@ CATEGORIES=		multimedia www
 MASTER_SITES=		http://fpdownload.macromedia.com/pub/flashplayer/installers/archive/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.adobe.com/products/flashplayer.html
+HOMEPAGE=		https://www.adobe.com/products/flashplayer.html
 COMMENT=		Adobe Flash Player Browser plugin
 LICENSE=		flash-license
 
@@ -24,8 +24,6 @@ WRKSRC=			${WRKDIR}
 BUILD_DIRS=		# empty
 EXTRACT_SUFX=		.zip
 USE_TOOLS+=		tar
-
-CRYPTO=			yes
 
 EMUL_PLATFORMS=		linux-i386 linux-x86_64
 EMUL_MODULES.linux=	gtk2 x11 krb5 alsa curl nss nspr

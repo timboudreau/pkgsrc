@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.9 2017/07/12 13:56:00 hauke Exp $
+# $NetBSD: Makefile,v 1.19 2018/11/14 22:22:13 kleink Exp $
 
 DISTNAME=	netatalk-2.2.6
 PKGNAME=        ${DISTNAME:C/-/22-/}
-#PKGREVISION=	1
+PKGREVISION=	9
 CATEGORIES=	net print
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=netatalk/}
 EXTRACT_SUFX=	.tar.bz2
@@ -73,6 +73,8 @@ PLIST_VARS+=		ea
 	${OPSYS} == "FreeBSD"
 PLIST.ea=		yes
 .endif
+
+CHECK_SSP_SKIP+=	libexec/netatalk/uams/*.a
 
 .include "options.mk"
 

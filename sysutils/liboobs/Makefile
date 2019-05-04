@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.17 2016/07/09 06:39:01 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/08/22 09:46:35 wiz Exp $
 #
 
 DISTNAME=		liboobs-2.22.2
-PKGREVISION=		9
+PKGREVISION=		10
 CATEGORIES=		sysutils gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/liboobs/2.22/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		Lightweight GObject based interface to system-tools-backends
 LICENSE=		gnu-gpl-v2
 

@@ -1,13 +1,14 @@
-# $NetBSD: Makefile,v 1.6 2017/01/01 14:43:44 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2019/04/26 13:14:02 maya Exp $
 
 DISTNAME=	xdot
 PKGNAME=	xdot-20121124
+PKGREVISION=	1
 CATEGORIES=	graphics
-MASTER_SITES=	http://xdot.jrfonseca.googlecode.com/git/
+#MASTER_SITES=	http://xdot.jrfonseca.googlecode.com/git/
 EXTRACT_SUFX=	.py
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/jrfonseca/wiki/XDot
+HOMEPAGE=	https://github.com/jrfonseca/xdot.py
 COMMENT=	Interactive viewer for graphs written in Graphviz's dot language
 LICENSE=	gnu-lgpl-v3
 
@@ -17,7 +18,7 @@ WRKSRC=		${WRKDIR}
 USE_LANGUAGES=	# none
 DIST_SUBDIR=	${PKGNAME_NOREV}
 REPLACE_PYTHON=	xdot.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 INSTALLATION_DIRS=	bin
 
 do-build:

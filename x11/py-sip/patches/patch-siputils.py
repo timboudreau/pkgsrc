@@ -1,8 +1,9 @@
-$NetBSD: patch-siputils.py,v 1.2 2014/08/21 21:32:39 wiz Exp $
+$NetBSD: patch-siputils.py,v 1.4 2018/09/18 03:33:21 maya Exp $
 
 Fix build on Darwin with pkgsrc python.
+Fix SunOS/clang.
 
---- siputils.py.orig	2014-05-10 15:00:48.000000000 +0000
+--- siputils.py.orig	2015-03-25 11:00:24.000000000 +0000
 +++ siputils.py
 @@ -258,6 +258,9 @@ class Makefile:
          self._installs = installs
@@ -14,3 +15,26 @@ Fix build on Darwin with pkgsrc python.
          # Make sure the destination directory is an absolute path.
          if dir:
              self.dir = os.path.abspath(dir)
+@@ -880,7 +883,7 @@
+                     qt5_rename = True
+                 else:
+                     lib = lib + "4"
+-        elif sys.platform.startswith("linux") and qt_version >= 0x050000:
++        elif qt_version >= 0x050000:
+             qt5_rename = True
+ 
+         if qt5_rename:
+@@ -1596,10 +1599,10 @@ class ModuleMakefile(Makefile):
+                     if sys.platform[:5] == 'linux':
+                         self.LFLAGS.extend(['-Wl,--version-script=%s.exp' % self._target])
+                     elif sys.platform[:5] == 'sunos':
+-                        if self.required_string('LINK') == 'g++':
+-                            self.LFLAGS.extend(['-Wl,-z,noversion', '-Wl,-M,%s.exp' % self._target])
+-                        else:
++                        if self.required_string('LINK') == 'CC':
+                             self.LFLAGS.extend(['-z' 'noversion', '-M', '%s.exp' % self._target])
++                        else:
++                            self.LFLAGS.extend(['-Wl,-z,noversion', '-Wl,-M,%s.exp' % self._target])
+                     elif sys.platform[:5] == 'hp-ux':
+                         self.LFLAGS.extend(['-Wl,+e,%s' % self._entry_point])
+                     elif sys.platform[:5] == 'irix' and self.required_string('LINK') != 'g++':

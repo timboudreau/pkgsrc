@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.2 2015/11/25 12:52:12 jperkin Exp $
+# $NetBSD: Makefile,v 1.5 2018/07/29 23:51:02 schmonz Exp $
 
-DISTNAME=		publicfile-run-20150109
+DISTNAME=		publicfile-run-20180730
 CATEGORIES=		net
 MASTER_SITES=		# empty
 DISTFILES=		# empty
@@ -10,8 +10,6 @@ COMMENT=		Configures publicfile to serve public files
 LICENSE=		2-clause-bsd
 
 DEPENDS+=		publicfile>=0.52:../../net/publicfile
-DEPENDS+=		daemontools-[0-9]*:../../sysutils/daemontools
-DEPENDS+=		ucspi-tcp-[0-9]*:../../net/ucspi-tcp
 
 WRKSRC=			${WRKDIR}
 NO_BUILD=		yes
@@ -30,7 +28,7 @@ FILES_SUBST+=		PKGNAME=${PKGNAME:Q}
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Substituting paths.
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	libexec-pubftpd
 SUBST_VARS.paths=	PREFIX
 

@@ -1,12 +1,13 @@
-# $NetBSD: buildlink3.mk,v 1.1 2016/12/13 01:19:20 marino Exp $
+# $NetBSD: buildlink3.mk,v 1.3 2018/01/28 16:24:11 wiz Exp $
 
-BUILDLINK_TREE+= gcc6-aux
+BUILDLINK_TREE+=	gcc6-aux
 
 .if !defined(GCC5_AUX_BUILDLINK3_MK)
 GCC5_AUX_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.gcc6-aux+= gcc6-aux>=20160822
-BUILDLINK_PKGSRCDIR.gcc6-aux?= ../../lang/gcc6-aux
+BUILDLINK_ABI_DEPENDS.gcc6-aux?=	gcc6-aux>=20160822nb1
+BUILDLINK_PKGSRCDIR.gcc6-aux?=	../../lang/gcc6-aux
 BUILDLINK_DEPMETHOD.gcc6-aux?=	build
 
 .include "../../converters/libiconv/buildlink3.mk"
@@ -19,4 +20,4 @@ pkgbase := gcc6-aux
 
 .endif
 
-BUILDLINK_TREE+= -gcc6-aux
+BUILDLINK_TREE+=	-gcc6-aux

@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.37 2017/07/09 10:44:19 adam Exp $
+# $NetBSD: Makefile,v 1.43 2019/03/06 13:07:58 joerg Exp $
 
-DISTNAME=	uwsgi-2.0.15
+DISTNAME=	uwsgi-2.0.18
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	www python
-MASTER_SITES=	http://projects.unbit.it/downloads/
+MASTER_SITES=	${MASTER_SITE_PYPI:=u/uWSGI/}
+DISTFILES=	${DEFAULT_DISTFILES}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://projects.unbit.it/uwsgi
+HOMEPAGE=	https://uwsgi-docs.readthedocs.io/
 COMMENT=	Feature-rich WSGI server
 LICENSE=	gnu-gpl-v2 # with linking exception
 
-USE_LANGUAGES=	c
 USE_TOOLS+=	pkg-config
 
 PLIST_SUBST+=	PYPKGPREFIX=${PYPKGPREFIX}
@@ -19,7 +19,7 @@ EGG_NAME=	${DISTNAME:S/uwsgi/uWSGI/}
 .include "options.mk"
 
 INSTALL_ENV+=		UWSGI_INCLUDES=${PREFIX}/include
-INSTALL_ENV+=		UWSGI_PROFILE_OVERRIDE="${UWSGI_DEBUG}${UWSGI_JSON}${UWSGI_PCRE}${UWSGI_SSL}${UWSGI_UUID}${UWSGI_XML}${UWSGI_YAML}"
+INSTALL_ENV+=		UWSGI_PROFILE_OVERRIDE="${UWSGI_DEBUG};${UWSGI_JSON};${UWSGI_PCRE};${UWSGI_SSE};${UWSGI_SSL};${UWSGI_UUID};${UWSGI_XML};${UWSGI_YAML}"
 INSTALLATION_DIRS+=	share/examples/${PYPKGPREFIX}-uwsgi
 
 post-install:
@@ -27,6 +27,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/examples/* \
 		${DESTDIR}${PREFIX}/share/examples/${PYPKGPREFIX}-uwsgi
 
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../lang/python/egg.mk"
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

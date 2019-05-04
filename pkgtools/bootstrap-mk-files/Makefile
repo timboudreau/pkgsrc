@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.52 2016/09/08 14:28:12 joerg Exp $
+# $NetBSD: Makefile,v 1.55 2018/09/01 21:56:04 tnn Exp $
 
-PKGNAME=	bootstrap-mk-files-20160908
+PKGNAME=	bootstrap-mk-files-20180901
 CATEGORIES=	pkgtools
 
 CONFLICTS+=	mk-files-[0-9]*
@@ -11,7 +11,7 @@ COMMENT=	*.mk files for the bootstrap bmake utility
 LICENSE=	original-bsd
 
 NO_PKGTOOLS_REQD_CHECK=	# defined
-BOOTSTRAP_PKG=	yes
+BOOTSTRAP_PKG=		yes
 
 NO_BUILD=	yes
 

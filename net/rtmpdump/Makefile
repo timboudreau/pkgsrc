@@ -1,10 +1,9 @@
-# $NetBSD: Makefile,v 1.9 2016/03/05 11:27:53 jperkin Exp $
-#
+# $NetBSD: Makefile,v 1.11 2018/09/23 21:09:32 wiz Exp $
 
-DISTNAME=	rtmpdump-2.4
-PKGREVISION=	3
+DISTNAME=	rtmpdump-2.4-git-fa8646daeb19dfd12c181f7d19de708d623704c0
+PKGNAME=	${DISTNAME:S/-git-/.0.0./}
 CATEGORIES=	net multimedia
-MASTER_SITES=	http://rtmpdump.mplayerhq.hu/download/
+#MASTER_SITES=
 
 MAINTAINER=	ryoon@NetBSD.org
 HOMEPAGE=	http://rtmpdump.mplayerhq.hu/
@@ -12,23 +11,17 @@ COMMENT=	Tools for handling RTMP stream
 LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2.1
 
 USE_LIBTOOL=	yes
-
 USE_TOOLS+=	pkg-config
-USE_LIBTOOL=	yes
 BUILD_DIRS=	. librtmp
+MAKE_ENV+=	XCFLAGS=${CFLAGS:Q}
+MAKE_ENV+=	XLDFLAGS=${LDFLAGS:Q}
 
 WRKSRC=		${WRKDIR}/rtmpdump
 PKGCONFIG_OVERRIDE+=	librtmp/librtmp.pc.in
 
 LDFLAGS.SunOS+=	-lnsl -lsocket
 
-SUBST_CLASSES+=			fix-paths
-SUBST_STAGE.fix-paths=		pre-configure
-SUBST_MESSAGE.fix-paths=	Fixing absolute paths.
-SUBST_FILES.fix-paths=		Makefile
-SUBST_FILES.fix-paths+=		librtmp/Makefile
-SUBST_SED.fix-paths=		-e 's,/usr/local,${PREFIX},g'
-
-.include "../../security/openssl/buildlink3.mk"
+.include "../../security/libgcrypt/buildlink3.mk"
+.include "../../security/gnutls/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

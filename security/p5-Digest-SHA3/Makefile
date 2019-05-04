@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.8 2017/06/05 14:24:33 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:46:26 wiz Exp $
 
-DISTNAME=	Digest-SHA3-0.25
+DISTNAME=	Digest-SHA3-1.04
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	security perl5

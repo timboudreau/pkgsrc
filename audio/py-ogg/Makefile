@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.17 2017/01/01 14:43:24 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2019/04/26 14:12:32 maya Exp $
 
 DISTNAME=		pyogg-1.3
 PKGNAME=		${PYPKGPREFIX}-${DISTNAME:S/py//}
@@ -16,7 +16,7 @@ CONFIG_SHELL=		${PYTHONBIN}
 CONFIGURE_SCRIPT=	config_unix.py
 CONFIGURE_ARGS+=	--prefix ${PREFIX}
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.3
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.3
 
 .include "../../lang/python/distutils.mk"
 .include "../../multimedia/libogg/buildlink3.mk"

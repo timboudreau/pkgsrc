@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/04/22 17:01:33 minskim Exp $
+
+SHA1 (alpha_vantage-2.0.0.tar.gz) = 2cc0914e59ec46e2d1125e0393bb33da8d5acd02
+RMD160 (alpha_vantage-2.0.0.tar.gz) = 4c3a0ce67ab5b137678a4cc92998ca58106ab190
+SHA512 (alpha_vantage-2.0.0.tar.gz) = 94942a8fd4b8f5149dde6fd498eb287f2fbea5796a59524a23ebe913c5439460f10f776b376a779e43a0c0d2b902208429246f503280b56282010c2ee082a625
+Size (alpha_vantage-2.0.0.tar.gz) = 321194 bytes

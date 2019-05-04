@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.32 2017/01/01 14:44:05 wiz Exp $
+# $NetBSD: Makefile,v 1.37 2019/04/26 14:12:48 maya Exp $
 
 VER=		1.9.7
 DISTNAME=	moin-${VER}
 PKGNAME=	${PYPKGPREFIX}-moin-${VER}
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	www python
 MASTER_SITES=	http://static.moinmo.in/files/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://moinmo.in/
+HOMEPAGE=	https://moinmo.in/
 COMMENT=	MoinMoin, a Python clone of WikiWiki
 LICENSE=	gnu-gpl-v2
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.9.7
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.9.7
 
 REPLACE_PYTHON=	jabberbot/bot.py \
 		MoinMoin/version.py \

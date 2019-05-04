@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.6 2017/02/12 06:24:54 ryoon Exp $
+# $NetBSD: Makefile,v 1.11 2018/11/14 22:22:43 kleink Exp $
 
 DISTNAME=	gtkdatabox-0.9.2.0
-PKGREVISION=	5
+PKGREVISION=	9
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gtkdatabox/}
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/gtkdatabox/
+HOMEPAGE=	https://sourceforge.net/projects/gtkdatabox/
 COMMENT=	TODO: Short description of the package
 LICENSE=	gnu-lgpl-v2.1
 

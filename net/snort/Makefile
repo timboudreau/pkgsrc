@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.56 2017/06/15 18:27:50 nils Exp $
+# $NetBSD: Makefile,v 1.59 2018/07/04 13:40:31 jperkin Exp $
 #
 
 DISTNAME=		snort-2.9.9.0
+PKGREVISION=		1
 CATEGORIES=		net security
 MASTER_SITES=		https://www.snort.org/downloads/archive/snort/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.snort.org/
+HOMEPAGE=		https://www.snort.org/
 COMMENT=		The Open Source Network Intrusion Detection System
 LICENSE=		gnu-gpl-v2
 
@@ -64,7 +65,7 @@ CONF_FILES+=		${EGDIR}/rules/white_list.rules \
 			${PKG_SYSCONFDIR}/rules/white_list.rules
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	etc/snort.conf src/snort.c
 SUBST_SED.paths=	-e "s|/usr/local|${PREFIX}|g"
 SUBST_SED.paths+=	-e "s|../rules|rules|g"

@@ -1,21 +1,21 @@
-# $NetBSD: Makefile,v 1.8 2017/07/07 13:04:36 bouyer Exp $
+# $NetBSD: Makefile,v 1.19 2019/03/25 11:55:03 bouyer Exp $
 #
 
-VERSION=	20170611
+VERSION=	20190228
 DISTNAME=	watchdog_pi-${VERSION}
 PKGNAME=	opencpn-plugin-watchdog-${VERSION}
-#PKGREVISION=	3
+#PKGREVISION=	2
 CATEGORIES=	geography
 MASTER_SITES=	${MASTER_SITE_GITHUB:=seandepagnier/}
 GITHUB_PROJECT=	watchdog_pi
-GITHUB_TAG=	870a9231cd451b24d876097166e95ab4a55122ce
+GITHUB_TAG=	71085bdc4cc90116799c820410fa5d020c8386ee
 
 MAINTAINER=	bouyer@NetBSD.org
 HOMEPAGE=	https://opencpn.org/OpenCPN/plugins/watchdog.html
 COMMENT=	implements various configurable alarms in OpenCPN
 LICENSE=	gnu-gpl-v3
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++11
 USE_CMAKE=		yes
 
 CMAKE_ARGS+=	-DPREFIX:PATH=${PREFIX} -DPREFIX_PLUGINS:PATH=${PREFIX}/lib/opencpn
@@ -26,9 +26,6 @@ CMAKE_MODULE_PATH_OVERRIDE = \
 		cmake/PluginPackage.cmake
 
 .include "../../devel/cmake/buildlink3.mk"
-.include "../../x11/gtk2/buildlink3.mk"
 .include "../../x11/wxGTK30/buildlink3.mk"
-.include "../../graphics/MesaLib/buildlink3.mk"
-.include "../../graphics/glu/buildlink3.mk"
 .include "../../textproc/tinyxml/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

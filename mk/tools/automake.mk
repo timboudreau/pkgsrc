@@ -1,4 +1,4 @@
-# $NetBSD: automake.mk,v 1.28 2015/11/25 13:05:47 jperkin Exp $
+# $NetBSD: automake.mk,v 1.30 2018/12/01 04:58:55 wiz Exp $
 #
 # Copyright (c) 2005 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -14,13 +14,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#        This product includes software developed by the NetBSD
-#        Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -93,7 +86,8 @@ _TOOLS_AM_NAMES=	aclocal		aclocal-1.4			\
 					aclocal-1.12			\
 					aclocal-1.13			\
 					aclocal-1.14			\
-					aclocal-1.15
+					aclocal-1.15			\
+					aclocal-1.16
 _TOOLS_AM_NAMES+=	automake	automake-1.4			\
 					automake-1.5			\
 					automake-1.6			\
@@ -105,7 +99,8 @@ _TOOLS_AM_NAMES+=	automake	automake-1.4			\
 					automake-1.12			\
 					automake-1.13			\
 					automake-1.14			\
-					automake-1.15
+					automake-1.15			\
+					automake-1.16
 
 .for _t_ in ${_TOOLS_AM_NAMES}
 _TOOLS_AM_TYPE.${_t_}?=	TOOLS_GNU_MISSING

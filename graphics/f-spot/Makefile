@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.80 2017/04/22 21:03:38 adam Exp $
-#
+# $NetBSD: Makefile,v 1.98 2019/04/03 00:32:46 ryoon Exp $
 
 DISTNAME=	f-spot-0.8.2
-PKGREVISION=	40
+PKGREVISION=	56
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/f-spot/0.8/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://f-spot.org/
+HOMEPAGE=	https://github.com/GNOME/f-spot
 COMMENT=	Full-featured personal photo management application
 
 GNU_CONFIGURE=	yes
@@ -31,7 +30,7 @@ REPLACE_BASH+=	src/Clients/MainApp/f-spot.in
 REPLACE_BASH+=	tools/f-spot-import
 
 SUBST_CLASSES+=			fix-x11
-SUBST_STAGE.fix-x11=		post-patch
+SUBST_STAGE.fix-x11=		pre-configure
 SUBST_MESSAGE.fix-x11=		Fixing libX11 references
 SUBST_FILES.fix-x11=		src/Core/FSpot.Utils/FSpot.Utils.dll.config.in
 SUBST_FILES.fix-x11+=		src/Core/FSpot.Utils/FSpot.Utils.dll.config
@@ -40,7 +39,7 @@ SUBST_FILES.fix-x11+=		lib/Hyena/build/DllMapVerifier.cs
 SUBST_SED.fix-x11=		-e 's,libX11.so.6,${X11BASE}/lib/libX11.so,'
 
 SUBST_CLASSES+=		fix-mcs
-SUBST_STAGE.fix-mcs=	post-patch
+SUBST_STAGE.fix-mcs=	pre-configure
 SUBST_MESSAGE.fix-mcs=	Fix compiler name
 SUBST_FILES.fix-mcs=	configure
 SUBST_SED.fix-mcs=	-e 's,gmcs,mcs,'

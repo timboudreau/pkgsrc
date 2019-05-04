@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.52 2016/07/09 06:37:46 wiz Exp $
+# $NetBSD: Makefile,v 1.54 2018/07/04 13:40:07 jperkin Exp $
 
 DISTNAME=	dar-2.4.13
 PKGREVISION=	1
@@ -10,7 +10,7 @@ HOMEPAGE=	http://dar.linux.free.fr/
 COMMENT=	Disk archiver
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		gmake groff gsed pkg-config bash:run
@@ -96,7 +96,7 @@ CPPFLAGS.SunOS+=	-D__EXTENSIONS__
 ## Build a static binary with threads is currently broken with glibc.
 .if ${OPSYS} == "Linux" && !empty(PKG_OPTIONS:Mthreads)
 SUBST_CLASSES+=		static
-SUBST_STAGE.static=	post-patch
+SUBST_STAGE.static=	pre-configure
 SUBST_MESSAGE.static=	Changing -all-static to -static
 SUBST_FILES.static=	src/testing/Makefile.in
 SUBST_SED.static=	-e 's,-all-static,-static,g'

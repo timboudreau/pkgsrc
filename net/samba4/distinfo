@@ -1,16 +1,21 @@
-$NetBSD: distinfo,v 1.14 2017/06/27 13:37:16 fhajny Exp $
+$NetBSD: distinfo,v 1.27 2019/04/08 18:35:59 adam Exp $
 
-SHA1 (samba-4.6.4.tar.gz) = eabfbb4d4ed17e25feb1aec81187011fca0f5f8a
-RMD160 (samba-4.6.4.tar.gz) = 91b77289adb41b1570e82411795fd8e7bb9a7543
-SHA512 (samba-4.6.4.tar.gz) = c20e6ad35b701816c35959fd242470dd899fb1b0bf02277ebdc87624dc1059199854b8d759374ab8b23f4842aa01347389a34319635091ade5afb5a94810eac1
-Size (samba-4.6.4.tar.gz) = 21108045 bytes
+SHA1 (samba-4.10.2.tar.gz) = b0b5dd49e92b266315cea6530dcfc926f27dd4ed
+RMD160 (samba-4.10.2.tar.gz) = 6d91d2d581e095753deaae1fae28b8a048e103fc
+SHA512 (samba-4.10.2.tar.gz) = 3d146ea12567ebb02a7babcad779b82339ffbfb19f6f2be5cac33eb18af2c9b546dc1cd910072a5c9e152ba9c4a632ed6870c48a8f6ad9d04304b130f240a4bf
+Size (samba-4.10.2.tar.gz) = 18280710 bytes
+SHA1 (patch-buildtools_wafsamba_samba__conftests.py) = 0f9ca14e3a77d7dfad06aa8c4d2de2f6cc3c0646
+SHA1 (patch-buildtools_wafsamba_samba__install.py) = d801340617da325e3bb70a90350e45cc8e383c2d
+SHA1 (patch-buildtools_wafsamba_samba__pidl.py) = a7cc41a55ce032c3fe1e0b660f88fa7871710e0e
 SHA1 (patch-buildtools_wafsamba_wscript) = 5604936a825675647157331df2333f4237c611f5
-SHA1 (patch-lib_nss__wrapper_nss__wrapper.c) = c692fa33ec17ed4f1dc1e40c1fadf7846d976824
+SHA1 (patch-docs-xml_wscript__build) = 5aa5cbf61882604b7ec9d19f0cd1537a23705ad0
+SHA1 (patch-dynconfig_wscript) = 1858e5fcca913f21aa3e7868d9760b9c40c9f5c4
 SHA1 (patch-lib_param_loadparm.h) = 0216b69d33d1e17260a446e11bee764116c52b18
-SHA1 (patch-lib_replace_wscript) = b6a042c2c13c0be78d7b64c0ce2efdaf4bbb1f3b
-SHA1 (patch-lib_tevent_wscript) = 9617b9e40d2ffc8d6297390a20ba9bd44147d669
+SHA1 (patch-lib_replace_wscript) = 2a754e7310850b376d5881b82a8467041284fce9
+SHA1 (patch-lib_tevent_wscript) = fbbe2024096b57d651d90064f53489a974db9d7a
+SHA1 (patch-nsswitch_winbind__nss__netbsd.c) = 71d8acd0aa4c297d75555fba650461c778495caa
 SHA1 (patch-nsswitch_wscript__build) = e8a6251e031ffa13d6347fade8891f7afd65d3eb
-SHA1 (patch-source3_script_tests_test__smbclient__s3.sh) = 4b4be0691322afc70769602069c8a1bbd81ab639
+SHA1 (patch-source4_dsdb_samdb_ldb__modules_wscript__build__server) = c322cf56995192039fa22548d6d6e50641c4c796
 SHA1 (patch-source4_heimdal__build_roken.h) = ee535f8e7cc46a3487d95bc859438c476a88fe60
-SHA1 (patch-source4_scripting_wsript_build) = 6053076427835ac4fe97d93b2ff67d2caccc71f4
-SHA1 (patch-testprogs_blackbox_dbcheck-oldrelease.sh) = 0bd2067b77a1db93e3cb5d80964a7be2b06802ff
+SHA1 (patch-source4_heimdal__build_wscript__configure) = 82f9da47f7dc4c3fc29f93b1e9829a1a3b54c095
+SHA1 (patch-source4_scripting_wsript_build) = bd4feddcaadf1c3d2d25eb7914e7b5843e4e9511

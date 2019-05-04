@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.31 2017/02/12 06:25:36 ryoon Exp $
+# $NetBSD: Makefile,v 1.37 2018/11/14 22:21:52 kleink Exp $
 
 DISTNAME=	novel-pinyin-0.2.5
-PKGREVISION=	27
+PKGREVISION=	32
 CATEGORIES=	inputmethod
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=novel-pinyin/}
 
@@ -11,7 +11,7 @@ COMMENT=	HMM-based sentence pinyin input method for Chinese
 LICENSE=	gnu-gpl-v2
 
 BDB_ACCEPTED=		db4 db5
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 USE_TOOLS+=		intltool pkg-config msgfmt msgmerge xgettext
 GNU_CONFIGURE=		yes

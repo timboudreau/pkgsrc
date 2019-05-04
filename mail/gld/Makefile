@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.31 2016/10/09 21:42:00 wiz Exp $
+# $NetBSD: Makefile,v 1.33 2018/07/04 13:40:23 jperkin Exp $
 #
 
 DISTNAME=		gld-1.7
 PKGREVISION=		5
 CATEGORIES=		mail
-MASTER_SITES=		http://www.gasmi.net/down/
+MASTER_SITES=		https://www.gasmi.net/down/
 EXTRACT_SUFX=		.tgz
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gasmi.net/
+HOMEPAGE=		https://www.gasmi.net/
 COMMENT=		Standalone greylisting server for Postfix
 
 GNU_CONFIGURE=		yes
@@ -29,11 +29,11 @@ PKG_GROUPS_VARS+=	GLD_GROUP
 PKG_USERS_VARS+=	GLD_USER
 
 SUBST_CLASSES+=		gld users
-SUBST_STAGE.gld=	post-patch
+SUBST_STAGE.gld=	pre-configure
 SUBST_FILES.gld=	gld.h
 SUBST_SED.gld=		-e "s,/etc,${PKG_SYSCONFDIR},"
 SUBST_MESSAGE.gld=	Fixing harcoded paths.
-SUBST_STAGE.users=	post-patch
+SUBST_STAGE.users=	pre-configure
 SUBST_FILES.users=	gld.conf
 SUBST_SED.users+=	-e "s|^USER=nobody|USER=${GLD_USER}|"
 SUBST_SED.users+=	-e "s|^GROUP=nobody|GROUP=${GLD_GROUP}|"

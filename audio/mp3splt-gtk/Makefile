@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.37 2017/02/12 06:25:04 ryoon Exp $
+# $NetBSD: Makefile,v 1.44 2018/11/14 22:21:04 kleink Exp $
 #
 
-DISTNAME=	mp3splt-gtk-0.8.2
-PKGREVISION=	11
+DISTNAME=	mp3splt-gtk-0.9.2
+PKGREVISION=	2
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mp3splt/}
 
@@ -17,15 +17,14 @@ USE_TOOLS+=		pkg-config msgfmt gmake
 
 LIBS.SunOS+=		-lnsl
 
-.include "options.mk"
-
 CONFIGURE_ARGS+=	--enable-gstreamer
 CONFIGURE_ARGS+=	--disable-audacious
+CONFIGURE_ARGS+=	--disable-doxygen_doc
+CONFIGURE_ARGS+=	--disable-gnome
 
 .include "../../audio/libmp3splt/buildlink3.mk"
-#.include "../../audio/audacious/buildlink3.mk"
-.include "../../multimedia/gstreamer0.10/buildlink3.mk"
-.include "../../multimedia/gst-plugins0.10-base/buildlink3.mk"
+.include "../../multimedia/gstreamer1/buildlink3.mk"
+.include "../../multimedia/gst-plugins1-base/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-.include "../../x11/gtk2/buildlink3.mk"
+.include "../../x11/gtk3/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

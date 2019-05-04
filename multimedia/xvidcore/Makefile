@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.45 2016/02/25 15:49:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.47 2018/12/09 03:04:34 sevan Exp $
 
 DISTNAME=	xvidcore-1.3.3
+PKGREVISION=	1
 CATEGORIES=	multimedia
 MASTER_SITES=	http://downloads.xvid.org/downloads/
 EXTRACT_SUFX=	.tar.bz2
@@ -20,7 +21,8 @@ USE_TOOLS+=	gmake
 # big patch available from Gentoo, if someone is interested:
 # http://bugs.gentoo.org/show_bug.cgi?id=90287
 .if ${OPSYS} == "SunOS" || ${MACHINE_ARCH} == "x86_64" || \
-    !empty(MACHINE_PLATFORM:MDarwin-*-i386)
+    !empty(MACHINE_PLATFORM:MDarwin-*-i386) || \
+    !empty(MACHINE_PLATFORM:MNetBSD-[89].*-i386)
 CONFIGURE_ARGS+=	--disable-assembly
 .elif ${MACHINE_ARCH} == "i386"
 BUILD_DEPENDS+=		nasm>=0.98.39nb3:../../devel/nasm
@@ -49,4 +51,5 @@ post-install:
 	${LN} -sf ${DESTDIR}${PREFIX}/lib/libxvidcore.4.dylib ${DESTDIR}${PREFIX}/lib/libxvidcore.dylib
 .endif
 
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

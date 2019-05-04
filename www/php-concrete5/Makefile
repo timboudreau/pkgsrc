@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.17 2017/05/28 11:45:42 taca Exp $
+# $NetBSD: Makefile,v 1.20 2019/04/25 07:33:27 maya Exp $
 #
 
 DISTNAME=	concrete5.7.5.13
 PKGNAME=	${PHP_PKG_PREFIX}-${DISTNAME:S/concrete5/concrete5-5/}
+PKGREVISION=	1
 CATEGORIES=	www
 MASTER_SITES=	http://www.concrete5.org/download_file/-/view/93075/
 EXTRACT_SUFX=	.zip
@@ -29,6 +30,8 @@ BUILD_DEFS+=	APACHE_GROUP APACHE_USER
 
 C5DIR=			share/concrete5
 INSTALLATION_DIRS=	${C5DIR}
+
+PHP_VERSIONS_ACCEPTED=	56 71
 
 .include "../../lang/php/phpversion.mk"
 

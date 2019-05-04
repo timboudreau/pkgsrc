@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.33 2017/05/03 08:38:43 jperkin Exp $
+# $NetBSD: Makefile,v 1.38 2018/11/14 22:22:02 kleink Exp $
 #
 
 DISTNAME=	gelemental-1.2.0
-PKGREVISION=	26
+PKGREVISION=	30
 CATEGORIES=	misc
 MASTER_SITES=	http://www.kdau.com/files/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.kdau.com/projects/gelemental/
+#HOMEPAGE=	http://www.kdau.com/projects/gelemental/
 COMMENT=	Periodic table viewer
 
 GNU_CONFIGURE=	yes

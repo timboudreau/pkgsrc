@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.8 2017/06/20 20:50:49 markd Exp $
+# $NetBSD: Makefile,v 1.10 2018/05/13 12:22:46 markd Exp $
 
-DISTNAME=	texlive-20170524-source
+DISTNAME=	texlive-20180414-source
 PKGNAME=	cjkutils-4.8.4
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	rxg@NetBSD.org,hubertf@NetBSD.org
-HOMEPAGE=	http://cjk.ffii.org/
+HOMEPAGE=	https://cjk.ffii.org/
 COMMENT=	Utilities for CJK LaTeX
 
 DEPENDS+=	tex-cjkutils>=4.8.3:../../print/tex-cjkutils

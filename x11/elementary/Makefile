@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.13 2017/04/30 01:21:26 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2019/03/20 12:13:21 wiz Exp $
 
 DISTNAME=	elementary-1.7.7
-PKGREVISION=	8
+PKGREVISION=	15
 CATEGORIES=	x11
 MASTER_SITES=	http://download.enlightenment.org/releases/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	joerg@NetBSD.org
-HOMEPAGE=	http://www.enlightenment.org/
+HOMEPAGE=	https://www.enlightenment.org/
 COMMENT=	E17 Widget Library
 LICENSE=	gnu-lgpl-v2.1
 

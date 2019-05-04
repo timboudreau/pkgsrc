@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.191 2017/05/31 07:52:00 tron Exp $
+# $NetBSD: Makefile,v 1.208 2019/03/14 08:15:13 tron Exp $
 
-DISTNAME=		mutt-1.8.3
+DISTNAME=		mutt-1.11.4
 CATEGORIES=		mail
 MASTER_SITES=		ftp://ftp.mutt.org/pub/mutt/
 
@@ -8,6 +8,11 @@ MAINTAINER=		tonio@NetBSD.org
 HOMEPAGE=		http://www.mutt.org/
 COMMENT=		Text-based MIME mail client with PGP & S/MIME support
 LICENSE=		gnu-gpl-v2 OR gnu-gpl-v3 # or newer
+
+BUILD_DEPENDS+=		docbook-xsl-[0-9]*:../../textproc/docbook-xsl
+BUILD_DEPENDS+=		lynx-[0-9]*:../../www/lynx
+
+CONFLICTS+=		neomutt-[0-9]*
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -20,6 +25,7 @@ CONFIGURE_ARGS+=	--without-included-gettext
 CONFIGURE_ARGS+=	--enable-external-dotlock
 CONFIGURE_ARGS+=	--enable-pop
 CONFIGURE_ARGS+=	--enable-imap
+INFO_FILES=		yes
 
 .if ${OPSYS} == "NetBSD" || ${OPSYS} == "DragonFly" || ${OPSYS} == "FreeBSD" || ${OPSYS} == "OpenBSD"
 # Force sendmail to /usr/sbin to avoid postfix's

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.19 2017/06/05 14:22:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.23 2018/08/22 09:42:56 wiz Exp $
 
-DISTNAME=	Audio-Scan-0.98
+DISTNAME=	Audio-Scan-1.01
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	audio perl5
@@ -10,6 +10,9 @@ MAINTAINER=	wenheping@gmail.com
 HOMEPAGE=	http://search.cpan.org/dist/Audio-Scan/
 COMMENT=	XS parser for MP3, MP4, Ogg Vorbis, etc
 LICENSE=	gnu-gpl-v2
+
+# TEST_DEPENDS
+BUILD_DEPENDS+=	p5-Test-Warn-[0-9]*:../../devel/p5-Test-Warn
 
 PERL5_PACKLIST=		auto/Audio/Scan/.packlist
 USE_LIBTOOL=		yes

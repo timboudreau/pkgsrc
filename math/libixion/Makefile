@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.5 2017/04/30 01:21:50 ryoon Exp $
+# $NetBSD: Makefile,v 1.12 2019/02/19 15:55:47 ryoon Exp $
 
-DISTNAME=	libixion-0.12.2
-PKGREVISION=	1
+DISTNAME=	libixion-0.14.1
 CATEGORIES=	math devel
 MASTER_SITES=	http://kohei.us/files/ixion/src/
 EXTRACT_SUFX=	.tar.xz
@@ -16,12 +15,15 @@ USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config
 USE_LANGUAGES=	c c++
 
+BUILDLINK_TRANSFORM.NetBSD+=	rm:-ldl
+
 CONFIGURE_ARGS+=	--disable-python
 
 PKGCONFIG_OVERRIDE+=	libixion.pc.in
 
 PTHREAD_AUTO_VARS=	yes
 
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"
-.include "../../devel/mdds1.2/buildlink3.mk"
+.include "../../devel/mdds/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.34 2014/10/09 14:07:08 wiz Exp $
+# $NetBSD: Makefile,v 1.37 2018/10/23 16:53:37 jperkin Exp $
 #
 
-DISTNAME=	ctwm-3.8.2
+DISTNAME=	ctwm-4.0.2
 CATEGORIES=	x11 wm
 MASTER_SITES=	http://ctwm.org/dist/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	rhialto@falu.nl
 HOMEPAGE=	http://ctwm.org/
-COMMENT=	Window manager with support for multiple virtual screens and Gnome 1.x
+COMMENT=	Window manager with support for multiple virtual screens and EWMH
 LICENSE=	mit
 
-USE_IMAKE=	YES
+USE_CMAKE=	YES
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -22,26 +22,42 @@ TOOLS_PLATFORM.gm4?=	${TOOLS_PLATFORM.m4}
 .  endif
 .endif
 USE_TOOLS+=		gm4:run
-OPSYSVARS+=		EXTRA_DEFINES
-# The __EXTENSIONS__ is needed for sigjmp_buf.
-EXTRA_DEFINES.SunOS+=	-D__EXTENSIONS__
-MAKE_ENV+=		EXTRA_DEFINES=${EXTRA_DEFINES:Q}
 AUTO_MKDIRS=		yes
 
+CFLAGS.SunOS+=		-D__EXTENSIONS__
+
+# If M4_CMD is not set, it is autodetected as ${WRKDIR}/.tools/bin/m4
+CMAKE_ARGS+=		-DM4_CMD=${TOOLS_PATH.gm4}
+CMAKE_ARG_PATH=		${WRKSRC}
+
+CONFIGURE_DIRS=		build
+BUILD_DIRS=		build
+
 pre-configure:
-	( ${ECHO} 'USER_JPEGLIBDIR = -L${JPEGBASE}/lib ${COMPILER_RPATH_FLAG}${JPEGBASE}/lib'; \
-	  ${ECHO} 'USER_JPEGINCDIR = -I${JPEGBASE}/include'; \
-	  ${CAT} ${WRKSRC}/Imakefile.local-template; \
-	  ${ECHO} '#undef M4_CMD'; \
-	  ${ECHO} '#define M4_CMD ${TOOLS_PATH.gm4}'; \
-	) >${WRKSRC}/Imakefile.local
+	${MKDIR} ${WRKSRC}/build
 
 pre-install:
-.for f in example.ctwmrc levitte.ctwmrc peterc.ctwmrc system.ctwmrc system.ctwmrc.gnome
+.for f in system.ctwmrc
 	${INSTALL_DATA} ${WRKSRC}/${f} ${DESTDIR}${PREFIX}/share/examples/ctwm/
+.endfor
+.for f in example.ctwmrc levitte.ctwmrc peterc.ctwmrc
+	${INSTALL_DATA} ${WRKSRC}/examples/${f} ${DESTDIR}${PREFIX}/share/examples/ctwm/
 .endfor
 	${INSTALL_DATA} ${FILESDIR}/ctwm.desktop \
 	    ${DESTDIR}${PREFIX}/share/xsessions/ctwm.desktop
+
+# The build optionally uses these, if found:
+#BUILD_DEPENDS+=    asciidoc-[0-9]*:../../textproc/asciidoc
+#BUILD_DEPENDS+=    xmlto-[0-9]*:../../textproc/xmlto
+#BUILD_DEPENDS+=    doxygen-[0-9]*:../../devel/doxygen
+#BUILD_DEPENDS+=    dblatex-[0-9]*:../../textproc/dblatex
+
+# but for consistent builds, we disable them entirely.
+CMAKE_ARGS+=		-DASCIIDOCTOR=
+CMAKE_ARGS+=		-DASCIIDOC=
+CMAKE_ARGS+=		-DA2X=
+CMAKE_ARGS+=		-DXMLTO=
+CMAKE_ARGS+=		-DDBLATEX=
 
 .include "../../mk/jpeg.buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"

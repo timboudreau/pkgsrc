@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.34 2016/07/09 06:38:58 wiz Exp $
+# $NetBSD: Makefile,v 1.42 2018/08/22 09:46:33 wiz Exp $
 
-CONSOLEKIT_VER=	1.0.2
-DISTNAME=	ConsoleKit2-1.0.2
+CONSOLEKIT_VER=	1.2.1
+PKGREVISION=	2
+DISTNAME=	ConsoleKit2-${CONSOLEKIT_VER}
 PKGNAME=	consolekit-${CONSOLEKIT_VER}
-PKGREVISION=	1
 CATEGORIES=	sysutils
-GITHUB_RELEASE= ${CONSOLEKIT_VER}
+GITHUB_RELEASE=	${CONSOLEKIT_VER}
 GITHUB_PROJECT=	ConsoleKit2
 MASTER_SITES=	${MASTER_SITE_GITHUB:=ConsoleKit2/}
 EXTRACT_SUFX=	.tar.bz2
@@ -47,8 +47,9 @@ USE_LIBTOOL=	YES
 
 CONFIGURE_ARGS+=--sysconfdir=${PKG_SYSCONFBASE}			\
 		--localstatedir=${VARBASE}			\
-		--enable-pam-module				\
-		--with-pam-module-dir=${PREFIX}/lib/security	\
+		--disable-pam-module
+		#--enable-pam-module				\
+		#--with-pam-module-dir=${PREFIX}/lib/security	\
 
 CONFIGURE_ARGS.SunOS+=	--enable-rbac-shutdown=solaris.system.shutdown
 
@@ -61,7 +62,7 @@ post-install:
 	${INSTALL_DATA} ${FILESDIR}/50-shutdown.rules	\
 	${DESTDIR}${RULESDIR}/50-shutdown.rules
 
-BUILD_DEPENDS+=		gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
+TOOL_DEPENDS+=		gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
 
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../security/polkit/buildlink3.mk"

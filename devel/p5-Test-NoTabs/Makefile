@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.5 2017/06/05 14:23:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.7 2018/08/22 09:44:48 wiz Exp $
 
-DISTNAME=	Test-NoTabs-2.00
+DISTNAME=	Test-NoTabs-2.02
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel

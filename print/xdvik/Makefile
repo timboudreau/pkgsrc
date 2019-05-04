@@ -1,18 +1,17 @@
-# $NetBSD: Makefile,v 1.22 2017/06/20 20:50:50 markd Exp $
+# $NetBSD: Makefile,v 1.26 2018/05/13 17:19:19 bsiegert Exp $
 
-DISTNAME=	texlive-20170524-source
+DISTNAME=	texlive-20180414-source
 PKGNAME=	xdvik-22.87.03
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://xdvi.sourceforge.net/
 COMMENT=	Previewer for DVI files
 
-CONFLICTS+=	teTeX-bin<3.0nb25
-BUILD_DEPENDS+=	tex-texconfig-[0-9]*:../../print/tex-texconfig
+BUILD_DEPENDS+=	tex-tetex-[0-9]*:../../print/tex-tetex
 BUILD_DEPENDS+=	tex-xdvi-[0-9]*:../../print/tex-xdvi
 DEPENDS+=	dvipsk-[0-9]*:../../print/dvipsk
 DEPENDS+=	kpathsea>=6.2.1:../../print/kpathsea
@@ -40,6 +39,8 @@ CONFIGURE_ARGS+=	--with-system-zlib \
 CONFIGURE_ARGS+=	--with-xdvi-x-toolkit=xaw
 CONFIGURE_ARGS+=	--with-default-dvips-path=${LOCALBASE}/bin/dvips
 CONFIGURE_ARGS+=	--with-default-ps2pdf-path=${LOCALBASE}/bin/ps2pdf
+CONFIGURE_ENV+=		FT2_CONFIG=pkg-config \
+		PKG_CONFIG=${TOOLS_CMD.pkg-config}
 
 PKG_SYSCONFSUBDIR=	texmf
 
@@ -62,6 +63,7 @@ XDVI_PAPERSIZE=	us
 XDVI_PAPERSIZE=	a4
 .endif
 
+.include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"

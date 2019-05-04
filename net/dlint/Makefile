@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.17 2016/07/09 06:38:41 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.19 2018/08/22 09:45:52 wiz Exp $
 
 DISTNAME=	dlint1.4.0
 PKGNAME=	dlint-1.4.0
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	net
-MASTER_SITES=	http://www.domtools.com/pub/
+#MASTER_SITES=	http://www.domtools.com/pub/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.domtools.com/
+#HOMEPAGE=	http://www.domtools.com/
 COMMENT=	Internet Domain Name System (DNS) error checking utility
 
 USE_TOOLS+=	perl:run

@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.2 2015/09/25 00:40:11 tnn Exp $
+# $NetBSD: buildlink3.mk,v 1.4 2018/09/01 20:46:07 bsiegert Exp $
 
 BUILDLINK_TREE+=	MesaLib7
 
@@ -8,7 +8,7 @@ MESALIB7_BUILDLINK3_MK:=
 BUILDLINK_API_DEPENDS.MesaLib7+=	MesaLib7>=7.11.2
 BUILDLINK_PKGSRCDIR.MesaLib7?=		../../graphics/MesaLib7
 BUILDLINK_FNAME_TRANSFORM.MesaLib7+=	-e 's|MesaLib7/||'
-BUILDLINK_RPATHDIRS+=	MesaLib7/lib
+BUILDLINK_RPATHDIRS+=			MesaLib7/lib
 
 .include "../../mk/bsd.fast.prefs.mk"
 
@@ -26,10 +26,6 @@ PKG_BUILD_OPTIONS.MesaLib7+=	dri
 
 .if !empty(PKG_BUILD_OPTIONS.MesaLib7:Mdri)
 .  include "../../graphics/MesaLib/dri.mk"
-.endif
-
-.if !empty(MACHINE_PLATFORM:MNetBSD-[12].*)
-.include "../../devel/pthread-stublib/buildlink3.mk"
 .endif
 
 .include "../../x11/libXext/buildlink3.mk"

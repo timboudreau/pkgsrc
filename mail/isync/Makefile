@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.40 2016/12/15 14:15:01 schmonz Exp $
+# $NetBSD: Makefile,v 1.43 2019/03/08 18:16:06 ryoon Exp $
 
-DISTNAME=	isync-1.2.1
+DISTNAME=	isync-1.3.0
+PKGREVISION=	1
 CATEGORIES=	mail net
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=isync/}
 
@@ -10,6 +11,7 @@ COMMENT=	Synchronize a maildir with an imap server
 LICENSE=	gnu-gpl-v2
 
 USE_LANGUAGES=		c99
+USE_TOOLS+=		perl
 BDB_ACCEPTED=		db4 db5
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-ssl=${BUILDLINK_PREFIX.openssl}

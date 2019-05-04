@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.40 2017/05/19 13:29:04 prlw1 Exp $
+# $NetBSD: Makefile,v 1.50 2018/11/14 22:22:18 kleink Exp $
 #
 
 DISTNAME=	libgnomecups-0.2.3
-PKGREVISION=	17
+PKGREVISION=	25
 CATEGORIES=	print gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/libgnomecups/0.2/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	GNOME interface to CUPS
 
 USE_TOOLS+=		intltool msgfmt pkg-config gmake
@@ -19,5 +19,5 @@ PKGCONFIG_OVERRIDE=	libgnomecups-1.0.pc.in
 
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../devel/glib2/buildlink3.mk"
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,11 +1,11 @@
-# $NetBSD: Makefile.common,v 1.19 2017/06/07 08:48:22 adam Exp $
+# $NetBSD: Makefile.common,v 1.36 2019/04/27 19:39:22 wiz Exp $
 # used by multimedia/ffmpeg3/Makefile
 # used by multimedia/ffplay3/Makefile
 
-DISTNAME=	ffmpeg-3.3.2
+DISTNAME=	ffmpeg-3.4.6
 CATEGORIES=	multimedia
 MASTER_SITES=	http://www.ffmpeg.org/releases/
-EXTRACT_SUFX=	.tar.bz2
+EXTRACT_SUFX=	.tar.xz
 
 LICENSE=	gnu-lgpl-v2.1 AND gnu-gpl-v2
 
@@ -13,15 +13,16 @@ PATCHDIR=	${.CURDIR}/../../multimedia/ffmpeg3/patches
 
 USE_LANGUAGES=		c99
 USE_LIBTOOL=		yes
-USE_TOOLS+=		gmake pod2man perl
+USE_TOOLS+=		gmake pod2man perl pkg-config
 HAS_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--cc=${CC:Q}
 CONFIGURE_ARGS+=	--disable-debug
 CONFIGURE_ARGS+=	--disable-optimizations
 CONFIGURE_ARGS+=	--disable-stripping
-CONFIGURE_ARGS+=	--enable-shared
-CONFIGURE_ARGS+=	--enable-pthreads
 CONFIGURE_ARGS+=	--enable-gpl
+CONFIGURE_ARGS+=	--enable-libxml2
+CONFIGURE_ARGS+=	--enable-pthreads
+CONFIGURE_ARGS+=	--enable-shared
 CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
 CONFIGURE_ARGS+=	--prefix=${PREFIX}
 
@@ -57,7 +58,7 @@ CONFIGURE_ENV+=		TMPDIR=${WRKSRC}/tmp
 
 .include "../../mk/compiler.mk"
 
-.if ${OPSYS} == "SunOS" && empty(CC_VERSION:Mgcc*)
+.if !empty(PKGSRC_COMPILER:Msunpro)
 SUBST_CLASSES+=		sunwspro
 SUBST_MESSAGE.sunwspro=	Fixing compiler options for SunStudio C compiler.
 SUBST_STAGE.sunwspro=	post-configure
@@ -68,14 +69,16 @@ SUBST_SED.sunwspro+=	-e "s/-std=c99/-xc99=all/"
 SUBST_SED.sunwspro+=	-e "s/-Wl,-rpath-link,/-L /g"
 .endif
 
-BUILD_DEPENDS+=	yasm>=0.7.2:../../devel/yasm
+.if ${MACHINE_ARCH} == x86_64 || ${MACHINE_ARCH} == i386
+BUILD_DEPENDS+=	nasm>=2.13:../../devel/nasm
+.endif
 
 REPLACE_PERL+=	doc/texi2pod.pl
-REPLACE_SH+=	configure version.sh
+REPLACE_SH+=	configure ffbuild/version.sh
 
 SUBST_CLASSES+=		conf
-SUBST_STAGE.conf=	post-patch
-SUBST_FILES.conf=	ffserver.c
+SUBST_STAGE.conf=	pre-configure
+SUBST_FILES.conf=	fftools/ffserver.c
 SUBST_SED.conf=		-e 's,/etc/ffserver.conf,${PKG_SYSCONFDIR}/ffserver.conf,g'
 SUBST_MESSAGE.conf=	Fixing configuration path.
 
@@ -90,5 +93,6 @@ pre-configure:
 .include "../../archivers/xz/buildlink3.mk"
 .include "../../devel/libgetopt/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
+.include "../../textproc/libxml2/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.129 2017/07/09 22:12:12 schmonz Exp $
+# $NetBSD: Makefile,v 1.133 2019/01/26 18:23:05 abs Exp $
 
-DISTNAME=	Mail-SpamAssassin-3.4.1
-PKGNAME=	spamassassin-3.4.1
-PKGREVISION=	7
+DISTNAME=	Mail-SpamAssassin-3.4.2
+PKGNAME=	spamassassin-3.4.2
+PKGREVISION=	1
 CATEGORIES=	mail perl5
 MASTER_SITES=	${MASTER_SITE_APACHE:=spamassassin/source/}
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
@@ -20,13 +20,13 @@ LICENSE=	apache-2.0
 
 SMF_METHODS=	spamassassin
 
-RULESARCHIVE=	Mail-SpamAssassin-rules-3.4.1.r1675274.tgz
+RULESARCHIVE=	Mail-SpamAssassin-rules-3.4.2.r1840640.tgz
 #RULESARCHIVEASC=${RULESARCHIVE}.asc
 #RULESARCHIVESHA=${RULESARCHIVE}.sha1
 FILES_SUBST+=	RULESARCHIVE=${RULESDIR}/${RULESARCHIVE}
-PLIST_SUBST+=   RULESARCHIVE=${RULESARCHIVE:Q}
-#PLIST_SUBST+=   RULESARCHIVEASC=${RULESARCHIVEASC:Q}
-#PLIST_SUBST+=   RULESARCHIVESHA=${RULESARCHIVESHA:Q}
+PLIST_SUBST+=	RULESARCHIVE=${RULESARCHIVE:Q}
+#PLIST_SUBST+=	RULESARCHIVEASC=${RULESARCHIVEASC:Q}
+#PLIST_SUBST+=	RULESARCHIVESHA=${RULESARCHIVESHA:Q}
 
 #DEPENDS+=	{perl>=5.9.3,p5-Archive-Tar>=1.23}:../../archivers/p5-Archive-Tar
 #DEPENDS+=	{perl>=5,p5-DB_File-[0-9]*}:../../databases/p5-DB_File
@@ -67,6 +67,10 @@ PERL5_PACKLIST=		auto/Mail/SpamAssassin/.packlist
 GNU_CONFIGURE=		YES
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_DIRS=		spamc
+# Fix openssl detection. These methods are deprecated and removed, but
+# still the configure scripts looks for them.
+CONFIGURE_ENV+=		ac_cv_lib_ssl_SSL_CTX_free=yes
+CONFIGURE_ENV+=		ac_cv_lib_crypto_CRYPTO_lock=yes
 BUILD_DIRS=		.  # build at the top-level directory, not in "spamc"
 PERL5_CONFIGURE=	NO # we need the default "do-configure" target
 PERL5_CONFIGURE_DIRS=	${WRKSRC}
@@ -102,7 +106,7 @@ CONF_FILES+=		${EGDIR}/${p}  ${PKG_SYSCONFDIR}/${p}
 .endfor
 CONF_FILES+=		${EGDIR}/local.cf  ${PKG_SYSCONFDIR}/local.cf	\
 			${RULESDIR}/user_prefs.template			\
-		 	  ${PKG_SYSCONFDIR}/user_prefs.template
+			  ${PKG_SYSCONFDIR}/user_prefs.template
 
 SA_INSTALLDIRS=		${EG_SUBDIR} ${DOC_SUBDIR} ${DOC_SUBDIR}/ldap
 SA_INSTALLDIRS+=	${DOC_SUBDIR}/rules ${DOC_SUBDIR}/spamc
@@ -201,7 +205,7 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/procmailrc.example ${DESTDIR}${EGDIR}
 	${INSTALL_DATA} ${WRKSRC}/rules/local.cf ${DESTDIR}${EGDIR}
 	${INSTALL_DATA} ${FILESDIR}/netbsd_lists.cf ${DESTDIR}${EGDIR}
-	${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/${RULESARCHIVE} 	\
+	${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/${RULESARCHIVE}	\
 		${DESTDIR}${RULESDIR}
 #	${INSTALL_DATA} ${DISTDIR}/${DIST_SUBDIR}/${RULESARCHIVEASC}	\
 #		${DESTDIR}${RULESDIR}

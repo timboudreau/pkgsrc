@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.9 2016/04/20 12:10:29 nros Exp $
+# $NetBSD: Makefile,v 1.11 2018/09/28 06:34:32 tnn Exp $
 #
 
 DISTNAME=	milkytracker-0.90.86
@@ -13,7 +13,7 @@ COMMENT=	Music tracker inspired by Fast Tracker 2
 LICENSE=	gnu-gpl-v3
 
 GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 USE_TOOLS+=	gawk
 
 .include "options.mk"
@@ -26,6 +26,7 @@ DOCDIR=			${DESTDIR}${PREFIX}/share/doc/milkytracker
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/docs/* ${DOCDIR}
 
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/SDL/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

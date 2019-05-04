@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.17 2017/05/09 07:52:14 adam Exp $
+@comment $NetBSD: PLIST,v 1.20 2018/10/23 08:58:27 adam Exp $
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
@@ -6,18 +6,24 @@ ${PYSITELIB}/${EGG_INFODIR}/not-zip-safe
 ${PYSITELIB}/${EGG_INFODIR}/requires.txt
 ${PYSITELIB}/${EGG_INFODIR}/top_level.txt
 ${PYSITELIB}/_ldap.so
-${PYSITELIB}/dsml.py
-${PYSITELIB}/dsml.pyc
-${PYSITELIB}/dsml.pyo
 ${PYSITELIB}/ldap/__init__.py
 ${PYSITELIB}/ldap/__init__.pyc
 ${PYSITELIB}/ldap/__init__.pyo
 ${PYSITELIB}/ldap/async.py
 ${PYSITELIB}/ldap/async.pyc
 ${PYSITELIB}/ldap/async.pyo
+${PYSITELIB}/ldap/asyncsearch.py
+${PYSITELIB}/ldap/asyncsearch.pyc
+${PYSITELIB}/ldap/asyncsearch.pyo
 ${PYSITELIB}/ldap/cidict.py
 ${PYSITELIB}/ldap/cidict.pyc
 ${PYSITELIB}/ldap/cidict.pyo
+${PYSITELIB}/ldap/compat.py
+${PYSITELIB}/ldap/compat.pyc
+${PYSITELIB}/ldap/compat.pyo
+${PYSITELIB}/ldap/constants.py
+${PYSITELIB}/ldap/constants.pyc
+${PYSITELIB}/ldap/constants.pyo
 ${PYSITELIB}/ldap/controls/__init__.py
 ${PYSITELIB}/ldap/controls/__init__.pyc
 ${PYSITELIB}/ldap/controls/__init__.pyo
@@ -30,6 +36,9 @@ ${PYSITELIB}/ldap/controls/libldap.pyo
 ${PYSITELIB}/ldap/controls/openldap.py
 ${PYSITELIB}/ldap/controls/openldap.pyc
 ${PYSITELIB}/ldap/controls/openldap.pyo
+${PYSITELIB}/ldap/controls/pagedresults.py
+${PYSITELIB}/ldap/controls/pagedresults.pyc
+${PYSITELIB}/ldap/controls/pagedresults.pyo
 ${PYSITELIB}/ldap/controls/ppolicy.py
 ${PYSITELIB}/ldap/controls/ppolicy.pyc
 ${PYSITELIB}/ldap/controls/ppolicy.pyo
@@ -51,6 +60,9 @@ ${PYSITELIB}/ldap/controls/simple.pyo
 ${PYSITELIB}/ldap/controls/sss.py
 ${PYSITELIB}/ldap/controls/sss.pyc
 ${PYSITELIB}/ldap/controls/sss.pyo
+${PYSITELIB}/ldap/controls/vlv.py
+${PYSITELIB}/ldap/controls/vlv.pyc
+${PYSITELIB}/ldap/controls/vlv.pyo
 ${PYSITELIB}/ldap/dn.py
 ${PYSITELIB}/ldap/dn.pyc
 ${PYSITELIB}/ldap/dn.pyo
@@ -75,6 +87,9 @@ ${PYSITELIB}/ldap/logger.pyo
 ${PYSITELIB}/ldap/modlist.py
 ${PYSITELIB}/ldap/modlist.pyc
 ${PYSITELIB}/ldap/modlist.pyo
+${PYSITELIB}/ldap/pkginfo.py
+${PYSITELIB}/ldap/pkginfo.pyc
+${PYSITELIB}/ldap/pkginfo.pyo
 ${PYSITELIB}/ldap/resiter.py
 ${PYSITELIB}/ldap/resiter.pyc
 ${PYSITELIB}/ldap/resiter.pyo
@@ -102,6 +117,20 @@ ${PYSITELIB}/ldapurl.pyo
 ${PYSITELIB}/ldif.py
 ${PYSITELIB}/ldif.pyc
 ${PYSITELIB}/ldif.pyo
-${PYSITELIB}/slapdtest.py
-${PYSITELIB}/slapdtest.pyc
-${PYSITELIB}/slapdtest.pyo
+${PYSITELIB}/slapdtest/__init__.py
+${PYSITELIB}/slapdtest/__init__.pyc
+${PYSITELIB}/slapdtest/__init__.pyo
+${PYSITELIB}/slapdtest/_slapdtest.py
+${PYSITELIB}/slapdtest/_slapdtest.pyc
+${PYSITELIB}/slapdtest/_slapdtest.pyo
+${PYSITELIB}/slapdtest/certs/README
+${PYSITELIB}/slapdtest/certs/ca.conf
+${PYSITELIB}/slapdtest/certs/ca.pem
+${PYSITELIB}/slapdtest/certs/client.conf
+${PYSITELIB}/slapdtest/certs/client.key
+${PYSITELIB}/slapdtest/certs/client.pem
+${PYSITELIB}/slapdtest/certs/gencerts.sh
+${PYSITELIB}/slapdtest/certs/gennssdb.sh
+${PYSITELIB}/slapdtest/certs/server.conf
+${PYSITELIB}/slapdtest/certs/server.key
+${PYSITELIB}/slapdtest/certs/server.pem

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.17 2017/03/12 14:31:24 taca Exp $
+# $NetBSD: Makefile,v 1.19 2018/02/28 15:20:00 taca Exp $
 
-DISTNAME=	ruby2ruby-2.3.2
+DISTNAME=	ruby2ruby-2.4.1
 CATEGORIES=	devel
 
 MAINTAINER=	pkgsrc-users@NetBSD.org

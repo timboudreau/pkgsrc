@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.72 2017/04/22 21:03:53 adam Exp $
+# $NetBSD: Makefile,v 1.88 2019/04/03 00:33:02 ryoon Exp $
 #
 
 DISTNAME=	vinagre-3.6.2
-PKGREVISION=	33
+PKGREVISION=	48
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/vinagre/3.6/}
 EXTRACT_SUFX=	.tar.xz
@@ -25,7 +25,8 @@ CFLAGS.SunOS+=	-D__EXTENSIONS__
 LDFLAGS.SunOS+=	-lnsl
 
 .include "../../mk/compiler.mk"
-.if !empty(PKGSRC_COMPILER:Mclang)
+
+.if !empty(PKGSRC_COMPILER:Mclang) || !empty(CC_VERSION:Mgcc-[6-9].*)
 CFLAGS+=	-Wno-error=format-nonliteral
 .endif
 

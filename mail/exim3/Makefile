@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.50 2017/01/19 18:52:16 agc Exp $
+# $NetBSD: Makefile,v 1.53 2018/08/22 09:45:25 wiz Exp $
 
 DISTNAME=	exim-3.36
-PKGREVISION=	17
+PKGREVISION=	19
 CATEGORIES=	mail net
 MASTER_SITES=	ftp://ftp.csx.cam.ac.uk/pub/software/email/exim/exim3/
 MASTER_SITES+=	http://public.planetmirror.com.au/pub/exim/exim3/
@@ -79,7 +79,7 @@ SUBST_SED.paths+=	-e 's,@GZIP_CMD@,${GZIP_CMD},g'
 SUBST_SED.paths+=	-e 's,@GZCAT@,${GZCAT},g'
 SUBST_SED.paths+=	-e 's,@PERL5@,${PERL5},g'
 SUBST_SED.paths+=	-e 's,@SH@,${SH},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 INSTALLATION_DIRS=	${PKGMANDIR}/man8 sbin share/examples/exim
 

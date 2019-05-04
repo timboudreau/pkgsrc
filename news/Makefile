@@ -1,15 +1,17 @@
-# $NetBSD: Makefile,v 1.38 2016/05/24 09:27:46 leot Exp $
+# $NetBSD: Makefile,v 1.42 2018/09/08 13:24:26 leot Exp $
 #
 
 COMMENT=	Network news
 
-SUBDIR+=	cg
+SUBDIR+=	canlock-hp
 SUBDIR+=	cleanscore
+SUBDIR+=	flnews
 SUBDIR+=	heirloom-news
 SUBDIR+=	hellanzb
 SUBDIR+=	inn
 SUBDIR+=	knews
 SUBDIR+=	leafnode
+SUBDIR+=	libcanlock
 SUBDIR+=	lottanzb
 SUBDIR+=	newsbeuter
 SUBDIR+=	newsfetch
@@ -19,6 +21,7 @@ SUBDIR+=	nn
 SUBDIR+=	nntpcache
 SUBDIR+=	nntpclnt
 SUBDIR+=	pan
+SUBDIR+=	sfeed
 SUBDIR+=	slrn
 SUBDIR+=	suck
 SUBDIR+=	tin

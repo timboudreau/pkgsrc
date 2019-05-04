@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.40 2017/01/03 21:38:29 roy Exp $
+# $NetBSD: Makefile,v 1.42 2018/11/26 07:12:39 dholland Exp $
 #
 
 DISTNAME=		angband-283
@@ -25,11 +25,7 @@ BUILD_TARGET=		angband
 
 SPOILERFILE=		angband-spoilers.tar.gz
 
-.if ${MACHINE_ARCH} == "arm" || ${MACHINE_ARCH} == "arm32"
-GCC_REQD+=		2.95.3
-.endif
-
-SETGIDGAME=		yes
+USE_GAMESGROUP=		yes
 SPECIAL_PERMS=		bin/angband ${SETGID_GAMES_PERMS}
 
 INSTALLATION_DIRS=	bin

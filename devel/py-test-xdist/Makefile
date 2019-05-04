@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.2 2017/06/06 17:34:32 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/05 13:11:30 adam Exp $
 
-DISTNAME=	pytest-xdist-1.16.0
+DISTNAME=	pytest-xdist-1.28.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pytest-xdist/}
@@ -11,11 +11,15 @@ COMMENT=	Plugin for distributed testing and loop-on-failing modes
 LICENSE=	mit
 
 DEPENDS+=	${PYPKGPREFIX}-execnet>=1.1:../../devel/py-execnet
-DEPENDS+=	${PYPKGPREFIX}-py>=1.4.22:../../devel/py-py
-DEPENDS+=	${PYPKGPREFIX}-test>=2.7.0:../../devel/py-test
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+DEPENDS+=	${PYPKGPREFIX}-test>=4.4.0:../../devel/py-test
+DEPENDS+=	${PYPKGPREFIX}-test-forked-[0-9]*:../../devel/py-test-forked
 BUILD_DEPENDS+=	${PYPKGPREFIX}-setuptools_scm-[0-9]*:../../devel/py-setuptools_scm
 
-USE_LANGUAGES=		# none
+USE_LANGUAGES=	# none
+
+do-test:
+	cd ${WRKSRC} && pytest-${PYVERSSUFFIX} testing
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

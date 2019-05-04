@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/12/21 21:06:30 adam Exp $
+
+SHA1 (Flask-RESTful-0.3.7.tar.gz) = 2759819ae9e012792dc36df5b1d1d73663b3638a
+RMD160 (Flask-RESTful-0.3.7.tar.gz) = af0ba61b0acbb18c6599f4956bdea84a035de1d3
+SHA512 (Flask-RESTful-0.3.7.tar.gz) = 72ceb0c6982e7c421be8a835cdfc49c10f780c499c1e77db58a07d46e4e11c53f9c48ce9ae87416d51606794c9232c41f0148d2296647fc124dbf9124e6d8f34
+Size (Flask-RESTful-0.3.7.tar.gz) = 105307 bytes

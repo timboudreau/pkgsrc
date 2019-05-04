@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.15 2017/06/05 14:24:33 ryoon Exp $
+# $NetBSD: Makefile,v 1.17 2018/11/27 23:58:40 sevan Exp $
 #
 
 DISTNAME=	GSSAPI-0.28
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	security perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=LWP/AGROLMS/}
 
@@ -17,5 +17,5 @@ MAKE_PARAMS+=	--gssapiimpl=${KRB5BASE}
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/krb5.buildlink3.mk"
-
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

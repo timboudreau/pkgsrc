@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.19 2016/03/05 11:28:40 jperkin Exp $
+# $NetBSD: Makefile,v 1.21 2018/03/12 11:16:49 wiz Exp $
 #
 
 DISTNAME=	qiviewer-0.5.0
-PKGREVISION=	16
+PKGREVISION=	17
 CATEGORIES=	graphics
 MASTER_SITES=	http://qiviewer.googlecode.com/files/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/qiviewer/
+HOMEPAGE=	https://github.com/samkpo/qiviewer
 COMMENT=	Qt image viewer, designed to be fast and lightweight
 LICENSE=	gnu-gpl-v2
 

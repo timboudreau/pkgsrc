@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.48 2017/02/12 06:25:08 ryoon Exp $
+# $NetBSD: Makefile,v 1.56 2019/04/26 13:13:44 maya Exp $
 
 DISTNAME=	telepathy-farsight-0.0.19
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	chat multimedia
 MASTER_SITES=	http://telepathy.freedesktop.org/releases/telepathy-farsight/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://telepathy.freedesktop.org/doc/telepathy-farsight/
+HOMEPAGE=	https://telepathy.freedesktop.org/doc/telepathy-farsight/
 COMMENT=	Library for the telepathy part of a voice/video call
 LICENSE=	gnu-lgpl-v2.1
 
@@ -19,7 +19,7 @@ CFLAGS.SunOS+=	-std=c99 -D_XOPEN_SOURCE=600
 PKGCONFIG_OVERRIDE+=	telepathy-farsight/telepathy-farsight.pc.in
 
 PY_PATCHPLIST=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2, py-gstreamer0.10
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2, py-gstreamer0.10
 
 .include "../../lang/python/extension.mk"
 

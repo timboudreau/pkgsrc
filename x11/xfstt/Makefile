@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.41 2017/01/29 05:54:21 mef Exp $
+# $NetBSD: Makefile,v 1.43 2018/07/04 13:40:44 jperkin Exp $
 
 DISTNAME=		xfstt-1.9.3
+PKGREVISION=		1
 CATEGORIES=		x11 net fonts
 MASTER_SITES=		http://archive.hadrons.org/software/xfstt/
 EXTRACT_SUFX=		.tar.xz
@@ -31,7 +32,7 @@ INSTALLATION_DIRS=	bin			\
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	doc/FAQ
 SUBST_SED.paths=	-e 's,/usr,${PREFIX},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/src/xfstt ${DESTDIR}${PREFIX}/bin
@@ -44,6 +45,5 @@ do-install:
 		 ${DESTDIR}${PREFIX}/share/examples/xfstt/	\
 	)
 
-.include "../../x11/fontsproto/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

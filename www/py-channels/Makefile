@@ -1,20 +1,22 @@
-# $NetBSD: Makefile,v 1.2 2017/07/03 20:56:08 adam Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/26 13:14:20 maya Exp $
 
-DISTNAME=	channels-1.1.6
+DISTNAME=	channels-2.1.7
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/channels/}
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://github.com/django/channels
+HOMEPAGE=	https://github.com/django/channels
 COMMENT=	Brings event-driven capabilities to Django with a channel system
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=		# empty
+DEPENDS+=	${PYPKGPREFIX}-asgiref>=2.3:../../www/py-asgiref
+DEPENDS+=	${PYPKGPREFIX}-daphne>=2.2:../../www/py-daphne
+DEPENDS+=	${PYPKGPREFIX}-django>=1.11:../../www/py-django
 
-DEPENDS+=	${PYPKGPREFIX}-django>=1.8:../../www/py-django
-DEPENDS+=	${PYPKGPREFIX}-asgiref>=1.1:../../www/py-asgiref
-DEPENDS+=	${PYPKGPREFIX}-daphne>=1.3:../../www/py-daphne
+USE_LANGUAGES=	# none
+
+PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

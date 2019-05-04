@@ -1,11 +1,9 @@
-# $NetBSD: Makefile,v 1.63 2017/06/26 07:21:21 adam Exp $
+# $NetBSD: Makefile,v 1.67 2019/02/21 16:22:54 adam Exp $
 
 DISTNAME=	${OPENVPN_DISTNAME}
 CATEGORIES=	net
 MASTER_SITES=	${OPENVPN_MASTER_SITES}
 EXTRACT_SUFX=	.tar.xz
-# Remove DIST_SUBDIR on next update
-DIST_SUBDIR=	${OPENVPN_DIST_SUBDIR}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://openvpn.net/

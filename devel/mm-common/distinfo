@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.3 2016/05/14 13:50:37 prlw1 Exp $
+$NetBSD: distinfo,v 1.5 2018/04/16 13:16:31 wiz Exp $
 
-SHA1 (mm-common-0.9.10.tar.xz) = 72625160de9249cf7df86a1f860b5d4db94f0d6e
-RMD160 (mm-common-0.9.10.tar.xz) = c76af9863cab193c766f75caf5c3c3ae3b0b02c8
-SHA512 (mm-common-0.9.10.tar.xz) = 77d6836ceb806aec49a4f97bc4a037558f9fccdd8aae88b7650cd050bf7661d597b6b4dec4a64e819652961e759b132c64887a1d9bf774d9be156d1fc00b8ad3
-Size (mm-common-0.9.10.tar.xz) = 266372 bytes
+SHA1 (mm-common-0.9.12.tar.xz) = 7d06581f85921436214dbd93e86308920192854d
+RMD160 (mm-common-0.9.12.tar.xz) = 0b3377636578bd07bc319061feccb026823c9147
+SHA512 (mm-common-0.9.12.tar.xz) = 99701d91994ca2783fe5b8bfd44cdea9f14e16dbbc116f894d9f3df746912cdbcdbdb0d5fdf6e235c9d22621a314de7aaac9b87a18f3ab742a0ad2ebbaad8ec7
+Size (mm-common-0.9.12.tar.xz) = 304588 bytes

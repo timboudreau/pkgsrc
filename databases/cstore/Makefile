@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.14 2017/01/19 18:52:04 agc Exp $
+# $NetBSD: Makefile,v 1.16 2018/08/22 09:43:11 wiz Exp $
 
 DISTNAME=	cstore0.2
 PKGNAME=	cstore-0.2
-PKGREVISION=	9
+PKGREVISION=	10
 CATEGORIES=	databases
 MASTER_SITES=	http://db.lcs.mit.edu/projects/cstore/
 MASTER_SITES+=	http://db.csail.mit.edu/data/
@@ -20,7 +20,7 @@ WRKSRC=			${WRKDIR}/cstore
 REPLACE_PERL=		Build/BSsrcs
 
 SUBST_CLASSES+=		prefix
-SUBST_STAGE.prefix=	post-patch
+SUBST_STAGE.prefix=	pre-configure
 SUBST_FILES.prefix=	Build/makefile.init
 SUBST_SED.prefix=	-e 's|@PREFIX@|'${PREFIX}'|g'
 

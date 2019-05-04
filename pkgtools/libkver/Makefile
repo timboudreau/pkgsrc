@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.36 2014/10/09 14:06:49 wiz Exp $
+# $NetBSD: Makefile,v 1.39 2018/07/04 13:40:32 jperkin Exp $
 
 PKGNAME=		libkver-${VERSION}
 CATEGORIES=		pkgtools
 
-MAINTAINER=	seb@NetBSD.org
+MAINTAINER=		seb@NetBSD.org
 #HOMEPAGE=
-COMMENT=	Shared library and sysctl(1) replacement to override system version
+COMMENT=		Shared library and sysctl(1) replacement to override system version
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -20,9 +20,9 @@ ONLY_FOR_PLATFORM=	NetBSD-*-*
 
 BUILDLINK_PASSTHRU_DIRS=	${BSDSRCDIR}/sys
 
-PLIST_VARS=	sysctl
-LDD_SYSCTL!=	ldd /sbin/sysctl 2>&1 || ${TRUE}
-MAKE_ENV+=	LDD_SYSCTL=${LDD_SYSCTL:Q} # save another ldd run
+PLIST_VARS=		sysctl
+LDD_SYSCTL!=		ldd /sbin/sysctl 2>&1 || ${TRUE}
+MAKE_ENV+=		LDD_SYSCTL=${LDD_SYSCTL:Q} # save another ldd run
 .if empty(LDD_SYSCTL:M*libc*)
 PLIST.sysctl=		yes
 FILES_SUBST+=		HAS_SYSCTL=true
@@ -30,17 +30,19 @@ FILES_SUBST+=		HAS_SYSCTL=true
 FILES_SUBST+=		HAS_SYSCTL=false
 .endif
 
-SUBST_CLASSES+=         paths
-SUBST_FILES.paths=      kver/kver.sh kver/kver.8 lib/kver.3
-SUBST_SED.paths+=       -e 's,@PREFIX@,${PREFIX},g'
-SUBST_SED.paths+=       -e 's,@SH@,${SH},g'
-SUBST_STAGE.paths=      post-patch
+SUBST_CLASSES+=		paths
+SUBST_FILES.paths=	kver/kver.sh kver/kver.8 lib/kver.3
+SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
+SUBST_SED.paths+=	-e 's,@SH@,${SH},g'
+SUBST_STAGE.paths=	pre-configure
 
 INSTALLATION_DIRS+=	sbin ${PKGMANDIR}/man8 ${PKGMANDIR}/cat8
 INSTALLATION_DIRS+=	lib ${PKGMANDIR}/man3 ${PKGMANDIR}/cat3
 .if empty(LDD_SYSCTL:M*libc*)
 INSTALLATION_DIRS+=	sbin
 .endif
+
+INSTALL_MAKE_FLAGS+=	MANDIR=${PREFIX:Q}/${PKGMANDIR:Q}
 
 do-extract:
 	${CP} -R ${FILESDIR} ${WRKSRC}

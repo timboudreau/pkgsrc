@@ -1,16 +1,26 @@
-# $NetBSD: Makefile,v 1.3 2016/06/08 17:43:39 wiz Exp $
+# $NetBSD: Makefile,v 1.8 2019/03/04 08:40:57 adam Exp $
 
-DISTNAME=	structlog-15.1.0
+DISTNAME=	structlog-19.1.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	python sysutils
+CATEGORIES=	sysutils python
 MASTER_SITES=	${MASTER_SITE_PYPI:=s/structlog/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.structlog.org/
 COMMENT=	Painless structural logging
 LICENSE=	apache-2.0 AND mit
 
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+TEST_DEPENDS+=	${PYPKGPREFIX}-freezegun>=0.2.8:../../devel/py-freezegun
+TEST_DEPENDS+=	${PYPKGPREFIX}-pretend-[0-9]*:../../devel/py-pretend
+TEST_DEPENDS+=	${PYPKGPREFIX}-simplejson-[0-9]*:../../textproc/py-simplejson
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-runner-[0-9]*:../../devel/py-test-runner
+TEST_DEPENDS+=	${PYPKGPREFIX}-twisted-[0-9]*:../../net/py-twisted
+
 USE_LANGUAGES=	# none
+
+PYSETUPTESTTARGET=	pytest
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

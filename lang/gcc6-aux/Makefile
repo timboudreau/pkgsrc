@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.1 2016/12/13 01:19:20 marino Exp $
-#
+# $NetBSD: Makefile,v 1.3 2018/10/01 12:32:15 ryoon Exp $
 
 PKGNAME=	gcc6-aux-${SNAPSHOT}
 PKGREVISION=	${MAIN_PR}
@@ -8,7 +7,7 @@ CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_GNU:=gcc/${IDENTIFICATION}/}
 DISTFILES=	${DISTNAME}.tar.bz2
 
-MAINTAINER=	draco@marino.st
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.dragonlace.net/
 COMMENT=	GNAT Ada compiler based on GCC ${GCC_BRANCH}
 LICENSE=	gnu-gpl-v3 AND gnu-lgpl-v3
@@ -23,15 +22,15 @@ APPLY_DIFFS=	core ada cxx
 
 # Requires bootstrap compiler, which is only available for on selected systems
 
+# Tasking is broken on NetBSD.  The reason for this is unknown
+# Until pthread support is fixed, remove NetBSD from PLATFORM list
 ONLY_FOR_PLATFORM=	DragonFly-*-x86_64   \
 			FreeBSD-*-i386       \
 			FreeBSD-*-x86_64     \
 			SunOS-5.1[1-9]*-i386 \
-			SunOS-5.1[1-9]*-x86_64
-# Tasking is broken on NetBSD.  The reason for this is unknown
-# Until pthread support is fixed, remove NetBSD from PLATFORM list
-#			NetBSD-[5-9]*-i386   \
-#			NetBSD-[5-9]*-x86_64
+			SunOS-5.1[1-9]*-x86_64 \
+			NetBSD-[5-9]*-i386   \
+			NetBSD-[5-9]*-x86_64
 
 GARCH=			${MACHINE_ARCH:S/amd64/x86_64/}
 BLD_TARGET=		${GARCH}-aux-${LOWER_OPSYS}${OS_VERSION}

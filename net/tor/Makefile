@@ -1,21 +1,25 @@
-# $NetBSD: Makefile,v 1.123 2017/07/03 22:20:37 wiz Exp $
+# $NetBSD: Makefile,v 1.139 2019/03/25 00:36:06 gdt Exp $
 
-DISTNAME=		tor-0.3.0.9
-CATEGORIES=		net security
-MASTER_SITES=		http://www.torproject.org/dist/
+DISTNAME=	tor-0.3.5.8
+PKGREVISION=	2
+CATEGORIES=	net security
+MASTER_SITES=	https://dist.torproject.org/
 
-MAINTAINER=		reezer@reezer.org
-HOMEPAGE=		http://www.torproject.org/
-COMMENT=		Anonymizing overlay network for TCP
-LICENSE=		modified-bsd
+MAINTAINER=	reezer@reezer.org
+HOMEPAGE=	http://www.torproject.org/
+COMMENT=	Anonymizing overlay network for TCP
+LICENSE=	modified-bsd
 
 USE_LANGUAGES=		c99
 USE_PKGLOCALEDIR=	yes
+USE_TOOLS+=		perl:test pkg-config
 GNU_CONFIGURE=		yes
-
-CONFIGURE_ENV+=		CPP=${CPP:Q}
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASEDIR}
+CONFIGURE_ENV+=		CPP=${CPP:Q}
 
+# one test failure in 0.3.0.10
+# https://trac.torproject.org/projects/tor/ticket/23250
 TEST_TARGET=		check
 
 TOR_USER?=		tor
@@ -36,10 +40,8 @@ USER_GROUP=		${TOR_USER} ${TOR_GROUP}
 
 OWN_DIRS_PERMS+=	${PKG_HOME.${TOR_USER}} ${USER_GROUP} 0700
 
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
-
-CONF_FILES+=		${PREFIX}/share/examples/tor/torrc.sample 	\
-				${PKG_SYSCONFDIR}/torrc
+CONF_FILES+=		${PREFIX}/share/examples/tor/torrc.sample \
+			${PKG_SYSCONFDIR}/torrc
 
 PRINT_PLIST_AWK+=	/^man\/man/ { $$0 = "$${PLIST.doc}" $$0 }
 PRINT_PLIST_AWK+=	/^share\/doc/ { $$0 = "$${PLIST.doc}" $$0 }
@@ -57,6 +59,7 @@ CHECK_PORTABILITY_SKIP+=contrib/*
 CFLAGS+=		-c99
 .endif
 
+.include "../../archivers/zstd/buildlink3.mk"
 BUILDLINK_API_DEPENDS.libevent+= libevent>=2.0
 .include "../../devel/libevent/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
@@ -65,7 +68,6 @@ BUILDLINK_API_DEPENDS.openssl+=	openssl>=1.0
 .include "../../mk/pthread.buildlink3.mk"
 
 ## We include this after other b3.mk files since we use PTHREAD_TYPE.
-##
 .include "options.mk"
 
 .include "../../mk/bsd.pkg.mk"

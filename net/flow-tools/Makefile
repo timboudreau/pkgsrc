@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.36 2016/10/09 21:42:01 wiz Exp $
+# $NetBSD: Makefile,v 1.38 2019/04/25 07:33:10 maya Exp $
 
 DISTNAME=	flow-tools-0.68
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.eng.oar.net/pub/flow-tools/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.splintered.net/sw/flow-tools/
+#HOMEPAGE=	http://www.splintered.net/sw/flow-tools/
 COMMENT=	Collect and store NetFlow data
 
 USE_TOOLS+=	lex

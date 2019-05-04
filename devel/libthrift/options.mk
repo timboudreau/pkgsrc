@@ -1,11 +1,11 @@
-# $NetBSD: options.mk,v 1.9 2016/11/20 13:00:08 taca Exp $
+# $NetBSD: options.mk,v 1.12 2018/05/15 10:16:17 jperkin Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.libthrift
-PKG_SUPPORTED_OPTIONS=	csharp java erlang python perl php ruby
+PKG_SUPPORTED_OPTIONS=	lua perl python # csharp java erlang php ruby
 
 .include "../../mk/bsd.options.mk"
 
-PLIST_VARS+=		csharp erlang java perl php python ruby
+PLIST_VARS+=		csharp erlang java lua perl php python ruby
 
 .if !empty(PKG_OPTIONS:Mcsharp)
 CONFIGURE_ARGS+=	--with-csharp
@@ -42,6 +42,14 @@ PLIST.erlang=		yes
 .include "../../lang/erlang/buildlink3.mk"
 .else
 CONFIGURE_ARGS+=	--without-erlang
+.endif
+
+.if !empty(PKG_OPTIONS:Mlua)
+CONFIGURE_ARGS+=	--with-lua
+.include "../../lang/lua/buildlink3.mk"
+PLIST.lua=		yes
+.else
+CONFIGURE_ARGS+=	--without-lua
 .endif
 
 .if !empty(PKG_OPTIONS:Mpython)
@@ -103,3 +111,14 @@ PLIST.ruby=		yes
 .else
 CONFIGURE_ARGS+=	--without-ruby
 .endif
+
+# Languages without options that may be auto-detected
+CONFIGURE_ARGS+=	--without-nodejs
+CONFIGURE_ARGS+=	--without-dart
+CONFIGURE_ARGS+=	--without-haskell
+CONFIGURE_ARGS+=	--without-go
+CONFIGURE_ARGS+=	--without-rs
+CONFIGURE_ARGS+=	--without-haxe
+CONFIGURE_ARGS+=	--without-dotnetcore
+CONFIGURE_ARGS+=	--without-d
+

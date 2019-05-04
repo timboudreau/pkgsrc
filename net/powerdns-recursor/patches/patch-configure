@@ -1,60 +1,35 @@
-$NetBSD: patch-configure,v 1.1 2017/07/03 13:02:38 joerg Exp $
+$NetBSD: patch-configure,v 1.3 2018/01/02 12:23:55 fhajny Exp $
 
-Regenerate for PDNS_CHECK_OS fix.
+Regen after excluding -latomic test on NetBSD.
 
---- configure.orig	2017-07-02 23:26:02.024754888 +0000
+--- configure.orig	2017-12-04 12:51:13.000000000 +0000
 +++ configure
-@@ -15885,17 +15885,14 @@ fi
+@@ -15944,9 +15944,14 @@ else
+ fi
  
-   case "$host" in
-   mips* | powerpc* )
--    as_CACHEVAR=`$as_echo "ax_cv_check_ldflags_cannot continue" "$LINENO" 5
--    _-latomic" | $as_tr_sh`
--{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the linker accepts -latomic" >&5
-+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the linker accepts -latomic" >&5
+ 
+-  case "$host" in
+-  mips* | powerpc-* )
+-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the linker accepts -latomic" >&5
++  case "$host_os" in
++  netbsd*)
++    : # no -latomic
++    ;;
++  *)
++    case "$host" in
++    mips* | powerpc-* )
++      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the linker accepts -latomic" >&5
  $as_echo_n "checking whether the linker accepts -latomic... " >&6; }
--if eval \${$as_CACHEVAR+:} false; then :
-+if ${ax_cv_check_ldflags___latomic+:} false; then :
-   $as_echo_n "(cached) " >&6
- else
+     LDFLAGS="-latomic $LDFLAGS"
+     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+@@ -15968,7 +15973,9 @@ else
  
-   ax_check_save_flags=$LDFLAGS
--  LDFLAGS="$LDFLAGS cannot continue" "$LINENO" 5
--     -latomic"
-+  LDFLAGS="$LDFLAGS  -latomic"
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
- 
-@@ -15908,24 +15905,23 @@ main ()
- }
- _ACEOF
- if ac_fn_cxx_try_link "$LINENO"; then :
--  eval "$as_CACHEVAR=yes"
-+  ax_cv_check_ldflags___latomic=yes
- else
--  eval "$as_CACHEVAR=no"
-+  ax_cv_check_ldflags___latomic=no
  fi
  rm -f core conftest.err conftest.$ac_objext \
-     conftest$ac_exeext conftest.$ac_ext
-   LDFLAGS=$ax_check_save_flags
- fi
--eval ac_res=\$$as_CACHEVAR
--	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
--$as_echo "$ac_res" >&6; }
--if eval test \"x\$"$as_CACHEVAR"\" = x"yes"; then :
--   :
-+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_ldflags___latomic" >&5
-+$as_echo "$ax_cv_check_ldflags___latomic" >&6; }
-+if test "x$ax_cv_check_ldflags___latomic" = xyes; then :
-+  LDFLAGS="-latomic $LDFLAGS"
-+      as_fn_error $? "Unable to link against libatomic, cannot continue" "$LINENO" 5
- else
--  as_fn_error $? "Unable to link against libatomic
-+  :
- fi
- 
--    LDFLAGS="-latomic $LDFLAGS"
+-    conftest$ac_exeext conftest.$ac_ext
++      conftest$ac_exeext conftest.$ac_ext
++      ;;
++    esac
      ;;
    esac
  

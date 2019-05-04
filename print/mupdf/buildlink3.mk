@@ -1,12 +1,12 @@
-# $NetBSD: buildlink3.mk,v 1.19 2017/04/30 01:21:24 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.28 2018/12/13 19:51:36 adam Exp $
 
 BUILDLINK_TREE+=	mupdf
 
 .if !defined(MUPDF_BUILDLINK3_MK)
 MUPDF_BUILDLINK3_MK:=
 
-BUILDLINK_API_DEPENDS.mupdf+=	mupdf>=1.11
-BUILDLINK_ABI_DEPENDS.mupdf?=	mupdf>=1.11nb1
+BUILDLINK_API_DEPENDS.mupdf+=	mupdf>=1.14.0
+BUILDLINK_ABI_DEPENDS.mupdf?=	mupdf>=1.14.0nb2
 BUILDLINK_PKGSRCDIR.mupdf?=	../../print/mupdf
 
 pkgbase := mupdf
@@ -16,9 +16,9 @@ pkgbase := mupdf
 .include "../../www/curl/buildlink3.mk"
 .endif
 
-.if !empty(PKG_BUILD_OPTIONS.mupdf:Mglfw)
+.if !empty(PKG_BUILD_OPTIONS.mupdf:Mopengl)
 .include "../../graphics/MesaLib/buildlink3.mk"
-.include "../../graphics/glfw/buildlink3.mk"
+.include "../../graphics/glut/buildlink3.mk"
 .endif
 
 .include "../../devel/zlib/buildlink3.mk"

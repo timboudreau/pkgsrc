@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.61 2017/04/22 21:03:50 adam Exp $
+# $NetBSD: Makefile,v 1.76 2019/04/03 00:33:00 ryoon Exp $
 
 DISTNAME=	monsoon-0.20
-PKGREVISION=	55
+PKGREVISION=	69
 CATEGORIES=	net
 MASTER_SITES=	http://www.monsoon-project.org/jaws/data/files/
 
@@ -15,7 +15,7 @@ USE_TOOLS+=	gmake gtar intltool perl pkg-config msgfmt
 EXTRACT_USING=	gtar
 
 SUBST_CLASSES+=		fix-mcs
-SUBST_STAGE.fix-mcs=	post-patch
+SUBST_STAGE.fix-mcs=	pre-configure
 SUBST_MESSAGE.fix-mcs=	Fix compiler name
 SUBST_FILES.fix-mcs=	configure Monsoon/Makefile.in
 SUBST_SED.fix-mcs=	-e 's,gmcs,mcs,'

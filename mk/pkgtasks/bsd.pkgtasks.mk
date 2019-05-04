@@ -1,4 +1,4 @@
-# $NetBSD: bsd.pkgtasks.mk,v 1.4 2017/06/04 00:03:43 jlam Exp $
+# $NetBSD: bsd.pkgtasks.mk,v 1.9 2018/11/30 18:38:20 rillig Exp $
 #
 # Copyright (c) 2017 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -27,8 +27,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-_VARGROUPS+=	pkgtasks
-
 # PKG_CONFIG
 #	User-settable variable for whether the directory- and
 #	file-handling should be performed automatically, or if the
@@ -51,6 +49,13 @@ _VARGROUPS+=	pkgtasks
 #
 #	Possible: yes, no (case-insensitive)
 #	Default: yes
+#
+# PKG_FATAL_ERRORS
+#	User-settable variable for whether the return value of the
+#	{pre,post}{install,remove} meta-tasks is used or not.
+#
+#	Possible: yes, no (case-insensitive)
+#	Default: no
 #
 # PKG_INIT_SCRIPTS
 #	User-settable variable for whether to copy init scripts into
@@ -77,16 +82,23 @@ _VARGROUPS+=	pkgtasks
 #	Possible: yes, no (case-insensitive)
 #	Default: yes
 #
-_USER_VARS.pkgtasks+=	PKG_CONFIG PKG_CONFIG_PERMS PKG_INIT_SCRIPTS
+
+_VARGROUPS+=		pkgtasks
+_USER_VARS.pkgtasks=	PKG_CONFIG PKG_CONFIG_PERMS PKG_INIT_SCRIPTS
+_USE_VARS.pkgtasks=	FILES_SUBST
+_SORTED_VARS.pkgtasks=	FILES_SUBST
+
 PKG_CONFIG?=		yes
 PKG_CONFIG_PERMS?=	no
 PKG_CREATE_USERGROUP?=	yes
+PKG_FATAL_ERRORS?=	no
 PKG_INIT_SCRIPTS?=	${PKG_RCD_SCRIPTS:Uno}	# deprecated
 PKG_REGISTER_SHELLS?=	yes
 PKG_UPDATE_FONTS_DB?=	yes
 FILES_SUBST+=		PKG_CONFIG=${PKG_CONFIG:tl:Q}
 FILES_SUBST+=		PKG_CONFIG_PERMS=${PKG_CONFIG_PERMS:tl:Q}
 FILES_SUBST+=		PKG_CREATE_USERGROUP=${PKG_CREATE_USERGROUP:tl:Q}
+FILES_SUBST+=		PKG_FATAL_ERRORS=${PKG_FATAL_ERRORS:tl:Q}
 FILES_SUBST+=		PKG_INIT_SCRIPTS=${PKG_INIT_SCRIPTS:tl:Q}
 FILES_SUBST+=		PKG_REGISTER_SHELLS=${PKG_REGISTER_SHELLS:tl:Q}
 FILES_SUBST+=		PKG_UPDATE_FONTS_DB=${PKG_UPDATE_FONTS_DB:tl:Q}
@@ -134,6 +146,7 @@ USE_PKGTASKS=		no
 .include "${PKGSRCDIR}/mk/pkgtasks/directories.mk"
 .include "${PKGSRCDIR}/mk/pkgtasks/files.mk"
 .include "${PKGSRCDIR}/mk/pkgtasks/fonts.mk"
+.include "${PKGSRCDIR}/mk/pkgtasks/icon_themes.mk"
 .include "${PKGSRCDIR}/mk/pkgtasks/info_files.mk"
 .include "${PKGSRCDIR}/mk/pkgtasks/ocaml_findlib.mk"
 .include "${PKGSRCDIR}/mk/pkgtasks/permissions.mk"
@@ -142,9 +155,12 @@ USE_PKGTASKS=		no
 .include "${PKGSRCDIR}/mk/pkgtasks/usergroup.mk"
 
 # Add a dependency on pkgtasks if package tasks are needed.
-_PKGTASKS_DEPENDS=	pkgtasks-1>=1.10:../../pkgtools/pkgtasks
+_PKGTASKS_DEPENDS=	pkgtasks-1>=1.15:../../pkgtools/pkgtasks
 DEPENDS+=		${"${USE_PKGTASKS:tl}" == "yes":?${_PKGTASKS_DEPENDS}:}
 TASK_MODULE_DIR?=	${LOCALBASE}/share/pkgtasks-1
+
+# Make package tasks verbose if PKG_VERBOSE is defined.
+PKGTOOLS_ENV+=		${PKG_VERBOSE:DTASK_VERBOSE=all}
 
 # PKGTASKS_DATAFILE
 #	The formatted data file for use by pkgtools/pkgtasks.

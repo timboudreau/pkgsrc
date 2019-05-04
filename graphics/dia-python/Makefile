@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.50 2017/02/12 06:25:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.57 2019/04/26 13:13:59 maya Exp $
 
 DIA_SUBPKG=		-python
-PKGREVISION= 3
+PKGREVISION= 8
 .include "../../graphics/dia/Makefile.common"
 
 COMMENT+=		(Python plugin)
@@ -12,7 +12,7 @@ CONFIGURE_ENV+=		PYTHON=${PYTHONBIN:Q}
 REPLACE_PYTHON=	po-checktrans.py
 REPLACE_PYTHON+=	plug-ins/python/gtkcons.py
 REPLACE_PYTHON+=	sheets/checktrans.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 BUILD_DIRS+=		plug-ins/python
 INSTALL_DIRS+=		plug-ins/python

@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.10 2017/02/12 06:25:32 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.16 2018/11/14 22:21:48 kleink Exp $
 
 DISTNAME=	freedv-1.1
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	ham
 MASTER_SITES=	http://files.freedv.org/freedv/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	dbj@NetBSD.org
-HOMEPAGE=	http://freedv.org/
+HOMEPAGE=	https://freedv.org/
 COMMENT=	FreeDV: HF Digital Voice for Radio Amateurs
 
 LICENSE=	gnu-lgpl-v2.1

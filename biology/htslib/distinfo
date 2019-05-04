@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/11/06 10:24:14 adam Exp $
+
+SHA1 (htslib-1.9.tar.bz2) = 21be5187203df30637dda2e1133cae2e833ef050
+RMD160 (htslib-1.9.tar.bz2) = 85d5211cc197931e73a0dc7ca0673426f2ff6d89
+SHA512 (htslib-1.9.tar.bz2) = ddb0e2d970e4c2c27e203b064898f95cb7c187cd497c02fc7b4312dcea25669d0b6063d537687521e7a065f6daefa1ae897add2df4981037a187b499d08fdef7
+Size (htslib-1.9.tar.bz2) = 1178859 bytes

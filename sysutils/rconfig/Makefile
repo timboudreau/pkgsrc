@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.42 2016/07/09 06:39:02 wiz Exp $
+# $NetBSD: Makefile,v 1.44 2018/08/22 09:46:40 wiz Exp $
 
 DISTNAME=	rconfig-0.47
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	sysutils
 MASTER_SITES=	http://rconfig.googlecode.com/files/
 EXTRACT_SUFX=	.tbz
 
 MAINTAINER=	abs@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/rconfig/
+HOMEPAGE=	https://code.google.com/archive/p/rconfig/
 COMMENT=	Manage configurations for many machines via rdist trees
 
 DEPENDS+=	fping-[0-9]*:../../net/fping

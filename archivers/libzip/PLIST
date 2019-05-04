@@ -1,10 +1,12 @@
-@comment $NetBSD: PLIST,v 1.10 2017/02/19 11:22:43 wiz Exp $
+@comment $NetBSD: PLIST,v 1.12 2017/12/30 00:19:56 wiz Exp $
 bin/zipcmp
 bin/zipmerge
 bin/ziptool
 include/zip.h
-lib/libzip.la
-lib/libzip/include/zipconf.h
+include/zipconf.h
+lib/libzip.so
+lib/libzip.so.5
+lib/libzip.so.5.0
 lib/pkgconfig/libzip.pc
 man/man1/zipcmp.1
 man/man1/zipmerge.1
@@ -67,10 +69,12 @@ man/man3/zip_get_file_comment.3
 man/man3/zip_get_name.3
 man/man3/zip_get_num_entries.3
 man/man3/zip_get_num_files.3
+man/man3/zip_libzip_version.3
 man/man3/zip_name_locate.3
 man/man3/zip_open.3
 man/man3/zip_open_from_source.3
 man/man3/zip_register_progress_callback.3
+man/man3/zip_register_progress_callback_with_state.3
 man/man3/zip_rename.3
 man/man3/zip_replace.3
 man/man3/zip_set_archive_comment.3
@@ -80,12 +84,18 @@ man/man3/zip_set_file_comment.3
 man/man3/zip_set_file_compression.3
 man/man3/zip_source.3
 man/man3/zip_source_begin_write.3
+man/man3/zip_source_begin_write_cloning.3
 man/man3/zip_source_buffer.3
+man/man3/zip_source_buffer_create.3
+man/man3/zip_source_buffer_fragment.3
+man/man3/zip_source_buffer_fragment_create.3
 man/man3/zip_source_close.3
 man/man3/zip_source_commit_write.3
 man/man3/zip_source_error.3
 man/man3/zip_source_file.3
+man/man3/zip_source_file_create.3
 man/man3/zip_source_filep.3
+man/man3/zip_source_filep_create.3
 man/man3/zip_source_free.3
 man/man3/zip_source_function.3
 man/man3/zip_source_function_create.3

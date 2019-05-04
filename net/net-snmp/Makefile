@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.119 2017/06/05 14:24:16 ryoon Exp $
+# $NetBSD: Makefile,v 1.125 2019/01/08 19:18:55 adam Exp $
 
 .include "Makefile.common"
 CATEGORIES=	net
-PKGREVISION=	7
+PKGREVISION=	11
 
 MAINTAINER=	adam@NetBSD.org
 COMMENT=	Extensible SNMP implementation
@@ -30,6 +30,7 @@ OSVERSION_SPECIFIC=	YES
 .  if empty(CFLAGS:U:M*-Dnetbsd1*)
 CFLAGS+=		-Dnetbsd1
 .  endif
+CFLAGS+=		-DSOL_IP=IPPROTO_IP
 .endif
 
 .if (${OPSYS} == "NetBSD") || !exists(/usr/bin/lpstat)
@@ -120,6 +121,8 @@ post-extract:
 	ln -s ${WRKSRC}/include/net-snmp/system/darwin13.h ${WRKSRC}/include/net-snmp/system/darwin14.h
 	ln -s ${WRKSRC}/include/net-snmp/system/darwin13.h ${WRKSRC}/include/net-snmp/system/darwin15.h
 	ln -s ${WRKSRC}/include/net-snmp/system/darwin13.h ${WRKSRC}/include/net-snmp/system/darwin16.h
+	ln -s ${WRKSRC}/include/net-snmp/system/darwin13.h ${WRKSRC}/include/net-snmp/system/darwin17.h
+	ln -s ${WRKSRC}/include/net-snmp/system/darwin13.h ${WRKSRC}/include/net-snmp/system/darwin18.h
 .endif
 
 post-wrapper:

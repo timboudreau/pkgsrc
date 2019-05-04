@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.40 2016/09/19 13:04:27 wiz Exp $
+# $NetBSD: Makefile,v 1.42 2018/07/04 13:40:35 jperkin Exp $
 #
 
 DISTNAME=		prelude-lml-0.9.15
-PKGREVISION=		9
+PKGREVISION=		10
 CATEGORIES=		security
 MASTER_SITES=		http://www.prelude-ids.com/download/releases/prelude-lml/
 
@@ -49,13 +49,13 @@ FILES_SUBST+=	PRELUDE_USER=${PRELUDE_USER:Q}
 FILES_SUBST+=	PRELUDE_GROUP=${PRELUDE_GROUP:Q}
 
 SUBST_CLASSES+=		code
-SUBST_STAGE.code=	post-patch
+SUBST_STAGE.code=	pre-configure
 SUBST_FILES.code=	run-prelude-lml.c
 SUBST_SED.code=		-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.code+=	-e 's,@PRELUDE_USER@,${PRELUDE_USER},g'
 
 SUBST_CLASSES+=		make
-SUBST_STAGE.make=	post-patch
+SUBST_STAGE.make=	pre-configure
 SUBST_FILES.make=	Makefile.in
 SUBST_SED.make=		-e 's,@EGDIR@,${EGDIR},g'
 

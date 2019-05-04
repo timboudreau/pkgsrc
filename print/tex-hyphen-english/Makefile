@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.3 2016/06/16 04:06:06 markd Exp $
+# $NetBSD: Makefile,v 1.5 2019/01/26 22:54:37 markd Exp $
 
 DISTNAME=	hyphen-english
-PKGNAME=	tex-${DISTNAME}-2016
-TEXLIVE_REV=	40340
+PKGNAME=	tex-${DISTNAME}-2018
+TEXLIVE_REV=	49078
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	English hyphenation patterns
 LICENSE=	lppl-1.3c
 
-CONFLICTS+=	teTeX-texmf<=3.0nb12
 DEPENDS+=	tex-hyphen-base-[0-9]*:../../print/tex-hyphen-base
 DEPENDS+=	tex-hyph-utf8-[0-9]*:../../print/tex-hyph-utf8
 

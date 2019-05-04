@@ -1,18 +1,22 @@
-# $NetBSD: Makefile,v 1.30 2017/05/29 13:16:11 fhajny Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/25 07:33:12 maya Exp $
 
-DISTNAME=		rabbitmq-server-3.6.10
+DISTNAME=		rabbitmq-server-3.7.7
 PKGNAME=		${DISTNAME:S/-server//}
+PKGREVISION=		1
 CATEGORIES=		net
-MASTER_SITES=		http://www.rabbitmq.com/releases/rabbitmq-server/v${PKGVERSION_NOREV}/
+MASTER_SITES=		${MASTER_SITE_GITHUB:=rabbitmq/}
 EXTRACT_SUFX=		.tar.xz
+GITHUB_PROJECT=		rabbitmq-server
+GITHUB_RELEASE=		v${PKGVERSION_NOREV}
 
-MAINTAINER=		filip@joyent.com
+MAINTAINER=		fhajny@NetBSD.org
 HOMEPAGE=		http://www.rabbitmq.com/server.html
 COMMENT=		Implementation of AMQP that provides robust messaging for applications
 LICENSE=		mpl-1.1
 
 USE_TOOLS+=		bash:run gmake unzip zip
 
+BUILD_DEPENDS+=		elixir-[0-9]*:../../lang/elixir
 BUILD_DEPENDS+=		libxslt-[0-9]*:../../textproc/libxslt
 BUILD_DEPENDS+=		${PYPKGPREFIX}-expat-[0-9]*:../../textproc/py-expat
 BUILD_DEPENDS+=		rsync-[0-9]*:../../net/rsync
@@ -20,6 +24,10 @@ BUILD_DEPENDS+=		xmlto-[0-9]*:../../textproc/xmlto
 DEPENDS+=		${PYPKGPREFIX}-simplejson>=2:../../converters/py-simplejson
 
 BUILD_DEFS+=		VARBASE
+
+# Create a mix tool to avoid nested interpreter issues.
+TOOLS_CREATE+=		mix
+TOOLS_SCRIPT.mix=	${PREFIX}/bin/elixir -r ${PREFIX}/bin/mix -- "$$@"
 
 .include		"../../mk/bsd.prefs.mk"
 
@@ -48,7 +56,7 @@ FILES_SUBST+=		RMQ_USER=${RMQ_USER}
 FILES_SUBST+=		RMQ_GROUP=${RMQ_GROUP}
 FILES_SUBST+=		RMQ_DIR=${RMQ_DIR}
 
-RABBITMQ_HOME=		${PREFIX}/lib/erlang/lib/rabbitmq_server-${PKGVERSION_NOREV}
+RABBITMQ_HOME=		lib/erlang/lib/rabbitmq_server-${PKGVERSION_NOREV}
 
 INSTALLATION_DIRS+=	share/examples/rabbitmq
 
@@ -64,13 +72,19 @@ SUBST_SED.paths=	-e 's|/etc/rabbitmq|${PKG_SYSCONFDIR}|g'
 SUBST_SED.paths+=	-e 's|/var/lib|${VARBASE}/db|g'
 SUBST_SED.paths+=	-e 's|/var/log|${VARBASE}/log|g'
 SUBST_SED.paths+=	-e 's|erl|${PREFIX}/bin/erl|g'
-SUBST_VARS.paths=	RABBITMQ_HOME
+SUBST_SED.paths+=	-e 's|@RABBITMQ_HOME@|${PREFIX}/${RABBITMQ_HOME}|g'
 
 REPLACE_BASH+=		${SCRIPTS_DIR}/rabbitmqctl
 REPLACE_BASH+=		${SCRIPTS_DIR}/rabbitmq-defaults
 REPLACE_BASH+=		${SCRIPTS_DIR}/rabbitmq-env
 REPLACE_BASH+=		${SCRIPTS_DIR}/rabbitmq-plugins
 REPLACE_BASH+=		${SCRIPTS_DIR}/rabbitmq-server
+
+# Too much effort to replace the shebang on generated files
+CHECK_INTERPRETER_SKIP+=	${RABBITMQ_HOME}/escript/rabbitmq-diagnostics
+CHECK_INTERPRETER_SKIP+=	${RABBITMQ_HOME}/escript/rabbitmq-plugins
+CHECK_INTERPRETER_SKIP+=	${RABBITMQ_HOME}/escript/rabbitmqctl
+CHECK_INTERPRETER_SKIP+=	${RABBITMQ_HOME}/sbin/cuttlefish
 
 MAKE_ENV+=		MANDIR="${PREFIX}/${PKGMANDIR}"
 MAKE_ENV+=		RMQ_BINDIR="${PREFIX}/sbin"
@@ -79,6 +93,7 @@ MAKE_ENV+=		RSYNC="${PREFIX}/bin/rsync"
 MAKE_ENV+=		VERSION="${PKGVERSION_NOREV}"
 
 INSTALL_TARGET=		install-erlapp install-scripts install-bin install-man
+TEST_TARGET=		check
 
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/deps/rabbit/docs/rabbitmq.config.example		\

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.2 2016/04/15 13:33:00 wiz Exp $
+# $NetBSD: Makefile,v 1.5 2018/06/17 09:13:11 wiz Exp $
 
-DISTNAME=	click-log-0.1.3
+DISTNAME=	click-log-0.3.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/click-log/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org

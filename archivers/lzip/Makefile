@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2016/12/16 13:45:22 mef Exp $
+# $NetBSD: Makefile,v 1.16 2019/01/18 10:03:40 adam Exp $
 
-DISTNAME=	lzip-1.18
+DISTNAME=	lzip-1.21
 CATEGORIES=	archivers
 MASTER_SITES=	http://download.savannah.gnu.org/releases/lzip/
 
@@ -11,12 +11,15 @@ LICENSE=	gnu-gpl-v2
 
 USE_LANGUAGES=		c++
 HAS_CONFIGURE=		yes
-CONFIGURE_ARGS=		--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--prefix=${PREFIX}
 CONFIGURE_ARGS+=	--infodir=${PREFIX}/${PKGINFODIR}
 CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
-INFO_FILES=		YES
+INFO_FILES=		yes
+TEST_TARGET=		check
 
-MAKE_FLAGS+=		CXX=${CXX:Q} CPPFLAGS=${CPPFLAGS:Q}
-MAKE_FLAGS+=		CXXFLAGS=${CXXFLAGS:Q} LDFLAGS=${LDFLAGS:Q}
+MAKE_FLAGS+=		CXX=${CXX:Q}
+MAKE_FLAGS+=		CPPFLAGS=${CPPFLAGS:Q}
+MAKE_FLAGS+=		CXXFLAGS=${CXXFLAGS:Q}
+MAKE_FLAGS+=		LDFLAGS=${LDFLAGS:Q}
 
 .include "../../mk/bsd.pkg.mk"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.37 2012/10/25 06:55:49 asau Exp $
+# $NetBSD: Makefile,v 1.41 2018/11/22 14:56:07 nia Exp $
 #
 
 DISTNAME=		enchant-1.6.0
-PKGREVISION=		5
+PKGREVISION=		8
 CATEGORIES=		textproc
 MASTER_SITES=		http://www.abisource.com/downloads/enchant/1.6.0/
 
@@ -19,7 +19,22 @@ PKGCONFIG_OVERRIDE+=	enchant.pc.in
 GNU_CONFIGURE=		yes
 CFLAGS.SunOS+=		-D__EXTENSIONS__
 
-CONFIGURE_ARGS+=	--with-myspell-dir=${BUILDLINK_PREFIX.hunspell}/share/hunspell
+INSTALLATION_DIRS+=	share/examples
+MAKE_DIRS+=		${PREFIX}/share/enchant
+CONF_FILES=		${PREFIX}/share/examples/enchant-1.ordering ${PREFIX}/share/enchant/enchant.ordering
+
+# Unsupported in pkgsrc:
+# hspell - Hebrew spelling
+# uspell - Yiddish spelling
+# voikko - Finnish spelling
+#
+# hunspell or aspell can be used for these languages.
+CONFIGURE_ARGS+=	--disable-hspell
+CONFIGURE_ARGS+=	--disable-uspell
+CONFIGURE_ARGS+=	--disable-voikko
+
+post-install:
+	cd ${DESTDIR}${PREFIX}/share && ${MV} enchant/enchant.ordering examples/enchant-1.ordering
 
 .include "options.mk"
 

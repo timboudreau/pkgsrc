@@ -1,11 +1,10 @@
-$NetBSD: patch-configure.py,v 1.4 2016/04/23 07:38:38 wiz Exp $
+$NetBSD: patch-configure.py,v 1.7 2018/02/01 21:09:29 adam Exp $
 
-On Darwin, do not expect application bundle.
-Adapt for pkgsrc change to make qmake create libtool files.
+Do not expect an app bundle on Darwin.
 
---- configure.py.orig	2015-10-25 11:42:16.000000000 +0000
+--- configure.py.orig	2018-01-23 10:20:28.000000000 +0000
 +++ configure.py
-@@ -1932,10 +1932,7 @@ def run_make(target_config, verbose, exe
+@@ -2009,10 +2009,7 @@ def run_make(target_config, verbose, exe
          make = 'make'
          makefile_target = ''
  
@@ -17,34 +16,21 @@ Adapt for pkgsrc change to make qmake create libtool files.
  
      remove_file(platform_exe)
  
-@@ -2441,8 +2438,10 @@ win32 {
-     target.files = %s%s.pyd
-     LIBS += %s
- } else {
--    PY_MODULE = %s.so
--    target.files = %s.so
-+    PY_MODULE = %s.la
-+    target.files = %s.la
-+    LIBS += -Wl,-rpath,@X11LIB@
-+    LIBS += -Wl,-rpath,@PREFIX@/lib/pulseaudio
- }
- ''' % (target_name, debug_suffix, target_name, debug_suffix, link, target_name, target_name)
+@@ -2568,7 +2565,7 @@ def generate_module_makefile(target_conf
  
-@@ -2517,9 +2514,6 @@ win32 {
-             # common case where the PyQt configuration reflects the Qt
-             # configuration.
-             fwks = []
--            for m in ('QtPrintSupport', 'QtDBus', 'QtWidgets'):
--                if m in target_config.pyqt_modules:
--                    fwks.append('-framework ' + m)
+     # Note some version of Qt5 (probably incorrectly) implements
+     # 'plugin_bundle' instead of 'plugin' so we specify both.
+-    pro_lines.append('CONFIG += warn_on exceptions_off %s' % ('staticlib hide_symbols' if target_config.static else 'plugin plugin_bundle'))
++    pro_lines.append('CONFIG += warn_on exceptions_off %s' % ('staticlib hide_symbols' if target_config.static else 'plugin'))
  
-             if len(fwks) != 0:
-                 extra_lflags = 'QMAKE_LFLAGS += "%s"\n        ' % ' '.join(fwks)
-@@ -2532,7 +2526,6 @@ win32 {
- }
- macx {
-     QMAKE_LFLAGS += "-undefined dynamic_lookup"
--    QMAKE_LFLAGS += "-install_name $$absolute_path($$PY_MODULE, $$target.path)"
+     pro_add_qt_dependencies(target_config, metadata, pro_lines)
  
-     greaterThan(QT_MINOR_VERSION, 4) {
-         %sQMAKE_RPATHDIR += $$[QT_INSTALL_LIBS]
+@@ -2614,7 +2611,7 @@ win32 {
+     PY_MODULE = %s.so
+ 
+     macx {
+-        PY_MODULE_SRC = $(TARGET).plugin/Contents/MacOS/$(TARGET)
++        PY_MODULE_SRC = $(TARGET)
+ 
+         QMAKE_LFLAGS += "-undefined dynamic_lookup"
+ 

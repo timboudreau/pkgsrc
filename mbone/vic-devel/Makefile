@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.20 2017/01/16 23:45:13 wiz Exp $
+# $NetBSD: Makefile,v 1.24 2018/07/18 00:06:21 joerg Exp $
 
 DISTNAME=	vic-2.8ucl1.4.0beta-4337
 PKGNAME=	vic-devel-2.8.1.4.0beta.4337
-PKGREVISION=	16
+PKGREVISION=	18
 CATEGORIES=	mbone tk
 MASTER_SITES=	http://www.NetBSD.org/~sborrill/snapshots/
 
@@ -17,14 +17,14 @@ PATCHFILES=	vic-2.8ucl1.4.0_ov511.diff.gz
 .endif
 
 MAINTAINER=	sborrill@NetBSD.org
-HOMEPAGE=	http://mediatools.cs.ucl.ac.uk/nets/mmedia/
+#HOMEPAGE=	http://mediatools.cs.ucl.ac.uk/nets/mmedia/
 COMMENT=	MBONE video conferencing tool
 EXTRACT_SUFX=	.tgz
 
 WRKSRC=		${WRKDIR}/vic-mpeg4
 GNU_CONFIGURE=	yes
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c gnu++03
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1
 
 CONFIGURE_ARGS+=	--with-tcl=${BUILDLINK_PREFIX.tcl}/lib

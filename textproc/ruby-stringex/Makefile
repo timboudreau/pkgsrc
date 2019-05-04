@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.9 2017/06/21 13:38:21 taca Exp $
+# $NetBSD: Makefile,v 1.11 2018/03/17 16:26:41 taca Exp $
 
-DISTNAME=	stringex-2.7.1
+DISTNAME=	stringex-2.8.4
 CATEGORIES=	textproc
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/rsl/stringex
+HOMEPAGE=	https://github.com/rsl/stringex
 COMMENT=	Some (hopefully) useful extensions to Rubys String class
 LICENSE=	mit
 

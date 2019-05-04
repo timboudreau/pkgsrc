@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.32 2017/04/22 21:03:21 adam Exp $
+# $NetBSD: Makefile,v 1.51 2019/04/25 19:43:16 adam Exp $
 
-DISTNAME=	qtmultimedia-opensource-src-${QTVERSION}
+DISTNAME=	qtmultimedia-everywhere-src-${QTVERSION}
 PKGNAME=	qt5-qtmultimedia-${QTVERSION}
-PKGREVISION=	10
 COMMENT=	Qt5 module for multimedia
 
 BUILD_TARGET=		sub-src
@@ -17,7 +16,7 @@ MAKE_ENV+=		LFLAGS=${COMPILER_RPATH_FLAG}${PREFIX}/lib/pulseaudio
 .endif
 
 post-install:
-.for i in Qt5Multimedia.pc Qt5MultimediaQuick_p.pc Qt5MultimediaWidgets.pc
+.for i in Qt5Multimedia.pc Qt5MultimediaWidgets.pc
 	cd ${DESTDIR}${PREFIX}/lib/pkgconfig && \
 	ln -f -s ${QTPREFIX}/lib/pkgconfig/${i} ${i}
 .endfor

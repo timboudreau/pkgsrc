@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.20 2017/05/28 07:51:18 wen Exp $
+$NetBSD: distinfo,v 1.26 2018/09/23 04:53:33 wen Exp $
 
-SHA1 (Devel-Cover-1.25.tar.gz) = e26ca996249fefda6d4ed5a68cbb9fc3403c9f05
-RMD160 (Devel-Cover-1.25.tar.gz) = 93dd212fa2720a001af0fa9fdf020bfdafd8e102
-SHA512 (Devel-Cover-1.25.tar.gz) = 717b35e8b0aa255e288925d29b959f41965b22bc008f86231ef488c643ec4f8b4cae2b7bf190446ab10a6038f5aa326ac46c1ccc805e55a8696d612f19e15a0f
-Size (Devel-Cover-1.25.tar.gz) = 204888 bytes
+SHA1 (Devel-Cover-1.31.tar.gz) = 7d8fb1fb7684b4d92579c1ae3e7e7300c2fbac58
+RMD160 (Devel-Cover-1.31.tar.gz) = 3492b1569c4ee52739b357ed6135d451ef4fc2da
+SHA512 (Devel-Cover-1.31.tar.gz) = e2e63c8296e90fa953bd5998ce47365e66c3aedeef27bbd2506fc4b15a50aa0dd4efc48ca22c47348a6986561b921aa97f3cdbfa94b7e3b22b79b28b4522b4e9
+Size (Devel-Cover-1.31.tar.gz) = 1744628 bytes

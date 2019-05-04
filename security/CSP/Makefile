@@ -1,45 +1,61 @@
-# $NetBSD: Makefile,v 1.22 2016/07/09 06:38:53 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.27 2018/08/22 09:46:17 wiz Exp $
 
-DISTNAME=	CSP-0.32
-PKGREVISION=	13
+DISTNAME=	CSP-0.34
+PKGREVISION=	1
 CATEGORIES=	security
-MASTER_SITES=	ftp://ftp.su.se/pub/users/leifj/
-DISTFILES=	${DISTNAME}${EXTRACT_SUFX} ${CSPGUIDE}
+DISTFILES=	${DISTNAME}${EXTRACT_SUFX} cspguide.pdf
+EXTRACT_ONLY=	${DISTFILES:N*.pdf}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://devel.it.su.se/pub/jsp/polopoly.jsp?d=1026&a=3290
 COMMENT=	Simple PKI Toolkit
+LICENSE=	unlicense
 
 DEPENDS+=	p5-Date-Calc>=5.4:../../devel/p5-Date-Calc
 DEPENDS+=	p5-IPC-Run>=0.79:../../devel/p5-IPC-Run
 DEPENDS+=	p5-Term-Prompt>=1.03:../../devel/p5-Term-Prompt
 
-USE_TOOLS+=	pax
+BUILD_DEFS+=	VARBASE
+EGDIR=		${PREFIX}/share/examples
 
-CSPGUIDE=	cspguide.pdf
-SITES.${CSPGUIDE}=	http://devel.it.su.se/content/1/c4/32/90/
-EXTRACT_ONLY=	${DISTFILES:N*.pdf}
+INSTALLATION_DIRS=	${PREFIX}/bin ${EGDIR}/csp/public_html/certs share/doc/csp
 
-PERL5_PACKLIST=	auto/CSP/.packlist
+OWN_DIRS+=	${PKG_SYSCONFDIR}/csp/public_html/certs
+REQD_FILES+=	${EGDIR}/csp/aliases.txt ${PKG_SYSCONFDIR}/csp/aliases.txt
+REQD_FILES+=	${EGDIR}/csp/crl_extensions.conf ${PKG_SYSCONFDIR}/csp/crl_extensions.conf
+REQD_FILES+=	${EGDIR}/csp/extensions.conf ${PKG_SYSCONFDIR}/csp/extensions.conf
+REQD_FILES+=	${EGDIR}/csp/oids.conf ${PKG_SYSCONFDIR}/csp/oids.conf
+REQD_FILES+=	${EGDIR}/csp/types.txt ${PKG_SYSCONFDIR}/csp/types.txt
+REQD_FILES+=	${EGDIR}/csp/public_html/index.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/index.html.mpp
+REQD_FILES+=	${EGDIR}/csp/public_html/certs/cert.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/certs/cert.html.mpp
+REQD_FILES+=	${EGDIR}/csp/public_html/certs/expired.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/certs/expired.html.mpp
+REQD_FILES+=	${EGDIR}/csp/public_html/certs/index.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/certs/index.html.mpp
+REQD_FILES+=	${EGDIR}/csp/public_html/certs/revoked.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/certs/revoked.html.mpp
+REQD_FILES+=	${EGDIR}/csp/public_html/certs/valid.html.mpp ${PKG_SYSCONFDIR}/csp/public_html/certs/valid.html.mpp
 
-CSPHOME=	${VARBASE}/csp
-OPENSSLBIN=	${BUILDLINK_PREFIX.openssl}/bin/openssl
-OWN_DIRS=	${CSPHOME}
-INSTALLATION_DIRS=	share/doc/csp
-
-BUILD_DEFS+=	CSPHOME
 
 SUBST_CLASSES+=		csp
 SUBST_FILES.csp=	csp
-SUBST_SED.csp=		-e s,@@CSPHOME@@,${CSPHOME},
-SUBST_SED.csp+=		-e s,@@OPENSSL@@,${OPENSSLBIN},
-SUBST_STAGE.csp=	post-patch
+SUBST_SED.csp=		-e s,@CSPHOME@,${PKG_SYSCONFDIR}/csp,
+SUBST_SED.csp+=		-e s,@OPENSSL@,${BUILDLINK_PREFIX.openssl}/bin/openssl,
+SUBST_STAGE.csp=	pre-configure
+
+pre-install:
+	${INSTALL_DATA} ${DISTDIR}/cspguide.pdf ${DESTDIR}${PREFIX}/share/doc/csp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/aliases.txt ${DESTDIR}${EGDIR}/csp/aliases.txt
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/crl_extensions.conf ${DESTDIR}${EGDIR}/csp/crl_extensions.conf
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/extensions.conf ${DESTDIR}${EGDIR}/csp/extensions.conf
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/oids.conf ${DESTDIR}${EGDIR}/csp/oids.conf
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/types.txt ${DESTDIR}${EGDIR}/csp/types.txt
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/index.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/index.html.mpp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/certs/cert.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/certs/cert.html.mpp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/certs/expired.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/certs/expired.html.mpp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/certs/index.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/certs/index.html.mpp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/certs/revoked.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/certs/revoked.html.mpp
+	${INSTALL_DATA} ${WRKSRC}/ca/etc/public_html/certs/valid.html.mpp ${DESTDIR}${EGDIR}/csp/public_html/certs/valid.html.mpp
 
 post-install:
-	${INSTALL_DATA_DIR} ${DESTDIR}${CSPHOME}
-	cd ${WRKSRC}/ca && ${FIND} . -type f | pax -rw ${DESTDIR}${CSPHOME}
-	${INSTALL_DATA} ${DISTDIR}/${CSPGUIDE} ${DESTDIR}${PREFIX}/share/doc/csp
+	${LN} -sf ${DESTDIR}${PREFIX}/${PERL5_SUB_INSTALLVENDORBIN}/csp ${DESTDIR}${PREFIX}/bin/csp
+	${RM} ${DESTDIR}${PREFIX}/${PERL5_SUB_INSTALLARCHLIB}/perllocal.pod
 
 .include "../../lang/perl5/module.mk"
 .include "../../security/openssl/buildlink3.mk"

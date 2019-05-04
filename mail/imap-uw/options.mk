@@ -1,24 +1,11 @@
-# $NetBSD: options.mk,v 1.7 2009/05/26 11:32:22 obache Exp $
+# $NetBSD: options.mk,v 1.9 2018/09/02 00:52:50 maya Exp $
 
 .include "../../mk/bsd.prefs.mk"
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.imap-uw
 PKG_SUPPORTED_OPTIONS+=	imapuw-cleartextpwd imapuw-whoson inet6 ssl
 PKG_SUGGESTED_OPTIONS+=	imapuw-cleartextpwd inet6 ssl
-
-# On NetBSD 1.x, using the native Kerberos 5 implementation causes
-# interoperability problems with OpenSSL 0.9.7 and above.
-#
-.if !empty(MACHINE_PLATFORM:MNetBSD-1.*)
-CHECK_BUILTIN.heimdal:=	yes
-.  include "../../security/heimdal/builtin.mk"
-CHECK_BUILTIN.heimdal:=	no
-.  if !empty(USE_BUILTIN.heimdal:M[nN][oO])
 PKG_SUPPORTED_OPTIONS+=	kerberos
-.  endif
-.else
-PKG_SUPPORTED_OPTIONS+=	kerberos
-.endif
 
 .include "../../mk/bsd.options.mk"
 
@@ -37,7 +24,7 @@ MAKE_FLAGS+=	IP=4
 .if !empty(PKG_OPTIONS:Mkerberos)
 .  include "../../mk/krb5.buildlink3.mk"
 MAKE_ENV+=	KRB5_TYPE=${KRB5_TYPE}
-MAKE_FLAGS+=	EXTRAAUTHENTICATORS=gss
+MAKE_ENV+=	EXTRAAUTHENTICATORS=gss
 EXTRASPECIALS+=	GSSDIR=${KRB5BASE}
 CFLAGS.heimdal=	-DHEIMDAL_KRB5
 CFLAGS+=	${CFLAGS.${KRB5_TYPE}}

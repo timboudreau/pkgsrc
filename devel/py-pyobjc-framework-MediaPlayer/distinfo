@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:44 adam Exp $
+
+SHA1 (pyobjc-framework-MediaPlayer-5.1.2.tar.gz) = 43d3556d18d3898a654b805c2673f91a3bacab6e
+RMD160 (pyobjc-framework-MediaPlayer-5.1.2.tar.gz) = e15c877dbd562a7045dae349d0ef51543b027a8c
+SHA512 (pyobjc-framework-MediaPlayer-5.1.2.tar.gz) = e25ca099fa8d7772d38a5a5cd31da2b66c38fcf021e7d8c8364ff6bb1b6c52563e88741825daf4c6b51a71155da4b87691799559d1a6ee9b9913e484b31b54ca
+Size (pyobjc-framework-MediaPlayer-5.1.2.tar.gz) = 18031 bytes

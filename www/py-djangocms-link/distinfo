@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/12/22 09:16:33 adam Exp $
+
+SHA1 (djangocms-link-2.3.1.tar.gz) = 7363565d5cd3ea765f0c2bb9fa8d11e8c42410a5
+RMD160 (djangocms-link-2.3.1.tar.gz) = 03e40ee431833c8922f74015995c56333e3a0bc8
+SHA512 (djangocms-link-2.3.1.tar.gz) = 881ed300d2104422e09a97bf3fdd43d7e66abcfc54ee686beb4d3fb8868c831232b5972d11ddeed4e92070aa93e77ab7d4dcffc1431e069bcec6a4e5f91aeb70
+Size (djangocms-link-2.3.1.tar.gz) = 32991 bytes

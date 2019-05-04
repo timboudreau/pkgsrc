@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.13 2017/03/16 14:39:16 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/08/17 11:50:51 wiz Exp $
 
 GST_PLUGINS1_NAME=	pulse
 GST_PLUGINS1_DIRS=	ext/pulse

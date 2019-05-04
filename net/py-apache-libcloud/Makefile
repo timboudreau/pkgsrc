@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.8 2017/07/18 05:12:27 adam Exp $
+# $NetBSD: Makefile,v 1.12 2019/02/22 08:59:49 adam Exp $
 
-DISTNAME=	apache-libcloud-2.1.0
+DISTNAME=	apache-libcloud-2.4.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	net
+CATEGORIES=	net python
 MASTER_SITES=	${MASTER_SITE_PYPI:=a/apache-libcloud/}
 
 MAINTAINER=	imil@NetBSD.org
@@ -13,12 +13,13 @@ LICENSE=	apache-2.0
 USE_LANGUAGES=	# none
 
 DEPENDS+=	${PYPKGPREFIX}-requests-[0-9]*:../../devel/py-requests
-BUILD_DEPENDS+=	${PYPKGPREFIX}-requests-mock-[0-9]*:../../devel/py-requests-mock
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 BUILD_DEPENDS+=	${PYPKGPREFIX}-test-runner-[0-9]*:../../devel/py-test-runner
+TEST_DEPENDS+=	${PYPKGPREFIX}-requests-mock-[0-9]*:../../devel/py-requests-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
-post-extract:
-	find ${WRKSRC}/libcloud -type f -name .DS_Store -delete
+pre-install:
+	${RM} ${WRKSRC}/libcloud/compute/drivers/azure.py.orig
+	${RM} ${WRKSRC}/build/lib/libcloud/compute/drivers/azure.py.orig
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

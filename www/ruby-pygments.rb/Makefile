@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.12 2017/04/22 17:19:47 taca Exp $
+# $NetBSD: Makefile,v 1.17 2019/04/26 13:14:22 maya Exp $
 
-DISTNAME=	pygments.rb-1.1.2
+DISTNAME=	pygments.rb-1.2.1
+PKGREVISION=	1
 CATEGORIES=	textproc
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/tmm1/pygments.rb
+HOMEPAGE=	https://github.com/tmm1/pygments.rb
 COMMENT=	Pygments wrapper for ruby
 LICENSE=	mit
 
@@ -18,7 +19,7 @@ SUBST_FILES.path=	lib/pygments/popen.rb
 SUBST_SED.path+=	-e 's|@PYTHON@|python${PYVERSSUFFIX}|'
 SUBST_MESSAGE.path=	Fixing Python's path.
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 0.6.3
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # as of 0.6.3
 
 .include "../../lang/ruby/gem.mk"
 .include "../../lang/python/application.mk"

@@ -1,12 +1,11 @@
-# $NetBSD: Makefile,v 1.54 2016/07/09 06:38:36 wiz Exp $
+# $NetBSD: Makefile,v 1.60 2019/04/18 17:04:37 gdt Exp $
 
-DISTNAME=	libcdio-0.93
-PKGREVISION=	4
+DISTNAME=	libcdio-2.1.0
 CATEGORIES=	misc
 MASTER_SITES=	${MASTER_SITE_GNU:=libcdio/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	drochner@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.gnu.org/software/libcdio/
 COMMENT=	CD-ROM access library
 LICENSE=	gnu-gpl-v3
@@ -23,6 +22,8 @@ PKGCONFIG_OVERRIDE+=	libudf.pc.in
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--without-versioned-libs
 INFO_FILES=		yes
+
+TEST_TARGET=		check
 
 .include "../../audio/libcddb/buildlink3.mk"
 .include "../../devel/ncurses/buildlink3.mk"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.57 2017/04/30 01:22:02 ryoon Exp $
+# $NetBSD: Makefile,v 1.67 2018/12/13 19:52:25 adam Exp $
 #
 
 DISTNAME=	nspluginwrapper-1.4.4
-PKGREVISION=	9
+PKGREVISION=	18
 CATEGORIES=	www
 MASTER_SITES=	http://nspluginwrapper.org/download/
 MASTER_SITES+=	http://teokurebsd.org/netbsd/packages/distfiles/nspluginwrapper/
@@ -38,7 +38,7 @@ PLUGIN_SRCDIR=		${WRKDIR}/usr/${PLUGIN_SUBDIR}
 LDFLAGS.DragonFly=	-lgmodule-2.0
 
 SUBST_CLASSES+=		npw-config
-SUBST_STAGE.npw-config=	post-patch
+SUBST_STAGE.npw-config=	pre-configure
 SUBST_FILES.npw-config=	src/npw-config.c
 SUBST_SED.npw-config=	-e "s|/usr/pkg/|${PREFIX}/|g"
 

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2016/04/15 13:33:00 wiz Exp $
+$NetBSD: distinfo,v 1.5 2018/06/17 09:13:11 wiz Exp $
 
-SHA1 (click-log-0.1.3.tar.gz) = b309f5015313a5593ec6445aa56e3ce67f8fd96e
-RMD160 (click-log-0.1.3.tar.gz) = 07d9ab919b56760aad87174e99ca7ae03f4455ec
-SHA512 (click-log-0.1.3.tar.gz) = 7accdd5be62c7c76ec9b862d8dc91710473a46669778f39cb7e8e5fa56020ce0bd619fbe30453338a05d87cef971916f2c4f6d5c9cb9e4982ae32e7a885bd722
-Size (click-log-0.1.3.tar.gz) = 3377 bytes
+SHA1 (click-log-0.3.2.tar.gz) = ba4fadcaa56f828785c3471d320029904c3b28a3
+RMD160 (click-log-0.3.2.tar.gz) = d479a5326208118b4d8cd66f98dabb1778fd4c3f
+SHA512 (click-log-0.3.2.tar.gz) = 8ae5c43d739127367bbcdcf32bfd4b34b2ea1c377948df3b8588e4bfe2b0f5e7a61d1ccc6cb32c77045b15251222866daffa5a7bfb7a907487548784ba345351
+Size (click-log-0.3.2.tar.gz) = 9523 bytes

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.58 2015/07/04 16:18:28 joerg Exp $
+# $NetBSD: Makefile,v 1.61 2018/07/04 13:40:09 jperkin Exp $
 #
 
 DISTNAME=	WSoundServer-0.4.0
 PKGNAME=	wsoundserver-0.4.0
-PKGREVISION=	25
+PKGREVISION=	26
 CATEGORIES=	audio wm windowmaker
 MASTER_SITES=	# ftp://shadowmere.student.utwente.nl/pub/WindowMaker/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://shadowmere.student.utwente.nl/
+#HOMEPAGE=	http://shadowmere.student.utwente.nl/
 COMMENT=	Sound server for windowmaker
 LICENSE=	modified-bsd
 
@@ -24,7 +24,7 @@ EGDIR=			${PREFIX}/share/examples/wsoundserver
 CONF_FILES=		${EGDIR:Q}/WMSound ${PKG_SYSCONFDIR:Q}/WMSound
 
 SUBST_CLASSES+=		1x
-SUBST_STAGE.1x=		post-patch
+SUBST_STAGE.1x=		pre-configure
 SUBST_MESSAGE.1x=	Changing the man page category from 1x to 1.
 SUBST_FILES.1x=		doc/*
 SUBST_SED.1x=		-e s,1x,1,g

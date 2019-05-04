@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.11 2017/02/12 06:25:59 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2018/11/14 22:22:24 kleink Exp $
 #
 
 DISTNAME=	gfm-1.06
-PKGREVISION=	10
+PKGREVISION=	14
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tilp/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://lpg.ticalc.org/prj_tilp/
 COMMENT=	Group File Manager for TI hand-helds
 LICENSE=	gnu-gpl-v2

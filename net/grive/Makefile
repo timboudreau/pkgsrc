@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.9 2017/06/17 19:44:37 joerg Exp $
+# $NetBSD: Makefile,v 1.15 2018/12/13 19:52:16 adam Exp $
 
 DISTNAME=	${GHNAME}-${GHDATE}-${GHCOMMIT}
 PKGNAME=	${GHNAME}-0.3.0.${GHDATE}
-PKGREVISION=	7
+PKGREVISION=	12
 CATEGORIES=	net
 MASTER_SITES=	https://github.com/${GHACCOUNT}/${GHNAME}/archive/${GHCOMMIT}/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.lbreda.com/grive/start
+#HOMEPAGE=	http://www.lbreda.com/grive/start
 COMMENT=	Independent open source implementation of Google Drive client
 LICENSE=	gnu-gpl-v2
 

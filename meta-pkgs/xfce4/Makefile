@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.78 2017/02/12 06:25:43 ryoon Exp $
+# $NetBSD: Makefile,v 1.90 2018/11/14 22:22:01 kleink Exp $
 
 META_PACKAGE=	yes
 
-PKGREVISION= 7
+PKGREVISION= 16
 .include "Makefile.common"
 
 DISTNAME=	xfce4-${XFCE4_VERSION}
@@ -12,9 +12,9 @@ COMMENT=	Xfce
 DEPENDS+=	xfce4-tumbler>=0.1.27:../../x11/xfce4-tumbler
 DEPENDS+=	xfce4-appfinder>=4.10.0:../../sysutils/xfce4-appfinder
 DEPENDS+=	xfce4-desktop>=4.10.0:../../x11/xfce4-desktop
-DEPENDS+=	xfce4-gtk2-engine>=3.0.1:../../x11/xfce4-gtk2-engine
 DEPENDS+=	xfce4-mousepad>=0.3.0:../../editors/xfce4-mousepad
 DEPENDS+=	xfce4-panel>=4.10.0:../../x11/xfce4-panel
+DEPENDS+=	xfce4-power-manager>=1.6.1:../../sysutils/xfce4-power-manager
 DEPENDS+=	xfce4-orage>=4.8.4:../../time/xfce4-orage
 DEPENDS+=	xfce4-settings>=4.10.0:../../x11/xfce4-settings
 DEPENDS+=	xfce4-session>=4.10.0:../../x11/xfce4-session
@@ -25,6 +25,7 @@ DEPENDS+=	xfce4-wm-themes>=4.10.0:../../wm/xfce4-wm-themes
 DEPENDS+=	xfce4-xarchiver>=0.5.2:../../sysutils/xfce4-xarchiver
 DEPENDS+=	elementary-xfce-icon-theme>=0.5:../../graphics/elementary-xfce-icon-theme
 DEPENDS+=	xdg-utils-[0-9]*:../../misc/xdg-utils
+DEPENDS+=	gnome-themes-standard>=3.20.2:../../graphics/gnome-themes-standard
 
 pre-extract:
 	${MKDIR} ${WRKSRC}

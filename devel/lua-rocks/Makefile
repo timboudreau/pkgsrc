@@ -1,17 +1,18 @@
-# $NetBSD: Makefile,v 1.2 2016/10/06 20:28:54 alnsn Exp $
+# $NetBSD: Makefile,v 1.8 2018/10/26 12:06:13 jperkin Exp $
 
-DISTNAME=	luarocks-2.4.1
+DISTNAME=	luarocks-2.4.4
 PKGNAME=	${DISTNAME:S/luarocks/${LUA_PKGPREFIX}-rocks/}
 CATEGORIES=	devel
-MASTER_SITES=	http://luarocks.org/releases/
+MASTER_SITES=	https://luarocks.org/releases/
 
 MAINTAINER=	alnsn@NetBSD.org
-HOMEPAGE=	http://luarocks.org/
+HOMEPAGE=	https://luarocks.org/
 COMMENT=	Deployment and management system for Lua modules
 LICENSE=	mit
 
 USE_TOOLS+=	curl:run    # downloader (curl or wget)
 USE_TOOLS+=	openssl:run # md5-checker (openssl or md5sum)
+USE_TOOLS+=	unzip
 
 .include "../../mk/bsd.prefs.mk"
 

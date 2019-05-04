@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.3 2016/12/23 03:34:41 ryoon Exp $
+# $NetBSD: Makefile,v 1.5 2018/04/16 21:27:54 wiz Exp $
 
-DISTNAME=	pugixml-1.8.1
-PKGREVISION=	1
+DISTNAME=	pugixml-1.9
 CATEGORIES=	textproc
 MASTER_SITES=	${MASTER_SITE_GITHUB:=zeux/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://pugixml.org/
+HOMEPAGE=	https://pugixml.org/
 COMMENT=	Light-weight C++ XML processing library
 LICENSE=	mit
 

@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.7 2017/02/12 06:25:27 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2018/11/14 22:21:39 kleink Exp $
 
 DISTNAME=	gmic_1.5.9.3
 PKGNAME=	${DISTNAME:S/_/-/}
-PKGREVISION=	6
+PKGREVISION=	11
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gmic/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/gmic/
+HOMEPAGE=	https://sourceforge.net/projects/gmic/
 COMMENT=	Full-featured image processing framework
 LICENSE=	gnu-gpl-v2
 

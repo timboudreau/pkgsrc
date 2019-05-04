@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.7 2013/04/13 07:55:03 ghen Exp $
+# $NetBSD: Makefile,v 1.9 2018/07/04 13:40:28 jperkin Exp $
 
 DISTNAME=		ez-ipupdate-3.0.11b7
 PKGREVISION=		1
 CATEGORIES=		net
-MASTER_SITES=		http://www.ez-ipupdate.com/dist/
+#MASTER_SITES=		http://www.ez-ipupdate.com/dist/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.ez-ipupdate.com/
+#HOMEPAGE=		http://www.ez-ipupdate.com/
 COMMENT=		Client to update dynamic DNS entries
 
 GNU_CONFIGURE=		yes
@@ -15,7 +15,7 @@ EGDIR=			${PREFIX}/share/examples/ez-ipupdate
 RCD_SCRIPTS=		ez-ipupdate
 
 SUBST_CLASSES+=		path
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_MESSAGE.path=	Correcting paths in example scripts.
 SUBST_FILES.path=	example-*.conf example.conf
 SUBST_SED.path=		-e "s|/usr/local|${PREFIX}|g"

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.34 2017/04/30 01:21:19 ryoon Exp $
+# $NetBSD: Makefile,v 1.40 2018/12/13 19:51:31 adam Exp $
 
 DISTNAME=		libtunepimp-0.5.3
-PKGREVISION=		19
+PKGREVISION=		24
 CATEGORIES=		audio
 MASTER_SITES=		ftp://ftp.musicbrainz.org/pub/musicbrainz/
 MASTER_SITES+=		http://ftp.musicbrainz.org/pub/musicbrainz/
@@ -18,6 +18,8 @@ GNU_CONFIGURE=		YES
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		YES
 CONFLICTS+=		tunepimp-[0-9]* trm-[0-9]*
+
+CXXFLAGS.SunOS+=	-fpermissive
 
 .include "../../mk/bsd.prefs.mk"
 

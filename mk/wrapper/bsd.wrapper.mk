@@ -1,4 +1,4 @@
-# $NetBSD: bsd.wrapper.mk,v 1.97 2016/03/11 23:03:31 khorben Exp $
+# $NetBSD: bsd.wrapper.mk,v 1.100 2018/08/22 20:48:37 maya Exp $
 #
 # Copyright (c) 2005 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -14,13 +14,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#        This product includes software developed by the NetBSD
-#        Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -313,6 +306,12 @@ _WRAP_TRANSFORM.CC=	${WRAPPER_TMPDIR}/transform-gcc
 _WRAP_TRANSFORM.CXX=	${_WRAP_TRANSFORM.CC}
 . if ${_PKGSRC_MKPIE} != "no"
 _WRAP_CMD_SINK.CC=	${WRAPPER_TMPDIR}/cmd-sink-mkpie-gcc
+_WRAP_CMD_SINK.CXX=	${_WRAP_CMD_SINK.CC}
+_WRAP_CMD_SINK.LD=	${WRAPPER_TMPDIR}/cmd-sink-mkpie-ld
+MKPIE_CFLAGS=		${_MKPIE_CFLAGS.gcc}
+.export MKPIE_CFLAGS
+MKPIE_LDFLAGS=		${_MKPIE_LDFLAGS.gcc}
+.export MKPIE_LDFLAGS
 . endif
 .endif
 
@@ -518,6 +517,7 @@ generate-wrappers: ${_target_}
 	cmd-sink-interix-gcc \
 	cmd-sink-ld \
 	cmd-sink-mkpie-gcc \
+	cmd-sink-mkpie-ld \
 	cmd-sink-osf1-cc \
 	cmd-sink-osf1-ld \
 	cmd-sink-hpux-cc \

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.16 2016/02/26 11:27:14 jperkin Exp $
+# $NetBSD: Makefile,v 1.18 2019/03/11 06:51:03 wiz Exp $
 
-DISTNAME=		libFS-1.0.7
+DISTNAME=		libFS-1.0.8
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -19,8 +19,6 @@ CONFIGURE_ARGS.NetBSD+=	--disable-malloc0returnsnull
 
 .include "../../meta-pkgs/modular-xorg/hacks.mk"
 
-.include "../../x11/fontsproto/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/xtrans/buildlink3.mk"
-
 .include "../../mk/bsd.pkg.mk"

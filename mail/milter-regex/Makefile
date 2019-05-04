@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.23 2014/12/01 12:39:17 joerg Exp $
+# $NetBSD: Makefile,v 1.25 2018/02/06 13:38:11 jperkin Exp $
 
 DISTNAME=	milter-regex-1.7
 PKGREVISION=	2
@@ -6,7 +6,7 @@ CATEGORIES=	mail
 MASTER_SITES=	http://www.benzedrine.cx/
 
 MAINTAINER=	jdarrow@NetBSD.org
-HOMEPAGE=	http://www.benzedrine.cx/milter-regex.html
+#HOMEPAGE=	http://www.benzedrine.cx/milter-regex.html
 COMMENT=	Milter enabling regular expression filtering
 
 USE_TOOLS+=		nroff yacc
@@ -27,6 +27,8 @@ SUBST_CLASSES+=		var
 SUBST_STAGE.var=	do-configure
 SUBST_FILES.var=	milter-regex.8 milter-regex.c
 SUBST_SED.var=		-e 's|/var/spool|${VARBASE}|g'
+
+LDFLAGS.SunOS+=		-lnsl -lsocket
 
 .include "../../mk/bsd.prefs.mk"
 

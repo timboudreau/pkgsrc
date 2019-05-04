@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.2 2016/06/08 17:43:28 wiz Exp $
+# $NetBSD: Makefile,v 1.5 2019/01/22 09:57:05 adam Exp $
 
-DISTNAME=	flexmock-0.9.7
+DISTNAME=	flexmock-0.10.3
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=f/flexmock/}
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://has207.github.com/flexmock
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/bkabrda/flexmock
 COMMENT=	Mock/Stub/Spy library for Python
 LICENSE=	2-clause-bsd
 
 USE_LANGUAGES=	# none
 
-.include "../../lang/python/distutils.mk"
+.include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

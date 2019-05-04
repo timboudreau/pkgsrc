@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.13 2017/07/11 14:19:20 jaapb Exp $
+# $NetBSD: Makefile,v 1.19 2018/11/12 16:10:24 jaapb Exp $
 #
 
 DISTNAME=	boomerang-0.2-source
 PKGNAME=	${DISTNAME:S/-source//}
-PKGREVISION=	10
+PKGREVISION=	15
 CATEGORIES=	lang
 MASTER_SITES=	http://www.seas.upenn.edu/~harmony/download/
 
@@ -47,4 +47,5 @@ do-install:
 		${DESTDIR}${PREFIX}/share/examples/boomerang/xsugar
 
 .include "../../lang/ocaml/buildlink3.mk"
+.include "../../math/ocaml-num/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

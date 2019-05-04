@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.20 2017/05/29 16:02:40 adam Exp $
+# $NetBSD: Makefile,v 1.27 2019/03/18 12:59:50 adam Exp $
 
-DISTNAME=	psutil-5.2.2
+DISTNAME=	psutil-5.6.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	sysutils
+CATEGORIES=	sysutils python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/psutil/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -10,15 +10,12 @@ HOMEPAGE=	https://github.com/giampaolo/psutil
 COMMENT=	Cross-platform process and system utilities module for Python
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=		c
-
 .include "../../lang/python/pyversion.mk"
-
-.if "${PYPKGPREFIX}" == "py27"
-BUILD_DEPENDS+=	${PYPKGPREFIX}-ipaddress-[0-9]*:../../net/py-ipaddress
+.if ${_PYTHON_VERSION} == 27
+TEST_DEPENDS+=	${PYPKGPREFIX}-enum34-[0-9]*:../../devel/py-enum34
+TEST_DEPENDS+=	${PYPKGPREFIX}-ipaddress-[0-9]*:../../net/py-ipaddress
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
 .endif
-BUILD_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
-BUILD_DEPENDS+=	${PYPKGPREFIX}-unittest2-[0-9]*:../../devel/py-unittest2
 
 REPLACE_PYTHON=	psutil/*py
 

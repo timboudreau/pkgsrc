@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.62 2017/06/20 20:50:50 markd Exp $
+# $NetBSD: Makefile,v 1.88 2019/04/03 00:33:03 ryoon Exp $
 
-DISTNAME=	texlive-20170524-source
-PKGNAME=	xetex-0.99997
+DISTNAME=	texlive-20180414-source
+PKGNAME=	xetex-0.99999
+PKGREVISION=	12
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	minskim@NetBSD.org
@@ -20,13 +21,13 @@ EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 			${DISTNAME}/texk/web2c
 
 GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++11
+USE_LANGUAGES=	c99 c++11
 USE_LIBTOOL=	yes
 USE_TOOLS+=	gmake lex perl pkg-config yacc
 CONFIGURE_ARGS+=	--disable-aleph --disable-etex --disable-pdftex \
 			--disable-luatex --disable-mf --disable-mf-nowin \
 			--with-x=no \
-			--disable-luajittex \
+			--disable-luajittex --disable-luatex53 \
 			--disable-mflua --disable-mfluajit \
 			--disable-mp --disable-pmp --disable-upmp \
 			--disable-ptex --disable-eptex --disable-uptex --disable-euptex \
@@ -44,6 +45,8 @@ CONFIGURE_ARGS+=	--with-system-libpng
 CONFIGURE_ARGS+=	--with-system-freetype2
 CONFIGURE_ARGS+=	--with-system-teckit
 CONFIGURE_ARGS+=	--with-system-icu
+CONFIGURE_ENV+=		FT2_CONFIG=pkg-config \
+			PKG_CONFIG=${TOOLS_CMD.pkg-config}
 
 CONFIGURE_DIRS=		libs/graphite2
 CONFIGURE_DIRS+=	libs/harfbuzz
@@ -58,7 +61,7 @@ SUBST_SED.paths=	-e 's,@XDVIPDFMX@,${LOCALBASE}/bin/xdvipdfmx,g'
 
 INSTALLATION_DIRS+=	bin
 
-CFLAGS.SunOS+= -std=gnu99 -D_XOPEN_SOURCE_EXTENDED=0
+CFLAGS.SunOS+=		-D_XOPEN_SOURCE_EXTENDED=0
 
 .include "../../converters/TECkit/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"

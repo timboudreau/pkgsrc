@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.34 2017/07/04 07:04:17 adam Exp $
+# $NetBSD: Makefile,v 1.45 2019/01/24 10:33:52 morr Exp $
 
-DISTNAME=	haproxy-1.7.7
+DISTNAME=	haproxy-1.8.17
 CATEGORIES=	net www
 MASTER_SITES=	http://www.haproxy.org/download/${PKGVERSION_NOREV:R}/src/
 
@@ -9,6 +9,7 @@ HOMEPAGE=	http://haproxy.org/
 COMMENT=	Reliable, high performance TCP/HTTP load balancer
 LICENSE=	gnu-gpl-v2
 
+USE_LANGUAGES=		c
 USE_TOOLS+=		gmake
 BUILD_MAKE_FLAGS+=	ADDLIB=${COMPILER_RPATH_FLAG}${PREFIX}/lib
 BUILD_MAKE_FLAGS+=	TARGET=${TARGET}
@@ -30,27 +31,27 @@ INSTALLATION_DIRS+=	${EGDIR}
 .include "../../mk/bsd.prefs.mk"
 
 .if ${OPSYS} == "NetBSD"
-TARGET=netbsd
+TARGET=	netbsd
 .elif ${OPSYS} == "FreeBSD"
-TARGET=freebsd
+TARGET=	freebsd
 .elif ${OPSYS} == "OpenBSD"
-TARGET=openbsd
+TARGET=	openbsd
 .elif ${OPSYS} == "SunOS"
-TARGET=solaris
+TARGET=	solaris
 .elif ${OPSYS} == "Linux"
 .  if !empty(OS_VERSION:M2.6.*)
-TARGET=linux26
+TARGET=	linux26
 .  elif !empty(OS_VERSION:M2.4.*)
 .    if exists(/usr/include/linux/eventpoll.h)
-TARGET=linux24e
+TARGET=	linux24e
 .    else
-TARGET=linux24
+TARGET=	linux24
 .    endif
 .  else
-TARGET=linux2628
+TARGET=	linux2628
 .  endif
 .else
-TARGET=generic
+TARGET=	generic
 .endif
 
 LIBS.SunOS+=		-lxnet

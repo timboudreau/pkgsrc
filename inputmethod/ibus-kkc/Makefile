@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.9 2017/02/12 06:25:34 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/11/14 22:21:50 kleink Exp $
 
 DISTNAME=	ibus-kkc-1.5.21
-PKGREVISION=	4
+PKGREVISION=	9
 CATEGORIES=	inputmethod japanese
-MASTER_SITES=	https://bitbucket.org/libkkc/ibus-kkc/downloads/
+#MASTER_SITES=	https://bitbucket.org/libkkc/ibus-kkc/downloads/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://bitbucket.org/libkkc/ibus-kkc/
+HOMEPAGE=	https://github.com/ueno/ibus-kkc
 COMMENT=	Japanese KKC input method for ibus
 LICENSE=	gnu-gpl-v2
 

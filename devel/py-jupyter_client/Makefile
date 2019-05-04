@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.3 2017/06/24 08:17:00 adam Exp $
+# $NetBSD: Makefile,v 1.9 2019/01/02 15:18:20 adam Exp $
 
-DISTNAME=	jupyter_client-5.1.0
+DISTNAME=	jupyter_client-5.2.4
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=j/jupyter_client/}
@@ -10,18 +10,27 @@ HOMEPAGE=	http://jupyter.org/
 COMMENT=	Jupyter protocol implementation and client libraries
 LICENSE=	modified-bsd
 
-DEPENDS+=	${PYPKGPREFIX}-traitlets>=4.1.0:../../devel/py-traitlets
-DEPENDS+=	${PYPKGPREFIX}-jupyter_core-[0-9]*:../../devel/py-jupyter_core
-DEPENDS+=	${PYPKGPREFIX}-zmq>=13.0.0:../../net/py-zmq
 DEPENDS+=	${PYPKGPREFIX}-dateutil>=2.1:../../time/py-dateutil
-BUILD_DEPENDS+=	${PYPKGPREFIX}-ipython-[0-9]*:../../devel/py-ipython
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+DEPENDS+=	${PYPKGPREFIX}-jupyter_core-[0-9]*:../../devel/py-jupyter_core
+DEPENDS+=	${PYPKGPREFIX}-tornado>=4.1:../../www/py-tornado
+DEPENDS+=	${PYPKGPREFIX}-traitlets>=4.1.0:../../devel/py-traitlets
+DEPENDS+=	${PYPKGPREFIX}-zmq>=13.0.0:../../net/py-zmq
+TEST_DEPENDS+=	${PYPKGPREFIX}-ipykernel-[0-9]*:../../devel/py-ipykernel
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+
+PYTHON_VERSIONED_DEPENDENCIES=	ipython:test
 
 USE_LANGUAGES=	# none
+
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && \
+	${MV} jupyter-kernel jupyter-kernel-${PYVERSSUFFIX} && \
+	${MV} jupyter-kernelspec jupyter-kernelspec-${PYVERSSUFFIX} && \
+	${MV} jupyter-run jupyter-run-${PYVERSSUFFIX} || ${TRUE}
 
 do-test:
 	cd ${WRKSRC} && py.test-${PYVERSSUFFIX}
 
-.include "../../lang/python/distutils.mk"
-.include "../../lang/python/application.mk"
+.include "../../lang/python/egg.mk"
+.include "../../lang/python/versioned_dependencies.mk"
 .include "../../mk/bsd.pkg.mk"

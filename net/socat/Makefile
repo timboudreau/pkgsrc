@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.38 2017/02/05 20:40:32 leot Exp $
+# $NetBSD: Makefile,v 1.41 2019/04/07 19:26:56 leot Exp $
 
-DISTNAME=	socat-1.7.3.2
+DISTNAME=	socat-1.7.3.3
 CATEGORIES=	net
 MASTER_SITES=	http://www.dest-unreach.org/socat/download/
 
@@ -10,6 +10,11 @@ COMMENT=	"netcat++" (extended design, new implementation)
 LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		YES
+
+USE_TOOLS+=	bash:test
+REPLACE_BASH+=	*.sh
+
+TEST_TARGET=	test
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -25,7 +30,7 @@ CONFIGURE_ENV+=		ac_cv_ispeed_offset=9
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Fixing hardcoded paths.
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	doc/socat.1
 SUBST_SED.paths=	-e 's,/usr/,${PREFIX}/,g'
 

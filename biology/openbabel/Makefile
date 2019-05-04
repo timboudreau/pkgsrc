@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2017/02/12 06:25:07 ryoon Exp $
+# $NetBSD: Makefile,v 1.33 2018/11/14 22:21:07 kleink Exp $
 #
 
 DISTNAME=	openbabel-2.3.2
-PKGREVISION=	4
+PKGREVISION=	8
 CATEGORIES=	biology
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openbabel/}
 
@@ -11,7 +11,7 @@ HOMEPAGE=	http://openbabel.org/
 COMMENT=	Chemistry file translation program
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 USE_TOOLS+=	pkg-config
 USE_CMAKE=	yes
 

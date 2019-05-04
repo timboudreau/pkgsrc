@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.49 2017/05/10 14:01:58 ryoon Exp $
+# $NetBSD: Makefile,v 1.77 2019/03/20 11:10:25 wiz Exp $
 
-DISTNAME=	openjdk-1.8.131-20170427
-PKGNAME=	openjdk8-1.8.131
+DISTNAME=	openjdk-1.8.202-20190219
+PKGNAME=	openjdk8-1.8.202
+PKGREVISION=	1
 CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_LOCAL:=openjdk7/}
 EXTRACT_SUFX=	.tar.xz
@@ -19,13 +20,13 @@ DIST_SUBDIR=	openjdk7
 
 JAVA_NAME=	openjdk8
 JAVA_HOME=	${PREFIX}/java/${JAVA_NAME}
-JAVA_WRAPPERS=	jar java javac javadoc javah javap jcmd jps jstack keytool \
-		orbd policytool rmid rmiregistry servertool tnameserv
+JAVA_WRAPPERS=	jar java javac javadoc javah javap jcmd jhat jps jstack \
+		keytool orbd policytool rmid rmiregistry servertool tnameserv
 
 BUILD_DEPENDS+=		mozilla-rootcerts>=1.0.20140820nb2:../../security/mozilla-rootcerts
 
 GNU_CONFIGURE=		yes
-CONFIGURE_SCRIPT=	common/autoconf/configure
+CONFIGURE_SCRIPT=	configure
 CONFIG_SHELL=		bash
 CONFIG_SUB_OVERRIDE+=	common/autoconf/build-aux/config.sub
 CONFIG_GUESS_OVERRIDE+=	common/autoconf/build-aux/config.guess
@@ -41,6 +42,8 @@ CHECK_SHLIBS_SKIP+=	java/openjdk8/jre/lib/${LIBDIR_ARCH}/libinstrument.so
 BUILDLINK_PASSTHRU_DIRS+=	${ALT_BOOTDIR}
 PREPEND_PATH+=			${ALT_BOOTDIR}/bin
 
+BUILDLINK_TRANSFORM+=	rm:-Werror
+
 CONFIGURE_ARGS+=	--disable-option-checking # for --with-libiconv-prefix
 CONFIGURE_ARGS+=	--prefix=${PREFIX:Q}
 CONFIGURE_ARGS+=	--build=${MACHINE_GNU_PLATFORM:Q}
@@ -48,7 +51,7 @@ CONFIGURE_ARGS+=	--host=${MACHINE_GNU_PLATFORM:Q}
 CONFIGURE_ARGS+=	--with-boot-jdk=${ALT_BOOTDIR}
 CONFIGURE_ARGS+=	--with-zlib=system
 CONFIGURE_ARGS+=	--with-giflib=bundled
-CONFIGURE_ARGS+=	--with-cups=${BUILDLINK_PREFIX.cups}
+CONFIGURE_ARGS+=	--with-cups-include=${BUILDLINK_PREFIX.cups-base}/include
 CONFIGURE_ARGS+=	--with-freetype-lib=${BUILDLINK_PREFIX.freetype2}/lib
 CONFIGURE_ARGS+=	--with-freetype-include=${BUILDLINK_PREFIX.freetype2}/include
 CONFIGURE_ARGS+=	--disable-freetype-bundling
@@ -59,6 +62,7 @@ CONFIGURE_ARGS+=	--disable-precompiled-headers
 CONFIGURE_ARGS+=	--disable-ccache
 CONFIGURE_ARGS+=	--with-user-release-suffix=pkgsrc_${PKGVERSION}
 CONFIGURE_ARGS+=	--with-update-version=${PKGVERSION_NOREV:S/1.8.//}
+CONFIGURE_ARGS+=	--with-extra-ldflags=${LDFLAGS:Q}
 
 CHECK_PORTABILITY_SKIP+=	hotspot/test/runtime/*/*.sh
 
@@ -73,13 +77,15 @@ NOT_PAX_MPROTECT_SAFE+= java/openjdk8/jre/bin/*
 MAKE_ENV+=	JAVA_HOME=
 MAKE_ENV+=	CLASSPATH=
 
-BUILD_OPSYS=	${OPSYS:C/.*BSD/bsd/:S/DragonFly/bsd/:S/SunOS/solaris/}
+BUILD_OPSYS=	${OPSYS:C/.*BSD/bsd/:S/DragonFly/bsd/:S/SunOS/solaris/:S/Linux/linux/}
 BUILD_ARCH=	${MACHINE_ARCH:S/i386/x86/:S/sparc64/sparcv9/:C/^e?arm.*$/arm/}
 LIBDIR_ARCH=	${MACHINE_ARCH:S/x86_64/amd64/:S/sparc64/sparcv9/:C/^e?arm.*$/arm/}
 BUILDDIR=	${WRKSRC}/build/${BUILD_OPSYS}-${BUILD_ARCH}-normal-${BUILD_VARIANT}-${BUILD_DEBUG_LEVEL}
 LD_LIBRARY_PATH=	${WRKDIR}/bootstrap/jre/lib/${LIBDIR_ARCH}:${WRKDIR}/bootstrap/jre/lib/${LIBDIR_ARCH}/jli:${WRKDIR}/bootstrap/jre/lib/${LIBDIR_ARCH}/server
 CONFIGURE_ENV+=	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 MAKE_ENV+=	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
+CONFIGURE_ENV+=	LFLAGS=${LDFLAGS:Q}
+MAKE_ENV+=	LFLAGS=${LDFLAGS:Q}
 BUILDLINK_PASSTHRU_RPATHDIRS+=	${PREFIX}/java/openjdk8/jre/lib/${LIBDIR_ARCH}
 
 PLIST_SUBST+=	ARCH=${LIBDIR_ARCH}
@@ -95,12 +101,23 @@ SUBST_VARS.libpath=	PREFIX
 CFLAGS+=	-D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
 CXXFLAGS+=	-D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
 
+CONFIGURE_ENV+=	CFLAGS_JDK=${CFLAGS:Q}
+CONFIGURE_ENV+=	CXXFLAGS_JDK=${CXXFLAGS:Q}
+
+# Fix segfault under NetBSD/amd64 8.99 with GCC 6.4.0
+.if !empty(CC_VERSION:Mgcc-[67].*)
+CFLAGS+=	-fno-lifetime-dse
+CFLAGS+=	-fno-delete-null-pointer-checks
+.endif
+
 .if ${OPSYS} == "SunOS" && !empty(PKGSRC_COMPILER:Mgcc)
 MAKE_ENV+=	USE_GCC=1
 MAKE_ENV+=	ARCH_DATA_MODEL=${ABI:Q}
 .endif
 
 .if !empty(PKGSRC_COMPILER:Mclang)
+CONFIGURE_ARGS+=	--with-toolchain-type=clang
+MAKE_ENV+=		USE_CLANG=true
 _WRAP_EXTRA_ARGS.CC+=	-Wno-return-type
 CWRAPPERS_APPEND.cc+=	-Wno-return-type
 _WRAP_EXTRA_ARGS.CXX+=	-Wno-parentheses -Wno-sign-conversion \
@@ -129,6 +146,9 @@ BUILDLINK_TRANSFORM+=	rm:-fpch-deps
 _WRAP_EXTRA_ARGS.CXX+=	-mstackrealign
 CWRAPPERS_APPEND.cxx+=	-mstackrealign
 .  endif
+.else
+# GCC
+CONFIGURE_ARGS+=	--with-toolchain-type=gcc
 .endif
 .include "bootstrap.mk"
 
@@ -155,7 +175,7 @@ PLIST.i386=	yes
 .endif
 
 PLIST_VARS+=	sctp
-.if ${OPSYS} == "FreeBSD" || ${OPSYS} == "SunOS"
+.if ${OPSYS} == "FreeBSD" || ${OPSYS} == "SunOS" || ${OPSYS} == "Linux"
 PLIST.sctp=	yes
 .endif
 
@@ -250,12 +270,16 @@ MAKE_ENV+=	STRIP=${PREFIX}/bin/gstrip
 .endif
 
 # disabled the ALSA support for now on BSDs via patch
-#.include "../../audio/alsa-lib/buildlink3.mk"
+.if ${OPSYS} == "Linux"
+.include "../../audio/alsa-lib/buildlink3.mk"
+.endif
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
-BUILDLINK_DEPMETHOD.cups?=	build
-.include "../../print/cups/buildlink3.mk"
+# Headers from CUPS are required to build the native implementation of
+# sun.print.* which is used by java.awt.print.
+BUILDLINK_DEPMETHOD.cups-base?=	build
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../mk/java-env.mk"
 .include "../../mk/bsd.pkg.mk"

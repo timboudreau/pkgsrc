@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.50 2017/06/05 14:24:02 ryoon Exp $
+# $NetBSD: Makefile,v 1.52 2018/08/22 09:45:24 wiz Exp $
 
 DISTNAME=	courier-${COURIER_VERSION}
 PKGNAME=	${DISTNAME:S/-/-mta-/}
-PKGREVISION=	11
+PKGREVISION=	12
 CATEGORIES=	mail
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=courier/}
 EXTRACT_SUFX=	.tar.bz2
@@ -82,7 +82,7 @@ SUBST_STAGE.perms=	pre-configure
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKDIR}/mailer.conf
 SUBST_SED.paths+=	-e "s,@PREFIX@,${PREFIX},g"
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 REPLACE_PERL+=	courier/webadmin/*.pl courier/webadmin/*.pl.in webadmin/*.pl
 

@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.59 2017/07/12 07:01:34 adam Exp $
+# $NetBSD: Makefile,v 1.78 2019/04/05 13:48:38 jperkin Exp $
 #
 # When updating this package, make sure that no strings like
 # "PR 12345" are in the commit message. Upstream likes
 # to reference their own PRs this way, but this ends up
 # in NetBSD GNATS.
 
-DISTNAME=	httpd-2.4.27
+DISTNAME=	httpd-2.4.39
 PKGNAME=	${DISTNAME:S/httpd/apache/}
+PKGREVISION=	1
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_APACHE:=httpd/}
 MASTER_SITES+=	http://archive.apache.org/dist/httpd/
@@ -36,7 +37,7 @@ CONFIGURE_ENV+=		ac_cv_path_RSYNC=/nonexistent
 .include "../../mk/compiler.mk"
 
 CFLAGS.SunOS+=	-D__EXTENSIONS__
-.if !empty(CC_VERSION:Mgcc-[7-9]*)
+.if !empty(CC_VERSION:Mgcc-[6-9]*) || !empty(PKGSRC_COMPILER:Mclang)
 CFLAGS.SunOS+=	-D_XOPEN_SOURCE=600
 .else
 CFLAGS.SunOS+=	-D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1
@@ -52,8 +53,6 @@ BUILDLINK_API_DEPENDS.apr-util+=	apr-util>=1.5.3
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 
-CONFIGURE_ARGS+=	--disable-xml2enc
-CONFIGURE_ARGS+=	--disable-proxy-html
 CONFIGURE_ARGS+=	--enable-proxy-fdpass
 
 DFLT_APACHE_MODULES+=	all
@@ -81,7 +80,7 @@ PKG_GROUPS_VARS=	APACHE_GROUP
 PKG_USERS_VARS=		APACHE_USER
 
 PKG_SYSCONFVAR=		apache
-PKG_SYSCONFSUBDIR?=	httpd
+PKG_SYSCONFSUBDIR=	httpd
 EGDIR=			${PREFIX}/share/examples/httpd
 SBINDIR=		${PREFIX}/sbin
 CONF_FILES+=		${EGDIR}/httpd.conf ${PKG_SYSCONFDIR}/httpd.conf
@@ -108,7 +107,7 @@ FIX_MAN_PERMS+=		man8/apachectl.8 man1/ab.1 man1/httxt2dbm.1
 
 # Fix paths in the apache manpages.
 SUBST_CLASSES+=		man
-SUBST_STAGE.man=	post-patch
+SUBST_STAGE.man=	pre-configure
 SUBST_MESSAGE.man=	Fixing paths in man pages.
 SUBST_FILES.man=	docs/man/*.1 docs/man/*.8
 SUBST_SED.man=		-e 's,/usr/local/etc/apache,${PKG_SYSCONFDIR},'
@@ -155,7 +154,7 @@ SUBST_SED.abs_srcdir=		-e 's|^\(abs_srcdir =\) .*|\1 ${PREFIX}/share/httpd|'
 
 REPLACE_PERL=		docs/cgi-examples/printenv
 
-.  include "../../devel/zlib/buildlink3.mk"
+.include "../../devel/zlib/buildlink3.mk"
 CONFIGURE_ARGS+=	--with-ssl=${BUILDLINK_PREFIX.openssl}
 CONFIGURE_ARGS+=	--with-z=${BUILDLINK_PREFIX.zlib}
 
@@ -171,7 +170,7 @@ INSTALL_TARGET=		install-conf install
 INSTALL_MAKE_FLAGS+=	sysconfdir="${EGDIR}"
 
 post-install:
-	${LN} -sf ${LOCALBASE}/libexec/apr/libtool ${DESTDIR}${PREFIX}/share/httpd/build
+	${LN} -sf ${PREFIX}/libexec/apr/libtool ${DESTDIR}${PREFIX}/share/httpd/build
 	${LN} -sf ${SBINDIR}/envvars-std ${DESTDIR}${SBINDIR}/envvars
 
 	${INSTALL_SCRIPT} ${WRKDIR}/mkcert ${DESTDIR}${PREFIX}/bin

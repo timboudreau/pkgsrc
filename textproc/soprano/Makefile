@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.50 2017/04/30 01:21:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.58 2018/12/13 19:51:38 adam Exp $
 
 DISTNAME=	soprano-2.9.4
-PKGREVISION=	9
+PKGREVISION=	16
 CATEGORIES=	textproc
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=soprano/}
 EXTRACT_SUFX=	.tar.bz2
@@ -11,7 +11,7 @@ HOMEPAGE=	http://soprano.sourceforge.net/
 COMMENT=	QT based RDF framework
 LICENSE=	gnu-lgpl-v2
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 USE_CMAKE=	yes
 USE_TOOLS+=	pkg-config
 

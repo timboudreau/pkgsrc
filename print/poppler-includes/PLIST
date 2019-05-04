@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.13 2016/04/15 14:36:21 wiz Exp $
+@comment $NetBSD: PLIST,v 1.18 2019/02/16 13:19:38 wiz Exp $
 include/poppler/Annot.h
 include/poppler/Array.h
 include/poppler/BuiltinFont.h
@@ -6,9 +6,12 @@ include/poppler/BuiltinFontTables.h
 include/poppler/CMap.h
 include/poppler/CachedFile.h
 include/poppler/Catalog.h
+include/poppler/CertificateInfo.h
 include/poppler/CharCodeToUnicode.h
 include/poppler/CharTypes.h
 include/poppler/CompactFontTables.h
+include/poppler/CurlCachedFile.h
+include/poppler/CurlPDFDocBuilder.h
 include/poppler/DateInfo.h
 include/poppler/Decrypt.h
 include/poppler/Dict.h
@@ -27,6 +30,8 @@ include/poppler/GlobalParams.h
 include/poppler/Hints.h
 include/poppler/JArithmeticDecoder.h
 include/poppler/JBIG2Stream.h
+include/poppler/JPEG2000Stream.h
+include/poppler/JPXStream.h
 include/poppler/Lexer.h
 include/poppler/Linearization.h
 include/poppler/Link.h
@@ -64,16 +69,15 @@ include/poppler/StructElement.h
 include/poppler/StructTreeRoot.h
 include/poppler/TextOutputDev.h
 include/poppler/UTF.h
-include/poppler/UTF8.h
 include/poppler/UnicodeCClassTables.h
 include/poppler/UnicodeCompTables.h
 include/poppler/UnicodeDecompTables.h
 include/poppler/UnicodeMap.h
+include/poppler/UnicodeMapFuncs.h
 include/poppler/UnicodeMapTables.h
 include/poppler/UnicodeTypeTable.h
 include/poppler/ViewerPreferences.h
 include/poppler/XRef.h
-include/poppler/XpdfPluginAPI.h
 include/poppler/fofi/FoFiBase.h
 include/poppler/fofi/FoFiEncodings.h
 include/poppler/fofi/FoFiIdentifier.h
@@ -81,10 +85,9 @@ include/poppler/fofi/FoFiTrueType.h
 include/poppler/fofi/FoFiType1.h
 include/poppler/fofi/FoFiType1C.h
 include/poppler/goo/FixedPoint.h
-include/poppler/goo/GooHash.h
+include/poppler/goo/GooCheckedOps.h
 include/poppler/goo/GooLikely.h
 include/poppler/goo/GooList.h
-include/poppler/goo/GooMutex.h
 include/poppler/goo/GooString.h
 include/poppler/goo/GooTimer.h
 include/poppler/goo/ImgWriter.h
@@ -92,11 +95,11 @@ include/poppler/goo/JpegWriter.h
 include/poppler/goo/NetPBMWriter.h
 include/poppler/goo/PNGWriter.h
 include/poppler/goo/TiffWriter.h
+include/poppler/goo/gdir.h
 include/poppler/goo/gfile.h
 include/poppler/goo/gmem.h
 include/poppler/goo/grandom.h
 include/poppler/goo/gstrtod.h
-include/poppler/goo/gtypes.h
 include/poppler/poppler-config.h
 include/poppler/splash/Splash.h
 include/poppler/splash/SplashBitmap.h
@@ -115,9 +118,6 @@ include/poppler/splash/SplashPath.h
 include/poppler/splash/SplashPattern.h
 include/poppler/splash/SplashScreen.h
 include/poppler/splash/SplashState.h
-include/poppler/splash/SplashT1Font.h
-include/poppler/splash/SplashT1FontEngine.h
-include/poppler/splash/SplashT1FontFile.h
 include/poppler/splash/SplashTypes.h
 include/poppler/splash/SplashXPath.h
 include/poppler/splash/SplashXPathScanner.h

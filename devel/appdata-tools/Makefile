@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.14 2017/04/22 21:03:29 adam Exp $
+# $NetBSD: Makefile,v 1.23 2019/04/25 07:32:42 maya Exp $
 
 DISTNAME=	appdata_tools-0.1.7
-PKGREVISION=	9
+PKGREVISION=	17
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=hughsie/}
 GITHUB_PROJECT=	appdata-tools
@@ -9,7 +9,7 @@ GITHUB_PROJECT=	appdata-tools
 GITHUB_TAG=	${DISTNAME:S/./_/g:S/-/_/g}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://github.com/hughsie/appdata-tools/
+#HOMEPAGE=	https://github.com/hughsie/appdata-tools/
 COMMENT=	Application data tools
 LICENSE=	gnu-gpl-v2
 

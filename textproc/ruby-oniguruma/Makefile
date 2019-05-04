@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.8 2014/03/13 11:08:53 jperkin Exp $
+# $NetBSD: Makefile,v 1.10 2018/03/22 08:14:52 adam Exp $
 
 DISTNAME=	oniguruma-1.1.0
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	textproc
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://oniguruma.rubyforge.org/
+#HOMEPAGE=	http://oniguruma.rubyforge.org/
 COMMENT=	Fast regular expression library
 LICENSE=	modified-bsd
 

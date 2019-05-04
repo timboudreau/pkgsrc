@@ -1,21 +1,16 @@
-# $NetBSD: Makefile,v 1.76 2017/02/12 06:26:02 ryoon Exp $
+# $NetBSD: Makefile,v 1.81 2018/11/14 22:22:28 kleink Exp $
 
-DISTNAME=	xcdroast-${DIST_VER}
-PKGNAME=	xcdroast-${DIST_VER:S/alpha/a/}
-PKGREVISION=	25
+DISTNAME=	xcdroast-1.18
+PKGREVISION=	3
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=xcdroast/}
-
-PATCH_SITES=	http://www.xcdroast.org/xcdr098/patches/
-PATCHFILES=	parse_version.patch
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.xcdroast.org/
 COMMENT=	Graphical user interface for the command-line cdrecord-tools
+LICENSE=	gnu-gpl-v2
 
 DEPENDS+=		cdrtools>=2.01:../../sysutils/cdrtools
-
-DIST_VER=		0.98alpha16
 
 USE_TOOLS+=		gmake msgfmt pkg-config
 USE_PKGLOCALEDIR=	YES
@@ -33,7 +28,6 @@ CONFIGURE_ENV+=	AUDIO_LIBS=${LIBOSSAUDIO}
 
 DOCDIR=		${PREFIX}/share/doc/xcdroast
 DOCFILES=	DOCUMENTATION FAQ README.nonroot manual/xcdroast-manual.pdf
-HTMLDIR=	${PREFIX}/share/doc/html/xcdroast
 CONF_FILES=	/dev/null ${PKG_SYSCONFDIR}/xcdroast.conf
 
 SUBST_CLASSES+=			devossaudio
@@ -43,6 +37,7 @@ SUBST_FILES.devossaudio=	io.c wavplay.c
 SUBST_SED.devossaudio=		-e "s,@DEVOSSAUDIO@,${DEVOSSAUDIO},g"
 
 INSTALLATION_DIRS=	${DOCDIR}
+SPECIAL_PERMS+=		lib/xcdroast/bin/xcdrwrap {REAL_ROOT_USER} ${REAL_ROOT_GROUP} 4711
 
 post-install:
 	(cd ${WRKSRC}/doc;						\

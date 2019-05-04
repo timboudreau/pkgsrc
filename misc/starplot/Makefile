@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.6 2017/02/12 06:25:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.11 2018/11/14 22:22:03 kleink Exp $
 
 DISTNAME=	starplot-0.95.5
-PKGREVISION=	5
+PKGREVISION=	9
 CATEGORIES=	misc x11
 MASTER_SITES=	http://starplot.org/downloads/
 
@@ -12,7 +12,7 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		yes
 USE_PKGLOCALEDIR=	yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		bison msgfmt pkg-config
 PTHREAD_OPTS+=		require
 

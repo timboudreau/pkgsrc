@@ -1,21 +1,21 @@
-# $NetBSD: Makefile,v 1.51 2016/03/05 11:27:41 jperkin Exp $
+# $NetBSD: Makefile,v 1.55 2018/01/13 23:18:25 rillig Exp $
 
 DISTNAME=	gale-0.99fruit
 PKGNAME=	gale-0.99f
-PKGREVISION=	14
+PKGREVISION=	15
 CATEGORIES=	chat
 MASTER_SITES=	http://download.ofb.net/gale/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://gale.org/
+#HOMEPAGE=	http://gale.org/
 COMMENT=	Secure instant messaging system
 
 MAKE_JOBS_SAFE=	no
 
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=	yes
-CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR:Q}
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ENV+=		PROG_GLIB_CONFIG=${GLIB_CONFIG:Q}
 
 CPPFLAGS+=		-I${BUILDLINK_PREFIX.boehm-gc}/include/gc
@@ -23,16 +23,15 @@ CPPFLAGS+=		-I${BUILDLINK_PREFIX.rsaref}/include/rsaref
 CPPFLAGS+=		-I${BUILDLINK_PREFIX.libwww}/include/w3c-libwww
 CPPFLAGS+=		-I${BUILDLINK_PREFIX.tcl}/include/tcl
 
-PKG_SYSCONFSUBDIR?=	gale
+PKG_SYSCONFSUBDIR=	gale
 EGDIR=			${PREFIX}/share/examples/${PKGBASE}
 
 PKG_GROUPS=		gale
 PKG_USERS=		gale:gale
 
-CONF_FILES=		${EGDIR}/COPYING ${PKG_SYSCONFDIR}/gale/COPYING
-CONF_FILES+=		${EGDIR}/ROOT ${PKG_SYSCONFDIR}/gale/auth/trusted/ROOT
-OWN_DIRS=		${PKG_SYSCONFDIR}
-OWN_DIRS+=		${PKG_SYSCONFDIR}/auth
+CONF_FILES=		${EGDIR}/COPYING ${PKG_SYSCONFDIR}/COPYING
+CONF_FILES+=		${EGDIR}/ROOT ${PKG_SYSCONFDIR}/auth/trusted/ROOT
+OWN_DIRS=		${PKG_SYSCONFDIR}/auth
 OWN_DIRS+=		${PKG_SYSCONFDIR}/auth/private
 OWN_DIRS+=		${PKG_SYSCONFDIR}/auth/trusted
 OWN_DIRS_PERMS=		${PKG_SYSCONFDIR}/auth/cache			\

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.27 2017/01/01 14:43:40 wiz Exp $
+# $NetBSD: Makefile,v 1.33 2019/04/26 14:12:38 maya Exp $
 
 DISTNAME=	blindmine-0.3-src
 PKGNAME=	${DISTNAME:S/-src//}
-PKGREVISION=	16
+PKGREVISION=	17
 CATEGORIES=	games python
 MASTER_SITES=	http://kldp.net/frs/download.php/3097/
 EXTRACT_SUFX=	.zip
@@ -17,12 +17,12 @@ NO_BUILD=	yes
 
 SUBST_CLASSES+=		path
 SUBST_MESSAGE.path=	Fixing paths.
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_FILES.path=	blindmine.py sdl_ui.py
 SUBST_SED.path=		-e 's,/usr/bin/env python,${PYTHONBIN},g'
 
-PYCOMPILEALL=	${BUILDLINK_PREFIX.${PYPACKAGE}}/${PYLIB}/compileall.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.3
+PYCOMPILEALL=			${BUILDLINK_PREFIX.${PYPACKAGE}}/${PYLIB}/compileall.py
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.3
 
 INSTALLATION_DIRS=	bin share/doc/blindmine share/blindmine/data
 

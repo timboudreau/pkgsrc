@@ -1,7 +1,7 @@
-$NetBSD: distinfo,v 1.3 2015/12/08 14:12:02 nonaka Exp $
+$NetBSD: distinfo,v 1.8 2018/10/10 08:20:56 adam Exp $
 
-SHA1 (subprocess32-3.2.7.tar.gz) = 75a8664ba54663016315dae17510af97c5a96953
-RMD160 (subprocess32-3.2.7.tar.gz) = d6bc7e5d6d34f535d4c186858c7ac7028f15149e
-SHA512 (subprocess32-3.2.7.tar.gz) = d897d6a48824991e2a63ea417ca15222f28c3a4117c9bba8cbb4eceabfba9769acce1166aafa7aee8a025d6ebe7e133ce0dd617f90cb07e11bdb73dc1e21dec6
-Size (subprocess32-3.2.7.tar.gz) = 54240 bytes
-SHA1 (patch-setup.py) = 47b4e2a1637eedecad59627c369fe9e35c7cf335
+SHA1 (subprocess32-3.5.3.tar.gz) = bfc293afad55733195927a236fd57c099db231b3
+RMD160 (subprocess32-3.5.3.tar.gz) = be2cc5d2b83c0eb743efcfa35fd8ef47333e2c4f
+SHA512 (subprocess32-3.5.3.tar.gz) = 3c28dca116f3cbb3be989225abb6c6c328f97f29a507898fb18833908f72c5e78ccd068e14c47be50fdb8d50953ca7c2a84f78b309265a698eab22582dcfa13b
+Size (subprocess32-3.5.3.tar.gz) = 96615 bytes
+SHA1 (patch-configure) = 12427ea60b3ddc8c5d9e6dac905ddc6a14cb8d61

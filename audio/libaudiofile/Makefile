@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.61 2014/10/09 14:05:56 wiz Exp $
+# $NetBSD: Makefile,v 1.64 2018/07/16 21:22:32 maya Exp $
 
 DISTNAME=	audiofile-0.3.6
 PKGNAME=	lib${DISTNAME}
@@ -7,14 +7,15 @@ CATEGORIES=	audio
 MASTER_SITES=	http://www.68k.org/~michael/audiofile/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://andromeda.68k.org/~michael/audiofile/
+#HOMEPAGE=	http://andromeda.68k.org/~michael/audiofile/
 COMMENT=	Sound library for SGI audio file
 LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2.1
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c99 c++
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE=	audiofile.pc.in
+TEST_TARGET=		check
 
 DOCDIR=			${PREFIX}/share/doc/libaudiofile
 

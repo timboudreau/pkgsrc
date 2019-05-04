@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.57 2017/07/01 12:48:10 maya Exp $
+# $NetBSD: options.mk,v 1.64 2019/01/26 20:33:39 tnn Exp $
 
 PKG_OPTIONS_VAR=		PKG_OPTIONS.MesaLib
 PKG_SUPPORTED_OPTIONS=		llvm dri
@@ -8,14 +8,15 @@ PKG_SUGGESTED_OPTIONS=
 # is also required to support the latest RADEON GPUs, so enable it
 # by default on platforms where such GPUs might be encountered.
 .if (${MACHINE_ARCH} == "i386" || ${MACHINE_ARCH} == "x86_64") && \
-	${OPSYS} != "SunOS" && ${OPSYS} != "Darwin"
+	${OPSYS} != "SunOS" && ${OPSYS} != "Darwin" && \
+	!(${OPSYS} == "NetBSD" && ${X11_TYPE} == "native")
 PKG_SUGGESTED_OPTIONS+=		llvm
 .endif
 
 .if ${OPSYS} == "FreeBSD" || ${OPSYS} == "OpenBSD" ||		\
 	${OPSYS} == "DragonFly" || ${OPSYS} == "Linux" ||	\
-	${OPSYS} == "SunOS" || ${OPSYS} == "NetBSD" ||		\
-	${OPSYS} == "Darwin"
+	${OPSYS} == "SunOS" || ${OPSYS} == "Darwin" ||		\
+	(${OPSYS} == "NetBSD" && ${X11_TYPE} == "modular")
 PKG_SUGGESTED_OPTIONS+=		dri
 .endif
 
@@ -115,16 +116,20 @@ PLIST.vc4=		yes
 #PLIST.virgl=		yes
 .endif
 
-# theoretically cross platform PCI drivers, but don't build on ARM
-.if ${OPSYS} != "Darwin" && empty(MACHINE_PLATFORM:MNetBSD-*-*arm*)
+# theoretically cross platform PCI drivers
+.if ${OPSYS} != "Darwin" && empty(MACHINE_PLATFORM:MNetBSD-*-*arm*) && \
+	empty(MACHINE_PLATFORM:MNetBSD-*-mipsel)
 
 # AMD Radeon r600
 PLIST.r600=		yes
 GALLIUM_DRIVERS+=	r600
 
+# FreeBSD lacks nouveau support (there are official binaries from Nvidia)
+.if ${OPSYS} != "FreeBSD"
 # nVidia
 PLIST.nouveau=		yes
 GALLIUM_DRIVERS+=	nouveau
+.endif
 
 # classic DRI radeon
 PLIST.radeon_dri=	yes
@@ -134,9 +139,13 @@ DRI_DRIVERS+=		radeon
 PLIST.r200_dri=		yes
 DRI_DRIVERS+=		r200
 
+# FreeBSD lacks nouveau support (there are official binaries from Nvidia)
+.if ${OPSYS} != "FreeBSD"
 # classic DRI nouveau
 PLIST.nouveau_dri=	yes
 DRI_DRIVERS+=		nouveau
+.endif
+
 .endif
 
 .if ${OPSYS} == "Darwin"
@@ -178,8 +187,7 @@ CONFIGURE_ARGS+=	--enable-gallium-llvm
 CONFIGURE_ARGS+=	--enable-r600-llvm-compiler
 .include "../../devel/libelf/buildlink3.mk"
 CPPFLAGS+=		-I${BUILDLINK_PREFIX.libelf}/include/libelf
-BUILDLINK_API_DEPENDS.libLLVM+= libLLVM>=4.0
-.include "../../lang/libLLVM/buildlink3.mk"
+.include "../../lang/libLLVM4/buildlink3.mk"
 CONFIGURE_ENV+=		ac_cv_path_ac_pt_LLVM_CONFIG=${LLVM_CONFIG_PATH}
 .else # !llvm
 CONFIGURE_ARGS+=	--disable-xa

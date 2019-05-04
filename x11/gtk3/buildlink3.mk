@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.30 2017/02/12 06:24:53 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.37 2018/11/14 22:22:42 kleink Exp $
 
 BUILDLINK_TREE+=	gtk3
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	gtk3
 GTK3_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.gtk3+=	gtk3+>=3.0.0
-BUILDLINK_ABI_DEPENDS.gtk3+=	gtk3+>=3.22.7nb2
+BUILDLINK_ABI_DEPENDS.gtk3+=	gtk3+>=3.24.1nb2
 BUILDLINK_PKGSRCDIR.gtk3?=	../../x11/gtk3
 
 .include "../../mk/bsd.fast.prefs.mk"
@@ -23,10 +23,11 @@ pkgbase := gtk3
 .include "../../graphics/cairo-gobject/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/gdk-pixbuf2/buildlink3.mk"
+BUILDLINK_API_DEPENDS.libepoxy+=	libepoxy>=1.4
 .include "../../graphics/libepoxy/buildlink3.mk"
 .if !empty(PKG_BUILD_OPTIONS.gtk3:Mx11)
 .  if !empty(PKG_BUILD_OPTIONS.gtk3:Mgtk3-atk-bridge)
-.  include "../../devel/at-spi2-atk/buildlink3.mk"
+.    include "../../devel/at-spi2-atk/buildlink3.mk"
 .  endif
 .include "../../x11/libXcursor/buildlink3.mk"
 BUILDLINK_API_DEPENDS.Xft2+=	Xft2>=2.1.2nb2

@@ -1,7 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/06/24 07:30:18 adam Exp $
+$NetBSD: distinfo,v 1.6 2018/11/06 14:31:48 adam Exp $
 
-SHA1 (websockets-3.3.tar.gz) = ab9a51b180e8ff557f49befb673bb5f21778b532
-RMD160 (websockets-3.3.tar.gz) = c97794ae8eace7c19f3b3041337044e6ce1d153b
-SHA512 (websockets-3.3.tar.gz) = 6f73a854bd00e7066c7a167eb218edcbed3eadfbe1f08d6d164192b0b2cd10263666eb55884cd8e1ddba08edf3bf951fc5ddb99fd32aa23ce4e5e2ad69b3ce8a
-Size (websockets-3.3.tar.gz) = 33852 bytes
-SHA1 (patch-setup.py) = 8cecab543470a7b9545d04de589dcd3b4deda7f9
+SHA1 (websockets-7.0.tar.gz) = b27a72fcfbfc3cb37794d579f7242b8f178d8003
+RMD160 (websockets-7.0.tar.gz) = a1b1cc9b3d79a4319060502bd747f3007150bd96
+SHA512 (websockets-7.0.tar.gz) = 3f3493c920ca3e07c143fdc443a2b1da142dda52ca6291566a3042daee6f5f702a9b091411a915da3896fe0f48cf174d9ef6fd40cf09483bc90928ee67ebd438
+Size (websockets-7.0.tar.gz) = 49257 bytes

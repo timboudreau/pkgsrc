@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.22 2017/05/11 13:00:16 leot Exp $
+# $NetBSD: Makefile,v 1.34 2019/02/03 00:09:45 leot Exp $
 #
 
-DISTNAME=	gammu-1.38.2
+DISTNAME=	gammu-1.40.0
 CATEGORIES=	comms
 MASTER_SITES=	http://dl.cihar.com/gammu/releases/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://wammu.eu/gammu/
+HOMEPAGE=	https://wammu.eu/gammu/
 COMMENT=	Command line utility and library to work with mobile phones
 LICENSE=	gnu-gpl-v2
 
 # cmake tests for it; unclear for what it would be used
 #BUILD_DEPENDS+=	doxygen-[0-9]*:../../devel/doxygen
 # for gammu-config
-DEPENDS+=	dialog-[0-9]*:../../misc/dialog
+DEPENDS+=		dialog-[0-9]*:../../misc/dialog
 
 USE_CMAKE=	yes
 CMAKE_ARGS+=	-DBUILD_SHARED_LIBS=ON
@@ -36,8 +36,16 @@ USE_LANGUAGES=	c c++
 USE_TOOLS+=	bash:run msgfmt
 REPLACE_BASH=	utils/gammu-config utils/jadmaker
 
+CFLAGS.SunOS+=	-Du_int8_t=uint8_t -Du_int32_t=uint32_t
+
 # needed because of https://bugs.cihar.com/view.php?id=908
 BUILDLINK_TRANSFORM+=	rm:-Werror
+
+SUBST_CLASSES+=			cmakelists
+SUBST_STAGE.cmakelists=		pre-configure
+SUBST_MESSAGE.cmakelists=	Fixing CMakeLists.txt
+SUBST_FILES.cmakelists=		CMakeLists.txt
+SUBST_SED.cmakelists=		-e 's/LIB_SUFFIX "64"/LIB_SUFFIX ""/'
 
 LDFLAGS.SunOS+=	-lintl
 

@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.19 2016/02/26 11:27:20 jperkin Exp $
+# $NetBSD: Makefile,v 1.21 2019/02/10 23:28:35 wiz Exp $
 
-DISTNAME=	xf86-video-s3virge-1.10.7
-PKGREVISION=	1
+DISTNAME=	xf86-video-s3virge-1.11.0
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_XORG:=driver/}
 EXTRACT_SUFX=	.tar.bz2
@@ -17,9 +16,7 @@ USE_TOOLS+=	pkg-config
 CONFIGURE_ENV.SunOS+=	DRIVER_MAN_SUFFIX=4
 
 .include "../../x11/modular-xorg-server/buildlink3.mk"
-.include "../../x11/randrproto/buildlink3.mk"
-.include "../../x11/renderproto/buildlink3.mk"
-.include "../../x11/videoproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 BUILDLINK_DEPMETHOD.libXext?=	build
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

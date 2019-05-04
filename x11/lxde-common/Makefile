@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.3 2017/06/28 15:22:59 jperkin Exp $
+# $NetBSD: Makefile,v 1.6 2018/05/27 14:24:45 youri Exp $
 
-DISTNAME=	lxde-common-0.99.1
+DISTNAME=	lxde-common-0.99.2
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=lxde/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	youri@NetBSD.org
-HOMEPAGE=	http://lxde.sourceforge.net/
+HOMEPAGE=	https://lxde.org/
 COMMENT=	Default configuration settings and scripts for LXDE
 LICENSE=	gnu-gpl-v2
 
@@ -20,6 +20,7 @@ DEPENDS+=	openbox>=0:../../wm/openbox
 DEPENDS+=	xprop>=0:../../x11/xprop
 
 GNU_CONFIGURE=		yes
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 LXDE_CONF=		share/examples/lxde
 PKG_SYSCONFSUBDIR=	xdg
 

@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.27 2017/02/12 06:25:37 ryoon Exp $
+# $NetBSD: Makefile,v 1.34 2018/11/14 22:21:54 kleink Exp $
 #
 
 DISTNAME=	scim-unikey-0.3.1
-PKGREVISION=	24
+PKGREVISION=	29
 CATEGORIES=	inputmethod
 MASTER_SITES=	http://scim-unikey.googlecode.com/files/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/scim-unikey/
+HOMEPAGE=	https://code.google.com/archive/p/scim-unikey/
 COMMENT=	Vietnamese Input Method Engine for SCIM using Unikey IME
 LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		pkg-config msgfmt
 
 USE_SCIM_GTKUTILS=	yes

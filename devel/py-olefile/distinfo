@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/01/31 14:04:02 leot Exp $
+$NetBSD: distinfo,v 1.3 2018/09/24 09:54:46 adam Exp $
 
-SHA1 (olefile-0.44.zip) = 3bab29b928bffdb70fbd3f924d1c459bac67f973
-RMD160 (olefile-0.44.zip) = e85ff631ac1992b5b59dcf98ced566c7778d2ea4
-SHA512 (olefile-0.44.zip) = 096450638b21882d462ceb6c60ece2e603318f7f4783414ed33b45e3dbbf38a60f763144b14df6685a0d55cc034cf16f82a0f8ed8773fe9a7d10d6bf32d4edfc
-Size (olefile-0.44.zip) = 74147 bytes
+SHA1 (olefile-0.46.zip) = 6c6f7d04f4f959beaaa55af9ad07fa86975f7da3
+RMD160 (olefile-0.46.zip) = aa90d9d17668567a3d21d0e2c458dd772463fee4
+SHA512 (olefile-0.46.zip) = 2a19c443c1e4519680027ff557b5f737e6d0e707c1932a759ea85105717f4f6393149e0eb04589fe2b2b7e0c474042cfe34801faad38517799483b711001b4ac
+Size (olefile-0.46.zip) = 112226 bytes

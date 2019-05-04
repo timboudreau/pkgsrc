@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.2 2017/04/24 12:20:37 fhajny Exp $
+# $NetBSD: Makefile,v 1.8 2019/04/25 07:32:48 maya Exp $
 
-DISTNAME=	librdkafka-0.9.5
+DISTNAME=	librdkafka-0.11.4
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=edenhill/}
 
-MAINTAINER=	filip@joyent.com
+MAINTAINER=	fhajny@NetBSD.org
 HOMEPAGE=	https://github.com/edenhill/librdkafka/
 COMMENT=	Apache Kafka C/C++ library
 LICENSE=	2-clause-bsd
@@ -23,6 +24,11 @@ CONFIGURE_ARGS+=	--enable-ssl
 CONFIGURE_ARGS+=	--disable-sasl
 
 TEST_TARGET=	check
+
+PKGCONFIG_OVERRIDE+=	src-cpp/rdkafka++-static.pc
+PKGCONFIG_OVERRIDE+=	src-cpp/rdkafka++.pc
+PKGCONFIG_OVERRIDE+=	src/rdkafka-static.pc
+PKGCONFIG_OVERRIDE+=	src/rdkafka.pc
 
 PYTHON_FOR_BUILD_ONLY=	yes
 

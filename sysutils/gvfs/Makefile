@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.84 2017/05/29 11:09:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.102 2019/04/03 00:33:07 ryoon Exp $
 #
 
 DISTNAME=	gvfs-1.6.7
-PKGREVISION=	28
+PKGREVISION=	42
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gvfs/1.6/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Userspace virtual filesystem
 LICENSE=	gnu-lgpl-v2
 
@@ -22,7 +22,7 @@ CONFIGURE_ARGS+=	--disable-bash-completion
 
 PKG_OPTIONS_VAR=        PKG_OPTIONS.gvfs
 PKG_SUPPORTED_OPTIONS+= avahi hal fuse samba
-PKG_SUGGESTED_OPTIONS+= hal samba
+PKG_SUGGESTED_OPTIONS+= samba
 PLIST_VARS+=		${PKG_SUPPORTED_OPTIONS}
 
 # XXX fuse.bl3.mk will fail if we include it and fuse is not available
@@ -70,7 +70,13 @@ CONFIGURE_ARGS+=	--disable-fuse
 
 BUILDLINK_TRANSFORM+=	rm:-DG_DISABLE_DEPRECATED
 
+.include "../../mk/compiler.mk"
+
+.if !empty(PKGSRC_COMPILER:Mclang) || !empty(CC_VERSION:Mgcc-[6-9]*)
+CFLAGS.SunOS+=		-D_XOPEN_SOURCE=600 -D__EXTENSIONS__
+.else
 CFLAGS.SunOS+=		-D_XOPEN_SOURCE=500 -D__EXTENSIONS__
+.endif
 
 BUILDLINK_API_DEPENDS.glib2+=	glib2>=2.23.4
 .include "../../devel/glib2/modules.mk"

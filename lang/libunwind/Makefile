@@ -1,22 +1,23 @@
-# $NetBSD: Makefile,v 1.8 2017/07/11 19:47:37 adam Exp $
+# $NetBSD: Makefile,v 1.16 2018/12/23 00:11:39 adam Exp $
 
-DISTNAME=	libunwind-4.0.1.src
+DISTNAME=	libunwind-7.0.1.src
 PKGNAME=	${DISTNAME:S/.src//}
 CATEGORIES=	lang devel
 MASTER_SITES=	http://llvm.org/releases/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://libunwind.llvm.org/
+#HOMEPAGE=	http://libunwind.llvm.org/
 COMMENT=	LLVM libunwind
 LICENSE=	modified-bsd
 
 CONFIGURE_DIRS=		${WRKDIR}/build
 
-USE_TOOLS+=		pax
-USE_LANGUAGES=		c c++11
 USE_CMAKE=		yes
+USE_LANGUAGES=		c c++11
+USE_TOOLS+=		pax
 GCC_REQD+=		4.8
+SSP_SUPPORTED=		no
 
 CMAKE_ARGS+=	-DCMAKE_BUILD_TYPE=Release
 CMAKE_ARGS+=	-DCMAKE_C_COMPILER=${CC:Q}

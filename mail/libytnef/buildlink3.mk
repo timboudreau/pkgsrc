@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.2 2009/03/20 19:24:55 joerg Exp $
+# $NetBSD: buildlink3.mk,v 1.4 2018/01/07 13:04:21 rillig Exp $
 
 BUILDLINK_TREE+=	libytnef
 
@@ -6,7 +6,8 @@ BUILDLINK_TREE+=	libytnef
 LIBYTNEF_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.libytnef+=	libytnef>=1.5
-BUILDLINK_PKGSRCDIR.libytnef?=	../../mail/libytnef
+BUILDLINK_ABI_DEPENDS.libytnef?=	libytnef>=1.9.2
+BUILDLINK_PKGSRCDIR.libytnef?=		../../mail/libytnef
 .endif # LIBYTNEF_BUILDLINK3_MK
 
 BUILDLINK_TREE+=	-libytnef

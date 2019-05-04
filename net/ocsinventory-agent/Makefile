@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.16 2017/06/28 08:27:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.18 2018/08/22 09:45:56 wiz Exp $
 #
 VERS=			1.1.2.1
-PKGREVISION=		9
+PKGREVISION=		10
 DISTNAME=		Ocsinventory-Agent-${VERS}
 PKGNAME=		ocsinventory-agent-${VERS}
 CATEGORIES=		net
@@ -41,13 +41,13 @@ REPLACE_PERL+=	ocsinventory-agent
 REPLACE_PERL+=	postinst.pl
 
 SUBST_CLASSES+=			sysconfdir path varbase apachevers
-SUBST_STAGE.sysconfdir=		post-patch
+SUBST_STAGE.sysconfdir=		pre-configure
 SUBST_FILES.sysconfdir=		lib/Ocsinventory/Agent/Config.pm
 SUBST_FILES.sysconfdir+=	postinst.pl
 SUBST_SED.sysconfdir=		-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
 SUBST_MESSAGE.sysconfdir=	Fixing hardcoded install directory path.
 
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_FILES.path=	lib/Ocsinventory/Agent/Common.pm
 SUBST_SED.path=		-e "s|/usr/local/bin|${PREFIX}/bin|g"
 SUBST_SED.path+=	-e "s|/usr/local/sbin|${PREFIX}/sbin|g"

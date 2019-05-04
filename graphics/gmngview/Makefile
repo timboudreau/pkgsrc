@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.50 2017/02/12 06:25:27 ryoon Exp $
+# $NetBSD: Makefile,v 1.55 2018/11/14 22:21:40 kleink Exp $
 #
 
 DISTNAME=	libmng-1.0.10
 PKGNAME=	${DISTNAME:S/libmng/gmngview/}
-PKGREVISION=	27
+PKGREVISION=	31
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=libmng/}
 
@@ -12,7 +12,7 @@ MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Simple GTK-based MNG viewer
 
 WRKSRC=		${WRKDIR}/${DISTNAME}/contrib/gcc/gtk-mng-view
-MAKE_ENV+=	LIBMNG_PREFIX=${BUILDLINK_PREFIX.mng:Q}
+MAKE_ENV+=	LIBMNG_PREFIX=${BUILDLINK_PREFIX.mng}
 
 EXTRACT_ELEMENTS=	*/contrib/gcc/gtk-mng*
 EXTRACT_USING=		bsdtar

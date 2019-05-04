@@ -1,21 +1,20 @@
-# $NetBSD: Makefile,v 1.30 2017/03/16 14:35:23 wiz Exp $
+# $NetBSD: Makefile,v 1.42 2018/11/08 14:40:24 prlw1 Exp $
 
-DISTNAME=	gstreamer-1.10.4
+DISTNAME=	gstreamer-1.14.4
 PKGNAME=	${DISTNAME:S/gstreamer/gstreamer1/}
 CATEGORIES=	multimedia
-MASTER_SITES=	http://gstreamer.freedesktop.org/src/gstreamer/
+MASTER_SITES=	https://gstreamer.freedesktop.org/src/gstreamer/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://gstreamer.freedesktop.org/
+HOMEPAGE=	https://gstreamer.freedesktop.org/
 COMMENT=	Open source multimedia framework
 LICENSE=	gnu-lgpl-v2
 
-GNU_CONFIGURE=		yes
 USE_LIBTOOL=		yes
-USE_TOOLS+=		bison flex gmake perl pkg-config
 USE_PKGLOCALEDIR=	yes
-USE_LANGUAGES=		c
+USE_TOOLS+=		bison flex gmake perl pkg-config
+GNU_CONFIGURE=		yes
 FLEX_REQD=		2.5.31
 
 .include "options.mk"

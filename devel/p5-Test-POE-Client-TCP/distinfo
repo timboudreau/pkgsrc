@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.4 2015/11/03 03:28:52 agc Exp $
+$NetBSD: distinfo,v 1.9 2018/11/25 13:06:08 wen Exp $
 
-SHA1 (Test-POE-Client-TCP-1.12.tar.gz) = f906e7dbb9f4cfbc4f21efba9b56ac9fe62a6cf0
-RMD160 (Test-POE-Client-TCP-1.12.tar.gz) = 9c8eece0af3a62b1bef0d16c943085f21f914b46
-SHA512 (Test-POE-Client-TCP-1.12.tar.gz) = 75c9bc2436d4094c774d714d69a72c16f56845441fd0efd6202ab4a44ffc4df3459d794f107217e9caf8c078c10d0d5dccc3e80b165eca46ffd462ee88481bbb
-Size (Test-POE-Client-TCP-1.12.tar.gz) = 21964 bytes
+SHA1 (Test-POE-Client-TCP-1.26.tar.gz) = 0c8a8bc0ba9ed9b71d2a54c1b3d4cdbc49b1e970
+RMD160 (Test-POE-Client-TCP-1.26.tar.gz) = 3f3ccb9f46a99a0589be2d302e7f07f91259447d
+SHA512 (Test-POE-Client-TCP-1.26.tar.gz) = 7652cdffa90d32993f69f77a116a288c573efec1ec9a3e613c656c420e3deba6d66e7754f4197da77f91144c6a01dbde168084b1d352209f0b90720a2c6465d3
+Size (Test-POE-Client-TCP-1.26.tar.gz) = 23245 bytes

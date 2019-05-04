@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2016/08/21 21:29:45 markd Exp $
+@comment $NetBSD: PLIST,v 1.6 2019/04/25 21:17:14 markd Exp $
 bin/preparetips5
 include/KF5/KConfigWidgets/KCModule
 include/KF5/KConfigWidgets/KCodecAction
@@ -9,6 +9,7 @@ include/KF5/KConfigWidgets/KConfigDialogManager
 include/KF5/KConfigWidgets/KConfigViewStateSaver
 include/KF5/KConfigWidgets/KHelpClient
 include/KF5/KConfigWidgets/KLanguageButton
+include/KF5/KConfigWidgets/KLanguageName
 include/KF5/KConfigWidgets/KPasteTextAction
 include/KF5/KConfigWidgets/KRecentFilesAction
 include/KF5/KConfigWidgets/KStandardAction
@@ -24,6 +25,7 @@ include/KF5/KConfigWidgets/kconfigviewstatesaver.h
 include/KF5/KConfigWidgets/kconfigwidgets_export.h
 include/KF5/KConfigWidgets/khelpclient.h
 include/KF5/KConfigWidgets/klanguagebutton.h
+include/KF5/KConfigWidgets/klanguagename.h
 include/KF5/KConfigWidgets/kpastetextaction.h
 include/KF5/KConfigWidgets/krecentfilesaction.h
 include/KF5/KConfigWidgets/kstandardaction.h
@@ -40,22 +42,23 @@ lib/libKF5ConfigWidgets.so.5
 lib/libKF5ConfigWidgets.so.${PKGVERSION}
 man/ca/man1/preparetips5.1
 man/de/man1/preparetips5.1
+man/es/man1/preparetips5.1
 man/it/man1/preparetips5.1
 man/man1/preparetips5.1
 man/nl/man1/preparetips5.1
+man/pt/man1/preparetips5.1
 man/pt_BR/man1/preparetips5.1
 man/ru/man1/preparetips5.1
 man/sv/man1/preparetips5.1
 man/uk/man1/preparetips5.1
 qt5/mkspecs/modules/qt_KConfigWidgets.pri
+share/examples/kde-xdg/kconfigwidgets.categories
 share/locale/af/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/af/kf5_entry.desktop
 share/locale/ar/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/ar/kf5_entry.desktop
 share/locale/as/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/as/kf5_entry.desktop
-share/locale/ast/LC_MESSAGES/kconfigwidgets5.mo
-share/locale/ast/kf5_entry.desktop
 share/locale/be/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/be/kf5_entry.desktop
 share/locale/be@latin/LC_MESSAGES/kconfigwidgets5.mo
@@ -200,6 +203,7 @@ share/locale/se/kf5_entry.desktop
 share/locale/si/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/si/kf5_entry.desktop
 share/locale/sk/LC_MESSAGES/kconfigwidgets5.mo
+share/locale/sk/kf5_entry.desktop
 share/locale/sl/LC_MESSAGES/kconfigwidgets5.mo
 share/locale/sl/kf5_entry.desktop
 share/locale/sq/LC_MESSAGES/kconfigwidgets5.mo

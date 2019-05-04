@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.26 2017/04/30 01:21:46 ryoon Exp $
+# $NetBSD: Makefile,v 1.35 2018/12/13 19:52:04 adam Exp $
 
-DISTNAME=		tqsl-2.2.1
+DISTNAME=		tqsl-2.3.1
 PKGREVISION=		4
 CATEGORIES=		ham
-MASTER_SITES=		http://sourceforge.net/projects/trustedqsl/files/TrustedQSL/v${PKGVERSION_NOREV}/
+MASTER_SITES=		https://sourceforge.net/projects/trustedqsl/files/TrustedQSL/v${PKGVERSION_NOREV}/
 
 MAINTAINER=		makoto@ki.nu
-HOMEPAGE=		http://sourceforge.net/projects/trustedqsl/
+HOMEPAGE=		https://sourceforge.net/projects/trustedqsl/
 COMMENT=		TrustedQSL, uploading QSL Data to LoTW of ARRL
 LICENSE=		arrl-license
 
@@ -23,6 +23,13 @@ USE_CMAKE=		yes
 # an old version of pixman is found by the pkgsrc cairo.  The root
 # cause (aside from having two pixman versions installed) is ad hoc -L
 # usage in Makefile.am, without matching -R.
+
+# remove the string $(LIB_SUFFIX), tested with NetBSD at least
+SUBST_CLASSES+=		lib-suffix
+SUBST_MESSAGE.lib-suffix= Removing $$(LIB_SUFFIX) from src/CMakeLists.txt
+SUBST_STAGE.lib-suffix= pre-configure
+SUBST_FILES.lib-suffix= src/CMakeLists.txt
+SUBST_SED.lib-suffix= 	-e s/\$$\(LIB_SUFFIX\)//
 
 do-configure:
 	(cd ${WRKSRC} ; \

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.8 2017/02/20 14:51:02 kleink Exp $
+$NetBSD: distinfo,v 1.11 2018/08/07 06:09:09 adam Exp $
 
-SHA1 (vobject-0.9.4.1.tar.gz) = bf3c6db458581099bf77b5c0a0ed36b7c94610a8
-RMD160 (vobject-0.9.4.1.tar.gz) = ab0b72aeb8ee2fd65b6d226442119622d0db0b01
-SHA512 (vobject-0.9.4.1.tar.gz) = 74a755aae919be00b820a93e6265a41ce91b6d22dc3b0d964afcfde9b2aff29d8500ee6e743c234d09d4955178f567750a0a4d1964e0e2eb05dea62929a7ebd7
-Size (vobject-0.9.4.1.tar.gz) = 57723 bytes
+SHA1 (vobject-0.9.6.1.tar.gz) = 41b5d10d50005d58c89d81ba91b86b061c6de585
+RMD160 (vobject-0.9.6.1.tar.gz) = 7b79c7655e769a9158cf0010a9b2540ba9d0faf1
+SHA512 (vobject-0.9.6.1.tar.gz) = 0b299fd4ca105a063f4ac7b03b157c54a3867d6fb798f9072897939b0ba275ba0887bb001c5ed38002a8eb1c10aee710af880413c072140b855af4b62d5aff72
+Size (vobject-0.9.6.1.tar.gz) = 58556 bytes

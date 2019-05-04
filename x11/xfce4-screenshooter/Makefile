@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.12 2017/06/18 23:16:23 youri Exp $
+# $NetBSD: Makefile,v 1.29 2019/04/04 04:17:11 gutteridge Exp $
 
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-DISTNAME=	xfce4-screenshooter-1.8.99
+DISTNAME=	xfce4-screenshooter-1.9.5
 CATEGORIES=	misc
-MASTER_SITES=	http://archive.xfce.org/src/apps/xfce4-screenshooter/1.8/
+MASTER_SITES=	http://archive.xfce.org/src/apps/xfce4-screenshooter/1.9/
 
-HOMEPAGE=	http://archive.xfce.org/src/apps/xfce4-screenshooter/1.8/
+HOMEPAGE=	http://archive.xfce.org/src/apps/xfce4-screenshooter/1.9/
 COMMENT=	Xfce screenshoot application
 
 GNU_CONFIGURE=	yes

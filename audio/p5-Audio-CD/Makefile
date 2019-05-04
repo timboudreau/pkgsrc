@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.25 2017/06/05 14:22:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.28 2018/08/22 09:42:56 wiz Exp $
 
 DISTNAME=	Audio-CD-0.05
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	12
+PKGREVISION=	13
 CATEGORIES=	audio perl5
 MASTER_SITES=	http://www.vanhemert.co.uk/files/
 
-MAINTAINER=	drochner@NetBSD.org
-HOMEPAGE=	http://www.vanhemert.co.uk/disc-cover.html
+MAINTAINER=	pkgsrc-users@NetBSD.org
+#HOMEPAGE=	http://www.vanhemert.co.uk/disc-cover.html
 COMMENT=	Audio-CD perl module for use with disc-cover
 LICENSE=	artistic
 

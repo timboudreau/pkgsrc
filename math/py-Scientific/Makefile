@@ -1,22 +1,26 @@
-# $NetBSD: Makefile,v 1.48 2017/04/30 01:21:50 ryoon Exp $
+# $NetBSD: Makefile,v 1.57 2019/04/26 14:12:41 maya Exp $
 
 DISTNAME=	ScientificPython-2.8.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/Python//}
-PKGREVISION=	4
+PKGREVISION=	9
 CATEGORIES=	math python
 MASTER_SITES=	http://sourcesup.cru.fr/frs/download.php/4411/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://dirac.cnrs-orleans.fr/ScientificPython/
 COMMENT=	Python modules for scientific computing
+LICENSE=	cecill-2.1
 
 CONFLICTS+=	py-Scientific-[0-9]*
 
 MAKE_ENV+=	NETCDF_PREFIX=${BUILDLINK_PREFIX.netcdf}
 
-PLIST_SUBST+=	OSNAME=${LOWER_OPSYS:S/solaris/sunos/}
-PLIST_SUBST+=	OSVER=${OS_VERSION:C/^(.).*/\1/}
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.8.1
+.include "../../lang/python/pyversion.mk"
+
+PYPLAT_CMD=	${PYTHONBIN} -c "import sys; print sys.platform"
+PLIST_SUBST+=	PYPLAT=${PYPLAT_CMD:sh}
+
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.8.1
 
 INSTALLATION_DIRS=	bin
 

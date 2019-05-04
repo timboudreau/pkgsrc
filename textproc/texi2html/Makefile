@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.42 2016/12/01 14:48:02 wiz Exp $
+# $NetBSD: Makefile,v 1.44 2018/08/22 09:47:13 wiz Exp $
 
 DISTNAME=	texi2html-5.0
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	textproc
 MASTER_SITES=	http://savannah.nongnu.org/download/texi2html/
 EXTRACT_SUFX=	.tar.bz2
@@ -12,8 +12,6 @@ COMMENT=	Texinfo-to-HTML direct translator
 LICENSE=	gnu-gpl-v2
 
 DEPENDS+=	p5-Locale-libintl-[0-9]*:../../misc/p5-Locale-libintl
-
-CONFLICTS=	teTeX-bin-1.*
 
 USE_TOOLS+=		gmake perl:run
 GNU_CONFIGURE=		yes

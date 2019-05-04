@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.154 2017/04/30 01:21:30 ryoon Exp $
+# $NetBSD: Makefile,v 1.173 2019/04/03 00:32:28 ryoon Exp $
 #
 # NOTE: when updating this package, there are two places that sound
 #       tarballs need to be checked; look win ${WRKSRC}/sounds/Makefile
 #       to find out the current sound file versions
 
-DISTNAME=	asterisk-11.25.1
-PKGREVISION=	5
+DISTNAME=	asterisk-11.25.3
+PKGREVISION=	8
 CATEGORIES=	comms net audio
 MASTER_SITES=	http://downloads.asterisk.org/pub/telephony/asterisk/
 MASTER_SITES+=	http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/
@@ -128,6 +128,10 @@ PLIST.mgcp=	yes
 .    endif
 .  endif
 .endfor
+
+.if ${OPSYS} == "SunOS"
+PLIST.mgcp=	yes
+.endif
 
 .include "options.mk"
 
@@ -275,4 +279,5 @@ post-install:
 .include "../../www/curl/buildlink3.mk"
 .include "../../mk/curses.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
+.include "../../mk/termcap.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

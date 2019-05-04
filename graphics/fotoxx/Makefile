@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.56 2017/02/12 06:25:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.62 2018/11/14 22:21:37 kleink Exp $
 #
 
 DISTNAME=	fotoxx-16.02.1
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	graphics
 MASTER_SITES=	http://www.kornelix.com/downloads/tarballs/
 
@@ -39,7 +39,6 @@ SUBST_CLASSES+=			fix-paths
 SUBST_STAGE.fix-paths=		pre-configure
 SUBST_MESSAGE.fix-paths=	Fixing absolute paths.
 SUBST_FILES.fix-paths=		desktop
-SUBST_SED.fix-paths=		-e 's,=/usr,=${PREFIX},g'
 SUBST_SED.fix-paths=		-e 's,=/usr,=${PREFIX},g'
 
 # XXX work around misc/xdg-utils being completely broken

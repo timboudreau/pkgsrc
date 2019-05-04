@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.8 2012/10/06 11:54:51 asau Exp $
+# $NetBSD: Makefile,v 1.10 2018/01/14 15:26:48 rillig Exp $
 
 DISTNAME=	qstat-2.10
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qstat/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.qstat.org/
+#HOMEPAGE=	http://www.qstat.org/
 COMMENT=	Program that gathers real-time statistics from game servers
 
 GNU_CONFIGURE=	yes
-CPPFLAGS+=	-DPKG_SYSCONFDIR="\"${PKG_SYSCONFDIR:Q}\""
+CPPFLAGS+=	-DPKG_SYSCONFDIR="\"${PKG_SYSCONFDIR}\""
 
 EGDIR=		${PREFIX}/share/examples/${PKGBASE}
 CONF_FILES=	${EGDIR}/qstat.cfg ${PKG_SYSCONFDIR}/qstat.cfg

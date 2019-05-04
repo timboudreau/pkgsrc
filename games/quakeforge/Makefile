@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.32 2015/04/25 14:23:03 tnn Exp $
+# $NetBSD: Makefile,v 1.36 2019/04/25 07:32:55 maya Exp $
 
 DISTNAME=		quakeforge-0.5.5
-PKGREVISION=		15
+PKGREVISION=		17
 CATEGORIES=		games
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=quake/}
 
@@ -9,7 +9,7 @@ MAINTAINER=		snj@NetBSD.org
 HOMEPAGE=		http://www.quakeforge.net/
 COMMENT=		Improved Quake engine
 
-CONFIGURE_ARGS+=	--with-cpp="${CPP} %d %i %o"
+CONFIGURE_ARGS+=	--with-cpp=${CPP:Q}" %d %i %o"
 CONFIGURE_ARGS+=	--disable-ogg
 CONFIGURE_ARGS+=	--disable-xmms
 GNU_CONFIGURE=		YES
@@ -18,7 +18,7 @@ USE_TOOLS+=		bison gmake
 USE_LIBTOOL=		YES
 
 SUBST_CLASSES+=		dsp
-SUBST_STAGE.dsp=	post-patch
+SUBST_STAGE.dsp=	pre-configure
 SUBST_MESSAGE.dsp=	Adjusting sound device path.
 SUBST_FILES.dsp=	libs/audio/targets/snd_oss.c
 SUBST_SED.dsp=		-e "s|/dev/dsp|${DEVOSSAUDIO}|"
@@ -55,7 +55,6 @@ INSTALLATION_DIRS=	include/QF/GL include/QF/plugin include/QF/ruamoko/gui
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../x11/libXxf86dga/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
-.include "../../x11/xf86vidmodeproto/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/oss.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

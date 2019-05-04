@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.25 2017/03/31 10:31:57 wiz Exp $
+# $NetBSD: buildlink3.mk,v 1.30 2017/12/21 13:30:40 ryoon Exp $
 
 BUILDLINK_TREE+=	gpgme
 
@@ -6,21 +6,17 @@ BUILDLINK_TREE+=	gpgme
 GPGME_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.gpgme+=	gpgme>=0.9.0
-BUILDLINK_ABI_DEPENDS.gpgme+=	gpgme>=1.8.0
+BUILDLINK_ABI_DEPENDS.gpgme+=	gpgme>=1.8.0nb1
 BUILDLINK_PKGSRCDIR.gpgme?=	../../security/gpgme
 
-.include "../../devel/librfuncs/buildlink3.mk"
 .include "../../security/libassuan2/buildlink3.mk"
 .include "../../security/libgpg-error/buildlink3.mk"
 
 pkgbase:=		gpgme
 .include "../../mk/pkg-build-options.mk"
 
-.if !empty(PKG_BUILD_OPTIONS.gpgme:Mgnupg21)
-DEPENDS+=		gnupg21>=2.1:../../security/gnupg21
-GPGME_GPG=		${PREFIX}/bin/gpg2
-.elif !empty(PKG_BUILD_OPTIONS.gpgme:Mgnupg2)
-DEPENDS+=		gnupg2>=2.0<2.1:../../security/gnupg2
+.if !empty(PKG_BUILD_OPTIONS.gpgme:Mgnupg2)
+DEPENDS+=		gnupg2>=2.2.0:../../security/gnupg2
 GPGME_GPG=		${PREFIX}/bin/gpg2
 .else
 DEPENDS+=		gnupg>=1.4.2:../../security/gnupg

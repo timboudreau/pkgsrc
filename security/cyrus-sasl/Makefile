@@ -1,6 +1,5 @@
-# $NetBSD: Makefile,v 1.72 2017/04/27 13:56:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.75 2018/12/09 21:05:35 adam Exp $
 
-PKGREVISION=	6
 COMMENT=	Simple Authentication and Security Layer
 
 .include "Makefile.common"
@@ -65,7 +64,7 @@ MESSAGE_SUBST+=		PLUGINDIR=${PLUGINDIR:Q}
 
 post-install:
 	${INSTALL_DATA_DIR} ${DESTDIR}${DOCDIR}
-	cd ${WRKSRC}/doc; for file in *.fig *.html *.txt; do		\
+	cd ${WRKSRC}/doc/legacy; for file in *.fig *.html *.txt; do		\
 		${INSTALL_DATA} $${file} ${DESTDIR}${DOCDIR};		\
 	done
 

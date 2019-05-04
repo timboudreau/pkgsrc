@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.38 2017/01/19 09:33:04 markd Exp $
+# $NetBSD: Makefile,v 1.41 2018/08/22 09:45:42 wiz Exp $
 
 DISTNAME=	kde4-4.14.3
-PKGREVISION=	8
+PKGREVISION=	11
 CATEGORIES=	meta-pkgs x11 kde
 MASTER_SITES=	# empty
 DISTFILES=	# empty
@@ -11,7 +11,7 @@ HOMEPAGE=	http://www.kde.org/
 COMMENT=	"meta-package" for the KDE4 integrated X11 desktop
 
 DEPENDS+=	oxygen-icons>=5.21.0:../../graphics/oxygen-icons
-DEPENDS+=	kdelibs4-4.14.27{,nb[0-9]*}:../../x11/kdelibs4
+DEPENDS+=	kdelibs4-4.14.38{,nb[0-9]*}:../../x11/kdelibs4
 DEPENDS+=	kdepimlibs4-4.14.10{,nb[0-9]*}:../../misc/kdepimlibs4
 DEPENDS+=	kde-runtime4-15.12.0{,nb[0-9]*}:../../x11/kde-runtime4
 DEPENDS+=	kde-workspace4-4.11.22{,nb[0-9]*}:../../x11/kde-workspace4
@@ -94,7 +94,7 @@ DEPENDS+=	kcolorchooser-15.12.0{,nb[0-9]*}:../../graphics/kcolorchooser
 DEPENDS+=	kgamma-4.14.3{,nb[0-9]*}:../../graphics/kgamma
 DEPENDS+=	kruler-4.14.3{,nb[0-9]*}:../../graphics/kruler
 DEPENDS+=	kolourpaint-16.04.0{,nb[0-9]*}:../../graphics/kolourpaint
-DEPENDS+=	okular-16.08.0{,nb[0-9]*}:../../print/okular
+##DEPENDS+=	okular-16.08.0{,nb[0-9]*}:../../print/okular
 DEPENDS+=	kdegraphics-mobipocket-16.08.0{,nb[0-9]*}:../../graphics/kdegraphics-mobipocket
 DEPENDS+=	kdegraphics-strigi-analyzer-16.04.0{,nb[0-9]*}:../../graphics/kdegraphics-strigi-analyzer
 DEPENDS+=	kdegraphics-thumbnailers-4.14.3{,nb[0-9]*}:../../graphics/kdegraphics-thumbnailers

@@ -1,22 +1,20 @@
-# $NetBSD: Makefile,v 1.10 2015/02/28 23:47:25 joerg Exp $
+# $NetBSD: Makefile,v 1.12 2018/08/25 01:57:43 manu Exp $
 
 DISTNAME=	tomcat-connectors-${JK_VERSION}-src
 PKGNAME=	${APACHE_PKG_PREFIX}-jk-${JK_VERSION}
-JK_VERSION=	1.2.37
+JK_VERSION=	1.2.43
 CATEGORIES=	www java
 MASTER_SITES=	${MASTER_SITE_APACHE:=tomcat/tomcat-connectors/jk/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://tomcat.apache.org/connectors-doc/
 COMMENT=	Apache connector for accessing Jakarta Tomcat
-LICENSE=    apache-2.0
+LICENSE=	apache-2.0
 
 CONFLICTS=	ap-jk-[0-9]*
 
 MAKE_PARAMS+=		USE_APXS=1
 MAKE_PARAMS+=		WITH_APXS=${APXS}
-
-PKG_APACHE_ACCEPTED=	apache22 apache24
 
 INSTALLATION_DIRS+=	lib/httpd
 
@@ -38,8 +36,14 @@ OVERRIDE_DIRDEPTH=	3
 SUBST_CLASSES+=		jk-lt
 SUBST_STAGE.jk-lt=	post-configure
 SUBST_FILES.jk-lt=	Makefile common/Makefile apache-2.0/Makefile
-SUBST_SED.jk-lt=	-e "s|^\\(LIBTOOL =\\) [^ ]*\$$|\\1 \$$(SHELL) \$$(top_builddir)/libtool|g"
+SUBST_SED.jk-lt=	-e "s|^\\(LIBTOOL *=\\).*\$$|\\1 \$$(SHELL) \$$(top_builddir)/libtool|g"
 SUBST_MESSAGE.jk-lt=	Fixing libtool references.
+
+SUBST_CLASSES+=		jk-shlt
+SUBST_STAGE.jk-shlt=	post-configure
+SUBST_FILES.jk-shlt=	scripts/build/instdso.s
+SUBST_SED.jk-shlt=	-e "s|^\\(SH_LIBTOOL *=\\).*\$$|\\1 \$$(SHELL) \$$(top_builddir)/libtool|g"
+SUBST_MESSAGE.jk-shlt=	Fixing libtool references in install script.
 
 # XXX The standard --with-apxs2 when using apache2 doesn't work
 CONFIGURE_ARGS+=	--with-apxs=${APXS:Q}

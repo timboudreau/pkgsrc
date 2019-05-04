@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.6 2017/06/26 16:44:00 joerg Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/25 07:33:07 maya Exp $
 
 .include "../../meta-pkgs/mate/Makefile.common"
 
-DISTNAME=	mate-utils-${VERSION:R}.2
+DISTNAME=	mate-utils-${VERSION}
+PKGREVISION=	2
 CATEGORIES=	misc
 
-COMMENT=	Utiltiles for MATE Desktop
+COMMENT=	Utilities for MATE Desktop
 
 USE_LANGUAGES=	c c++
 

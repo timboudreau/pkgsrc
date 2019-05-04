@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.4 2017/02/12 06:24:42 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.12 2018/11/29 11:21:46 prlw1 Exp $
 
 BUILDLINK_TREE+=	xulrunner45
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	xulrunner45
 XULRUNNER45_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.xulrunner45+=	xulrunner45>=45.1.0
-BUILDLINK_ABI_DEPENDS.xulrunner45+=	xulrunner45>=45.7.0nb2
+BUILDLINK_ABI_DEPENDS.xulrunner45+=	xulrunner45>=45.9.0nb7
 BUILDLINK_PKGSRCDIR.xulrunner45?=	../../devel/xulrunner45
 
 BUILDLINK_INCDIRS.xulrunner45+=		lib/xulrunner45/include
@@ -21,8 +21,8 @@ BUILDLINK_FNAME_TRANSFORM.xulrunner45+=	-e "s|lib/xulrunner45/pkgconfig|lib/pkgc
 pkgbase := xulrunner45
 .include "../../mk/pkg-build-options.mk"
 .if !empty(PKG_BUILD_OPTIONS.xulrunner45:Mgnome)
-. include "../../devel/libgnomeui/buildlink3.mk"
-. include "../../sysutils/gnome-vfs/buildlink3.mk"
+.  include "../../devel/libgnomeui/buildlink3.mk"
+.  include "../../sysutils/gnome-vfs/buildlink3.mk"
 .endif
 .include "../../devel/nspr/buildlink3.mk"
 .endif # XULRUNNER45_BUILDLINK3_MK

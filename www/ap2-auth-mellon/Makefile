@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.39 2017/04/30 01:22:02 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.49 2019/03/25 06:21:06 leot Exp $
 
-DISTNAME=	mod_auth_mellon-0.12.0
+DISTNAME=	mod_auth_mellon-0.14.2
 PKGNAME=	${APACHE_PKG_PREFIX}-${DISTNAME:S/mod_//:S/_/-/g}
-PKGREVISION=	5
+#PKGREVISION=	1
 CATEGORIES=	www security
-MASTER_SITES=	${MASTER_SITE_GITHUB:=UNINETT/}/mod_auth_mellon/releases/download/v${DISTNAME:C/.*-//}/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=UNINETT/}
+GITHUB_PROJECT=	mod_auth_mellon
+GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	manu@NetBSD.org
 HOMEPAGE=	https://github.com/UNINETT/mod_auth_mellon
@@ -17,9 +18,7 @@ USE_LIBTOOL=	YES
 USE_TOOLS+=	pkg-config
 
 APACHE_MODULE=	YES
-PKG_APACHE_ACCEPTED=	apache22 apache24
 .include "../../mk/apache.mk"
-BUILDLINK_API_DEPENDS.apache+=	apache>=2.0.47
 
 SUBST_CLASSES+=		pthflags
 SUBST_STAGE.pthflags=	post-configure

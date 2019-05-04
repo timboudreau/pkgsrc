@@ -1,18 +1,18 @@
-# $NetBSD: Makefile.common,v 1.41 2017/07/19 18:48:21 adam Exp $
+# $NetBSD: Makefile.common,v 1.49 2019/04/25 08:53:43 adam Exp $
 #
 # used by databases/mysql56-client/Makefile
 # used by databases/mysql56-server/Makefile
 
-DISTNAME=	mysql-5.6.37
+DISTNAME=	mysql-5.6.44
 CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_MYSQL:=MySQL-5.6/}
 
 MAINTAINER?=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.mysql.com/
+HOMEPAGE=	https://www.mysql.com/
 LICENSE=	gnu-gpl-v2
 
-DISTINFO_FILE?=		${.CURDIR}/../../databases/mysql56-client/distinfo
-PATCHDIR?=		${.CURDIR}/../../databases/mysql56-client/patches
+DISTINFO_FILE?=	${.CURDIR}/../../databases/mysql56-client/distinfo
+PATCHDIR?=	${.CURDIR}/../../databases/mysql56-client/patches
 
 USE_CMAKE=		yes
 USE_LANGUAGES=		c c++
@@ -61,12 +61,12 @@ CMAKE_ARGS+=		-DINSTALL_SUPPORTFILESDIR="share/mysql"
 CMAKE_ARGS+=		-DMYSQL_DATADIR=${MYSQL_DATADIR}
 
 CMAKE_ARGS+=		-DWITH_ZLIB="system"
-CMAKE_ARGS+=		-DDEFAULT_CHARSET=${MYSQL_CHARSET:Q}
-CMAKE_ARGS+=		-DDEFAULT_COLLATION=${MYSQL_COLLATION:Q}
+CMAKE_ARGS+=		-DDEFAULT_CHARSET=${MYSQL_CHARSET}
+CMAKE_ARGS+=		-DDEFAULT_COLLATION=${MYSQL_COLLATION}
 CMAKE_ARGS+=		-DWITH_EXTRA_CHARSETS=${MYSQL_EXTRA_CHARSET:Q}
 
 # MySQL 5 depends on builtin functions enabled with i486 and later with GCC.
-.if ${OPSYS} == "NetBSD" && !empty(MACHINE_ARCH:Mi386)
+.if ${OPSYS} == "NetBSD" && ${MACHINE_ARCH} == "i386"
 GNU_ARCH.i386=		i486
 CFLAGS+=		-march=i486
 .endif
@@ -84,6 +84,8 @@ CFLAGS+=		-D__STDC_FORMAT_MACROS=1 # always defined too late
 CFLAGS+=		-fPIC -DPIC
 CXXFLAGS+=		-fPIC -DPIC
 .endif
+
+CMAKE_ARGS.SunOS+=	-DFORCE_UNSUPPORTED_COMPILER=YES
 
 # Force HAVE_CURSES_H on Solaris since the configure script is broken
 # and does not properly detect this, breaking the build later on.  Also

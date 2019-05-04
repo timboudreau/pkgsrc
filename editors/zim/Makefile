@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.28 2017/02/12 06:25:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.34 2019/04/26 13:13:56 maya Exp $
 
 DISTNAME=	zim-0.59
-PKGREVISION=	12
+PKGREVISION=	16
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	editors
 MASTER_SITES=	http://zim-wiki.org/downloads/
@@ -19,7 +19,7 @@ DEPENDS+=	xdg-utils-[0-9]*:../../misc/xdg-utils
 USE_LANGUAGES=	# none
 
 REPLACE_PYTHON=	${WRKSRC}/zim.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 SUBST_CLASSES+=		data-path
 SUBST_STAGE.data-path=	pre-configure

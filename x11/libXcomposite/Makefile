@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.10 2014/10/09 14:07:14 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.12 2019/03/11 06:54:09 wiz Exp $
 
-DISTNAME=		libXcomposite-0.4.4
+DISTNAME=		libXcomposite-0.4.5
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -17,10 +16,7 @@ USE_TOOLS+=		pkg-config
 
 PKGCONFIG_OVERRIDE+=	xcomposite.pc.in
 
-BUILDLINK_API_DEPENDS.compositeproto+=	compositeproto>=0.4
-
-.include "../../x11/compositeproto/buildlink3.mk"
-.include "../../x11/fixesproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../x11/libXfixes/buildlink3.mk"

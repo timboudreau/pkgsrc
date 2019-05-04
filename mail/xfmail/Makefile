@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.55 2015/07/04 16:18:37 joerg Exp $
+# $NetBSD: Makefile,v 1.58 2018/07/18 00:06:20 joerg Exp $
 
 DISTNAME=		xfmail-1.5.5
-PKGREVISION=		7
+PKGREVISION=		8
 CATEGORIES=		mail x11
 MASTER_SITES=		ftp://xfmail.ufies.org/pub/xfmail/release/1.5.5/source/
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://xfmail.slappy.org/
+#HOMEPAGE=		http://xfmail.slappy.org/
 COMMENT=		Xforms based mail application for Unix operating systems
 #LICENSE=		gpl-gnu-v2
 # A few files are.
 #LICENSE+=		mit-license
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		YES
 

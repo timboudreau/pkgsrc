@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.31 2017/02/12 06:26:12 ryoon Exp $
+# $NetBSD: Makefile,v 1.36 2018/11/14 22:22:42 kleink Exp $
 
 DISTNAME=	murrine-0.98.2
 PKGNAME=	${DISTNAME:S/^/gtk2-engines-/}
-PKGREVISION=	4
+PKGREVISION=	8
 CATEGORIES=	x11 gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/murrine/0.98/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.cimitan.com/murrine/
+#HOMEPAGE=	http://www.cimitan.com/murrine/
 COMMENT=	GTK2+ engine featuring a modern glassy look
 LICENSE=	gnu-lgpl-v2.1 OR gnu-lgpl-v3
 

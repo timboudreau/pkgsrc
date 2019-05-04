@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.33 2017/06/25 12:05:59 martin Exp $
+# $NetBSD: Makefile,v 1.47 2018/12/01 13:26:09 wiz Exp $
 
-DISTNAME=	gtksourceview-3.22.0
+DISTNAME=	gtksourceview-3.24.9
 PKGNAME=	${DISTNAME:S/gtksourceview/gtksourceview3/}
-PKGREVISION=	2
 CATEGORIES=	x11 gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gtksourceview/${PKGVERSION_NOREV:R}/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	prlw1@cam.ac.uk
 HOMEPAGE=	https://wiki.gnome.org/Projects/GtkSourceView
-COMMENT=	Text widget that extends GTK3's GtkTextView widget
+COMMENT=	Text widget that extends GTK3's GtkTextView widget (v3)
 LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=		yes

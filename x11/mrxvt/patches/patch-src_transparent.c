@@ -1,4 +1,4 @@
-$NetBSD: patch-src_transparent.c,v 1.1 2015/02/08 18:12:49 tnn Exp $
+$NetBSD: patch-src_transparent.c,v 1.3 2017/11/27 08:05:24 maya Exp $
 
 Fix strict aligment SIGBUS
 

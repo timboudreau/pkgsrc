@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.11 2017/06/21 13:50:41 markd Exp $
+# $NetBSD: Makefile,v 1.37 2019/04/03 00:32:41 ryoon Exp $
 
-DISTNAME=	texstudio-2.12.4
+DISTNAME=	texstudio-2.12.14
+PKGREVISION=	4
 CATEGORIES=	editors
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=texstudio/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=texstudio-org/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://texstudio.sourceforge.net/
 COMMENT=	Integrated writing environment for creating LaTeX documents
 LICENSE=	gnu-gpl-v2
-
-WRKSRC=		${WRKDIR}/${DISTNAME:S/-//}
 
 USE_TOOLS+=	pkg-config
 USE_LANGUAGES=	c++ c
@@ -31,8 +30,10 @@ do-configure:
 
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-.include "../../x11/qt4-libs/buildlink3.mk"
-.include "../../x11/qt4-tools/buildlink3.mk"
-.include "../../print/poppler-qt4/buildlink3.mk"
+.include "../../x11/qt5-qtbase/buildlink3.mk"
+.include "../../x11/qt5-qtscript/buildlink3.mk"
+.include "../../x11/qt5-qtsvg/buildlink3.mk"
+.include "../../x11/qt5-qttools/buildlink3.mk"
+.include "../../print/poppler-qt5/buildlink3.mk"
 .include "../../print/poppler-includes/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

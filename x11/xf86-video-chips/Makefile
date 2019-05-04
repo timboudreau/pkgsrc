@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.18 2017/01/18 18:28:03 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2019/02/16 18:17:12 wiz Exp $
 
-DISTNAME=	xf86-video-chips-1.2.7
+DISTNAME=	xf86-video-chips-1.4.0
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_XORG:=driver/}
 EXTRACT_SUFX=	.tar.bz2
@@ -15,18 +15,8 @@ USE_TOOLS+=	pkg-config
 
 CONFIGURE_ENV.SunOS+=	DRIVER_MAN_SUFFIX=4
 
-#
-# it appears the 1.2.5 tarball forgot something
-#
-post-extract:
-.if !exists(${WRKSRC}/util/iopl.h)
-	${CP} ${FILESDIR}/iopl.h ${WRKSRC}/util/
-.endif
-
 .include "../../x11/modular-xorg-server/buildlink3.mk"
-.include "../../x11/randrproto/buildlink3.mk"
-.include "../../x11/renderproto/buildlink3.mk"
-.include "../../x11/videoproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 BUILDLINK_DEPMETHOD.libXext?=	build
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

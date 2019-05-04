@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.137 2017/06/28 15:19:29 jperkin Exp $
+# $NetBSD: Makefile,v 1.145 2019/04/26 14:12:42 maya Exp $
 
 DISTNAME=	gnome-2.26.2
-PKGREVISION=	5
+PKGREVISION=	7
 CATEGORIES=	meta-pkgs x11 gnome
 MASTER_SITES=	# empty
 
-MAINTAINER=	drochner@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Meta-package for the GNOME desktop
 
 META_PACKAGE=	yes
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit via py-gnome2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # py-ORBit via py-gnome2
 
 .include "../../lang/python/pyversion.mk"
 
@@ -19,7 +19,7 @@ PKG_OPTIONS_VAR=	PKG_OPTIONS.gnome
 PKG_SUPPORTED_OPTIONS=	pulseaudio mono
 PKG_SUGGESTED_OPTIONS=	pulseaudio
 # mono does not work on NetBSD/arm yet
-.if ${OPSYS} != "NetBSD" || empty(MACHINE_ARCH:M*arm*)
+.if ${OPSYS} != "SunOS" && (${OPSYS} != "NetBSD" || empty(MACHINE_ARCH:M*arm*))
 PKG_SUGGESTED_OPTIONS+=	mono
 .endif
 .include "../../mk/bsd.options.mk"
@@ -104,7 +104,7 @@ DEPENDS+=	gucharmap>=2.26.2:../../fonts/gucharmap
 DEPENDS+=	gvfs>=1.2.3:../../sysutils/gvfs
 DEPENDS+=	hamster-applet>=2.26.2:../../time/hamster-applet
 DEPENDS+=	libgail-gnome>=1.20.1:../../devel/libgail-gnome
-DEPENDS+=	libgnomekbd>=2.26.0:../../x11/libgnomekbd
+DEPENDS+=	libgnomekbd2>=2.26.0:../../x11/libgnomekbd2
 DEPENDS+=	libgnomeprint>=2.18.6:../../print/libgnomeprint
 DEPENDS+=	libgnomeprintui>=2.18.4:../../print/libgnomeprintui
 DEPENDS+=	libgtop>=2.26.1:../../sysutils/libgtop

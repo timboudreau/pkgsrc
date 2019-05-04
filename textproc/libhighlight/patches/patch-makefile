@@ -1,0 +1,111 @@
+$NetBSD: patch-makefile,v 1.4 2019/04/04 14:14:28 schmonz Exp $
+
+Use pkgsrc-provided paths and tools.
+
+--- makefile.orig	2019-03-26 19:58:45.000000000 +0000
++++ makefile
+@@ -7,7 +7,7 @@
+ DESTDIR =
+ 
+ # Root directory for final installation
+-PREFIX = /usr
++#PREFIX = /usr
+ 
+ # Location of the highlight data files:
+ data_dir = ${PREFIX}/share/highlight/
+@@ -16,7 +16,7 @@ data_dir = ${PREFIX}/share/highlight/
+ bin_dir = ${PREFIX}/bin/
+ 
+ # Location of the highlight man pages:
+-man_dir = ${PREFIX}/share/man/
++man_dir = ${PREFIX}/${PKGMANDIR}/
+ 
+ # Location of the highlight documentation:
+ doc_dir = ${PREFIX}/share/doc/highlight/
+@@ -25,8 +25,8 @@ doc_dir = ${PREFIX}/share/doc/highlight/
+ examples_dir = ${doc_dir}extras/
+ 
+ # Location of the highlight config files:
+-conf_dir = /etc/highlight/
+-#conf_dir = ${PREFIX}/etc/highlight/
++#conf_dir = /etc/highlight/
++conf_dir = ${PREFIX}/share/examples/highlight/
+ 
+ # Location of additional gui files
+ desktop_apps = ${PREFIX}/share/applications/
+@@ -34,10 +34,10 @@ desktop_pixmaps = ${PREFIX}/share/pixmap
+ 
+ # Commands:
+ GZIP=gzip -9f
+-INSTALL_DATA=install -m644
+-INSTALL_PROGRAM=install -m755
+-MKDIR=mkdir -p -m 755
+-RMDIR=rm -r -f
++INSTALL_DATA=${BSD_INSTALL_DATA}
++INSTALL_PROGRAM=${BSD_INSTALL_PROGRAM}
++MKDIR=${BSD_INSTALL_DATA_DIR}
++RMDIR=${RM} -r -f
+ 
+ all cli:
+ 	${MAKE} -C ./src -f ./makefile HL_DATA_DIR=${data_dir} HL_CONFIG_DIR=${conf_dir}
+@@ -86,19 +86,12 @@ install:
+ 		${DESTDIR}${data_dir}themes/base16 \
+ 		${DESTDIR}${data_dir}langDefs \
+ 		${DESTDIR}${data_dir}plugins
+-	${MKDIR} ${DESTDIR}${man_dir}man1/
+-	${MKDIR} ${DESTDIR}${man_dir}man5/
+-	${MKDIR} ${DESTDIR}${bin_dir}
+ 
+ 	${INSTALL_DATA} ./langDefs/*.lang ${DESTDIR}${data_dir}langDefs/
+ 	${INSTALL_DATA} ./*.conf ${DESTDIR}${conf_dir}
+ 	${INSTALL_DATA} ./themes/*.theme ${DESTDIR}${data_dir}themes/
+ 	${INSTALL_DATA} ./themes/base16/*.theme ${DESTDIR}${data_dir}themes/base16/
+ 	${INSTALL_DATA} ./plugins/*.lua ${DESTDIR}${data_dir}plugins/
+-	${INSTALL_DATA} ./man/highlight.1 ${DESTDIR}${man_dir}man1/
+-	-${GZIP} ${DESTDIR}${man_dir}man1/highlight.1
+-	${INSTALL_DATA} ./man/filetypes.conf.5 ${DESTDIR}${man_dir}man5/
+-	-${GZIP} ${DESTDIR}${man_dir}man5/filetypes.conf.5
+ 
+ 	${INSTALL_DATA} ./AUTHORS ${DESTDIR}${doc_dir}
+ 	${INSTALL_DATA} ./README* ${DESTDIR}${doc_dir}
+@@ -118,15 +111,27 @@ install:
+ 	${INSTALL_DATA} ./extras/themes-resources/css-themes/* ${DESTDIR}${examples_dir}themes-resources/css-themes
+ 	${INSTALL_DATA} ./extras/highlight_pipe.* ${DESTDIR}${examples_dir}
+ 	${INSTALL_DATA} ./extras/*.py ${DESTDIR}${examples_dir}
+-	${INSTALL_PROGRAM} ./src/highlight ${DESTDIR}${bin_dir}
+ 
+ 	@echo
+ 	@echo "Done."
+-	@echo "Type highlight --help or man highlight for instructions."
+ 	@echo "Take a look at ${DESTDIR}${examples_dir} for web plugins, SWIG and TCL bindings."
++	@echo "Execute 'make install-cli' to install the highlight CLI ('make cli')."
+ 	@echo "Execute 'make install-gui' to install the highlight GUI ('make gui')."
+ 	@echo "Do not hesitate to report problems. Unknown bugs are hard to fix."
+ 
++install-cli:
++	@echo "Installing files for the CLI..."
++	${MKDIR} ${DESTDIR}${bin_dir}
++	${INSTALL_PROGRAM} ./src/highlight ${DESTDIR}${bin_dir}
++	${BSD_INSTALL_MAN_DIR} ${DESTDIR}${man_dir}man1
++	${BSD_INSTALL_MAN} ./man/highlight.1 ${DESTDIR}${man_dir}/man1/
++	${BSD_INSTALL_MAN_DIR} ${DESTDIR}${man_dir}man5
++	${BSD_INSTALL_MAN} ./man/filetypes.conf.5 ${DESTDIR}${man_dir}man5/
++
++	@echo
++	@echo "Done."
++	@echo "Type highlight --help or man highlight for instructions."
++
+ install-gui:
+ 	@echo "Installing files for the GUI..."
+ 	${MKDIR} ${DESTDIR}${data_dir} \
+@@ -148,8 +153,8 @@ uninstall:
+ 	${RMDIR} ${DESTDIR}${doc_dir}
+ 	${RMDIR} ${DESTDIR}${conf_dir}
+ 	${RMDIR} ${DESTDIR}${examples_dir}
+-	rm -rf ${DESTDIR}${man_dir}man1/highlight.1.gz
+-	rm -rf ${DESTDIR}${man_dir}man5/filetypes.conf.5.gz
++	rm -rf ${DESTDIR}${man_dir}man1/highlight.1*
++	rm -rf ${DESTDIR}${man_dir}man5/filetypes.conf.5*
+ 
+ 	rm -rf ${DESTDIR}${bin_dir}highlight
+ 	rm -rf ${DESTDIR}${bin_dir}highlight-gui

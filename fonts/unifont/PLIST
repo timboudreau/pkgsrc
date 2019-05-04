@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2016/08/31 09:14:49 wiz Exp $
+@comment $NetBSD: PLIST,v 1.4 2019/03/10 10:51:15 leot Exp $
 bin/bdfimplode
 bin/hex2bdf
 bin/hex2sfd
@@ -9,9 +9,11 @@ bin/hexmerge
 bin/johab2ucs2
 bin/unibdf2hex
 bin/unibmp2hex
+bin/unibmpbump
 bin/unicoverage
 bin/unidup
 bin/unifont-viewer
+bin/unifont1per
 bin/unifontchojung
 bin/unifontksx
 bin/unifontpic
@@ -21,6 +23,7 @@ bin/unihex2bmp
 bin/unihex2png
 bin/unihexfill
 bin/unihexgen
+bin/unihexrotate
 bin/unipagecount
 bin/unipng2hex
 man/man1/bdfimplode.1
@@ -33,9 +36,11 @@ man/man1/hexmerge.1
 man/man1/johab2ucs2.1
 man/man1/unibdf2hex.1
 man/man1/unibmp2hex.1
+man/man1/unibmpbump.1
 man/man1/unicoverage.1
 man/man1/unidup.1
 man/man1/unifont-viewer.1
+man/man1/unifont1per.1
 man/man1/unifontchojung.1
 man/man1/unifontksx.1
 man/man1/unifontpic.1
@@ -45,6 +50,7 @@ man/man1/unihex2bmp.1
 man/man1/unihex2png.1
 man/man1/unihexfill.1
 man/man1/unihexgen.1
+man/man1/unihexrotate.1
 man/man1/unipagecount.1
 man/man1/unipng2hex.1
 man/man5/unifont.5
@@ -56,13 +62,7 @@ share/fonts/truetype/unifont/unifont.ttf
 share/fonts/truetype/unifont/unifont_csur.ttf
 share/fonts/truetype/unifont/unifont_sample.ttf
 share/fonts/truetype/unifont/unifont_upper.ttf
-share/unifont/ChangeLog.gz
-share/unifont/INSTALL.gz
-share/unifont/NEWS.gz
-share/unifont/README.gz
-share/unifont/bmp-combining.txt
-share/unifont/unifont.bmp
+share/unifont/plane00-combining.txt
+share/unifont/unifont.bmp.gz
 share/unifont/unifont.hex
-share/unifont/unifont.info.gz
-share/unifont/unifont.txt.gz
 share/unifont/wchardata.c

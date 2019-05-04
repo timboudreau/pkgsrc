@@ -1,4 +1,4 @@
-#	$NetBSD: gnustep.mk,v 1.25 2015/03/04 16:51:57 tnn Exp $
+#	$NetBSD: gnustep.mk,v 1.27 2018/07/04 13:40:14 jperkin Exp $
 
 .if !defined(GNUSTEP_MK)
 GNUSTEP_MK=		#defined
@@ -9,8 +9,19 @@ PKG_SUPPORTED_OPTIONS+=	fragile
 .include "../../mk/bsd.options.mk"
 
 .if empty(PKG_OPTIONS:Mfragile)
+# It is necessary to use clang to build gnustep packages.
+# PKGSRC_COMPILER is a user-settable variable and may not be set by
+# packages, but there is not a package-settable way to force a
+# different compiler.  For now, abuse it, realizing that this will
+# also drop any ccache or distcc set by the user.
+# \todo Stop abusing PKGSRC_COMPILER.
 PKGSRC_COMPILER=	clang
+
+# \todo Explain.
 ONLY_FOR_COMPILER=	clang
+
+# \todo Explain.  Is this about forcing clang as the compiler, or
+# about using libraries in the clang package, or ?
 BUILDLINK_API_DEPENDS.clang+=   clang>=3.1
 DEPENDS+=		clang-[0-9]*:../../lang/clang
 .endif
@@ -53,7 +64,7 @@ GNUSTEP_LDFLAGS=	${GNUSTEP_LFLAGS} ${GNUSTEP_RFLAGS}
 
 .if defined(FIX_GNUSTEP_INSTALLATION_DIR)
 SUBST_CLASSES+=				gnustep_installation_dir
-SUBST_STAGE.gnustep_installation_dir=	post-patch
+SUBST_STAGE.gnustep_installation_dir=	pre-configure
 SUBST_FILES.gnustep_installation_dir?=	GNUmakefile
 SUBST_SED.gnustep_installation_dir+=	-e 's|GNUSTEP_INSTALLATION_DIR.*=.*..GNUSTEP_\(.*\)_ROOT.*|GNUSTEP_INSTALLATION_DOMAIN = \1|'
 SUBST_SED.gnustep_installation_dir+=	-e 's|\$$(GNUSTEP_INSTALLATION_DIR)/Libraries|$${DESTDIR}${GNUSTEP_LIB_DIR}/Libraries/${PKGNAME_NOREV}|g'

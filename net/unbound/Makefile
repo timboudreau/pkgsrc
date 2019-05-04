@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.49 2017/07/09 08:09:41 adam Exp $
+# $NetBSD: Makefile,v 1.65 2019/03/12 12:13:08 he Exp $
 
-DISTNAME=	unbound-1.6.4
+DISTNAME=	unbound-1.9.1
 CATEGORIES=	net
-MASTER_SITES=	http://www.unbound.net/downloads/
+MASTER_SITES=	http://www.nlnetlabs.nl/downloads/unbound/
 
 MAINTAINER=	pettai@NetBSD.org
 HOMEPAGE=	http://www.unbound.net/
@@ -21,6 +21,8 @@ CONFIGURE_ARGS+=	--with-pidfile=${VARBASE}/run/unbound/unbound.pid
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 GNU_CONFIGURE=		yes
 TEST_TARGET=		test
+
+.include "options.mk"
 
 # unbound uses some OpenBSD libc functions such as reallocarray(3).
 # The existing tests just look for the symbol in libc regardless
@@ -98,4 +100,6 @@ PKG_USERS=	${UNBOUND_USER}:${UNBOUND_GROUP}
 
 .include "../../devel/libevent/buildlink3.mk"
 .include "../../textproc/expat/buildlink3.mk"
+BUILDLINK_API_DEPENDS.flex+=	flex>=2.6.4
+.include "../../devel/flex/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

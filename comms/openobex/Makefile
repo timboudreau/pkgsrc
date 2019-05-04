@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.30 2016/11/24 14:11:31 mef Exp $
+# $NetBSD: Makefile,v 1.33 2018/02/27 23:56:08 khorben Exp $
 
 DISTNAME=	openobex-1.7.1-Source
 PKGNAME=	${DISTNAME:C/-Source//}
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	comms
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=openobex/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://gitorious.org/openobex
+#HOMEPAGE=	https://gitorious.org/openobex
 COMMENT=	Implementation of the Object Exchange (OBEX) protocol
 LICENSE=	gnu-lgpl-v2
 
@@ -35,5 +35,5 @@ post-install:
 	      ${DESTDIR}${PREFIX}/${EGDIR}/60-openobex.rules
 .endif
 
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

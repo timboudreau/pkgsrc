@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.12 2017/05/17 10:30:18 wiz Exp $
+# $NetBSD: Makefile,v 1.28 2019/03/19 12:12:22 wiz Exp $
 
 DISTNAME=	mercurial-${VERSION}
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
@@ -11,25 +11,27 @@ COMMENT=	Fast, lightweight source control management system
 LICENSE=	gnu-gpl-v2 OR gnu-gpl-v3 # OR newer
 
 # with this dependency, two zip test cases start working
-# http://bz.selenic.com/show_bug.cgi?id=4483
-# http://bz.selenic.com/show_bug.cgi?id=4485
-#BUILD_DEPENDS+=	unzip-[0-9]*:../../archivers/unzip
+# https://bz.mercurial-scm.org/show_bug.cgi?id=4483
+# https://bz.mercurial-scm.org/show_bug.cgi?id=4485
+BUILD_DEPENDS+=	unzip-[0-9]*:../../archivers/unzip
 DEPENDS+=	${PYPKGPREFIX}-curses-[0-9]*:../../devel/py-curses
 
-USE_TOOLS+=			gmake msgfmt
+USE_TOOLS+=	gmake msgfmt
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1 ${PKGMANDIR}/man5
 INSTALLATION_DIRS+=	share/doc/mercurial
 
 .include "Makefile.version"
 
+# Known test failures:
+# none
 do-test:
-	cd ${WRKSRC} && make tests PYTHON=${PYTHONBIN}
+	cd ${WRKSRC} && make tests PYTHON=${PYTHONBIN} TESTFLAGS=${_MAKE_JOBS:Q}
 
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/doc/*.1  ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1
 	${INSTALL_DATA} ${WRKSRC}/doc/*.5  ${DESTDIR}${PREFIX}/${PKGMANDIR}/man5
-	${INSTALL_DATA} ${WRKSRC}/README  \
+	${INSTALL_DATA} ${WRKSRC}/README.rst  \
 		${DESTDIR}${PREFIX}/share/doc/mercurial
 
 .include "../../lang/python/distutils.mk"

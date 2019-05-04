@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.15 2016/03/05 11:28:52 jperkin Exp $
+# $NetBSD: Makefile,v 1.25 2019/03/18 16:17:49 gdt Exp $
 #
 
-PKGREVISION=		10
+PKGREVISION=		18
 CATEGORIES=		math
-MASTER_SITES=		${MASTER_SITE_R_CRAN:=contrib/}
 
 MAINTAINER=		mchittur@cs.nmsu.edu
 HOMEPAGE=		${R_HOMEPAGE_BASE}/CGIwithR/
@@ -18,7 +17,7 @@ REPLACE.r.new=		${PREFIX}/bin/R
 REPLACE_FILES.r=	inst/examples/dangerous.R inst/examples/trivial.R
 
 SUBST_CLASSES+=			fix-paths
-SUBST_STAGE.fix-paths=		post-patch
+SUBST_STAGE.fix-paths=		pre-configure
 SUBST_MESSAGE.fix-paths=	Fixing absolute paths.
 SUBST_FILES.fix-paths=		inst/cgi-bin/R.cgi
 SUBST_SED.fix-paths=		-e 's,/usr/local,${PREFIX},g'

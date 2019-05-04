@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.117 2017/05/24 19:41:03 adam Exp $
+# $NetBSD: Makefile,v 1.131 2019/04/18 10:10:03 adam Exp $
 
 .include "Makefile.common"
 
+DISTNAME=	sqlite-autoconf-${SQLITE3_DISTVERSION}
 PKGNAME=	sqlite3-${SQLITE3_VERSION}
 CATEGORIES=	databases
 
@@ -50,6 +51,7 @@ LIBS+=			${BUILDLINK_LDADD.dl}
 LDFLAGS.SCO_SV+=	-lpthread
 .endif
 
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/readline.buildlink3.mk"
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

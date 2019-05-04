@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.9 2017/06/28 08:27:41 jperkin Exp $
+# $NetBSD: Makefile,v 1.11 2018/08/22 09:44:56 wiz Exp $
 #
 
 DISTNAME=	constant-def-0.01
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=../../authors/id/M/MO/MONS/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://search.cpan.org/~mons/constant-def-0.01/lib/constant/def.pm
 COMMENT=	Perl pragma to declare previously undeclared constants
 LICENSE=	${PERL5_LICENSE}

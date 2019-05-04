@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.34 2016/12/09 22:28:17 pettai Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/25 07:33:11 maya Exp $
 
-DISTNAME=	knot-2.3.3
+DISTNAME=	knot-2.8.1
+PKGREVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	https://secure.nic.cz/files/knot-dns/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pettai@NetBSD.org
-HOMEPAGE=	http://www.knot-dns.cz/
+HOMEPAGE=	https://www.knot-dns.cz/
 COMMENT=	Knot (auth) DNS server
 LICENSE=	gnu-gpl-v3
 
@@ -14,7 +15,7 @@ BUILD_DEFS+=	VARBASE
 
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--prefix=${PREFIX:Q}
-CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 CONFIGURE_ARGS+=	--localstatedir=${VARBASE}/knot
 CONFIGURE_ARGS+=	--with-rundir=${VARBASE}/run/knot
 CONFIGURE_ARGS+=	--with-storage=${VARBASE}/knot/lib
@@ -23,29 +24,41 @@ CONFIGURE_ARGS+=	--with-libidn=${BUILDLINK_PREFIX.libidn}
 
 CONFIGURE_ARGS.NetBSD+=	--enable-recvmmsg=no
 
+.include "../../mk/bsd.prefs.mk"
+
+.if ${MACHINE_ARCH} == "i386" 
+CFLAGS += -march=i586 
+.endif 
+
 USE_LIBTOOL=	yes
 USE_TOOLS+=	bison flex gmake pkg-config
 
+REPLACE_PYTHON=		src/utils/pykeymgr/pykeymgr.in
+
+.include "../../lang/python/extension.mk"
+.include "../../lang/python/application.mk"
+
 PKGCONFIG_OVERRIDE=	src/dnssec/libdnssec.pc.in
+PKGCONFIG_OVERRIDE+=	src/knotd.pc.in
 PKGCONFIG_OVERRIDE+=	src/libknot.pc.in
 PKGCONFIG_OVERRIDE+=	src/zscanner/libzscanner.pc.in
 
 RCD_SCRIPTS=	knot
 
 EGDIR=			${PREFIX}/share/examples/knot
-KNOT_SYSCONFDIR=	${PKG_SYSCONFDIR}/knot
+PKG_SYSCONFSUBDIR=	knot
 
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKSRC}/samples/Makefile.in
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_SED.paths=	-e 's,@EGDIR@,${EGDIR},'
 
 CONF_FILES=	${EGDIR}/knot.sample.conf \
-			${KNOT_SYSCONFDIR}/knot.sample.conf
+			${PKG_SYSCONFDIR}/knot.conf
 CONF_FILES+=	${EGDIR}/example.com.zone \
-			${KNOT_SYSCONFDIR}/example.com.zone
+			${PKG_SYSCONFDIR}/example.com.zone
 
-INSTALLATION_DIRS=	${EGDIR} ${KNOT_SYSCONFDIR}
+INSTALLATION_DIRS=	${EGDIR}
 OWN_DIRS+=		${VARBASE}/knot
 
 .include "../../devel/userspace-rcu/buildlink3.mk"

@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.8 2017/04/05 15:55:38 wiz Exp $
+# $NetBSD: Makefile,v 1.17 2019/01/25 12:28:32 adam Exp $
 
-DISTNAME=	oauthlib-2.0.2
+DISTNAME=	oauthlib-3.0.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	security
+CATEGORIES=	security python
 MASTER_SITES=	${MASTER_SITE_PYPI:=o/oauthlib/}
 
 MAINTAINER=	imil@NetBSD.org
-HOMEPAGE=	https://pypi.python.org/pypi/oauthlib
+HOMEPAGE=	https://github.com/oauthlib/oauthlib
 COMMENT=	Generic implementation of the OAuth request-signing logic
-LICENSE=	original-bsd
+LICENSE=	modified-bsd
 
-DEPENDS+=	${PYPKGPREFIX}-cryptography-[0-9]*:../../security/py-cryptography
-DEPENDS+=	${PYPKGPREFIX}-blinker-[0-9]*:../../devel/py-blinker
 DEPENDS+=	${PYPKGPREFIX}-JWT>=1.0.0:../../textproc/py-JWT
-BUILD_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
-BUILD_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
+DEPENDS+=	${PYPKGPREFIX}-blinker-[0-9]*:../../devel/py-blinker
+DEPENDS+=	${PYPKGPREFIX}-cryptography-[0-9]*:../../security/py-cryptography
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
 
 USE_LANGUAGES=	# none
 

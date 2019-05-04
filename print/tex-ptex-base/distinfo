@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.3 2017/06/21 11:46:00 markd Exp $
+$NetBSD: distinfo,v 1.5 2019/01/26 01:21:31 markd Exp $
 
-SHA1 (tex-ptex-base-43899/ptex-base.tar.xz) = 462348bbb3184762770ef6dcefba95257fea0411
-RMD160 (tex-ptex-base-43899/ptex-base.tar.xz) = b2f913f7ab2f51bcaee47b0f3c29d6e33f381632
-SHA512 (tex-ptex-base-43899/ptex-base.tar.xz) = efdc658e61a77978aa19cc47298736a2558f6170ca9b1517c5f093845a38734839d138bce645dcdf118bbbb159d01b6f41d88b44d83d559b4223aa398ecc6369
-Size (tex-ptex-base-43899/ptex-base.tar.xz) = 9984 bytes
+SHA1 (tex-ptex-base-48432/ptex-base.tar.xz) = 6848591c1b638a0053c8727a6e5c9f1ec0fd2be3
+RMD160 (tex-ptex-base-48432/ptex-base.tar.xz) = 8bb38969865cb5a994e5b6846e56200f4348ff8a
+SHA512 (tex-ptex-base-48432/ptex-base.tar.xz) = 6a9decc4358d1941c8de10655352cf53f3bdc7c1253205c801dd946ba50211fa92bf32ef554198b531301db9330a714d8a54200d33d0b8e2c76331dc1e1c473e
+Size (tex-ptex-base-48432/ptex-base.tar.xz) = 10016 bytes

@@ -1,10 +1,6 @@
-# $NetBSD: options.mk,v 1.41 2017/05/15 15:49:27 maya Exp $
+# $NetBSD: options.mk,v 1.45 2019/03/15 12:52:42 ryoon Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.firefox
-
-PKG_OPTIONS_REQUIRED_GROUPS=	gtk
-PKG_OPTIONS_GROUP.gtk=		gtk2 gtk3
-PKG_SUGGESTED_OPTIONS=		gtk3
 
 PKG_SUPPORTED_OPTIONS=	official-mozilla-branding
 PKG_SUPPORTED_OPTIONS+=	debug debug-info mozilla-jemalloc webrtc
@@ -17,27 +13,9 @@ PKG_SUGGESTED_OPTIONS+=	pulseaudio mozilla-jemalloc dbus
 PKG_SUGGESTED_OPTIONS+=	oss dbus
 .endif
 
-# On NetBSD/amd64 6.99.21 libxul.so is invalid when --enable-webrtc is set.
 PKG_SUGGESTED_OPTIONS.Linux+=	webrtc
 
 .include "../../mk/bsd.options.mk"
-
-PLIST_VARS+=		gtk3
-.if !empty(PKG_OPTIONS:Mgtk2)
-CONFIGURE_ARGS+=	--enable-default-toolkit=cairo-gtk2
-BUILDLINK_API_DEPENDS.gtk2+=  gtk2+>=2.18.3nb1
-.include "../../x11/gtk2/buildlink3.mk"
-.endif
-
-# As of firefox-51 gtk2 is still pulled in implicitly
-.if !empty(PKG_OPTIONS:Mgtk3)
-CONFIGURE_ARGS+=	--enable-default-toolkit=cairo-gtk3
-# gtk2 needed even if --enable-default-toolkit=cairo-gtk3
-BUILDLINK_API_DEPENDS.gtk2+=  gtk2+>=2.18.3nb1
-.include "../../x11/gtk2/buildlink3.mk"
-.include "../../x11/gtk3/buildlink3.mk"
-PLIST.gtk3=		yes
-.endif
 
 .if !empty(PKG_OPTIONS:Malsa)
 CONFIGURE_ARGS+=	--enable-alsa
@@ -117,6 +95,7 @@ PLIST_VARS+=		webrtc
 .if !empty(PKG_OPTIONS:Mwebrtc)
 .include "../../graphics/libv4l/buildlink3.mk"
 CONFIGURE_ARGS+=	--enable-webrtc
+PLIST.webrtc=		yes
 .else
 CONFIGURE_ARGS+=	--disable-webrtc
 .endif

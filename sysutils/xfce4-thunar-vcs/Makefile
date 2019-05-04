@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.11 2017/06/20 12:20:39 youri Exp $
+# $NetBSD: Makefile,v 1.24 2019/04/03 00:33:08 ryoon Exp $
 
+PKGREVISION= 1
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-VERSION=	0.1.5
+VERSION=	0.2.0
 DISTNAME=	thunar-vcs-plugin-${VERSION}
 PKGNAME=	xfce4-${DISTNAME}
 CATEGORIES=	devel
@@ -16,5 +17,4 @@ COMMENT=	Thunar vcs integration plugin
 .include "../../devel/subversion-base/buildlink3.mk"
 .include "../../sysutils/xfce4-thunar/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
-.include "../../x11/gtk2/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

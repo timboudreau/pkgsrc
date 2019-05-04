@@ -1,28 +1,26 @@
-$NetBSD: patch-rapid_plugin_x_CMakeLists.txt,v 1.2 2017/04/11 20:49:15 adam Exp $
+$NetBSD: patch-rapid_plugin_x_CMakeLists.txt,v 1.5 2019/04/25 10:13:04 adam Exp $
 
-Use system OpenSSL and zlib.
+Use system OpenSSL.
 Fix mysqlxtest binary linking.
 
---- rapid/plugin/x/CMakeLists.txt.orig	2017-03-18 07:45:14.000000000 +0000
+--- rapid/plugin/x/CMakeLists.txt.orig	2019-04-13 13:32:15.000000000 +0000
 +++ rapid/plugin/x/CMakeLists.txt
-@@ -92,14 +92,14 @@ ELSE()
+@@ -92,13 +92,13 @@ ELSE()
      ${CMAKE_SOURCE_DIR}/include #temporary
      ${CMAKE_CURRENT_SOURCE_DIR}/include/mysql
      ${CMAKE_CURRENT_BINARY_DIR}/generated
 -    ${SSL_INCLUDE_DIRS}
--    ${ZLIB_INCLUDE_DIR}
    )
  
    INCLUDE_DIRECTORIES(SYSTEM
      ${BOOST_INCLUDE_DIR}
      ${PROTOBUF_INCLUDE_DIRS}
-     ${LIBEVENT_INCLUDE_DIR}
+     ${LIBEVENT_INCLUDE_DIRS}
 +    ${SSL_INCLUDE_DIRS}
-+    ${ZLIB_INCLUDE_DIR}
    )
  
    IF(XPLUGIN_NO_LITE_PROTOBUF)
-@@ -215,7 +215,10 @@ ELSE()
+@@ -214,7 +214,10 @@ ELSE()
    ENDIF()
  
    TARGET_LINK_LIBRARIES(mysqlxtest mysys strings mysqlclient)
@@ -32,5 +30,5 @@ Fix mysqlxtest binary linking.
 +    TARGET_LINK_LIBRARIES(mysqlxtest "socket")
 +  ENDIF()
  
-   IF( WIN32 )
-     ADD_DEFINITIONS(-DMYSQLXTEST_EXPORTS)
+   IF(INSTALL_MYSQLTESTDIR)
+     INSTALL(

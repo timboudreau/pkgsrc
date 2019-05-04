@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.1 2017/07/11 10:34:30 jaapb Exp $
+# $NetBSD: Makefile,v 1.8 2019/01/13 23:22:51 dholland Exp $
 
-VERSION=	2.0.0_beta3
+VERSION=	2.0.0
 GITHUB_PROJECT=	opam-file-format
 GITHUB_TAG=	${VERSION:S/_/-/}
 DISTNAME=	${GITHUB_PROJECT}-${VERSION}

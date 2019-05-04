@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.5 2017/06/23 17:17:09 youri Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/25 07:33:31 maya Exp $
 
 .include "../../meta-pkgs/mate/Makefile.common"
 
-DISTNAME=	mate-control-center-${VERSION:R}.2
+DISTNAME=	mate-control-center-${VERSION}
+PKGREVISION=	1
 CATEGORIES=	sysutils
 
 COMMENT=	MATE Control Center

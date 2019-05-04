@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.2 2017/04/23 05:35:27 markd Exp $
+# $NetBSD: Makefile,v 1.4 2019/01/04 23:04:25 adam Exp $
 
-DISTNAME=	kerberos-1.2.4
+DISTNAME=	kerberos-1.3.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	1
-CATEGORIES=	security
+CATEGORIES=	security python
 MASTER_SITES=	${MASTER_SITE_PYPI:=k/kerberos/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://svn.calendarserver.org/wiki/PyKerberos
+HOMEPAGE=	https://github.com/apple/ccs-pykerberos
 COMMENT=	Python Kerberos implementation
 LICENSE=	apache-2.0
 

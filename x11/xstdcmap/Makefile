@@ -1,12 +1,11 @@
-# $NetBSD: Makefile,v 1.2 2013/05/28 03:47:57 rodent Exp $
-#
+# $NetBSD: Makefile,v 1.5 2019/02/21 09:47:24 wiz Exp $
 
-DISTNAME=	xstdcmap-1.0.3
+DISTNAME=	xstdcmap-1.0.4
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_XORG:=app/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://xorg.freedesktop.org/
 COMMENT=	Selectively defines standard colormap properties
 LICENSE=	x11
@@ -15,8 +14,7 @@ GNU_CONFIGURE=	yes
 USE_TOOLS+=	pkg-config
 
 .include "../../x11/libXmu/buildlink3.mk"
-BUILDLINK_API_DEPENDS.xproto+=	xproto>=7.0.17
-.include "../../x11/xproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
 .include "../../devel/xorg-util-macros/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

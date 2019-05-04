@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.31 2015/01/04 04:56:53 dholland Exp $
-#
+# $NetBSD: Makefile,v 1.33 2019/04/27 11:18:56 wiz Exp $
 
 DISTNAME=	${PKGNAME_NOREV}
 PKGNAME=	eclipse-${VERSION}
@@ -32,7 +31,7 @@ VERSION=	3.0.1
 
 .if ${OPSYS} == "Linux"
 DISTNAME=	eclipse-sourceBuild-srcIncluded-${VERSION}
-MASTER_SITES=	ftp://download.eclipse.org/R-3.0.1-200409161125/
+MASTER_SITES=	http://archive.eclipse.org/eclipse/downloads/drops/R-3.0.1-200409161125/
 
 INSTALLATION_DIRS=	bin
 
@@ -41,6 +40,7 @@ do-build:
 .else
 NO_BUILD=		yes
 CHECK_SHLIBS_SUPPORTED=	no
+CHECK_SSP_SUPPORTED=	no
 
 do-extract:
 	${MKDIR} ${WRKDIR}/result

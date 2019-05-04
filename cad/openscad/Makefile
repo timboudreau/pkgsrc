@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.44 2017/04/30 01:21:28 ryoon Exp $
+# $NetBSD: Makefile,v 1.54 2019/04/25 07:32:37 maya Exp $
 #
 
 DISTNAME=	openscad-2015.03-3.src
 PKGNAME=	openscad-2015.03p3
-PKGREVISION=	4
+PKGREVISION=	13
 CATEGORIES=	cad
 MASTER_SITES=	http://files.openscad.org/
 
@@ -29,7 +29,8 @@ MAKE_ENV+=	INSTALL_ROOT=${DESTDIR}
 
 do-configure:
 	cd ${WRKSRC} && ${QTDIR}/bin/qmake \
-	    PREFIX=${PREFIX} -after QMAKE_YACC=bison QMAKE_LEX=flex
+	    PREFIX=${PREFIX} -after QMAKE_YACC=bison QMAKE_LEX=flex \
+	    QMAKE_CXXFLAGS+=-std=c++0x
 
 .include "../../devel/boost-headers/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"

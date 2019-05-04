@@ -1,19 +1,20 @@
-# $NetBSD: Makefile,v 1.5 2017/02/12 06:25:32 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2018/11/14 22:21:48 kleink Exp $
 #
 
-DISTNAME=	zathura-djvu-0.2.6
+DISTNAME=	zathura-djvu-0.2.8
 PKGREVISION=	2
 CATEGORIES=	graphics
-MASTER_SITES=	http://pwmt.org/projects/zathura-djvu/download/
+MASTER_SITES=	https://pwmt.org/projects/zathura-djvu/download/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://pwmt.org/projects/zathura-djvu/
+HOMEPAGE=	https://pwmt.org/projects/zathura-djvu/
 COMMENT=	Add DjVu support to zathura using djvulibre library
 LICENSE=	zlib
 
-USE_TOOLS+=	pkg-config gmake
-USE_LIBTOOL=	yes
+USE_TOOLS+=	pkg-config
 
+.include "../../devel/py-meson/build.mk"
 .include "../../graphics/cairo/buildlink3.mk"
 .include "../../graphics/djvulibre-lib/buildlink3.mk"
 .include "../../print/zathura/buildlink3.mk"

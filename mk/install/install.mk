@@ -1,4 +1,4 @@
-# $NetBSD: install.mk,v 1.70 2017/06/01 02:15:10 jlam Exp $
+# $NetBSD: install.mk,v 1.75 2018/11/12 14:22:58 jperkin Exp $
 #
 # This file provides the code for the "install" phase.
 #
@@ -38,10 +38,11 @@
 #
 # INSTALLATION_DIRS
 #	A list of directories that should be created at the very
-#	beginning of the install phase. These directories are relative
-#	to ${PREFIX}. As a convenience, a leading gnu/ is transformed
-#	to ${PKGGNUDIR} and a leading man/ is transformed to
-#	${PKGMANDIR}, to save package authors from typing too much.
+#	beginning of the install phase. These directories MUST either
+#	be paths that contain a leading {PREFIX}/ or be relative
+#	paths. As a convenience, a leading gnu/ is transformed to
+#	${PKGGNUDIR} and a leading man/ is transformed to ${PKGMANDIR},
+#	to save package authors from typing too much.
 #
 # AUTO_MKDIRS
 # INSTALLATION_DIRS_FROM_PLIST
@@ -54,6 +55,13 @@
 #	A variable name that should be set as staged installation location
 #	presented as ${DESTDIR} at install phase.
 #	"DESTDIR" is set by default.
+#
+# STRIP_DEBUG_SUPPORTED
+#	If set to anything other than "yes" (the default), stripping will
+#	be disabled for the package.
+#
+# STRIP_FILES_SKIP
+#	A list of files relative to ${PREFIX} that will not be stripped.
 
 ######################################################################
 ### install (PUBLIC)
@@ -175,7 +183,10 @@ _INSTALL_ALL_TARGETS+=		pre-install
 _INSTALL_ALL_TARGETS+=		do-install
 _INSTALL_ALL_TARGETS+=		post-install
 _INSTALL_ALL_TARGETS+=		plist
-.if !empty(STRIP_DEBUG:M[Yy][Ee][Ss])
+.if ${_PKGSRC_USE_CTF} == "yes"
+_INSTALL_ALL_TARGETS+=		install-ctf
+.endif
+.if ${STRIP_DEBUG:Uno:tl} == "yes" && ${STRIP_DEBUG_SUPPORTED:Uyes:tl} == "yes"
 _INSTALL_ALL_TARGETS+=		install-strip-debug
 .endif
 _INSTALL_ALL_TARGETS+=		install-doc-handling
@@ -237,19 +248,33 @@ _INSTALL_ONE_DIR_CMD= { \
 	esac;								\
 	}
 
+# _INSTALLATION_DIRS
+#	Contains the items listed in ${INSTALLATION_DIRS} with the
+#	following transformations performed, in order:
+#
+#	1. Leading "${PREFIX}/" is stripped.
+#	2. Leading "gnu/" is transformed into "${PKGGNUDIR}".
+#	3. Leading "man/" is transformed into "${PKGMANDIR}/".
+#
+# Check that paths listed in ${_INSTALLATION_DIRS} are relative paths.
+# This can't be an assertion because some variables used when listing
+# directories in INSTALLATION_DIRS are not expanded until they are
+# used.
+#
+_INSTALLATION_DIRS=	${INSTALLATION_DIRS:C,^${PREFIX}/,,:C,^gnu/,${PKGGNUDIR},:C,^man/,${PKGMANDIR}/,}
+
 .PHONY: install-makedirs
 install-makedirs:
 	${RUN} ${INSTALL_DATA_DIR} ${DESTDIR}${PREFIX}
 .if defined(INSTALLATION_DIRS) && !empty(INSTALLATION_DIRS)
 	@${STEP_MSG} "Creating installation directories"
-	${RUN}								\
-	for dir in ${INSTALLATION_DIRS:C,^gnu/,${PKGGNUDIR},:C,^man/,${PKGMANDIR}/,}; do \
+	${RUN} set -- args ${_INSTALLATION_DIRS}; shift;		\
+	while ${TEST} "$$#" -gt 0; do					\
+		dir="$$1"; shift;					\
 		case "$$dir" in						\
-		${PREFIX}/*)						\
-			dir=`${ECHO} "$$dir" | ${SED} "s|^${PREFIX}/||"` ;; \
-		/*)	continue ;;					\
+		/*)	${FAIL_MSG} "INSTALLATION_DIRS: $$dir must be in "${PREFIX:Q}"." ;; \
+		*)	${_INSTALL_ONE_DIR_CMD}	;;			\
 		esac;							\
-		${_INSTALL_ONE_DIR_CMD};				\
 	done
 .endif	# INSTALLATION_DIRS
 
@@ -315,6 +340,30 @@ post-install:
 .endif
 
 ######################################################################
+### install-ctf (PRIVATE)
+######################################################################
+### install-ctf creates CTF information from debug binaries.
+###
+.PHONY: install-ctf
+install-ctf: plist
+	@${STEP_MSG} "Generating CTF data"
+	${RUN}cd ${DESTDIR:Q}${PREFIX:Q};				\
+	${CAT} ${_PLIST_NOKEYWORDS} | while read f; do			\
+		[ ! -h "$${f}" ] || continue;				\
+		case "$${f}" in						\
+		${CTF_FILES_SKIP:@p@${p}) continue ;;@}			\
+		*) ;;							\
+		esac;							\
+		tmp_f="$${f}.XXX";					\
+		if ${CTFCONVERT} -o "$${tmp_f}" "$${f}" 2>/dev/null; then \
+			if [ -f "$${tmp_f}" -a -f "$${f}" ]; then	\
+				${MV} "$${tmp_f}" "$${f}";		\
+			fi;						\
+		fi;							\
+		${RM} -f "$${tmp_f}";					\
+	done
+
+######################################################################
 ### install-strip-debug (PRIVATE)
 ######################################################################
 ### install-strip-debug tries to strip debug information from
@@ -323,16 +372,20 @@ post-install:
 .PHONY: install-strip-debug
 install-strip-debug: plist
 	@${STEP_MSG} "Automatic stripping of debug information"
-	${RUN}${CAT} ${_PLIST_NOKEYWORDS} \
-	| ${SED} -e 's|^|${DESTDIR}${PREFIX}/|' \
-	| while read f; do \
-		tmp_f="$${f}.XXX"; \
-		if ${STRIP} -g -o "$${tmp_f}" "$${f}" 2> /dev/null; then \
-			[ ! -f "$${f}" ] || \
-			    ${MV} "$${tmp_f}" "$${f}"; \
-		else \
-			${RM} -f "$${tmp_f}"; \
-		fi \
+	${RUN}cd ${DESTDIR:Q}${PREFIX:Q};				\
+	${CAT} ${_PLIST_NOKEYWORDS} | while read f; do			\
+		[ ! -h "$${f}" ] || continue;				\
+		case "$${f}" in						\
+		${STRIP_FILES_SKIP:@p@${p}) continue;;@}		\
+		*) ;;							\
+		esac;							\
+		tmp_f="$${f}.XXX";					\
+		if ${STRIP_DBG} -o "$${tmp_f}" "$${f}" 2>/dev/null; then \
+			if [ -f "$${tmp_f}" -a -f "$${f}" ]; then	\
+				${MV} "$${tmp_f}" "$${f}";		\
+			fi;						\
+		fi;							\
+		${RM} -f "$${tmp_f}";					\
 	done
 
 ######################################################################

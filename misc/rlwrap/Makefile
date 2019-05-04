@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.18 2017/04/10 20:30:15 leot Exp $
+# $NetBSD: Makefile,v 1.21 2019/04/25 07:33:08 maya Exp $
 #
 
 DISTNAME=	rlwrap-0.43
+PKGREVISION=	2
 CATEGORIES=	misc
 MASTER_SITES=	${MASTER_SITE_GITHUB:=hanslub42/}
 GITHUB_RELEASE=	v${PKGVERSION_NOREV}
@@ -13,6 +14,7 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		gmake perl:run
+USE_TOOLS+=		autoreconf autoconf automake
 
 REPLACE_PERL+=	filters/censor_passwords
 REPLACE_PERL+=	filters/count_in_prompt
@@ -35,6 +37,9 @@ REPLACE_PYTHON+=	filters/*.py
 PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 TEST_TARGET=		check
+
+pre-configure:
+	cd ${WRKSRC} && autoreconf -fi
 
 .include "options.mk"
 

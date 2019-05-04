@@ -1,25 +1,59 @@
-$NetBSD: patch-configure,v 1.3 2017/07/11 09:57:11 jaapb Exp $
+$NetBSD: patch-configure,v 1.5 2018/05/08 19:06:15 jaapb Exp $
 
-Do not install dbm META file even if dbm is present
---- configure.orig	2017-05-21 14:26:16.000000000 +0000
+Do not install META files for libraries that were split off
+--- configure.orig	2018-04-16 08:13:23.000000000 +0000
 +++ configure
-@@ -514,13 +514,13 @@ fi
+@@ -518,32 +518,32 @@ fi
  
  # dbm?
  
--if [ -f "${ocaml_core_stdlib}/dbm.cmi" ]; then
+-if [ -f "${ocaml_sitelib}/dbm/META" ]; then
+-    echo "dbm: package already present"
+-    ldbm=""
+-elif [ -f "${ocaml_core_stdlib}/dbm.cmi" ]; then
 -    echo "dbm: found"
 -    ldbm="dbm"
 -else
 -    echo "dbm: not present (normal since OCaml-4.00)"
-+#if [ -f "${ocaml_core_stdlib}/dbm.cmi" ]; then
-+#    echo "dbm: found"
-+#    ldbm="dbm"
+-    ldbm=""
+-fi
++#if [ -f "${ocaml_sitelib}/dbm/META" ]; then
++#   echo "dbm: package already present"
++#   ldbm=""
++#lif [ -f "${ocaml_core_stdlib}/dbm.cmi" ]; then
++#   echo "dbm: found"
++#   ldbm="dbm"
++#lse
++#   echo "dbm: not present (normal since OCaml-4.00)"
++   ldbm=""
++#i
+ 
+ # num?
+ 
+-if [ -f "${ocaml_sitelib}/num/META" ]; then
+-    echo "num: package already present"
+-    lnum=""
+-    numtop=""
+-elif [ -f "${ocaml_core_stdlib}/num.cmi" ]; then
+-    echo "num: found but not as package"
+-    lnum="num num-top"
+-    numtop="num-top"
+-else
+-    echo "num: not present (normal since OCaml-4.06)"
++#if [ -f "${ocaml_sitelib}/num/META" ]; then
++#    echo "num: package already present"
++#    lnum=""
++#    numtop=""
++#elif [ -f "${ocaml_core_stdlib}/num.cmi" ]; then
++#    echo "num: found but not as package"
++#    lnum="num num-top"
++#    numtop="num-top"
 +#else
-+#    echo "dbm: not present (normal since OCaml-4.00)"
-     ldbm=""
++#    echo "num: not present (normal since OCaml-4.06)"
+     lnum=""
+     numtop=""
 -fi
 +#fi
  
- # num?
+ # bytes?
  

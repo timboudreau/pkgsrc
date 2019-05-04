@@ -1,10 +1,12 @@
-$NetBSD: patch-makefile,v 1.19 2017/01/04 23:05:12 wiz Exp $
+$NetBSD: patch-makefile,v 1.23 2019/01/07 15:51:23 wiz Exp $
 
 Treat all BSDs the same.
 
---- makefile.orig	2016-10-25 23:47:23.000000000 +0000
+Do not set compiler optimization.
+
+--- makefile.orig	2018-08-29 00:35:24.000000000 +0000
 +++ makefile
-@@ -177,19 +177,19 @@ GENIEOS := solaris
+@@ -190,19 +190,19 @@ GENIEOS := solaris
  endif
  ifeq ($(firstword $(filter FreeBSD,$(UNAME))),FreeBSD)
  OS := freebsd
@@ -28,3 +30,14 @@ Treat all BSDs the same.
  endif
  ifeq ($(firstword $(filter Darwin,$(UNAME))),Darwin)
  OS := macosx
+@@ -566,10 +566,6 @@ PROFILER =
+ SYMBOLS = 1
+ endif
+ 
+-# specify a default optimization level if none explicitly stated
+-ifndef OPTIMIZE
+-OPTIMIZE = 3
+-endif
+ 
+ # set the symbols level
+ ifdef SYMBOLS

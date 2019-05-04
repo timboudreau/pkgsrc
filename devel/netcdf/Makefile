@@ -1,19 +1,24 @@
-# $NetBSD: Makefile,v 1.41 2017/04/30 01:21:22 ryoon Exp $
+# $NetBSD: Makefile,v 1.51 2018/12/13 19:51:34 adam Exp $
 
-DISTNAME=	netcdf-4.2.1.1
-PKGREVISION=	6
+DISTNAME=	netcdf-4.6.1
+PKGREVISION=	2
 CATEGORIES=	devel
-MASTER_SITES=	http://www.unidata.ucar.edu/downloads/netcdf/ftp/
+MASTER_SITES=	https://www.unidata.ucar.edu/downloads/netcdf/ftp/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.unidata.ucar.edu/software/netcdf/index.html
+HOMEPAGE=	https://www.unidata.ucar.edu/software/netcdf/index.html
 COMMENT=	Library for array-oriented data access
 
+USE_TOOLS+=		m4
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--disable-doxygen
 CONFIGURE_ARGS+=	--disable-examples
+
+.include "../../mk/dlopen.buildlink3.mk"
+
+BUILDLINK_TRANSFORM+=	opt:-ldl:${BUILDLINK_LDADD.dl:M*}
 
 .include "../../devel/hdf5/buildlink3.mk"
 .include "../../www/curl/buildlink3.mk"

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.90 2017/04/18 01:50:20 khorben Exp $
+# $NetBSD: Makefile,v 1.98 2018/11/29 11:21:50 prlw1 Exp $
 
 DISTNAME=	dasher-4.10.1
-PKGREVISION=	36
+PKGREVISION=	43
 CATEGORIES=	editors gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/dasher/4.10/}
 EXTRACT_SUFX=	.tar.bz2
@@ -11,7 +11,7 @@ HOMEPAGE=	http://www.inference.phy.cam.ac.uk/dasher/
 COMMENT=	Easy typing without using keyboard
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake intltool msgfmt pkg-config
 USE_PKGLOCALEDIR=	yes

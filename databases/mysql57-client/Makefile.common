@@ -1,18 +1,18 @@
-# $NetBSD: Makefile.common,v 1.5 2017/05/05 16:22:29 jperkin Exp $
+# $NetBSD: Makefile.common,v 1.16 2019/04/25 10:13:04 adam Exp $
 #
 # used by databases/mysql57-client/Makefile
 # used by databases/mysql57-server/Makefile
 
-DISTNAME=	mysql-5.7.18
+DISTNAME=	mysql-5.7.26
 CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_MYSQL:=MySQL-5.7/}
 
 MAINTAINER?=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.mysql.com/
+HOMEPAGE=	https://www.mysql.com/
 LICENSE=	gnu-gpl-v2
 
-DISTINFO_FILE?=		${.CURDIR}/../../databases/mysql57-client/distinfo
-PATCHDIR?=		${.CURDIR}/../../databases/mysql57-client/patches
+DISTINFO_FILE?=	${.CURDIR}/../../databases/mysql57-client/distinfo
+PATCHDIR?=	${.CURDIR}/../../databases/mysql57-client/patches
 
 USE_CMAKE=		yes
 USE_LANGUAGES=		c c++
@@ -66,14 +66,15 @@ CMAKE_ARGS+=		-DWITH_BOOST="system"
 CMAKE_ARGS+=		-DWITH_LZ4="system"
 CMAKE_ARGS+=		-DWITH_SSL="system"
 CMAKE_ARGS+=		-DWITH_ZLIB="system"
-CMAKE_ARGS+=		-DDEFAULT_CHARSET=${MYSQL_CHARSET:Q}
-CMAKE_ARGS+=		-DDEFAULT_COLLATION=${MYSQL_COLLATION:Q}
-CMAKE_ARGS+=		-DWITH_EXTRA_CHARSETS=${MYSQL_EXTRA_CHARSET:Q}
+CMAKE_ARGS+=		-DDEFAULT_CHARSET=${MYSQL_CHARSET}
+CMAKE_ARGS+=		-DDEFAULT_COLLATION=${MYSQL_COLLATION}
+CMAKE_ARGS+=		-DWITH_EXTRA_CHARSETS=${MYSQL_EXTRA_CHARSET}
 
-# MySQL 5 depends on builtin functions enabled with i486 and later with GCC.
-.if ${OPSYS} == "NetBSD" && !empty(MACHINE_ARCH:Mi386)
-GNU_ARCH.i386=		i486
-CFLAGS+=		-march=i486
+
+# we need atomic builtins
+.if ${OPSYS} == "NetBSD" && ${MACHINE_ARCH} == "i386"
+GNU_ARCH.i386=		i586
+CFLAGS+=		-march=i586
 .endif
 
 CPPFLAGS+=		-Dunix
@@ -84,6 +85,8 @@ CFLAGS+=		-DUSE_OLD_FUNCTIONS # 3.23.x compat
 CFLAGS+=		-fPIC -DPIC
 CXXFLAGS+=		-fPIC -DPIC
 .endif
+
+CMAKE_ARGS.SunOS+=	-DFORCE_UNSUPPORTED_COMPILER=YES
 
 # Force HAVE_CURSES_H on Solaris since the configure script is broken
 # and does not properly detect this, breaking the build later on.  Also
@@ -103,10 +106,11 @@ LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib/mysql
 
 SUBST_CLASSES+=		scr
 SUBST_STAGE.scr=	pre-configure
-SUBST_FILES.scr=	scripts/mysqld_safe.sh \
-			support-files/mysql.server.sh
+SUBST_FILES.scr=	scripts/mysqld_safe.sh
+SUBST_FILES.scr+=	support-files/mysql.server.sh
 SUBST_SED.scr=		-e "s,chown,${CHOWN},g"
 SUBST_SED.scr+=		-e "s,/bin/sh,${RCD_SCRIPTS_SHELL},g"
+SUBST_SED.scr+=		-e "s,@SHELL_PATH@,${RCD_SCRIPTS_SHELL},g"
 SUBST_MESSAGE.scr=	Fixing scripts.
 
 # Don't use the base system "libedit" under NetBSD because MySQL expects

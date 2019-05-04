@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.6 2017/07/14 15:33:19 adam Exp $
+# $NetBSD: Makefile,v 1.9 2018/12/16 14:19:16 adam Exp $
 
-DISTNAME=	pydot-1.2.3
+DISTNAME=	pydot-1.4.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
 CATEGORIES=	graphics python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pydot/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/pydot/
+HOMEPAGE=	https://github.com/erocarrera/pydot
 COMMENT=	Python interface to Graphviz's Dot language
 LICENSE=	mit
 
-DEPENDS+=	${PYPKGPREFIX}-pyparsing-[0-9]*:../../devel/py-pyparsing
 DEPENDS+=	graphviz-[0-9]*:../../graphics/graphviz
+DEPENDS+=	${PYPKGPREFIX}-pyparsing>=2.1.4:../../devel/py-pyparsing
 
-USE_LANGUAGES=		# none
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

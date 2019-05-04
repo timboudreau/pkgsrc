@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.12 2012/10/06 11:54:43 asau Exp $
+# $NetBSD: Makefile,v 1.14 2019/01/20 08:09:29 dholland Exp $
 
 DISTNAME=	jetpack
 PKGNAME=	jetpack-1.0
@@ -10,9 +10,9 @@ EXTRACT_SUFX=	.tar.Z
 MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Arcade action game for X Windows
 
-USE_IMAKE=	yes
+USE_IMAKE=		yes
 NO_INSTALL_MANPAGES=	yes
-SETGIDGAME=		yes
+USE_GAMESGROUP=		yes
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man6 share/jetpack
 

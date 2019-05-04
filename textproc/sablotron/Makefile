@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.47 2016/07/09 06:39:07 wiz Exp $
+# $NetBSD: Makefile,v 1.49 2018/08/22 09:47:12 wiz Exp $
 
 DISTNAME=		Sablot-1.0.2
 PKGNAME=		${DISTNAME:S/Sablot/sablotron/}
-PKGREVISION=		9
+PKGREVISION=		10
 CATEGORIES=		textproc
 MASTER_SITES=		http://download-1.gingerall.cz/download/sablot/
 
@@ -14,7 +14,7 @@ BUILD_DEPENDS+=		p5-XML-Parser-[0-9]*:../../textproc/p5-XML-Parser
 
 GNU_CONFIGURE=	YES
 USE_TOOLS+=		gmake perl
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		YES
 CONFIGURE_ARGS+=	--with-html-dir=${PREFIX}/share/doc/sablotron
 

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.6 2017/06/10 08:27:20 tsutsui Exp $
+$NetBSD: distinfo,v 1.20 2019/03/21 08:42:22 tsutsui Exp $
 
-SHA1 (gdk3-3.1.6.gem) = 6c5b3d2840ab6c0064afecd4fb33fe5f45fc69bb
-RMD160 (gdk3-3.1.6.gem) = 4037c58ee51978dd88d6a39a7afd31cb178ab3a9
-SHA512 (gdk3-3.1.6.gem) = e6b5b2e9ea1dd7beaaede8d5861652a9b9c1978e0e3c8e5769ca6f87f7236f17d78f8d43611535116064d1fd16005f53a8b8636dee72c4a65ffccfbd9543704e
-Size (gdk3-3.1.6.gem) = 26112 bytes
+SHA1 (gdk3-3.3.6.gem) = 91e272eb77a2cd9ccbd587c61f4453f01b351516
+RMD160 (gdk3-3.3.6.gem) = ab8714bd56dcbb16002035d6dfd2140694649b71
+SHA512 (gdk3-3.3.6.gem) = 8c21415ad6b0d0d3c4f0dc5966c8c94b59b22cecbfcb9071b0af6431e68fb16f1bff9519c1af5818a2ccadd8ca388dfa115634888aa6a6cf317b585116e629e7
+Size (gdk3-3.3.6.gem) = 35840 bytes

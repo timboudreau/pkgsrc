@@ -1,0 +1,7 @@
+$NetBSD: distinfo,v 1.4 2018/08/05 10:30:12 adam Exp $
+
+SHA1 (pytest-relaxed-1.1.4.tar.gz) = c27014e709a83c5b4e087023b9573f30d8aec3e1
+RMD160 (pytest-relaxed-1.1.4.tar.gz) = 6d310eba8aec1c1d101c3d9b8401f7648ba077b2
+SHA512 (pytest-relaxed-1.1.4.tar.gz) = d4e7ed5143ac9f1bff1f911e4ab3aede076d154dcecc28ce96cbc49782d186214893b942a3548da2789faa51df5ddbd43ff41c82b9bb9d0d52f38a2000fc0c6b
+Size (pytest-relaxed-1.1.4.tar.gz) = 26854 bytes
+SHA1 (patch-setup.py) = 62756ee640f7a1ac18d45554ed7a9713793d42e0

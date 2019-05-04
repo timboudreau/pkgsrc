@@ -1,4 +1,4 @@
-# $NetBSD: configure.mk,v 1.25 2012/06/01 12:52:37 jperkin Exp $
+# $NetBSD: configure.mk,v 1.28 2019/04/28 13:18:18 rillig Exp $
 #
 # = Package-settable variables =
 #
@@ -46,10 +46,13 @@
 
 _VARGROUPS+=		configure
 _USER_VARS.configure=	CONFIG_SHELL_FLAGS
-_PKG_VARS.configure=	CONFIGURE_ENV CONFIG_SHELL CONFIGURE_SCRIPT \
+_PKG_VARS.configure= \
+	CONFIGURE_DIRS CONFIGURE_ENV CONFIG_SHELL CONFIGURE_SCRIPT \
 	CONFIGURE_ARGS OVERRIDE_GNU_CONFIG_SCRIPTS HAS_CONFIGURE \
 	GNU_CONFIGURE PKGCONFIG_OVERRIDE USE_PKGLOCALEDIR \
 	CMAKE_ARGS CMAKE_ARG_PATH
+_SORTED_VARS.configure=	*_ENV *_OVERRIDE
+_LISTED_VARS.configure=	*_ARGS *_SCRIPTS
 
 CONFIGURE_SCRIPT?=	./configure
 CONFIGURE_ENV+=		${ALL_ENV}
@@ -203,6 +206,9 @@ _CONFIGURE_SCRIPT_ENV+=	${CONFIGURE_ENV}
 .PHONY: do-configure-script
 do-configure-script:
 .for _dir_ in ${CONFIGURE_DIRS}
+.  if ${CONFIGURE_DIRS:[#]} != 1
+	${RUN} ${STEP_MSG} "Running "${CONFIGURE_SCRIPT:Q}" in "${_dir_:Q}
+.  endif
 	${RUN}${_ULIMIT_CMD}						\
 	cd ${WRKSRC} && cd ${_dir_} &&					\
 	${PKGSRC_SETENV} ${_CONFIGURE_SCRIPT_ENV}			\

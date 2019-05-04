@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.17 2017/03/31 13:52:00 schmonz Exp $
+@comment $NetBSD: PLIST,v 1.21 2018/11/14 16:43:17 schmonz Exp $
 bin/bouncesaying
 bin/condredirect
 bin/datemail
@@ -96,7 +96,7 @@ man/man8/qmail-tcpok.8
 man/man8/qmail-tcpto.8
 man/man8/splogger.8
 share/doc/qmail/FAQ
-share/doc/qmail/INSTALL${DARWINSUFX}
+share/doc/qmail/INSTALL
 share/doc/qmail/INSTALL.alias
 share/doc/qmail/INSTALL.ctl
 share/doc/qmail/INSTALL.ids
@@ -114,10 +114,9 @@ share/doc/qmail/PIC.relaygood
 share/doc/qmail/PIC.rem2local
 share/doc/qmail/README.pkgsrc
 ${PLIST.srs}share/doc/qmail/README.srs
-${PLIST.qregex}share/doc/qmail/README.qregex
 share/doc/qmail/REMOVE.binmail
 share/doc/qmail/REMOVE.sendmail
-share/doc/qmail/SENDMAIL${DARWINSUFX}
+share/doc/qmail/SENDMAIL
 share/doc/qmail/TEST.deliver
 share/doc/qmail/TEST.receive
 share/doc/qmail/UPGRADE
@@ -131,12 +130,13 @@ share/examples/qmail/boot/home
 share/examples/qmail/boot/home+df
 share/examples/qmail/boot/proc
 share/examples/qmail/boot/proc+df
-${PLIST.viruscan}share/examples/qmail/control/signatures
 share/qmail/setup/config
 share/qmail/setup/config-fast
+share/qmail/setup/config-fast-pkgsrc
 share/qmail/setup/dnsfq
 share/qmail/setup/dnsip
 share/qmail/setup/dnsptr
 share/qmail/setup/hostname
-share/qmail/setup/install
+share/qmail/setup/install-destdir
+share/qmail/setup/instcheck
 share/qmail/setup/ipmeprint

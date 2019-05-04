@@ -1,0 +1,3 @@
+@comment $NetBSD: PLIST,v 1.2 2019/01/29 06:19:36 markd Exp $
+share/texmf-dist/scripts/changes/pyMergeChanges.py
+share/texmf-dist/tex/latex/changes/changes.sty

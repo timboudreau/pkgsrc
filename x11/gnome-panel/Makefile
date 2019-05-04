@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.192 2017/04/22 21:03:19 adam Exp $
+# $NetBSD: Makefile,v 1.212 2019/04/26 14:12:50 maya Exp $
 
 DISTNAME=		gnome-panel-2.32.1
-PKGREVISION=		54
+PKGREVISION=		69
 CATEGORIES=		x11 gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gnome-panel/2.32/}
 EXTRACT_SUFX=		.tar.bz2
 
-MAINTAINER=		drochner@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+MAINTAINER=		pkgsrc-users@NetBSD.org
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		GNOME2 panel application
 
 # depends on policykit
@@ -22,7 +22,7 @@ USE_LIBTOOL=		YES
 PKGCONFIG_OVERRIDE+=	bonobo/libpanel-applet/libpanelapplet-2.0.pc.in
 PKGCONFIG_OVERRIDE+=	libpanel-applet/libpanelapplet-3.0.pc.in
 CONFIGURE_ENV+=		PYTHON=${PYTHONBIN}
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit via py-gnome2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # py-ORBit via py-gnome2
 
 # XXX this pkg installs a gio module to ${PREFIX}/lib/gnome-panel/modules
 # but there are two problems with this:

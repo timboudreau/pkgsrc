@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.67 2016/11/15 08:54:40 leot Exp $
+# $NetBSD: Makefile,v 1.73 2019/02/11 20:44:46 leot Exp $
 
-DISTNAME=	msmtp-1.6.6
+DISTNAME=	msmtp-1.8.3
 CATEGORIES=	mail
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=msmtp/}
+MASTER_SITES=	https://marlam.de/msmtp/releases/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	bcv@hub3.net
-HOMEPAGE=	http://msmtp.sourceforge.net/
+HOMEPAGE=	https://marlam.de/msmtp/
 COMMENT=	SMTP plugin for MUAs
 LICENSE=	gnu-gpl-v3
 
@@ -15,6 +15,7 @@ USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		pkg-config msgfmt xgettext
 
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
+CONFIGURE_ARGS.Darwin+=	--with-macosx-keyring
 
 EGDIR=		${PREFIX}/share/examples/msmtp
 CONF_FILES=	${EGDIR}/msmtprc-user.example \
@@ -24,6 +25,7 @@ INFO_FILES=	yes
 PLIST_VARS+=	scripts
 
 CPPFLAGS.Interix+=	-D__WINSOCK
+LDFLAGS.SunOS+=		-lsocket -lnsl
 
 .include "options.mk"
 

@@ -1,5 +1,5 @@
-@comment $NetBSD: PLIST,v 1.2 2017/07/09 21:24:24 adam Exp $
-bin/waitress-serve${PYVERSSUFFIX}
+@comment $NetBSD: PLIST,v 1.4 2019/01/20 13:20:02 adam Exp $
+bin/waitress-serve-${PYVERSSUFFIX}
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
@@ -10,6 +10,9 @@ ${PYSITELIB}/${EGG_INFODIR}/top_level.txt
 ${PYSITELIB}/waitress/__init__.py
 ${PYSITELIB}/waitress/__init__.pyc
 ${PYSITELIB}/waitress/__init__.pyo
+${PYSITELIB}/waitress/__main__.py
+${PYSITELIB}/waitress/__main__.pyc
+${PYSITELIB}/waitress/__main__.pyo
 ${PYSITELIB}/waitress/adjustments.py
 ${PYSITELIB}/waitress/adjustments.pyc
 ${PYSITELIB}/waitress/adjustments.pyo
@@ -116,9 +119,15 @@ ${PYSITELIB}/waitress/tests/test_trigger.pyo
 ${PYSITELIB}/waitress/tests/test_utilities.py
 ${PYSITELIB}/waitress/tests/test_utilities.pyc
 ${PYSITELIB}/waitress/tests/test_utilities.pyo
+${PYSITELIB}/waitress/tests/test_wasyncore.py
+${PYSITELIB}/waitress/tests/test_wasyncore.pyc
+${PYSITELIB}/waitress/tests/test_wasyncore.pyo
 ${PYSITELIB}/waitress/trigger.py
 ${PYSITELIB}/waitress/trigger.pyc
 ${PYSITELIB}/waitress/trigger.pyo
 ${PYSITELIB}/waitress/utilities.py
 ${PYSITELIB}/waitress/utilities.pyc
 ${PYSITELIB}/waitress/utilities.pyo
+${PYSITELIB}/waitress/wasyncore.py
+${PYSITELIB}/waitress/wasyncore.pyc
+${PYSITELIB}/waitress/wasyncore.pyo

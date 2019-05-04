@@ -1,8 +1,10 @@
-# $NetBSD: Makefile.common,v 1.21 2017/05/03 08:38:46 jperkin Exp $
+# $NetBSD: Makefile.common,v 1.31 2019/04/28 12:46:31 maya Exp $
 # used by x11/qt5-mysql/Makefile
 # used by x11/qt5-odbc/Makefile
 # used by x11/qt5-psql/Makefile
 # used by x11/qt5-qtbase/Makefile
+# used by x11/qt5-qtcharts/Makefile
+# used by x11/qt5-qtconnectivity/Makefile
 # used by x11/qt5-qtdeclarative/Makefile
 # used by x11/qt5-qtdoc/Makefile
 # used by x11/qt5-qtgraphicaleffects/Makefile
@@ -10,7 +12,7 @@
 # used by x11/qt5-qtlocation/Makefile
 # used by x11/qt5-qtmacextras/Makefile
 # used by x11/qt5-qtmultimedia/Makefile
-# used by x11/qt5-qtquick1/Makefile
+# used by x11/qt5-qtnetworkauth/Makefile
 # used by x11/qt5-qtquickcontrols/Makefile
 # used by x11/qt5-qtscript/Makefile
 # used by x11/qt5-qtsensors/Makefile
@@ -23,17 +25,18 @@
 # used by x11/qt5-qtwebsockets/Makefile
 # used by x11/qt5-qtx11extras/Makefile
 # used by x11/qt5-qtxmlpatterns/Makefile
-# used by x11/qt5-sqlite3/Makefile
 
 .include "../../x11/qt5/Makefile.common"
 .include "options.mk"
 
 .include "../../mk/dlopen.buildlink3.mk"
-BUILDLINK_TRANSFORM+=	opt:-ldl:${BUILDLINK_LDADD.dl:M*}
+BUILDLINK_TRANSFORM+=	opt:-ldl:${BUILDLINK_LDADD.dl:Q}
 
 USE_LANGUAGES=		c c++11
-USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake perl:build pkg-config
+
+# Avoid failures to due 'register' usage in X11 headers.
+CFLAGS+=		-Wno-register
 
 # wcstof(3) etc. is used in C++ code.
 CFLAGS.NetBSD+=		-D_NETBSD_SOURCE
@@ -56,9 +59,20 @@ PLIST.unix=		yes
 # avoid creating a .qt directory in the users home directory
 SCRIPTS_ENV+=		HOME=${WRKDIR}
 
-.if empty(PKGPATH:Mx11/qt5-qtbase) \
-	&& empty(PKGPATH:Mx11/qt5-odbc) && empty(PKGPATH:Mx11/qt5-mysql) \
-	&& empty(PKGPATH:Mx11/qt5-psql) && empty(PKGPATH:Mx11/qt5-sqlite3)
+.if "${PKGPATH}" != "x11/qt5-qtbase" && "${PKGPATH}" != "x11/qt5-odbc" && \
+	"${PKGPATH}" != "x11/qt5-mysql" && "${PKGPATH}" != "x11/qt5-psql"
 do-configure:
-	cd ${WRKSRC} && ${QTPREFIX}/bin/qmake -o Makefile
+	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${QTPREFIX}/bin/qmake -o Makefile
+.endif
+
+.if ${OPSYS} == "Darwin"
+.PHONY: fix-darwin-install-name
+post-install: fix-darwin-install-name
+fix-darwin-install-name:
+	${FIND} ${DESTDIR}${PREFIX} -name "*.dylib" -print |		\
+		while read lib; do					\
+		libname=`basename $${lib}`;				\
+		libdir=`dirname $${lib} | sed -e 's,${DESTDIR},,'`;	\
+		install_name_tool -id $${libdir}/$${libname} $${lib};	\
+	done
 .endif

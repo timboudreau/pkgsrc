@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.20 2017/07/16 07:34:51 wiz Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/03 00:33:17 ryoon Exp $
 
-DISTNAME=	PyQt-gpl-${PYQT_VERSION}
-PKGNAME=	${PYPKGPREFIX}-qt5-${PYQT_VERSION}
-PKGREVISION=	11
-PYQT_VERSION=	5.5.1
+DISTNAME=	PyQt5_gpl-5.11.3
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/PyQt5_gpl/qt5/}
+PKGREVISION=	4
 CATEGORIES=	x11 python
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pyqt/}
 
@@ -11,10 +10,15 @@ MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Python binding for Qt5
 HOMEPAGE=	http://www.riverbankcomputing.com/software/pyqt/intro
 
+.include "../../lang/python/pyversion.mk"
+.if ${_PYTHON_VERSION} == 27
+DEPENDS+=	${PYPKGPREFIX}-enum34-[0-9]*:../../devel/py-enum34
+.endif
+DEPENDS+=	${PYPKGPREFIX}-sip-qt5-[0-9]*:../../x11/py-sip-qt5
+
+USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake pkg-config
-USE_LANGUAGES=		c c++
-
 CONFIGURE_ARGS+=	-b ${PREFIX}/bin
 CONFIGURE_ARGS+=	-d ${PREFIX}/${PYSITELIB}
 CONFIGURE_ARGS+=	-q ${QTDIR}/bin/qmake
@@ -22,64 +26,63 @@ CONFIGURE_ARGS+=	--confirm-license
 CONFIGURE_ARGS+=	--qsci-api
 CONFIGURE_ARGS+=	--sip ${BUILDLINK_PREFIX.py-sip}/bin/sip${PYVERSSUFFIX}
 CONFIGURE_ARGS+=	--verbose
-MAKEFLAGS+=		LFLAGS=${LDFLAGS:Q}
 
 INSTALL_ENV+=		INSTALL_ROOT=${DESTDIR}
 
+PLIST_VARS+=		webkit x11
 PY_PATCHPLIST=		yes
 
-SUBST_CLASSES+=		install x11lib
-SUBST_STAGE.install=	post-configure
-SUBST_SED.install+=	-e 's,INSTALL_FILE  = ,INSTALL_FILE  = libtool --mode=install ,'
-SUBST_SED.install+=	-e 's,\(TARGET[A-Z ]*\)= lib,\1= ,'
-SUBST_MESSAGE.install=	Fixing installation target and file name.
-SUBST_FILES.install+=	Qt/Makefile
-SUBST_FILES.install+=	QtCore/Makefile
-SUBST_FILES.install+=	QtDBus/Makefile
-SUBST_FILES.install+=	QtDesigner/Makefile
-SUBST_FILES.install+=	QtGui/Makefile
-SUBST_FILES.install+=	QtHelp/Makefile
-SUBST_FILES.install+=	QtMultimedia/Makefile
-SUBST_FILES.install+=	QtMultimediaWidgets/Makefile
-SUBST_FILES.install+=	QtNetwork/Makefile
-SUBST_FILES.install+=	QtOpenGL/Makefile
-SUBST_FILES.install+=	QtPositioning/Makefile
-SUBST_FILES.install+=	QtPrintSupport/Makefile
-SUBST_FILES.install+=	QtQml/Makefile
-SUBST_FILES.install+=	QtQuick/Makefile
-SUBST_FILES.install+=	QtSensors/Makefile
-SUBST_FILES.install+=	QtSql/Makefile
-SUBST_FILES.install+=	QtSvg/Makefile
-SUBST_FILES.install+=	QtTest/Makefile
-SUBST_FILES.install+=	QtWebKit/Makefile
-SUBST_FILES.install+=	QtWebKitWidgets/Makefile
-SUBST_FILES.install+=	QtWidgets/Makefile
-SUBST_FILES.install+=	QtXmlPatterns/Makefile
-SUBST_FILES.install+=	_QOpenGLFunctions_2_0/Makefile
-
-SUBST_STAGE.x11lib=     post-patch
-SUBST_SED.x11lib+=      -e 's,@X11LIB@,${X11BASE}/lib,'
-SUBST_SED.x11lib+=      -e 's,@PREFIX@,${PREFIX},'
-SUBST_MESSAGE.x11lib=   Fixing rpath for X11 and pulseaudio libraries.
-SUBST_FILES.x11lib+=    configure.py
-SUBST_FILES.x11lib+=    designer/designer.pro-in
-SUBST_FILES.x11lib+=    qmlscene/qmlscene.pro-in
+SUBST_CLASSES+=		x11lib
+SUBST_STAGE.x11lib=	pre-configure
+SUBST_MESSAGE.x11lib=	Fixing rpath for X11 and pulseaudio libraries.
+SUBST_FILES.x11lib+=	configure.py
+SUBST_FILES.x11lib+=	designer/designer.pro-in
+SUBST_FILES.x11lib+=	qmlscene/qmlscene.pro-in
+SUBST_SED.x11lib+=	-e 's,@X11LIB@,${X11BASE}/lib,'
+SUBST_SED.x11lib+=	-e 's,@PREFIX@,${PREFIX},'
 
 do-configure:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} \
 		${PYTHONBIN} configure.py ${CONFIGURE_ARGS}
 
+.include "../../mk/bsd.prefs.mk"
+
+.if ${OPSYS} == "Darwin"
+.PHONY: fix-darwin-install-name
+post-install: fix-darwin-install-name
+fix-darwin-install-name:
+	${FIND} ${DESTDIR}${PREFIX} -name '*.so' -or -name '*.dylib' |	\
+		while read lib; do					\
+		libname=`basename $${lib}`;				\
+		libdir=`dirname $${lib} | sed -e 's,${DESTDIR},,'`;	\
+		install_name_tool -id $${libdir}/$${libname} $${lib};	\
+	done
+.else
+PLIST.x11=	yes
+.endif
+
 .include "../../lang/python/extension.mk"
 .include "../../sysutils/dbus-python-common/buildlink3.mk"
-BUILDLINK_API_DEPENDS.py-sip+=	${PYPKGPREFIX}-sip>=4.16.4
+.include "../../sysutils/py-dbus/buildlink3.mk"
+BUILDLINK_API_DEPENDS.py-sip+=	${PYPKGPREFIX}-sip>=4.19.4
 .include "../../x11/py-sip/buildlink3.mk"
 .include "../../x11/qt5-qtbase/buildlink3.mk"
+.include "../../x11/qt5-qtcharts/buildlink3.mk"
 .include "../../x11/qt5-qtdeclarative/buildlink3.mk"
 .include "../../x11/qt5-qtlocation/buildlink3.mk"
 .include "../../x11/qt5-qtmultimedia/buildlink3.mk"
+.include "../../x11/qt5-qtnetworkauth/buildlink3.mk"
 .include "../../x11/qt5-qtsensors/buildlink3.mk"
 .include "../../x11/qt5-qtsvg/buildlink3.mk"
 .include "../../x11/qt5-qttools/buildlink3.mk"
-.include "../../x11/qt5-qtwebkit/buildlink3.mk"
+.if ${OPSYS} == "Darwin"
+.  include "../../x11/qt5-qtmacextras/buildlink3.mk"
+.else
+# currently qt5-qtwebkit does not build on Darwin
+PLIST.webkit=	yes
+.  include "../../x11/qt5-qtwebkit/buildlink3.mk"
+.  include "../../x11/qt5-qtx11extras/buildlink3.mk"
+.endif
+.include "../../x11/qt5-qtwebsockets/buildlink3.mk"
 .include "../../x11/qt5-qtxmlpatterns/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

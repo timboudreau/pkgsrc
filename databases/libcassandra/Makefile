@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.35 2017/04/30 01:21:30 ryoon Exp $
+# $NetBSD: Makefile,v 1.43 2018/12/13 19:51:44 adam Exp $
 #
 
 DISTNAME=		libcassandra-20101010
-PKGREVISION=		24
+PKGREVISION=		30
 CATEGORIES=		databases
 MASTER_SITES=		ftp://ftp.ancient-solutions.com/pub/bsdprojects/NetBSD/packages/distfiles/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://github.com/posulliv/libcassandra/
+HOMEPAGE=		https://github.com/posulliv/libcassandra/
 LICENSE=		modified-bsd
 
 COMMENT=		C++ interface to Cassandra
@@ -36,6 +36,7 @@ MAKE_ENV+=		AM_DEFAULT_VERBOSITY=1
 
 .include "../../mk/compiler.mk"
 .if !empty(PKGSRC_COMPILER:Mclang)
+CXXFLAGS+=	-Wno-unknown-warning-option
 CXXFLAGS+=	-Wno-c++11-extensions -Wno-error=unused-local-typedef
 .endif
 

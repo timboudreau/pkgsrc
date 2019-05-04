@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.52 2017/07/05 11:02:16 sborrill Exp $
+# $NetBSD: Makefile,v 1.69 2019/04/25 07:33:21 maya Exp $
 
-DISTNAME=	salt-2016.11.6
+DISTNAME=	salt-2019.2.0
+PKGREVISION=	1
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_PYPI:=s/salt/}
 
@@ -15,12 +16,13 @@ DEPENDS+=	${PYPKGPREFIX}-msgpack-[0-9]*:../../devel/py-msgpack
 DEPENDS+=	${PYPKGPREFIX}-yaml-[0-9]*:../../textproc/py-yaml
 DEPENDS+=	${PYPKGPREFIX}-requests>=2.5.0:../../devel/py-requests
 DEPENDS+=	${PYPKGPREFIX}-tornado>=4.3:../../www/py-tornado
+DEPENDS+=	${PYPKGPREFIX}-psutil-[0-9]*:../../sysutils/py-psutil
 # zeromq transport requirements
-DEPENDS+=	${PYPKGPREFIX}-crypto-[0-9]*:../../security/py-crypto
-DEPENDS+=	${PYPKGPREFIX}-zmq>=2.1.9:../../net/py-zmq
+DEPENDS+=	${PYPKGPREFIX}-cryptodome-[0-9]*:../../security/py-cryptodome
+DEPENDS+=	${PYPKGPREFIX}-zmq>=2.2.0:../../net/py-zmq
 
 .include "../../lang/python/pyversion.mk"
-.if "${PYPKGPREFIX}" == "py27"
+.if ${_PYTHON_VERSION} == 27
 DEPENDS+= ${PYPKGPREFIX}-futures-[0-9]*:../../devel/py-futures
 .endif
 
@@ -35,7 +37,6 @@ PYSETUPARGS+=	--salt-logs-dir=${VARBASE}/log/salt
 PYSETUPARGS+=	--salt-pidfile-dir=${VARBASE}/run
 PYSETUPARGS+=	--salt-sock-dir=${VARBASE}/run/salt
 
-REPLACE_PYTHON=		*.py */*.py */*/*.py
 REPLACE_SH=		salt/templates/git/ssh-id-wrapper
 
 RCD_SCRIPTS+=		salt_master salt_minion salt_syndic
@@ -55,32 +56,29 @@ OWN_DIRS+=		${VARBASE}/salt/master-roots
 OWN_DIRS+=		${VARBASE}/cache/salt ${VARBASE}/run/salt
 OWN_DIRS+=		${VARBASE}/log/salt
 
-SUBST_CLASSES+=		fix-paths
-SUBST_STAGE.fix-paths=	pre-configure
-SUBST_MESSAGE.fix-paths=Fixing hardcoded paths
-SUBST_FILES.fix-paths=	conf/*
-SUBST_FILES.fix-paths+=	doc/man/* salt/modules/munin.py setup.py
-SUBST_FILES.fix-paths+=	salt/utils/rsax931.py salt/grains/core.py
-SUBST_SED.fix-paths=	-e 's,/etc/salt,${PKG_SYSCONFDIR},g'
-SUBST_SED.fix-paths+=	-e 's,/srv/salt,${VARBASE}/salt/file-roots,g'
-SUBST_SED.fix-paths+=	-e 's,/srv/pillar,${VARBASE}/salt/pillar-roots,g'
-SUBST_SED.fix-paths+=	-e 's,/etc/munin,${PKG_SYSCONFBASEDIR}/munin,g'
-SUBST_SED.fix-paths+=	-e 's,share/man,${PKGMANDIR},g'
-SUBST_SED.fix-paths+=	-e 's,/opt/local/lib,${PREFIX}/lib,g'
-SUBST_SED.fix-paths+=	-e 's,/opt/local/etc,${PKG_SYSCONFBASEDIR},g'
+SUBST_CLASSES+=		fix-path
+SUBST_STAGE.fix-path=	pre-configure
+SUBST_MESSAGE.fix-path=	Fixing hardcoded paths
+SUBST_FILES.fix-path=	conf/*
+SUBST_FILES.fix-path+=	doc/man/* salt/modules/munin.py setup.py
+SUBST_FILES.fix-path+=	salt/utils/rsax931.py salt/grains/core.py
+SUBST_SED.fix-path=	-e 's,/etc/salt,${PKG_SYSCONFDIR},g'
+SUBST_SED.fix-path+=	-e 's,/srv/salt,${VARBASE}/salt/file-roots,g'
+SUBST_SED.fix-path+=	-e 's,/srv/pillar,${VARBASE}/salt/pillar-roots,g'
+SUBST_SED.fix-path+=	-e 's,/etc/munin,${PKG_SYSCONFBASEDIR}/munin,g'
+SUBST_SED.fix-path+=	-e 's,share/man,${PKGMANDIR},g'
+SUBST_SED.fix-path+=	-e 's,/opt/local/lib,${PREFIX}/lib,g'
+SUBST_SED.fix-path+=	-e 's,/opt/local/etc,${PKG_SYSCONFBASEDIR},g'
+SUBST_SED.fix-path+=	-e 's,/var/run,${VARBASE}/run,g'
+SUBST_SED.fix-path+=	-e 's,/var/cache,${VARBASE}/cache,g'
+SUBST_SED.fix-path+=	-e 's,/var/log,${VARBASE}/log,g'
+
+# Contains hardcoded paths to find installed libraries.
+CHECK_WRKREF_SKIP+=	*/salt/utils/rsax931.py
 
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/conf/master ${DESTDIR}${EGDIR}/
 	${INSTALL_DATA} ${WRKSRC}/conf/minion ${DESTDIR}${EGDIR}/
 
-# Dependencies are documented at
-# http://docs.saltstack.org/en/latest/topics/installation/index.html#dependencies
-# Jinja2 is documented as an optional dependency, but it's small so we
-# include it unconditionally.
-#
-# There's also an optional dependency on gcc, for Cython support, but
-# we don't bother with that here.
-#
-.include "../../lang/python/application.mk"
 .include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

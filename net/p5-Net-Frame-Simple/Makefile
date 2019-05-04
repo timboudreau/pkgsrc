@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.11 2017/06/05 14:24:19 ryoon Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:46:00 wiz Exp $
 
-DISTNAME=	Net-Frame-Simple-1.07
+DISTNAME=	Net-Frame-Simple-1.09
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	net perl5

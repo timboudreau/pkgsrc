@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.66 2017/01/19 18:52:27 agc Exp $
+# $NetBSD: Makefile,v 1.68 2018/08/22 09:46:46 wiz Exp $
 
 DISTNAME=		intltool-0.51.0
-PKGREVISION=		2
+PKGREVISION=		3
 CATEGORIES=		textproc devel gnome
 MASTER_SITES=		https://launchpad.net/intltool/trunk/${PKGVERSION_NOREV}/+download/
 MASTER_SITES+=		http://launchpadlibrarian.net/94524169/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://launchpad.net/intltool/
+HOMEPAGE=		https://launchpad.net/intltool/
 COMMENT=		Internationalization Tool Collection
 LICENSE=		gnu-gpl-v2
 

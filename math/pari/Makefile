@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.72 2017/01/07 13:37:41 leot Exp $
+# $NetBSD: Makefile,v 1.75 2018/08/22 09:45:41 wiz Exp $
 
 DISTNAME=	pari-2.7.6
-PKGREVISION=	2
+PKGREVISION=	4
 CATEGORIES=	math
 MASTER_SITES=	http://pari.math.u-bordeaux.fr/pub/pari/unix/
 
@@ -18,6 +18,7 @@ USE_LANGUAGES+=		c c++
 HAS_CONFIGURE=		yes
 CONFIGURE_ENV+=		LOCALBASE=${LOCALBASE}
 CONFIGURE_ENV+=		PERL5=${PERL5:Q}
+MAKE_ENV+=		PERL_USE_UNSAFE_INC=1
 
 CONFIGURE_SCRIPT=	${WRKSRC}/Configure
 CONFIGURE_ARGS+=	--prefix=${PREFIX}

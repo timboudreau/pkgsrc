@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.5 2017/05/12 22:35:52 khorben Exp $
+# $NetBSD: Makefile,v 1.7 2018/11/28 16:03:41 nia Exp $
 
-DISTNAME=	telegram-purple_1.3.0.orig
-PKGNAME=	telegram-purple-1.3.0
+DISTNAME=	telegram-purple_1.3.1.orig
+PKGNAME=	telegram-purple-1.3.1
 CATEGORIES=	chat
 MASTER_SITES=	${MASTER_SITE_GITHUB:=majn/}
 GITHUB_PROJECT=	telegram-purple
-GITHUB_RELEASE=	v1.3.0
+GITHUB_RELEASE=	v1.3.1
 
 MAINTAINER=	khorben@defora.org
 HOMEPAGE=	https://github.com/majn/telegram-purple/
@@ -25,7 +25,7 @@ INSTALLATION_DIRS+=	${EGDIR}
 OWN_DIRS+=		${PKG_SYSCONFDIR}/${PKGBASE}
 
 SUBST_CLASSES+=		tglpub
-SUBST_STAGE.tglpub=	post-patch
+SUBST_STAGE.tglpub=	pre-configure
 SUBST_MESSAGE.tglpub=	Adjust path to server.tglpub
 SUBST_FILES.tglpub=	telegram-purple.c
 SUBST_SED.tglpub=	-e "s|/etc/|${PKG_SYSCONFDIR}/|g"

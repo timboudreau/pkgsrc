@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.9 2017/06/05 14:23:54 ryoon Exp $
+# $NetBSD: Makefile,v 1.11 2018/08/22 09:44:57 wiz Exp $
 
-DISTNAME=	indirect-0.37
+DISTNAME=	indirect-0.38
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

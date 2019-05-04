@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.44 2017/04/22 21:03:11 adam Exp $
+# $NetBSD: Makefile,v 1.55 2019/04/03 00:32:44 ryoon Exp $
 #
 
 DISTNAME=	libchamplain-0.6.1
 PKGNAME=	libchamplain06-0.6.1
-PKGREVISION=	41
+PKGREVISION=	52
 CATEGORIES=	geography
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/libchamplain/0.6/}
 EXTRACT_SUFX=	.tar.bz2

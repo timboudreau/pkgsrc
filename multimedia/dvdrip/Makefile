@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.60 2017/02/07 12:13:12 wiz Exp $
+# $NetBSD: Makefile,v 1.63 2018/08/22 09:45:48 wiz Exp $
 
 DISTNAME=	dvdrip-0.98.11
-PKGREVISION=	7
+PKGREVISION=	8
 CATEGORIES=	multimedia x11 sysutils
-MASTER_SITES=	http://www.exit1.org/dvdrip/dist/
+MASTER_SITES=	https://www.exit1.org/dvdrip/dist/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.exit1.org/dvdrip/
+HOMEPAGE=	https://www.exit1.org/dvdrip/
 COMMENT=	Graphical frontend for DVD ripping
 
 DEPENDS+=	lsdvd>=0.16nb3:../../multimedia/lsdvd
@@ -38,7 +38,7 @@ MAKE_JOBS_SAFE=		no
 PERL5_PACKLIST= auto/Video/DVDRip/.packlist
 
 SUBST_CLASSES+=		fping
-SUBST_STAGE.fping=	post-patch
+SUBST_STAGE.fping=	pre-configure
 SUBST_FILES.fping+=	lib/Video/DVDRip/Cluster/Master.pm
 SUBST_SED.fping=	-e "s|/usr/sbin|${PREFIX}/sbin|g"
 SUBST_MESSAGE.fping=	Fixing hardcoded path.

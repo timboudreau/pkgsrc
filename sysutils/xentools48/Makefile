@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2017/07/11 14:19:21 jaapb Exp $
+# $NetBSD: Makefile,v 1.26 2019/04/25 07:33:23 maya Exp $
 #
-VERSION=	4.8.0
+VERSION=	4.8.3
 VERSION_IPXE=	827dd1bfee67daa683935ce65316f7e0f057fe1c
 DIST_IPXE=	ipxe-git-${VERSION_IPXE}.tar.gz
 DIST_NEWLIB=	newlib-1.16.0.tar.gz
@@ -16,10 +16,10 @@ DIST_LIBPCI=	pciutils-2.2.9.tar.bz2
 DIST_SUBDIR=		xen48
 DISTNAME=		xen-${VERSION}
 PKGNAME=		xentools48-${VERSION}
-PKGREVISION=		1
-#PKGREVISION=		2
 CATEGORIES=		sysutils
 MASTER_SITES=		https://downloads.xenproject.org/release/xen/${VERSION}/
+
+PKGREVISION=		7
 
 DISTFILES=		${DISTNAME}.tar.gz
 
@@ -71,13 +71,14 @@ PKG_SYSCONFSUBDIR=	xen
 ONLY_FOR_PLATFORM=	Linux-2.6*-x86_64
 ONLY_FOR_PLATFORM+=	NetBSD-[5-9].*-x86_64
 
+SSP_SUPPORTED=		no
+
 CONFLICTS+=		libxen-[0-9]*
-CONFLICTS+=		xentools20-[0-9]*
-CONFLICTS+=		xentools3-[0-9]*
 CONFLICTS+=		xenstoretools-[0-9]*
 
 CHECK_PORTABILITY_SKIP=	tools/examples/* \
 			tools/qemu-xen/scripts/qemu-binfmt-conf.sh
+CHECK_RELRO_SKIP=	libexec/xen/boot/hvmloader
 
 EGDIR=			${PREFIX}/share/examples/xen
 MESSAGE_SUBST+=		EGDIR=${EGDIR}
@@ -92,12 +93,13 @@ CONFIGURE_ARGS+=	--disable-seabios
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 
 MAKE_ENV+=		PREFIX=${prefix:Q} WRKSRC=${WRKSRC}
+MAKE_ENV+=		APPEND_LIB=${LDFLAGS:Q}
 MAKE_ENV+=		XEN_EXAMPLES_DIR=${EGDIR}
 MAKE_ENV+=		MV=${MV:Q} PYTHON=${PYTHONBIN:Q} SED=${SED:Q}
 MAKE_ENV+=		V=YES
 MAKE_ENV+=		NO_WERROR=1
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+PYTHON_VERSIONS_ACCEPTED=	27
 
 PY_PATCHPLIST=		yes
 REPLACE_PYTHON+=	tools/misc/xen-bugtool tools/misc/xen-ringwatch
@@ -185,7 +187,6 @@ CONF_FILES+=		${EGDIR}/xl.conf ${PKG_SYSCONFDIR}/xl.conf
 CONF_FILES+=		${EGDIR}/oxenstored.conf ${PKG_SYSCONFDIR}/oxenstored.conf
 
 OWN_DIRS=		${PKG_SYSCONFDIR}/scripts ${VARBASE}/log/xen
-OWN_DIRS+=		${VARBASE}/lib/xen
 
 .for s in ${XEND_SCRIPTS}
 CONF_FILES_PERMS+=	${EGDIR}/scripts/${s} ${PKG_SYSCONFDIR}/scripts/${s} \

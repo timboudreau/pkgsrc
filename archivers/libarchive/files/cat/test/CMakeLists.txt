@@ -12,6 +12,7 @@ IF(ENABLE_CAT AND ENABLE_TEST)
     test_empty_gz.c
     test_empty_lz4.c
     test_empty_xz.c
+    test_empty_zstd.c
     test_error.c
     test_error_mixed.c
     test_expand_Z.c
@@ -21,7 +22,9 @@ IF(ENABLE_CAT AND ENABLE_TEST)
     test_expand_mixed.c
     test_expand_plain.c
     test_expand_xz.c
+    test_expand_zstd.c
     test_help.c
+    test_stdin.c
     test_version.c
   )
 
@@ -29,6 +32,16 @@ IF(ENABLE_CAT AND ENABLE_TEST)
   # Register target
   #
   ADD_EXECUTABLE(bsdcat_test ${bsdcat_test_SOURCES})
+  IF(ENABLE_ACL)
+    SET(TEST_ACL_LIBS "")
+    IF(HAVE_LIBACL)
+      LIST(APPEND TEST_ACL_LIBS ${ACL_LIBRARY})
+    ENDIF(HAVE_LIBACL)
+    IF(HAVE_LIBRICHACL)
+      LIST(APPEND TEST_ACL_LIBS ${RICHACL_LIBRARY})
+    ENDIF(HAVE_LIBRICHACL)
+    TARGET_LINK_LIBRARIES(bsdcat_test ${TEST_ACL_LIBS})
+  ENDIF(ENABLE_ACL)
   SET_PROPERTY(TARGET bsdcat_test PROPERTY COMPILE_DEFINITIONS LIST_H)
 
   #

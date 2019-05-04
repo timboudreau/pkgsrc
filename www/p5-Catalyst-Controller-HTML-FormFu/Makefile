@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.15 2017/06/05 14:25:12 ryoon Exp $
+# $NetBSD: Makefile,v 1.18 2018/08/22 09:47:32 wiz Exp $
 
-DISTNAME=	Catalyst-Controller-HTML-FormFu-2.01
+DISTNAME=	Catalyst-Controller-HTML-FormFu-2.04
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	www perl5

@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.42 2017/02/21 16:05:53 joerg Exp $
+# $NetBSD: Makefile,v 1.45 2019/01/26 02:44:34 gdt Exp $
 
 DISTNAME=		avrdude-6.3
+PKGREVISION=		2
 CATEGORIES=		cross
 MASTER_SITES=		http://download.savannah.gnu.org/releases/avrdude/
 
@@ -13,14 +14,15 @@ BUILD_DEPENDS+=		dvipsk-[0-9]*:../../print/dvipsk
 BUILD_DEPENDS+=		tex-latex-fonts-[0-9]*:../../fonts/tex-latex-fonts
 BUILD_DEPENDS+=		tex-pdftex-[0-9]*:../../print/tex-pdftex
 
-# make: make: don't know how to make ./libavrdude.a. Stop
-MAKE_JOBS_SAFE=		no
-
 .include "../../mk/bsd.prefs.mk"
 
 GNU_CONFIGURE=		yes
 TEXINFO_REQD=		4.9
-USE_TOOLS+=		autoconf automake autoreconf makeinfo texi2html yacc lex
+USE_TOOLS+=		autoconf automake autoreconf lex makeinfo texi2html yacc
+# Upstream does not documentat that GNU make is required, but BSD make
+# leads to inexplicable errors about libavrdude.
+# \todo Resolve and/or discuss with upstream.
+USE_TOOLS+=		gmake 
 USE_LIBTOOL=		yes
 INFO_FILES=		yes
 EGDIR=			${PREFIX}/share/examples/avrdude
@@ -45,7 +47,7 @@ BUILD_DEPENDS+=		gtexinfo-[0-9]*:../../devel/gtexinfo
 .include "../../devel/libftdi/buildlink3.mk"
 .include "../../devel/libhid/buildlink3.mk"
 .include "../../devel/libftdi1/buildlink3.mk"
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../devel/libusb1/buildlink3.mk"
 # elf_getshdrstrndx
 .include "../../devel/libelf/buildlink3.mk"

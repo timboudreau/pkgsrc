@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.36 2017/07/07 04:07:02 adam Exp $
+# $NetBSD: Makefile,v 1.44 2019/04/03 08:05:44 adam Exp $
 
-DISTNAME=	Pillow-4.2.1
+DISTNAME=	Pillow-6.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	graphics python
 MASTER_SITES=	${MASTER_SITE_PYPI:=P/Pillow/}
@@ -14,7 +14,10 @@ USE_TOOLS+=	pkg-config
 
 CONFLICTS+=	${PYPKGPREFIX}-imaging-[0-9]*
 
-DEPENDS+=	${PYPKGPREFIX}-olefile-*:../../devel/py-olefile
+DEPENDS+=	${PYPKGPREFIX}-olefile-[0-9]*:../../devel/py-olefile
+BUILD_DEPENDS+=	${PYPKGPREFIX}-test-runner-[0-9]*:../../devel/py-test-runner
+TEST_DEPENDS+=	netpbm-[0-9]*:../../graphics/netpbm
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.78 2016/09/17 15:33:59 richard Exp $
+# $NetBSD: Makefile,v 1.82 2018/08/22 09:46:34 wiz Exp $
 
 DISTNAME=		hal-0.5.14
-PKGREVISION=		18
+PKGREVISION=		21
 CATEGORIES=		sysutils
 MASTER_SITES=		http://hal.freedesktop.org/releases/
 EXTRACT_SUFX=		.tar.bz2
@@ -80,7 +80,6 @@ PLIST_SRC=		PLIST
 
 CFLAGS.SunOS+=		-Du_int32_t=uint32_t
 
-BUILDLINK_TRANSFORM.Darwin+=	rm:-Wl,--as-needed
 BUILDLINK_TRANSFORM.SunOS+=	opt:-Wl,--as-needed:-Wl,-zignore
 
 REPLACE_INTERPRETER+=	bash

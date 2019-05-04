@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.35 2017/02/12 06:25:41 ryoon Exp $
+# $NetBSD: Makefile,v 1.40 2018/11/14 22:21:58 kleink Exp $
 #
 
 DISTNAME=		netbiff-0.9.18
-PKGREVISION=		29
+PKGREVISION=		33
 CATEGORIES=		mail
-MASTER_SITES=		http://www.cs.virginia.edu/~jrk3g/netbiff/
+#MASTER_SITES=		http://www.cs.virginia.edu/~jrk3g/netbiff/
 
 MAINTAINER=		rvalls@ac.upc.edu
-HOMEPAGE=		http://www.cs.virginia.edu/~jrk3g/netbiff/
+#HOMEPAGE=		http://www.cs.virginia.edu/~jrk3g/netbiff/
 COMMENT=		Xbiff-like mail notification, handles multiple mailboxes
 
 USE_TOOLS+=		pkg-config

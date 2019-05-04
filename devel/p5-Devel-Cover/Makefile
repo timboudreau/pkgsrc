@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.28 2017/06/05 14:22:51 ryoon Exp $
+# $NetBSD: Makefile,v 1.35 2018/09/23 04:53:33 wen Exp $
 
-DISTNAME=	Devel-Cover-1.25
+DISTNAME=	Devel-Cover-1.31
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Devel/}
 
@@ -13,8 +12,10 @@ LICENSE=	${PERL5_LICENSE}
 
 DEPENDS+=	p5-PPI-HTML>=1.07:../../textproc/p5-PPI-HTML
 DEPENDS+=	p5-Perl-Tidy>=20060719:../../devel/p5-Perl-Tidy
+DEPENDS+=	p5-Sereal-[0-9]*:../../converters/p5-Sereal
 DEPENDS+=	p5-Pod-Coverage>=0.06:../../textproc/p5-Pod-Coverage
 DEPENDS+=	p5-Template-Toolkit>=2.0:../../www/p5-Template-Toolkit
+DEPENDS+=	p5-libwww-[0-9]*:../../www/p5-libwww
 BUILD_DEPENDS+=	p5-Test-Differences-[0-9]*:../../devel/p5-Test-Differences
 
 USE_LANGUAGES=		c

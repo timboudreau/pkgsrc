@@ -1,21 +1,22 @@
-# $NetBSD: Makefile,v 1.4 2016/07/16 00:19:02 markd Exp $
+# $NetBSD: Makefile,v 1.7 2018/07/18 00:06:14 joerg Exp $
 
-DISTNAME=	fs-uae-2.6.2
-PKGREVISION=	1
+DISTNAME=	fs-uae-2.8.3
 CATEGORIES=	emulators
-MASTER_SITES=	http://fs-uae.net/fs-uae/stable/${PKGVERSION_NOREV}/
+MASTER_SITES=	https://fs-uae.net/fs-uae/stable/${PKGVERSION_NOREV}/
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://fs-uae.net/
+HOMEPAGE=	https://fs-uae.net/
 COMMENT=	FS-UAE Amiga Emulator
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c gnu++03
 USE_TOOLS+=		msgfmt pkg-config zip
 GNU_CONFIGURE=		yes
 
 .include "../../mk/bsd.prefs.mk"
-.if ${OPSYS} != "Darwin"
+.if ${OPSYS} == "Darwin"
+#OPENAL_CFLAGS="-framework OpenAL"
+.else
 .include "../../audio/openal-soft/buildlink3.mk"
 .include "../../graphics/MesaLib/buildlink3.mk"
 .include "../../graphics/glu/buildlink3.mk"

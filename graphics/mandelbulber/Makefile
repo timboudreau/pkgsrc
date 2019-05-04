@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.13 2017/02/12 06:25:29 ryoon Exp $
+# $NetBSD: Makefile,v 1.18 2018/11/14 22:21:43 kleink Exp $
 #
 
 DISTNAME=	mandelbulber1.13-1
 PKGNAME=	${DISTNAME:S/-/./:S/mandelbulber/mandelbulber-/}
-PKGREVISION=	11
+PKGREVISION=	15
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mandelbulber/}
 
@@ -13,7 +13,7 @@ COMMENT=	3D fractal explorer
 LICENSE=	gnu-gpl-v3
 
 USE_TOOLS+=	gmake pax pkg-config
-USE_LANGUAGES=	c++
+USE_LANGUAGES=	c++03
 
 BUILD_DIRS=	makefiles
 MAKE_FILE=	makefile

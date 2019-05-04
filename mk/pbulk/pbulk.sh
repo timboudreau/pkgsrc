@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: pbulk.sh,v 1.3 2015/12/14 21:12:01 asau Exp $
+# $NetBSD: pbulk.sh,v 1.8 2018/10/29 02:47:08 sevan Exp $
 set -e
 
 usage="usage: ${0##*/} [-lun] [-c mk.conf.fragment] [-d nodes]"
@@ -38,10 +38,15 @@ fi
 # almost constant:
 : ${PKGSRCDIR:=/usr/pkgsrc}
 
+# setting pkgdb directory:
+if [ -n "$unprivileged" -o -n "${PREFIX}" ]; then
+: ${PKGDBDIR:=${PREFIX}/var/db/pkg} 
+fi
+
 # Do it early since adding it after it fails is problematic:
 if [ ! -n "$unprivileged" ]; then
 case "$(uname)" in
-NetBSD)
+NetBSD|Minix)
 if ! id pbulk; then user add -m -g users pbulk; fi
 ;;
 FreeBSD)
@@ -124,7 +129,7 @@ unprivileged_user=$(id -un)
 pkgsrc=${PKGSRCDIR}
 prefix=${PREFIX}
 varbase=${PREFIX}/var
-pkgdb=${PREFIX}/var/db/pkg
+pkgdb=${PKGDBDIR}
 EOF
 elif [ -n "${PREFIX}" ]; then
 # Non-default prefix:
@@ -132,7 +137,7 @@ cat >> ${PBULKPREFIX}/etc/pbulk.conf.over <<EOF
 # Non-default prefix overrides:
 prefix=${PREFIX}
 varbase=${PREFIX}/var
-pkgdb=${PREFIX}/var/db/pkg
+pkgdb=${PKGDBDIR}
 EOF
 fi
 
@@ -187,6 +192,7 @@ ${PKGSRCDIR}/bootstrap/bootstrap \
   ${PREFIX:+--prefix=${PREFIX}} \
   ${mk_fragment:+--mk-fragment="$mk_fragment"} \
   --workdir=${TMPDIR}/work \
+  ${PKGDBDIR:+--pkgdbdir=${PKGDBDIR}} \
   --gzip-binary-kit=${PACKAGES}/bootstrap.tar.gz
 rm -rf ${TMPDIR}/work
 rm -f ${TMPDIR}/mk.conf.inc
@@ -195,9 +201,6 @@ fi
 
 # Final preparations:
 mkdir -p ${PACKAGES}
-if [ ! -n "$unprivileged" ]; then
-chown pbulk:"$(id -gn pbulk)" ${PACKAGES}
-fi
 
 # Let's start:
 #PACKAGES=${PACKAGES} WRKOBJDIR=${TMPDIR} ${PBULKPREFIX}/bin/bulkbuild

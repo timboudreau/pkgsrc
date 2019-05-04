@@ -1,19 +1,22 @@
-# $NetBSD: Makefile,v 1.23 2017/06/15 07:15:57 fhajny Exp $
-#
+# $NetBSD: Makefile,v 1.33 2019/04/25 18:44:36 adam Exp $
 
-DISTNAME=		pdns-recursor-4.0.5
-CATEGORIES=		net
-MASTER_SITES=		http://downloads.powerdns.com/releases/
-EXTRACT_SUFX=		.tar.bz2
+DISTNAME=	pdns-recursor-4.1.12
+PKGNAME=	${DISTNAME:S/pdns/powerdns/}
+CATEGORIES=	net
+MASTER_SITES=	http://downloads.powerdns.com/releases/
+EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.powerdns.com/
-COMMENT=		PowerDNS resolver/recursing nameserver
-LICENSE=		gnu-gpl-v2
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://www.powerdns.com/
+COMMENT=	PowerDNS resolver/recursing nameserver
+LICENSE=	gnu-gpl-v2
 
-GNU_CONFIGURE=		yes
 USE_LANGUAGES=		c c++11
 USE_TOOLS+=		gmake pkg-config
+GNU_CONFIGURE=		yes
+CONFIGURE_ARGS+=	--without-net-snmp
+# currently not portable
+CONFIGURE_ENV.NetBSD+=	ac_cv_search_pthread_setaffinity_np=no
 
 RCD_SCRIPTS+=		pdns_recursor
 
@@ -31,9 +34,8 @@ CONF_FILES+=		${EGDIR}/recursor.conf-dist \
 CXXFLAGS+=	-Wno-c++11-narrowing
 .endif
 
-.include "options.mk"
-
 .include "../../devel/boost-headers/buildlink3.mk"
+.include "../../lang/lua/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

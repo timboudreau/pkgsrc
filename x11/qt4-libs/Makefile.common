@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.45 2017/05/24 14:29:50 jperkin Exp $
+# $NetBSD: Makefile.common,v 1.47 2018/01/25 13:31:51 jperkin Exp $
 # used by x11/qt4-docs/Makefile
 # used by x11/qt4-libs/Makefile
 # used by x11/qt4-mng/Makefile
@@ -51,6 +51,7 @@ MAKE_ENV+=		QTPREFIX=${QTPREFIX:Q}
 MAKE_ENV+=		QTDIR=${WRKSRC}
 PLIST_VARS+=		mac unix
 .if ${OPSYS} == "Darwin"
+CFLAGS+=		-D__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=1
 PLIST.mac=		yes
 QMAKE_CONF=		qmake.conf.mac
 QMAKE_RANLIB=		${RANLIB}
@@ -79,7 +80,7 @@ CXXFLAGS+=	-std=c++98
 .endif
 
 .if ${OPSYS} == "SunOS"
-.  if !empty(CC_VERSION:Mgcc*)
+.  if !empty(PKGSRC_COMPILER:Mgcc) || !empty(PKGSRC_COMPILER:Mclang)
 .    if ${ABI:U} == "64"
 CONFIGURE_ARGS+=	-platform solaris-g++-64
 .    else

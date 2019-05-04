@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.179 2016/10/04 17:57:22 morr Exp $
+# $NetBSD: Makefile,v 1.187 2019/03/02 20:50:33 gutteridge Exp $
 #
 
 COMMENT=	Editors
@@ -22,6 +22,7 @@ SUBDIR+=	cooledit
 SUBDIR+=	dasher
 SUBDIR+=	deforaos-editor
 SUBDIR+=	dhex
+SUBDIR+=	dte
 SUBDIR+=	easyedit
 SUBDIR+=	ed
 SUBDIR+=	edt
@@ -35,14 +36,10 @@ SUBDIR+=	emacs-snapshot
 SUBDIR+=	emacs20
 SUBDIR+=	emacs21
 SUBDIR+=	emacs21-nox11
-SUBDIR+=	emacs22
-SUBDIR+=	emacs22-nox11
-SUBDIR+=	emacs23
-SUBDIR+=	emacs23-nox11
-SUBDIR+=	emacs24
-SUBDIR+=	emacs24-nox11
 SUBDIR+=	emacs25
 SUBDIR+=	emacs25-nox11
+SUBDIR+=	emacs26
+SUBDIR+=	emacs26-nox11
 SUBDIR+=	ex
 SUBDIR+=	fe
 SUBDIR+=	gate
@@ -66,9 +63,7 @@ SUBDIR+=	jed
 SUBDIR+=	joe
 SUBDIR+=	jove
 SUBDIR+=	kate
-SUBDIR+=	kdissert
 SUBDIR+=	kile
-SUBDIR+=	kile-kde3
 SUBDIR+=	kilo
 SUBDIR+=	leafpad
 SUBDIR+=	leim20
@@ -117,7 +112,9 @@ SUBDIR+=	p5-Wx-Scintilla
 SUBDIR+=	pico
 SUBDIR+=	pluma
 SUBDIR+=	poedit
-SUBDIR+=	qgoogletranslator
+SUBDIR+=	py-editor
+SUBDIR+=	py-jedi
+SUBDIR+=	retext
 SUBDIR+=	rox-edit
 SUBDIR+=	sam
 SUBDIR+=	sandy

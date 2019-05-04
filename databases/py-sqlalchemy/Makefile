@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.29 2017/06/20 07:32:19 adam Exp $
+# $NetBSD: Makefile,v 1.52 2019/04/29 10:26:27 adam Exp $
 
-DISTNAME=	SQLAlchemy-1.1.11
+DISTNAME=	SQLAlchemy-1.3.3
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:tl}
 CATEGORIES=	databases python
 MASTER_SITES=	${MASTER_SITE_PYPI:=S/SQLAlchemy/}
@@ -10,8 +10,9 @@ HOMEPAGE=	http://www.sqlalchemy.org/
 COMMENT=	Python SQL toolkit and Object Relational Mapper
 LICENSE=	mit
 
-BUILD_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test-xdist-[0-9]*:../../devel/py-test-xdist
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-test>=2.5.2:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-xdist-[0-9]*:../../devel/py-test-xdist
 
 REPLACE_PYTHON=	lib/sqlalchemy/testing/runner.py
 

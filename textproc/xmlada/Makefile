@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.15 2017/01/01 14:44:02 wiz Exp $
+# $NetBSD: Makefile,v 1.21 2019/04/26 14:12:47 maya Exp $
 
 DISTNAME=	xmlada-${XMLADA_VERS}
-PKGREVISION=	3
+PKGREVISION=	5
 CATEGORIES=	textproc
 MASTER_SITES=	http://downloads.dragonlace.net/src/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	draco@marino.st
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://libre.adacore.com/libre/tools/xmlada/
 COMMENT=	Adacore XML suite for the Ada language
 LICENSE=	gnu-gpl-v3
@@ -41,7 +41,7 @@ MAKE_ENV+=	SPHINXBUILD=${PREFIX}/bin/sphinx-build${PYVERSSUFFIX}
 
 DESTSTATIC=	${DESTDIR}${PREFIX}/lib/xmlada/static
 DEPENDS+=	${PYPKGPREFIX}-sphinx-[0-9]*:../../textproc/py-sphinx
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 4.4.0.0
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 4.4.0.0
 
 post-install:
 	# There is no reason to install sphinx source files

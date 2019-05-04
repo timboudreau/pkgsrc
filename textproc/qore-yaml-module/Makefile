@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2016/08/07 11:44:43 nros Exp $
+# $NetBSD: Makefile,v 1.7 2018/06/08 20:12:49 nros Exp $
 
-DISTNAME=	qore-yaml-module-0.5
+DISTNAME=	qore-yaml-module-0.6
 CATEGORIES=	textproc
 MASTER_SITES=   ${MASTER_SITE_GITHUB:=qorelanguage/}
 EXTRACT_SUFX=   .tar.bz2
@@ -14,7 +14,7 @@ LICENSE=	gnu-lgpl-v2.1 OR mit
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS+=	gmake pax
 
 PTHREAD_OPTS+=	native

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.43 2015/05/05 13:10:43 reinoud Exp $
-#
+# $NetBSD: Makefile,v 1.45 2018/07/20 19:07:41 reinoud Exp $
+# 
 
-DISTNAME=		UDFclient.0.8
-PKGNAME=		udfclient-0.8
+DISTNAME=		UDFclient.0.8.9
+PKGNAME=		udfclient-0.8.9
 CATEGORIES=		misc
 MASTER_SITES=		http://www.13thmonkey.org/udfclient/releases/
 EXTRACT_SUFX=		.tgz
@@ -16,8 +16,8 @@ GNU_CONFIGURE=		yes
 PTHREAD_OPTS+=		require
 
 INSTALLATION_DIRS+=	bin ${PKGMANDIR}/man1
-INSTALL_MAKE_FLAGS+=	prefix=${DESTDIR}${PREFIX} \
-			mandir=${DESTDIR}${PREFIX}/${PKGMANDIR}
+INSTALL_MAKE_FLAGS+=	prefix=${PREFIX} \
+			mandir=${PREFIX}/${PKGMANDIR}
 
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.230 2017/01/26 16:31:57 jperkin Exp $
+# $NetBSD: Makefile,v 1.240 2018/09/12 12:44:17 fhajny Exp $
 
-DISTNAME=	openssl-1.0.2k
+DISTNAME=	openssl-1.0.2p
 CATEGORIES=	security
 MASTER_SITES=	https://www.openssl.org/source/
 
@@ -10,8 +10,6 @@ COMMENT=	Secure Socket Layer and cryptographic library
 LICENSE=	openssl
 
 CONFLICTS=	SSLeay-[0-9]* ssleay-[0-9]*
-
-CRYPTO=		yes
 
 BUILD_DEPENDS+=	p5-Perl4-CoreLibs-[0-9]*:../../devel/p5-Perl4-CoreLibs
 
@@ -78,12 +76,16 @@ CONFIGURE_ARGS+=	tru64-alpha-cc
 .elif ${OPSYS} == "Darwin"
 CONFIGURE_SCRIPT=	./Configure
 .  if defined(ABI) && ${ABI} == "64"
-CONFIGURE_ARGS+=	darwin64-${MACHINE_ARCH}-cc
-.  elif ${MACHINE_ARCH} == "powerpc"
-CONFIGURE_ARGS+=	darwin-ppc-cc
+_OS=			darwin64
 .  else
-CONFIGURE_ARGS+=	darwin-${MACHINE_ARCH}-cc
+_OS=			darwin
 .  endif
+.  if ${MACHINE_ARCH:Mpowerpc*}
+_ARCH=			ppc
+.  else
+_ARCH=			${MACHINE_ARCH}
+.endif
+CONFIGURE_ARGS+=	${_OS}-${_ARCH}-cc
 
 SUBST_CLASSES+=		dl
 SUBST_MESSAGE.dl=	Adding dynamic link compatibility library.
@@ -166,6 +168,18 @@ INSTALLATION_DIRS+=	share/examples/openssl
 # Fix the path to perl in various scripts.
 pre-configure:
 	cd ${WRKSRC} && ${PERL5} util/perlpath.pl ${PERL5}
+
+# BN_print.3 and bn_print.3 cannot co-exist on Darwin, we choose to remove
+# bn_print.3 simply because it has more aliases to the same manual page.
+PLIST_VARS+=	notmac
+.if ${OPSYS} == "Darwin"
+post-install:
+	${CP} -p ${DESTDIR}${PREFIX}/${PKGMANDIR}/man3/BN_print.3 ${WRKDIR}
+	${RM} ${DESTDIR}${PREFIX}/${PKGMANDIR}/man3/bn_print.3*
+	${MV} -f ${WRKDIR}/BN_print.3 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man3
+.else
+PLIST.notmac=	yes
+.endif
 
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

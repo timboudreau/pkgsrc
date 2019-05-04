@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2017/06/21 08:28:42 markd Exp $
+$NetBSD: distinfo,v 1.4 2019/01/26 10:54:00 markd Exp $
 
-SHA1 (tex-latexdiff-41892/latexdiff.doc.tar.xz) = e8fbd6a503f0d2dd739777c8ba810633fa69e72e
-RMD160 (tex-latexdiff-41892/latexdiff.doc.tar.xz) = 5f8fe74b5ae0b8972695ec58a2f041ca42225ecb
-SHA512 (tex-latexdiff-41892/latexdiff.doc.tar.xz) = 680bd0e1b07b3fc06e17ebe2dd3b584c3b9c8ed421409f0181e98ca082b841dc6100578cea39719001013827461c01d36571e7f278cf17b88f71cb1f80e2e412
-Size (tex-latexdiff-41892/latexdiff.doc.tar.xz) = 449056 bytes
+SHA1 (tex-latexdiff-48926/latexdiff.doc.tar.xz) = 956fa3b18af5d199359ed6f2644a49551085b1f5
+RMD160 (tex-latexdiff-48926/latexdiff.doc.tar.xz) = 2d3b50e9137afc18dd27ac2c72fd8a7ccd66f9e9
+SHA512 (tex-latexdiff-48926/latexdiff.doc.tar.xz) = 5e037da262f095879e4cf4a6b6aca7d52a083989d712728f90aa7d5a987d3c34198e1aad23ce9ddaa1b79b1de1bd5ae128095def119890127f3cd5c8e121b8ac
+Size (tex-latexdiff-48926/latexdiff.doc.tar.xz) = 472596 bytes

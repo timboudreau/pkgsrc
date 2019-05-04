@@ -1,4 +1,4 @@
-#	$NetBSD: bsd.pkg.mk,v 1.2026 2017/06/01 03:41:44 jlam Exp $
+#	$NetBSD: bsd.pkg.mk,v 1.2031 2018/05/28 20:37:47 rillig Exp $
 #
 # This file is in the public domain.
 #
@@ -45,6 +45,9 @@ PKGNAME_NOREV=		${PKGNAME}
 .endif
 PKGVERSION_NOREV=	${PKGNAME_NOREV:C/^.*-//}
 
+_VARGROUPS+=		pkgname
+_DEF_VARS.pkgname=	PKGBASE PKGVERSION PKGNAME_NOREV PKGNAME PKGVERSION_NOREV
+
 # Fail-safe in the case of circular dependencies
 .if defined(_PKGSRC_DEPS) && defined(PKGNAME) && !empty(_PKGSRC_DEPS:M${PKGNAME})
 PKG_FAIL_REASON+=	"Circular dependency detected"
@@ -80,8 +83,6 @@ PKG_FAIL_REASON+=	"Circular dependency detected"
 # Transform package Makefile variables and set defaults
 ############################################################################
 
-MKCRYPTO?=		YES	# build crypto packages by default
-
 ##### Others
 
 BUILD_DEPENDS?=		# empty
@@ -95,6 +96,7 @@ MAINTAINER=${OWNER}
 MAINTAINER?=		pkgsrc-users@NetBSD.org
 .endif
 PKGWILDCARD?=		${PKGBASE}-[0-9]*
+TEST_DEPENDS?=		# empty
 TOOL_DEPENDS?=		# empty
 .if defined(GITHUB_TAG)
 WRKSRC?=		${WRKDIR}/${GITHUB_PROJECT}-${GITHUB_TAG:C/^v//}
@@ -315,6 +317,10 @@ OVERRIDE_DIRDEPTH?=	2
 .endif
 .endif
 
+# Handle Reproducible Builds
+#
+.include "repro/repro.mk"
+
 # Define SMART_MESSAGES in /etc/mk.conf for messages giving the tree
 # of dependencies for building, and the current target.
 _PKGSRC_IN?=		===${SMART_MESSAGES:D> ${.TARGET} [${PKGNAME}${_PKGSRC_DEPS}] ===}
@@ -447,9 +453,6 @@ PATH=	${_PATH_COMPONENTS:ts:}
 # Don't build a package if it's restricted and we don't want to
 # get into that.
 #
-# Don't build any package that utilizes strong cryptography, for
-# when the law of the land forbids it.
-#
 # Don't attempt to build packages against X if we don't have X.
 #
 # Don't build a package if it's broken.
@@ -473,11 +476,6 @@ PKG_SKIP_REASON+= "${PKGNAME} may not be placed in source form on a CDROM:" \
 .  if (defined(RESTRICTED) && defined(NO_RESTRICTED))
 PKG_SKIP_REASON+= "${PKGNAME} is restricted:" \
 	 "    "${RESTRICTED:Q}
-.  endif
-.  if !(${MKCRYPTO} == "YES" || ${MKCRYPTO} == yes)
-.    if defined(CRYPTO)
-PKG_SKIP_REASON+= "${PKGNAME} may not be built, because it utilizes strong cryptography"
-.    endif
 .  endif
 .  if defined(USE_X11) && (${X11_TYPE} == "native") && !exists(${X11BASE})
 PKG_FAIL_REASON+= "${PKGNAME} uses X11, but ${X11BASE} not found"
@@ -828,7 +826,4 @@ ${_MAKEVARS_MK.${_phase_}}: ${WRKDIR}
 .  include "bsd.pkg.debug.mk"
 .endif
 .include "misc/warnings.mk"
-.if make(import)
-.include "misc/import.mk"
-.endif
 .include "misc/can-be-built-here.mk"

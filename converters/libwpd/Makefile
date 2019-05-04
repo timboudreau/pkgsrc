@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.39 2017/04/30 01:21:21 ryoon Exp $
+# $NetBSD: Makefile,v 1.46 2018/12/13 19:51:32 adam Exp $
 
 DISTNAME=	libwpd-0.10.1
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	converters
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=libwpd/}
 EXTRACT_SUFX=	.tar.bz2
@@ -28,6 +28,8 @@ PKGCONFIG_OVERRIDE+=	libwpd.pc.in
 .if !empty(PKGSRC_COMPILER:Mclang)
 _WRAP_EXTRA_ARGS.CXX+=	-Wno-unused-private-field
 CWRAPPERS_APPEND.cxx+=	-Wno-unused-private-field
+CWRAPPERS_APPEND.cxx+=	-Wno-unknown-warning-option
+CWRAPPERS_APPEND.cxx+=	-Wno-tautological-type-limit-compare
 .endif
 
 .include "../../mk/bsd.pkg.mk"

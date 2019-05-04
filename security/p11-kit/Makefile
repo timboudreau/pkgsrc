@@ -1,26 +1,39 @@
-# $NetBSD: Makefile,v 1.4 2016/04/04 17:34:56 joerg Exp $
-#
+# $NetBSD: Makefile,v 1.14 2019/03/24 18:03:54 ryoon Exp $
 
-DISTNAME=	p11-kit-0.22.1
-PKGREVISION=	1
+DISTNAME=	p11-kit-0.23.15
 CATEGORIES=	security
-MASTER_SITES=	http://p11-glue.freedesktop.org/releases/
+#MASTER_SITES=	http://p11-glue.freedesktop.org/releases/
+MASTER_SITES+=	${MASTER_SITE_GITHUB:=p11-glue/}
+GITHUB_RELEASE=	${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://p11-glue.freedesktop.org/p11-kit.html
-COMMENT=	PKCS#11 module manager
+COMMENT=	PKCS\#11 module manager
 LICENSE=	modified-bsd
 
-DEPENDS=	mozilla-rootcerts>=1.0.20150804nb1:../../security/mozilla-rootcerts
+DEPENDS+=	mozilla-rootcerts>=1.0.20150804nb1:../../security/mozilla-rootcerts
 
 CONFIGURE_ARGS+=	--with-trust-paths=${PREFIX}/share/mozilla-rootcerts/cacert.pem
 
 GNU_CONFIGURE=	yes
+USE_LANGUAGES=	c99
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config
 
+TEST_TARGET=	check
+
 # dirfd(3)
 CFLAGS.NetBSD+=	-D_NETBSD_SOURCE
+
+# reallocarray(3)
+CFLAGS.NetBSD+=	-D_OPENBSD_SOURCE
+
+CFLAGS.SunOS+=	-D_POSIX_PTHREAD_SEMANTICS
+LDFLAGS.SunOS+=	-lsocket -lnsl
+
+DLEXT.dylib=	dylib
+DLEXT=		${DLEXT.${SHLIB_TYPE}:Uso}
+PLIST_SUBST+=	DLEXT=${DLEXT:Q}
 
 PKGCONFIG_OVERRIDE+=	p11-kit/p11-kit-1.pc.in
 

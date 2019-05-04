@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.10 2017/06/21 07:24:06 markd Exp $
+# $NetBSD: Makefile,v 1.12 2018/05/06 04:15:45 markd Exp $
 
 DISTNAME=	graphics.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-1.2a
-TEXLIVE_REV=	44579
+PKGNAME=	tex-${DISTNAME:S/./-/}-1.2c.47350
+TEXLIVE_REV=	47350
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/latex-graphics

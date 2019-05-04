@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.109 2017/07/14 12:58:52 joerg Exp $
+# $NetBSD: Makefile,v 1.131 2019/04/03 00:33:01 ryoon Exp $
 
-DISTNAME=	unison-2.48.4
-PKGREVISION=	7
+GITHUB_TAG=	v${PKGVERSION_NOREV}
+DISTNAME=	unison-2.48.15v4
+PKGREVISION=	1
 CATEGORIES=	net
-MASTER_SITES=	http://www.seas.upenn.edu/~bcpierce/unison/download/releases/stable/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=bcpierce00/}
 
 MAINTAINER=	tonio@NetBSD.org
 HOMEPAGE=	http://www.cis.upenn.edu/~bcpierce/unison/
@@ -22,15 +23,17 @@ BUILDLINK_ABI_DEPENDS.ocaml+=	ocaml>=3.11.2
 BUILDLINK_API_DEPENDS.ocaml-lablgtk+= ocaml-lablgtk>=2.16.0
 
 # docs: unison-manual.pdf/html/ps/dvi
-WRKSRC=		${WRKDIR}/src
+#WRKSRC=		${WRKDIR}/src
 USE_TOOLS+=	gmake
-MAKE_FLAGS+=	CFLAGS=""
+MAKE_FLAGS+=	CFLAGS="" -C src
 MAKE_ENV+=	HOME=${WRKDIR:Q}
 
 .include "options.mk"
 .include "../../mk/bsd.prefs.mk"
 
-.if (${MACHINE_ARCH} == "i386") || (${MACHINE_ARCH} == "powerpc") || (${MACHINE_ARCH} == "sparc") || (${MACHINE_ARCH}=="arm") || (${MACHINE_ARCH} == "x86_64")
+.include "../../mk/ocaml.mk"
+
+.if (${OCAML_USE_OPT_COMPILER} == "true")
 MAKE_FLAGS+=	NATIVE=true
 .else
 MAKE_FLAGS+=	NATIVE=false
@@ -48,13 +51,13 @@ INSTALLATION_DIRS=	bin
 INSTALLATION_DIRS+=	share/doc/unison
 
 post-install:
-	${INSTALL_MAN} ${WRKSRC}/BUGS.txt ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/CONTRIB ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/COPYING ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/NEWS ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/README ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/ROADMAP.txt ${DESTDIR}${PREFIX}/share/doc/unison
-	${INSTALL_MAN} ${WRKSRC}/TODO.txt ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/BUGS.txt ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/CONTRIB ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/COPYING ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/NEWS ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/README ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/ROADMAP.txt ${DESTDIR}${PREFIX}/share/doc/unison
+	${INSTALL_MAN} ${WRKSRC}/src/TODO.txt ${DESTDIR}${PREFIX}/share/doc/unison
 
 .include "../../lang/ocaml/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

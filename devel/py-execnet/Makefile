@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.2 2017/05/30 20:31:11 joerg Exp $
+# $NetBSD: Makefile,v 1.5 2019/04/02 08:40:55 adam Exp $
 
-DISTNAME=	execnet-1.4.1
+DISTNAME=	execnet-1.6.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=e/execnet/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://codespeak.net/execnet
+HOMEPAGE=	https://pypi.python.org/pypi/execnet
 COMMENT=	Rapid multi-Python deployment
 LICENSE=	mit
 

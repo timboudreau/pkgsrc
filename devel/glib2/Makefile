@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.235 2017/07/11 11:52:42 jperkin Exp $
+# $NetBSD: Makefile,v 1.245 2019/04/25 07:32:45 maya Exp $
 
+PKGREVISION= 4
 .include "Makefile.common"
 
-PKGREVISION=		1
 CATEGORIES=		devel gnome
 
 COMMENT=		Some useful routines for C programming (glib2)
@@ -51,9 +51,21 @@ CPPFLAGS.SunOS+=	-DBSD_COMP
 CONFIGURE_ENV+=		LIBELF_LIBS='-lelf'
 .    endif
 .  else
-.  include "../../devel/libelf/buildlink3.mk"
+.    include "../../devel/libelf/buildlink3.mk"
 .  endif
 .endif
+
+# XXX: Kludge to avoid uncoditionally pick up some gtkdoc-* tools if gtk-doc
+# XXX: package is installed and then fails in the installation phase.
+CONFIGURE_ENV+=	ac_cv_prog_GTKDOC_CHECK= \
+		ac_cv_path_GTKDOC_CHECK_PATH= \
+		ac_cv_path_GTKDOC_REBASE= \
+		ac_cv_path_GTKDOC_MKPDF=
+
+# to run gdbus-codegen to generate gdbus-daemon-generated.{h,c}
+TOOL_DEPENDS+=		${PYPKGPREFIX}-expat-[0-9]*:../../textproc/py-expat
+PYTHON_FOR_BUILD_ONLY?=	yes
+.include "../../lang/python/pyversion.mk"
 
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"

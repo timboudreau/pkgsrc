@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.15 2016/10/15 15:10:32 taca Exp $
+# $NetBSD: Makefile,v 1.17 2019/01/20 14:33:08 taca Exp $
 
-DISTNAME=	daemons-1.2.4
+DISTNAME=	daemons-1.3.1
 CATEGORIES=	misc
 
 MAINTAINER=	minskim@NetBSD.org

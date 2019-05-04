@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.4 2014/02/09 00:44:36 wiedi Exp $
+# $NetBSD: Makefile,v 1.6 2018/01/26 13:36:43 jperkin Exp $
 #
 
 DISTNAME=	sbd-0.5
@@ -6,12 +6,12 @@ CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=sbd/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/sbd/
+HOMEPAGE=	https://sourceforge.net/projects/sbd/
 COMMENT=	HMAC & one-time pad-based remote login program
 
 WRKSRC=		${WRKDIR}/sbd
 
-USE_LANGUAGES+=	c c++
+USE_LANGUAGES+=	c c++03
 
 EGDIR=		${PREFIX}/share/sbd
 CONF_FILES=	${EGDIR}/deckey.bits ${PKG_SYSCONFDIR}/sbd/deckey.bits

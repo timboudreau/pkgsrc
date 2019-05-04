@@ -1,10 +1,9 @@
-# $NetBSD: Makefile,v 1.130 2017/02/12 06:26:07 ryoon Exp $
+# $NetBSD: Makefile,v 1.140 2019/04/26 14:12:48 maya Exp $
 
-DISTNAME=	bluefish-2.2.8
-PKGREVISION=	4
+DISTNAME=	bluefish-2.2.10
+PKGREVISION=	1
 CATEGORIES=	www
-MASTER_SITES=	http://bluefish.mrball.net/stable/source/
-MASTER_SITES+=	http://www.bennewitz.com/bluefish/stable/source/
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=bluefish/${PKGVERSION_NOREV}/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -30,7 +29,7 @@ REPLACE_PYTHON+=	data/css_decompressor
 CHECK_INTERPRETER_SKIP+= share/bluefish/plugins/*/*.py
 CHECK_INTERPRETER_SKIP+= share/bluefish/plugins/*/*/*.py
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.2.4
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.2.4
 
 # XXX this doesn't work
 #XML_CATALOGS=	${PREFIX}/share/xml/bluefish/catalog.xml
@@ -48,6 +47,6 @@ PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.2.4
 .include "../../fonts/gucharmap/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-.include "../../textproc/enchant/buildlink3.mk"
+.include "../../textproc/enchant2/buildlink3.mk"
 .include "../../x11/gtk2/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

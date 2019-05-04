@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.42 2017/05/03 08:38:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.52 2019/01/19 20:01:56 tnn Exp $
 
-DISTNAME=		synergy-1.8.6
-PKGREVISION=		2
+DISTNAME=		synergy-core-1.10.1
+PKGNAME=		${DISTNAME:S/-core//}
 CATEGORIES=		net x11
 MASTER_SITES=		${MASTER_SITE_GITHUB:=symless/}
+GITHUB_PROJECT=		synergy-core
 GITHUB_TAG=		v${PKGVERSION_NOREV}-stable
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
@@ -12,17 +13,20 @@ COMMENT=		Let a user share a mouse and keyboard among computers
 LICENSE=		gnu-gpl-v2
 
 USE_LANGUAGES=		c c++11
-USE_TOOLS+=		unzip
 # Main configuration is CMake, but subdirectories are GNU configure.
 # We need to set GNU_CONFIGURE=yes for config.{guess,sub} overrides to kick in.
-# Fortunately for us, cmake seems to take precedence in infrastructure.
+# We override the do-configure target to prevent pkgsrc from running both
+# configuration mechanisms.
 USE_CMAKE=		yes
 GNU_CONFIGURE=		yes
+CMAKE_ARGS+=		-DSYNERGY_BUILD_LEGACY_GUI=OFF
 
-CONFIG_SUB_OVERRIDE+=	ext/gmock-1.6.0/build-aux/config.sub
-CONFIG_SUB_OVERRIDE+=	ext/gtest-1.6.0/build-aux/config.sub
-CONFIG_GUESS_OVERRIDE+=	ext/gmock-1.6.0/build-aux/config.guess
-CONFIG_GUESS_OVERRIDE+=	ext/gtest-1.6.0/build-aux/config.guess
+CONFIG_SUB_OVERRIDE+=	ext/gmock/build-aux/config.sub
+CONFIG_SUB_OVERRIDE+=	ext/gtest/build-aux/config.sub
+CONFIG_GUESS_OVERRIDE+=	ext/gmock/build-aux/config.guess
+CONFIG_GUESS_OVERRIDE+=	ext/gtest/build-aux/config.guess
+
+CONFIGURE_ENV+=		GIT_COMMIT=1b4c0761
 
 EXAMPLES=	MacReadme.txt org.synergy-foss.org.synergyc.plist \
 		org.synergy-foss.org.synergys.plist synergy.conf.example \
@@ -37,11 +41,8 @@ SUBST_SED.fix-paths=		-e 's,"/etc,"${PKG_SYSCONFDIR},g'
 
 BUILDLINK_TRANSFORM+=		rm:-march=native
 
-post-extract:
-	${MKDIR} ${WRKSRC}/ext/gmock-1.6.0
-	cd ${WRKSRC}/ext/gmock-1.6.0 && unzip -aqo ../gmock-1.6.0.zip
-	${MKDIR} ${WRKSRC}/ext/gtest-1.6.0
-	cd ${WRKSRC}/ext/gtest-1.6.0 && unzip -aqo ../gtest-1.6.0.zip
+.PHONY: do-configure
+do-configure: do-configure-cmake
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1 share/examples/${PKGBASE}
 
@@ -75,6 +76,8 @@ CFLAGS+=	-DUSYNERGY_LITTLE_ENDIAN
 .if ${OPSYS} != "Linux"
 BUILDLINK_TRANSFORM+=	rm:-ldl
 .endif
+
+LDFLAGS.SunOS+=	-lsocket -lnsl
 
 .include "../../security/openssl/buildlink3.mk"
 .include "../../www/curl/buildlink3.mk"

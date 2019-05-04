@@ -1,23 +1,23 @@
-# $NetBSD: Makefile,v 1.12 2016/07/09 06:38:52 wiz Exp $
+# $NetBSD: Makefile,v 1.25 2019/04/27 03:12:41 ryoon Exp $
 
-DISTNAME=	qpdf-6.0.0
-PKGREVISION=	1
+DISTNAME=	qpdf-8.4.0
 CATEGORIES=	print
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qpdf/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://qpdf.sourceforge.net/
 COMMENT=	Structural, content-preserving transformations on PDF files
-LICENSE=	artistic-2.0
+LICENSE=	apache-2.0
 
-GNU_CONFIGURE=	yes
-USE_LIBTOOL=	yes
-USE_TOOLS+=	gmake perl:run pkg-config
-USE_LANGUAGES=	c c++
-
+USE_LANGUAGES=		c c++
+USE_LIBTOOL=		yes
+USE_TOOLS+=		gmake perl:run pkg-config
+GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE+=	libqpdf.pc.in
+
 REPLACE_PERL=	qpdf/fix-qdf
 
+.include "../../mk/jpeg.buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

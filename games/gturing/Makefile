@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.82 2017/02/12 06:25:21 ryoon Exp $
+# $NetBSD: Makefile,v 1.90 2018/11/29 11:21:51 prlw1 Exp $
 #
 
 DISTNAME=		gturing-0.1.1
-PKGREVISION=		60
+PKGREVISION=		67
 CATEGORIES=		games gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gturing/0.1/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		GNOME2 turing machine emulator
 
 GNU_CONFIGURE=		YES

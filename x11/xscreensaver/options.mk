@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.9 2015/01/24 06:09:13 obache Exp $
+# $NetBSD: options.mk,v 1.11 2018/09/02 20:26:59 wiz Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.xscreensaver
 PKG_SUPPORTED_OPTIONS=	pam webcollage opengl
@@ -20,10 +20,11 @@ CONFIGURE_ARGS+=	--without-pam
 #CONFIGURE_ARGS+=	--without-shadow
 .endif
 
-PLIST_SRC=	PLIST
+PLIST_SRC+=	PLIST
 .if !empty(PKG_OPTIONS:Mwebcollage)
 PLIST_SRC+=	PLIST.webcollage
 .else
+.PHONY: delwebcollage
 post-install: delwebcollage
 delwebcollage:
 	rm ${DESTDIR}${PREFIX}/libexec/xscreensaver/config/webcollage.xml

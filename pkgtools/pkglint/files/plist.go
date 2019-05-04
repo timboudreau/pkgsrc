@@ -1,106 +1,112 @@
-package main
+package pkglint
 
 import (
-	"netbsd.org/pkglint/line"
-	"netbsd.org/pkglint/regex"
-	"netbsd.org/pkglint/trace"
+	"netbsd.org/pkglint/textproc"
 	"path"
 	"sort"
 	"strings"
 )
 
-func ChecklinesPlist(lines []line.Line) {
+func CheckLinesPlist(pkg *Package, lines Lines) {
 	if trace.Tracing {
-		defer trace.Call1(lines[0].Filename())()
+		defer trace.Call1(lines.FileName)()
 	}
 
-	LineChecker{lines[0]}.CheckRcsid(`@comment `, "@comment ")
+	lines.CheckRcsID(0, `@comment `, "@comment ")
 
-	if len(lines) == 1 {
-		lines[0].Warnf("PLIST files shouldn't be empty.")
-		Explain(
+	if lines.Len() == 1 {
+		line := lines.Lines[0]
+		line.Warnf("PLIST files shouldn't be empty.")
+		line.Explain(
 			"One reason for empty PLISTs is that this is a newly created package",
-			"and that the author didn't run \"bmake print-PLIST\" after installing",
-			"the files.",
+			sprintf("and that the author didn't run %q after installing the files.", bmake("print-PLIST")),
 			"",
-			"Another reason, common for Perl packages, is that the final PLIST is",
-			"automatically generated.  Since the source PLIST is not used at all,",
-			"you can remove it.",
+			"For most Perl packages, the final PLIST is generated automatically.",
+			"Since the source PLIST is not used at all, it can be removed for these packages.",
 			"",
-			"Meta packages also don't need a PLIST file.")
+			"Meta packages also don't need a PLIST file",
+			"since their only purpose is to declare dependencies.")
 	}
 
-	ck := &PlistChecker{
+	ck := PlistChecker{
+		pkg,
 		make(map[string]*PlistLine),
 		make(map[string]*PlistLine),
-		""}
+		"",
+		Once{},
+		false}
 	ck.Check(lines)
 }
 
 type PlistChecker struct {
-	allFiles  map[string]*PlistLine
-	allDirs   map[string]*PlistLine
-	lastFname string
+	pkg             *Package
+	allFiles        map[string]*PlistLine
+	allDirs         map[string]*PlistLine
+	lastFname       string
+	once            Once
+	nonAsciiAllowed bool
 }
 
 type PlistLine struct {
-	line        line.Line
-	conditional string // e.g. PLIST.docs
-	text        string // Like line.text, without the conditional
+	Line
+	conditions []string // e.g. PLIST.docs
+	text       string   // Line.Text without any conditions of the form ${PLIST.cond}
 }
 
-func (ck *PlistChecker) Check(plainLines []line.Line) {
+func (ck *PlistChecker) Check(plainLines Lines) {
 	plines := ck.NewLines(plainLines)
 	ck.collectFilesAndDirs(plines)
 
-	if fname := plines[0].line.Filename(); path.Base(fname) == "PLIST.common_end" {
-		commonLines, err := readLines(strings.TrimSuffix(fname, "_end"), false)
-		if err == nil {
+	if plines[0].Basename == "PLIST.common_end" {
+		commonLines := Load(strings.TrimSuffix(plines[0].Filename, "_end"), NotEmpty)
+		if commonLines != nil {
 			ck.collectFilesAndDirs(ck.NewLines(commonLines))
 		}
 	}
 
 	for _, pline := range plines {
-		ck.checkline(pline)
+		ck.checkLine(pline)
 		pline.CheckTrailingWhitespace()
 	}
-	ChecklinesTrailingEmptyLines(plainLines)
+	CheckLinesTrailingEmptyLines(plainLines)
 
-	if G.opts.WarnPlistSort {
-		sorter := NewPlistLineSorter(plines)
-		sorter.Sort()
-		if !sorter.autofixed {
-			SaveAutofixChanges(plainLines)
-		}
-	} else {
+	sorter := NewPlistLineSorter(plines)
+	sorter.Sort()
+	if !sorter.autofixed {
 		SaveAutofixChanges(plainLines)
 	}
 }
 
-func (ck *PlistChecker) NewLines(lines []line.Line) []*PlistLine {
-	plines := make([]*PlistLine, len(lines))
-	for i, line := range lines {
-		conditional, text := "", line.Text()
-		if hasPrefix(text, "${PLIST.") {
-			if m, cond, rest := match2(text, `^\$\{(PLIST\.[\w-.]+)\}(.*)`); m {
-				conditional, text = cond, rest
+func (ck *PlistChecker) NewLines(lines Lines) []*PlistLine {
+	plines := make([]*PlistLine, lines.Len())
+	for i, line := range lines.Lines {
+		var conditions []string
+		text := line.Text
+
+		for hasPrefix(text, "${PLIST.") /* just for performance */ {
+			if m, cond, rest := match2(text, `^(?:\$\{(PLIST\.[\w-.]+)\})(.*)`); m {
+				conditions = append(conditions, cond)
+				text = rest
+			} else {
+				break
 			}
 		}
-		plines[i] = &PlistLine{line, conditional, text}
+
+		plines[i] = &PlistLine{line, conditions, text}
 	}
 	return plines
 }
 
+var plistLineStart = textproc.NewByteSet("$0-9A-Za-z")
+
 func (ck *PlistChecker) collectFilesAndDirs(plines []*PlistLine) {
+
 	for _, pline := range plines {
 		if text := pline.text; len(text) > 0 {
 			first := text[0]
 			switch {
-			case 'a' <= first && first <= 'z',
-				first == '$',
-				'A' <= first && first <= 'Z',
-				'0' <= first && first <= '9':
-				if ck.allFiles[text] == nil {
+			case plistLineStart.Contains(first):
+				if prev := ck.allFiles[text]; prev == nil || stringSliceLess(pline.conditions, prev.conditions) {
 					ck.allFiles[text] = pline
 				}
 				for dir := path.Dir(text); dir != "."; dir = path.Dir(dir) {
@@ -113,307 +119,330 @@ func (ck *PlistChecker) collectFilesAndDirs(plines []*PlistLine) {
 					}
 				}
 			}
-
 		}
 	}
 }
 
-func (ck *PlistChecker) checkline(pline *PlistLine) {
+func (ck *PlistChecker) checkLine(pline *PlistLine) {
 	text := pline.text
-	if hasAlnumPrefix(text) {
-		ck.checkpath(pline)
-	} else if m, cmd, arg := match2(text, `^(?:\$\{[\w.]+\})?@([a-z-]+)\s+(.*)`); m {
+
+	if text == "" {
+		fix := pline.Autofix()
+		fix.Warnf("PLISTs should not contain empty lines.")
+		fix.Delete()
+		fix.Apply()
+
+	} else if textproc.AlnumU.Contains(text[0]) || text[0] == '$' {
+		ck.checkPath(pline)
+
+	} else if m, cmd, arg := match2(text, `^@([a-z-]+)[\t ]*(.*)`); m {
 		pline.CheckDirective(cmd, arg)
-	} else if hasPrefix(text, "$") {
-		ck.checkpath(pline)
+		ck.nonAsciiAllowed = pline.firstLine > 1
+
 	} else {
-		pline.line.Warnf("Unknown line type.")
+		pline.Warnf("Invalid line type: %s", pline.Line.Text)
 	}
 }
 
-func (ck *PlistChecker) checkpath(pline *PlistLine) {
-	line, text := pline.line, pline.text
-	sdirname, basename := path.Split(text)
-	dirname := strings.TrimSuffix(sdirname, "/")
+func (ck *PlistChecker) checkPath(pline *PlistLine) {
+	text := pline.text
+	dirSlash, basename := path.Split(text)
+	dirname := strings.TrimSuffix(dirSlash, "/")
 
+	ck.checkPathNonAscii(pline)
 	ck.checkSorted(pline)
+	ck.checkDuplicate(pline)
 
 	if contains(basename, "${IMAKE_MANNEWSUFFIX}") {
 		pline.warnImakeMannewsuffix()
 	}
+
 	if hasPrefix(text, "${PKGMANDIR}/") {
-		if !line.AutofixReplace("${PKGMANDIR}/", "man/") {
-			line.Notef("PLIST files should mention \"man/\" instead of \"${PKGMANDIR}\".")
-			Explain(
-				"The pkgsrc infrastructure takes care of replacing the correct value",
-				"when generating the actual PLIST for the package.")
-		}
+		fix := pline.Autofix()
+		fix.Notef("PLIST files should use \"man/\" instead of \"${PKGMANDIR}\".")
+		fix.Explain(
+			"The pkgsrc infrastructure takes care of replacing the correct value",
+			"when generating the actual PLIST for the package.")
+		fix.Replace("${PKGMANDIR}/", "man/")
+		fix.Apply()
+
+		// Since the autofix only applies to the Line, the PlistLine needs to be updated manually.
+		pline.text = strings.Replace(pline.text, "${PKGMANDIR}/", "man/", 1)
 	}
 
-	topdir := ""
-	if firstSlash := strings.IndexByte(text, '/'); firstSlash != -1 {
-		topdir = text[:firstSlash]
-	}
+	topdir := strings.SplitN(text, "/", 2)[0]
 
 	switch topdir {
 	case "bin":
-		ck.checkpathBin(pline, dirname, basename)
+		ck.checkPathBin(pline, dirname, basename)
 	case "doc":
-		line.Errorf("Documentation must be installed under share/doc, not doc.")
+		pline.Errorf("Documentation must be installed under share/doc, not doc.")
 	case "etc":
-		ck.checkpathEtc(pline, dirname, basename)
+		ck.checkPathEtc(pline, dirname, basename)
 	case "info":
-		ck.checkpathInfo(pline, dirname, basename)
+		ck.checkPathInfo(pline, dirname, basename)
 	case "lib":
-		ck.checkpathLib(pline, dirname, basename)
+		ck.checkPathLib(pline, dirname, basename)
 	case "man":
-		ck.checkpathMan(pline)
-	case "sbin":
-		ck.checkpathSbin(pline)
+		ck.checkPathMan(pline)
 	case "share":
-		ck.checkpathShare(pline)
+		ck.checkPathShare(pline)
 	}
 
-	if contains(text, "${PKGLOCALEDIR}") && G.Pkg != nil && G.Pkg.vardef["USE_PKGLOCALEDIR"] == nil {
-		line.Warnf("PLIST contains ${PKGLOCALEDIR}, but USE_PKGLOCALEDIR was not found.")
+	if contains(text, "${PKGLOCALEDIR}") && ck.pkg != nil && !ck.pkg.vars.Defined("USE_PKGLOCALEDIR") {
+		pline.Warnf("PLIST contains ${PKGLOCALEDIR}, but USE_PKGLOCALEDIR is not set in the package Makefile.")
 	}
 
 	if contains(text, "/CVS/") {
-		line.Warnf("CVS files should not be in the PLIST.")
+		pline.Warnf("CVS files should not be in the PLIST.")
 	}
 	if hasSuffix(text, ".orig") {
-		line.Warnf(".orig files should not be in the PLIST.")
+		pline.Warnf(".orig files should not be in the PLIST.")
 	}
 	if hasSuffix(text, "/perllocal.pod") {
-		line.Warnf("perllocal.pod files should not be in the PLIST.")
-		Explain(
-			"This file is handled automatically by the INSTALL/DEINSTALL scripts,",
-			"since its contents changes frequently.")
+		pline.Warnf("The perllocal.pod file should not be in the PLIST.")
+		pline.Explain(
+			"This file is handled automatically by the INSTALL/DEINSTALL scripts",
+			"since its contents depends on more than one package.")
 	}
 	if contains(text, ".egg-info/") {
-		line.Warnf("Include \"../../lang/python/egg.mk\" instead of listing .egg-info files directly.")
+		pline.Warnf("Include \"../../lang/python/egg.mk\" instead of listing .egg-info files directly.")
+	}
+}
+
+func (ck *PlistChecker) checkPathNonAscii(pline *PlistLine) {
+	text := pline.text
+
+	lex := textproc.NewLexer(text)
+	lex.NextBytesFunc(func(b byte) bool { return b >= ' ' && b <= '~' })
+	ascii := lex.EOF()
+
+	switch {
+	case !ck.nonAsciiAllowed && !ascii:
+		ck.nonAsciiAllowed = true
+
+		pline.Warnf("Non-ASCII filename %q.", escapePrintable(text))
+		pline.Explain(
+			"The great majority of filenames installed by pkgsrc packages",
+			"are ASCII-only. Filenames containing non-ASCII characters",
+			"can cause various problems since their name may already be",
+			"different when another character encoding is set in the locale.",
+			"",
+			"To mark a filename as intentionally non-ASCII, insert a PLIST",
+			"@comment with a convincing reason directly above this line.",
+			"That comment will allow this line and the lines directly",
+			"below it to contain non-ASCII filenames.")
+
+	case ck.nonAsciiAllowed && ascii:
+		ck.nonAsciiAllowed = false
 	}
 }
 
 func (ck *PlistChecker) checkSorted(pline *PlistLine) {
-	if text := pline.text; G.opts.WarnPlistSort && hasAlnumPrefix(text) && !containsVarRef(text) {
+	if text := pline.text; hasAlnumPrefix(text) && !containsVarRef(text) {
 		if ck.lastFname != "" {
-			if ck.lastFname > text && !G.opts.Autofix {
-				pline.line.Warnf("%q should be sorted before %q.", text, ck.lastFname)
-				Explain(
+			if ck.lastFname > text && !G.Logger.Opts.Autofix {
+				pline.Warnf("%q should be sorted before %q.", text, ck.lastFname)
+				pline.Explain(
 					"The files in the PLIST should be sorted alphabetically.",
-					"To fix this, run \"pkglint -F PLIST\".")
-			}
-			if prev := ck.allFiles[text]; prev != nil && prev != pline {
-				if !pline.line.AutofixDelete() {
-					pline.line.Errorf("Duplicate filename %q, already appeared in %s.", text, prev.line.ReferenceFrom(pline.line))
-				}
+					"This allows human readers to quickly see whether a file is included or not.")
 			}
 		}
 		ck.lastFname = text
 	}
 }
 
-func (ck *PlistChecker) checkpathBin(pline *PlistLine, dirname, basename string) {
-	if contains(dirname, "/") {
-		pline.line.Warnf("The bin/ directory should not have subdirectories.")
+func (ck *PlistChecker) checkDuplicate(pline *PlistLine) {
+	text := pline.text
+	if !hasAlnumPrefix(text) || containsVarRef(text) {
 		return
 	}
 
-	if G.opts.WarnExtra &&
-		ck.allFiles["man/man1/"+basename+".1"] == nil &&
-		ck.allFiles["man/man6/"+basename+".6"] == nil &&
-		ck.allFiles["${IMAKE_MAN_DIR}/"+basename+".${IMAKE_MANNEWSUFFIX}"] == nil {
-		pline.line.Warnf("Manual page missing for bin/%s.", basename)
-		Explain(
-			"All programs that can be run directly by the user should have a",
-			"manual page for quick reference.  The programs in the bin/ directory",
-			"should have corresponding manual pages in section 1 (filename",
-			"program.1), while the programs in the sbin/ directory have their",
-			"manual pages in section 8.")
+	prev := ck.allFiles[text]
+	if prev == pline || len(prev.conditions) > 0 {
+		return
+	}
+
+	fix := pline.Autofix()
+	fix.Errorf("Duplicate filename %q, already appeared in %s.", text, pline.RefTo(prev.Line))
+	fix.Delete()
+	fix.Apply()
+}
+
+func (ck *PlistChecker) checkPathBin(pline *PlistLine, dirname, basename string) {
+	if contains(dirname, "/") {
+		pline.Warnf("The bin/ directory should not have subdirectories.")
+		pline.Explain(
+			"The programs in bin/ are collected there to be executable by the",
+			"user without having to type an absolute path.",
+			"This advantage does not apply to programs in subdirectories of bin/.",
+			"These programs should rather be placed in libexec/PKGBASE.")
+		return
 	}
 }
 
-func (ck *PlistChecker) checkpathEtc(pline *PlistLine, dirname, basename string) {
+func (ck *PlistChecker) checkPathEtc(pline *PlistLine, dirname, basename string) {
 	if hasPrefix(pline.text, "etc/rc.d/") {
-		pline.line.Errorf("RCD_SCRIPTS must not be registered in the PLIST. Please use the RCD_SCRIPTS framework.")
+		pline.Errorf("RCD_SCRIPTS must not be registered in the PLIST.")
+		pline.Explain(
+			"Please use the RCD_SCRIPTS framework, which is described in mk/pkginstall/bsd.pkginstall.mk.")
 		return
 	}
 
-	pline.line.Errorf("Configuration files must not be registered in the PLIST. " +
+	pline.Errorf("Configuration files must not be registered in the PLIST.")
+	pline.Explain(
 		"Please use the CONF_FILES framework, which is described in mk/pkginstall/bsd.pkginstall.mk.")
 }
 
-func (ck *PlistChecker) checkpathInfo(pline *PlistLine, dirname, basename string) {
+func (ck *PlistChecker) checkPathInfo(pline *PlistLine, dirname, basename string) {
 	if pline.text == "info/dir" {
-		pline.line.Errorf("\"info/dir\" must not be listed. Use install-info to add/remove an entry.")
+		pline.Errorf("\"info/dir\" must not be listed. Use install-info to add/remove an entry.")
 		return
 	}
 
-	if G.Pkg != nil && G.Pkg.vardef["INFO_FILES"] == nil {
-		pline.line.Warnf("Packages that install info files should set INFO_FILES.")
+	if ck.pkg != nil && !ck.pkg.vars.Defined("INFO_FILES") {
+		pline.Warnf("Packages that install info files should set INFO_FILES in the Makefile.")
 	}
 }
 
-func (ck *PlistChecker) checkpathLib(pline *PlistLine, dirname, basename string) {
+func (ck *PlistChecker) checkPathLib(pline *PlistLine, dirname, basename string) {
+	pkg := ck.pkg
+
 	switch {
-	case G.Pkg != nil && G.Pkg.EffectivePkgbase != "" && hasPrefix(pline.text, "lib/"+G.Pkg.EffectivePkgbase+"/"):
+	case pkg != nil && pkg.EffectivePkgbase != "" && hasPrefix(pline.text, "lib/"+pkg.EffectivePkgbase+"/"):
 		return
 
-	case pline.text == "lib/charset.alias" && (G.Pkg == nil || G.Pkg.Pkgpath != "converters/libiconv"):
-		pline.line.Errorf("Only the libiconv package may install lib/charset.alias.")
+	case pline.text == "lib/charset.alias" && (pkg == nil || pkg.Pkgpath != "converters/libiconv"):
+		pline.Errorf("Only the libiconv package may install lib/charset.alias.")
 		return
 
 	case hasPrefix(pline.text, "lib/locale/"):
-		pline.line.Errorf("\"lib/locale\" must not be listed. Use ${PKGLOCALEDIR}/locale and set USE_PKGLOCALEDIR instead.")
+		pline.Errorf("\"lib/locale\" must not be listed. Use ${PKGLOCALEDIR}/locale and set USE_PKGLOCALEDIR instead.")
 		return
 	}
 
 	switch ext := path.Ext(basename); ext {
-	case ".a", ".la", ".so":
-		if G.opts.WarnExtra && dirname == "lib" && !hasPrefix(basename, "lib") {
-			pline.line.Warnf("Library filename %q should start with \"lib\".", basename)
-		}
-		if ext == "la" {
-			if G.Pkg != nil && G.Pkg.vardef["USE_LIBTOOL"] == nil {
-				pline.line.Warnf("Packages that install libtool libraries should define USE_LIBTOOL.")
-			}
+	case ".la":
+		if pkg != nil && !pkg.vars.Defined("USE_LIBTOOL") && ck.once.FirstTime("USE_LIBTOOL") {
+			pline.Warnf("Packages that install libtool libraries should define USE_LIBTOOL.")
 		}
 	}
 
 	if contains(basename, ".a") || contains(basename, ".so") {
 		if m, noext := match1(pline.text, `^(.*)(?:\.a|\.so[0-9.]*)$`); m {
 			if laLine := ck.allFiles[noext+".la"]; laLine != nil {
-				pline.line.Warnf("Redundant library found. The libtool library is in %s.", laLine.line.ReferenceFrom(pline.line))
+				pline.Warnf("Redundant library found. The libtool library is in %s.", pline.RefTo(laLine.Line))
 			}
 		}
 	}
 }
 
-func (ck *PlistChecker) checkpathMan(pline *PlistLine) {
-	line := pline.line
-
-	m, catOrMan, section, manpage, ext, gz := regex.Match5(pline.text, `^man/(cat|man)(\w+)/(.*?)\.(\w+)(\.gz)?$`)
+func (ck *PlistChecker) checkPathMan(pline *PlistLine) {
+	m, catOrMan, section, manpage, ext, gz := match5(pline.text, `^man/(cat|man)(\w+)/(.*?)\.(\w+)(\.gz)?$`)
 	if !m {
 		// maybe: line.Warnf("Invalid filename %q for manual page.", text)
 		return
 	}
 
-	if !matches(section, `^[\dln]$`) {
-		line.Warnf("Unknown section %q for manual page.", section)
+	if !matches(section, `^[0-9ln]$`) {
+		pline.Warnf("Unknown section %q for manual page.", section)
 	}
 
 	if catOrMan == "cat" && ck.allFiles["man/man"+section+"/"+manpage+"."+section] == nil {
-		line.Warnf("Preformatted manual page without unformatted one.")
+		pline.Warnf("Preformatted manual page without unformatted one.")
 	}
 
 	if catOrMan == "cat" {
 		if ext != "0" {
-			line.Warnf("Preformatted manual pages should end in \".0\".")
+			pline.Warnf("Preformatted manual pages should end in \".0\".")
 		}
 	} else {
 		if !hasPrefix(ext, section) {
-			line.Warnf("Mismatch between the section (%s) and extension (%s) of the manual page.", section, ext)
+			pline.Warnf("Mismatch between the section (%s) and extension (%s) of the manual page.", section, ext)
 		}
 	}
 
 	if gz != "" {
-		line.Notef("The .gz extension is unnecessary for manual pages.")
-		Explain(
+		fix := pline.Autofix()
+		fix.Notef("The .gz extension is unnecessary for manual pages.")
+		fix.Explain(
 			"Whether the manual pages are installed in compressed form or not is",
-			"configured by the pkgsrc user.  Compression and decompression takes",
-			"place automatically, no matter if the .gz extension is mentioned in",
-			"the PLIST or not.")
+			"configured by the pkgsrc user.",
+			"Compression and decompression takes place automatically,",
+			"no matter if the .gz extension is mentioned in the PLIST or not.")
+		fix.ReplaceRegex(`\.gz\n`, "\n", 1)
+		fix.Apply()
 	}
 }
 
-func (ck *PlistChecker) checkpathSbin(pline *PlistLine) {
-	binname := pline.text[5:]
+func (ck *PlistChecker) checkPathShare(pline *PlistLine) {
+	pkg := ck.pkg
+	text := pline.text
 
-	if ck.allFiles["man/man8/"+binname+".8"] == nil && G.opts.WarnExtra {
-		pline.line.Warnf("Manual page missing for sbin/%s.", binname)
-		Explain(
-			"All programs that can be run directly by the user should have a",
-			"manual page for quick reference.  The programs in the sbin/",
-			"directory should have corresponding manual pages in section 8",
-			"(filename program.8), while the programs in the bin/ directory",
-			"have their manual pages in section 1.")
-	}
-}
-
-func (ck *PlistChecker) checkpathShare(pline *PlistLine) {
-	line, text := pline.line, pline.text
 	switch {
-	// Disabled due to PR 46570, item "10. It should stop".
-	case false && hasPrefix(text, "share/applications/") && hasSuffix(text, ".desktop"):
-		f := "../../sysutils/desktop-file-utils/desktopdb.mk"
-		if G.opts.WarnExtra && G.Pkg != nil && G.Pkg.included[f] == nil {
-			line.Warnf("Packages that install a .desktop entry should .include %q.", f)
-			Explain(
-				"If *.desktop files contain MimeType keys, the global MIME type",
-				"registry must be updated by desktop-file-utils.  Otherwise, this",
-				"warning is harmless.")
+	case hasPrefix(text, "share/icons/") && pkg != nil:
+		if hasPrefix(text, "share/icons/hicolor/") && pkg.Pkgpath != "graphics/hicolor-icon-theme" {
+			f := "../../graphics/hicolor-icon-theme/buildlink3.mk"
+			if !pkg.included.Seen(f) && ck.once.FirstTime("hicolor-icon-theme") {
+				pline.Errorf("Packages that install hicolor icons must include %q in the Makefile.", f)
+			}
 		}
 
-	case hasPrefix(text, "share/icons/hicolor/") && G.Pkg != nil && G.Pkg.Pkgpath != "graphics/hicolor-icon-theme":
-		f := "../../graphics/hicolor-icon-theme/buildlink3.mk"
-		if G.Pkg.included[f] == nil {
-			line.Errorf("Packages that install hicolor icons must include %q in the Makefile.", f)
+		if text == "share/icons/hicolor/icon-theme.cache" && pkg.Pkgpath != "graphics/hicolor-icon-theme" {
+			pline.Errorf("The file icon-theme.cache must not appear in any PLIST file.")
+			pline.Explain(
+				"Remove this line and add the following line to the package Makefile.",
+				"",
+				".include \"../../graphics/hicolor-icon-theme/buildlink3.mk\"")
 		}
 
-	case hasPrefix(text, "share/icons/gnome") && G.Pkg != nil && G.Pkg.Pkgpath != "graphics/gnome-icon-theme":
-		f := "../../graphics/gnome-icon-theme/buildlink3.mk"
-		if G.Pkg.included[f] == nil {
-			line.Errorf("The package Makefile must include %q.", f)
-			Explain(
-				"Packages that install GNOME icons must maintain the icon theme",
-				"cache.")
+		if hasPrefix(text, "share/icons/gnome") && pkg.Pkgpath != "graphics/gnome-icon-theme" {
+			f := "../../graphics/gnome-icon-theme/buildlink3.mk"
+			if !pkg.included.Seen(f) {
+				pline.Errorf("The package Makefile must include %q.", f)
+				pline.Explain(
+					"Packages that install GNOME icons must maintain the icon theme",
+					"cache.")
+			}
+		}
+
+		if contains(text[12:], "/") && !pkg.vars.Defined("ICON_THEMES") && ck.once.FirstTime("ICON_THEMES") {
+			pline.Warnf("Packages that install icon theme files should set ICON_THEMES.")
 		}
 
 	case hasPrefix(text, "share/doc/html/"):
-		if G.opts.WarnPlistDepr {
-			line.Warnf("Use of \"share/doc/html\" is deprecated. Use \"share/doc/${PKGBASE}\" instead.")
-		}
+		pline.Warnf("Use of \"share/doc/html\" is deprecated. Use \"share/doc/${PKGBASE}\" instead.")
 
-	case G.Pkg != nil && G.Pkg.EffectivePkgbase != "" && (hasPrefix(text, "share/doc/"+G.Pkg.EffectivePkgbase+"/") ||
-		hasPrefix(text, "share/examples/"+G.Pkg.EffectivePkgbase+"/")):
+	case pkg != nil && pkg.EffectivePkgbase != "" && (hasPrefix(text, "share/doc/"+pkg.EffectivePkgbase+"/") ||
+		hasPrefix(text, "share/examples/"+pkg.EffectivePkgbase+"/")):
 		// Fine.
-
-	case text == "share/icons/hicolor/icon-theme.cache" && G.Pkg != nil && G.Pkg.Pkgpath != "graphics/hicolor-icon-theme":
-		line.Errorf("This file must not appear in any PLIST file.")
-		Explain(
-			"Remove this line and add the following line to the package Makefile.",
-			"",
-			".include \"../../graphics/hicolor-icon-theme/buildlink3.mk\"")
 
 	case hasPrefix(text, "share/info/"):
-		line.Warnf("Info pages should be installed into info/, not share/info/.")
-		Explain(
-			"To fix this, you should add INFO_FILES=yes to the package Makefile.")
-
-	case hasPrefix(text, "share/locale/") && hasSuffix(text, ".mo"):
-		// Fine.
+		pline.Warnf("Info pages should be installed into info/, not share/info/.")
+		pline.Explain(
+			"To fix this, add INFO_FILES=yes to the package Makefile.")
 
 	case hasPrefix(text, "share/man/"):
-		line.Warnf("Man pages should be installed into man/, not share/man/.")
+		pline.Warnf("Man pages should be installed into man/, not share/man/.")
 	}
 }
 
 func (pline *PlistLine) CheckTrailingWhitespace() {
 	if hasSuffix(pline.text, " ") || hasSuffix(pline.text, "\t") {
-		pline.line.Errorf("pkgsrc does not support filenames ending in white-space.")
-		Explain(
-			"Each character in the PLIST is relevant, even trailing white-space.")
+		pline.Errorf("Pkgsrc does not support filenames ending in whitespace.")
+		pline.Explain(
+			"Each character in the PLIST is relevant, even trailing whitespace.")
 	}
 }
 
 func (pline *PlistLine) CheckDirective(cmd, arg string) {
-	line := pline.line
-
 	if cmd == "unexec" {
-		if m, arg := match1(arg, `^(?:rmdir|\$\{RMDIR\} \%D/)(.*)`); m {
-			if !contains(arg, "true") && !contains(arg, "${TRUE}") {
-				pline.line.Warnf("Please remove this line. It is no longer necessary.")
+		if m, dir := match1(arg, `^(?:rmdir|\$\{RMDIR\} %D/)(.*)`); m {
+			if !contains(dir, "true") && !contains(dir, "${TRUE}") {
+				fix := pline.Autofix()
+				fix.Warnf("Please remove this line. It is no longer necessary.")
+				fix.Delete()
+				fix.Apply()
 			}
 		}
 	}
@@ -421,28 +450,25 @@ func (pline *PlistLine) CheckDirective(cmd, arg string) {
 	switch cmd {
 	case "exec", "unexec":
 		switch {
-		case contains(arg, "install-info"),
-			contains(arg, "${INSTALL_INFO}"):
-			line.Warnf("@exec/unexec install-info is deprecated.")
 		case contains(arg, "ldconfig") && !contains(arg, "/usr/bin/true"):
-			pline.line.Errorf("ldconfig must be used with \"||/usr/bin/true\".")
+			pline.Errorf("The ldconfig command must be used with \"||/usr/bin/true\".")
 		}
 
 	case "comment":
-		// Nothing to do.
+		// Nothing to check.
 
 	case "dirrm":
-		line.Warnf("@dirrm is obsolete. Please remove this line.")
-		Explain(
+		pline.Warnf("@dirrm is obsolete. Please remove this line.")
+		pline.Explain(
 			"Directories are removed automatically when they are empty.",
 			"When a package needs an empty directory, it can use the @pkgdir",
-			"command in the PLIST")
+			"command in the PLIST.")
 
 	case "imake-man":
-		args := splitOnSpace(arg)
+		args := strings.Fields(arg)
 		switch {
 		case len(args) != 3:
-			line.Warnf("Invalid number of arguments for imake-man.")
+			pline.Warnf("Invalid number of arguments for imake-man, should be 3.")
 		case args[2] == "${IMAKE_MANNEWSUFFIX}":
 			pline.warnImakeMannewsuffix()
 		}
@@ -451,16 +477,16 @@ func (pline *PlistLine) CheckDirective(cmd, arg string) {
 		// Nothing to check.
 
 	default:
-		line.Warnf("Unknown PLIST directive \"@%s\".", cmd)
+		pline.Warnf("Unknown PLIST directive \"@%s\".", cmd)
 	}
 }
 
 func (pline *PlistLine) warnImakeMannewsuffix() {
-	pline.line.Warnf("IMAKE_MANNEWSUFFIX is not meant to appear in PLISTs.")
-	Explain(
+	pline.Warnf("IMAKE_MANNEWSUFFIX is not meant to appear in PLISTs.")
+	pline.Explain(
 		"This is the result of a print-PLIST call that has not been edited",
-		"manually by the package maintainer.  Please replace the",
-		"IMAKE_MANNEWSUFFIX with:",
+		"manually by the package maintainer.",
+		"Please replace the IMAKE_MANNEWSUFFIX with:",
 		"",
 		"\tIMAKE_MAN_SUFFIX for programs,",
 		"\tIMAKE_LIBMAN_SUFFIX for library functions,",
@@ -470,55 +496,84 @@ func (pline *PlistLine) warnImakeMannewsuffix() {
 }
 
 type plistLineSorter struct {
-	first     *PlistLine
-	plines    []*PlistLine
-	lines     []line.Line
-	after     map[*PlistLine][]line.Line
-	swapped   bool
-	autofixed bool
+	header     []*PlistLine // Does not take part in sorting
+	middle     []*PlistLine // Only this part is sorted
+	footer     []*PlistLine // Does not take part in sorting, typically contains @exec or @pkgdir
+	unsortable Line         // Some lines are so difficult to sort that only humans can do that
+	changed    bool         // Whether the sorting actually changed something
+	autofixed  bool         // Whether the newly sorted file has been written to disk
 }
 
 func NewPlistLineSorter(plines []*PlistLine) *plistLineSorter {
-	s := &plistLineSorter{first: plines[0], after: make(map[*PlistLine][]line.Line)}
-	prev := plines[0]
-	for _, pline := range plines[1:] {
-		if hasPrefix(pline.text, "@") || contains(pline.text, "$") {
-			s.after[prev] = append(s.after[prev], pline.line)
-		} else {
-			s.plines = append(s.plines, pline)
-			s.lines = append(s.lines, pline.line)
-			prev = pline
+	headerEnd := 0
+	for headerEnd < len(plines) && hasPrefix(plines[headerEnd].text, "@comment") {
+		headerEnd++
+	}
+
+	footerStart := len(plines)
+	for footerStart > headerEnd && hasPrefix(plines[footerStart-1].text, "@") {
+		footerStart--
+	}
+
+	header := plines[0:headerEnd]
+	middle := plines[headerEnd:footerStart]
+	footer := plines[footerStart:]
+	var unsortable Line
+
+	for _, pline := range middle {
+		if unsortable == nil && (hasPrefix(pline.text, "@") || contains(pline.text, "$")) {
+			unsortable = pline.Line
 		}
 	}
-	return s
-}
-
-func (s *plistLineSorter) Len() int {
-	return len(s.plines)
-}
-func (s *plistLineSorter) Less(i, j int) bool {
-	return s.plines[i].text < s.plines[j].text
-}
-func (s *plistLineSorter) Swap(i, j int) {
-	s.swapped = true
-	s.lines[i], s.lines[j] = s.lines[j], s.lines[i]
-	s.plines[i], s.plines[j] = s.plines[j], s.plines[i]
+	return &plistLineSorter{header, middle, footer, unsortable, false, false}
 }
 
 func (s *plistLineSorter) Sort() {
-	sort.Stable(s)
-
-	if !s.swapped {
+	if line := s.unsortable; line != nil {
+		if G.Logger.IsAutofix() {
+			trace.Stepf("%s: This line prevents pkglint from sorting the PLIST automatically.", line)
+		}
 		return
 	}
 
-	firstLine := s.first.line
-	firstLine.AutofixMark("Sorting the whole file.")
-	lines := []line.Line{firstLine}
-	lines = append(lines, s.after[s.first]...)
-	for _, pline := range s.plines {
-		lines = append(lines, pline.line)
-		lines = append(lines, s.after[pline]...)
+	if !G.shallBeLogged("%q should be sorted before %q.") {
+		return
 	}
-	s.autofixed = SaveAutofixChanges(lines)
+	if len(s.middle) == 0 {
+		return
+	}
+	firstLine := s.middle[0].Line
+
+	sort.SliceStable(s.middle, func(i, j int) bool {
+		mi := s.middle[i]
+		mj := s.middle[j]
+		less := mi.text < mj.text ||
+			(mi.text == mj.text && stringSliceLess(mi.conditions, mj.conditions))
+		if (i < j) != less {
+			s.changed = true
+		}
+		return less
+	})
+
+	if !s.changed {
+		return
+	}
+
+	fix := firstLine.Autofix()
+	fix.Notef(SilentAutofixFormat)
+	fix.Describef(int(firstLine.firstLine), "Sorting the whole file.")
+	fix.Apply()
+
+	var lines []Line
+	for _, pline := range s.header {
+		lines = append(lines, pline.Line)
+	}
+	for _, pline := range s.middle {
+		lines = append(lines, pline.Line)
+	}
+	for _, pline := range s.footer {
+		lines = append(lines, pline.Line)
+	}
+
+	s.autofixed = SaveAutofixChanges(NewLines(lines[0].Filename, lines))
 }

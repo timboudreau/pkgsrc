@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.4 2016/08/07 11:44:42 nros Exp $
+# $NetBSD: Makefile,v 1.7 2018/06/08 20:49:41 nros Exp $
 
 DISTNAME=	qore-openldap-module-1.1
+PKGREVISION=	3
 CATEGORIES=	databases
 MASTER_SITES=   ${MASTER_SITE_GITHUB:=qorelanguage/}
 EXTRACT_SUFX=   .tar.bz2
@@ -14,7 +15,7 @@ LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS+=	gmake pax
 PTHREAD_OPTS+=	native
 

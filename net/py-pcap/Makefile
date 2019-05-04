@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.9 2017/01/01 14:43:52 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2019/04/26 13:14:10 maya Exp $
 
 DISTNAME=	pypcap-1.1
 PKGNAME=	${PYPKGPREFIX}-pcap-1.1
@@ -7,7 +7,7 @@ CATEGORIES=	net python
 MASTER_SITES=	http://pypcap.googlecode.com/files/
 
 MAINTAINER=	pettai@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/pypcap/
+HOMEPAGE=	https://github.com/dugsong/pypcap
 COMMENT=	Simplified object-oriented python module for libpcap
 LICENSE=	modified-bsd
 
@@ -16,15 +16,15 @@ BUILD_DEPENDS+=		${PYPKGPREFIX}-pyrex-[0-9]*:../../lang/py-pyrex
 SUBST_CLASSES+=		python
 SUBST_FILES.python=	Makefile
 SUBST_SED.python+=	-e 's,@PYTHON@,${PYTHONBIN},g'
-SUBST_STAGE.python=	post-patch
+SUBST_STAGE.python=	pre-configure
 
 SUBST_CLASSES+=		prefix
 SUBST_FILES.prefix=	Makefile
 SUBST_SED.prefix=	-e "s|@PREFIX@|${PREFIX}|g"
-SUBST_STAGE.prefix=	post-patch
+SUBST_STAGE.prefix=	pre-configure
 
 PYDISTUTILSPKG=			yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-pyrex
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-pyrex
 
 FILES_SUBST+=	PYTHONBIN=${PYTHONBIN:Q}
 

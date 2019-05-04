@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.33 2017/04/20 09:59:39 dsainty Exp $
+# $NetBSD: Makefile,v 1.40 2018/08/22 09:46:30 wiz Exp $
 
 PKGNAME=	${DISTNAME:S/ZoneMinder-/zoneminder-/}
 DISTNAME=	ZoneMinder-1.28.1
-PKGREVISION=	12
+PKGREVISION=	18
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_GITHUB:=ZoneMinder/}
 GITHUB_PROJECT=	ZoneMinder
@@ -10,7 +10,7 @@ GITHUB_TYPE=	tag
 GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	dsainty@NetBSD.org
-HOMEPAGE=	http://www.zoneminder.com/
+HOMEPAGE=	https://www.zoneminder.com/
 COMMENT=	Video camera security and surveillance solution
 LICENSE=	gnu-gpl-v2
 
@@ -127,6 +127,7 @@ DEPENDS+=	${PHP_PKG_PREFIX}-mysql-[0-9]*:../../databases/php-mysql
 DEPENDS+=	${PHP_PKG_PREFIX}-pdo_mysql-[0-9]*:../../databases/php-pdo_mysql
 .endif
 
+# \todo Somehow, this permission setup still fails.
 # This directory contains state, so use OWN_DIRS instead of MAKE_DIRS.
 ZM_CACHE=	${VARBASE}/cache/zoneminder
 OWN_DIRS_PERMS+=	${ZM_CACHE} ${REAL_ROOT_USER} ${REAL_ROOT_GROUP} 755

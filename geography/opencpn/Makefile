@@ -1,15 +1,12 @@
-# $NetBSD: Makefile,v 1.14 2017/04/30 01:21:41 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.31 2019/03/25 11:34:05 bouyer Exp $
 
-VERSION=	4.6.1
-#PKGREVISION=	0
-DISTNAME=	OpenCPN-${VERSION}
-PKGNAME=	opencpn-${VERSION}
-PKGREVISION=	1
+DISTNAME=	OpenCPN-5.0.0
+PKGNAME=	${DISTNAME:S/OpenCPN/opencpn/}
+#PKGREVISION=	1
 CATEGORIES=	geography
 MASTER_SITES=	${MASTER_SITE_GITHUB:=OpenCPN/}
 GITHUB_PROJECT=	OpenCPN
-GITHUB_TAG=	89f78e06c52683faac51c30baa1f25fee7ed6c97
+GITHUB_TAG=	v5.0.0
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	bouyer@NetBSD.org
@@ -17,9 +14,9 @@ HOMEPAGE=	http://www.opencpn.org/
 COMMENT=	Concise ChartPlotter/Navigator
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES=		c c++
-USE_TOOLS=		gettext
-USE_CMAKE=		yes
+USE_LANGUAGES=	c c++11
+USE_TOOLS+=	gettext pkg-config
+USE_CMAKE=	yes
 
 CMAKE_ARGS+=	-DPREFIX:PATH=${PREFIX} -DPREFIX_PLUGINS:PATH=${PREFIX}/lib/opencpn
 CMAKE_ARGS+=	-DBUNDLE_DOCS=ON -DBUNDLE_GSHHS=CRUDE -DBUNDLE_TCDATA=ON
@@ -43,11 +40,10 @@ SUBST_SED.prefix=	-e s,"/usr/local,"${PREFIX},g
 # Ensure we export symbols in the linked shared object.
 LDFLAGS+=	${EXPORT_SYMBOLS_LDFLAGS}
 
+.include "../../audio/libsndfile/buildlink3.mk"
 .include "../../devel/cmake/buildlink3.mk"
-.include "../../x11/gtk2/buildlink3.mk"
 .include "../../x11/wxGTK30/buildlink3.mk"
-.include "../../graphics/MesaLib/buildlink3.mk"
-.include "../../graphics/glu/buildlink3.mk"
+.include "../../graphics/libexif/buildlink3.mk"
 .include "../../archivers/bzip2/buildlink3.mk"
 .include "../../audio/portaudio-devel/buildlink3.mk"
 .include "../../textproc/tinyxml/buildlink3.mk"

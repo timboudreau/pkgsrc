@@ -1,4 +1,4 @@
-# $NetBSD: replace-interpreter.mk,v 1.13 2013/04/18 00:24:48 mspo Exp $
+# $NetBSD: replace-interpreter.mk,v 1.17 2019/02/18 14:10:37 bsiegert Exp $
 
 # This file provides common templates for replacing #! interpreters
 # in script files.
@@ -10,6 +10,7 @@
 # REPLACE_CSH
 # REPLACE_KSH
 # REPLACE_PERL
+# REPLACE_PERL6
 # REPLACE_SH
 #	Lists of files relative to WRKSRC in which the #! interpreter
 #	should be replaced by the pkgsrc one. If any directories
@@ -30,7 +31,8 @@
 # variable, all identifiers starting with "sys-" are reserved for the
 # pkgsrc infrastructure. All others may be used freely.
 #
-# Keywords: replace_interpreter interpreter interp
+# Keywords: replace_interpreter interpreter interp hashbang #!
+# Keywords: awk bash csh ksh perl sh
 
 ######################################################################
 ### replace-interpreter (PRIVATE)
@@ -83,6 +85,14 @@ REPLACE.sys-Perl.new=	${PERL5}
 REPLACE_FILES.sys-Perl=	${REPLACE_PERL}
 .endif
 
+.if !empty(REPLACE_PERL6:M*)
+PERL6?=			${PREFIX}/bin/perl6
+REPLACE_INTERPRETER+=	sys-Perl6
+REPLACE.sys-Perl6.old=	.*perl6[^[:space:]]*
+REPLACE.sys-Perl6.new=	${PERL6}
+REPLACE_FILES.sys-Perl6=${REPLACE_PERL6}
+.endif
+
 .if !empty(REPLACE_SH:M*)
 REPLACE_INTERPRETER+=	sys-sh
 REPLACE.sys-sh.old=	[^[:space:]]*sh
@@ -106,7 +116,12 @@ replace-interpreter:
 			if [ -x "$${f}" ]; then				\
 				${CHMOD} a+x "$${f}.new";		\
 			fi;						\
-			${MV} -f "$${f}.new" "$${f}";			\
+			if ${CMP} -s "$${f}.new" "$${f}"; then		\
+				${INFO_MSG} "[replace-interpreter] Nothing changed in $${f}."; \
+				${RM} -f "$${f}.new";			\
+			else						\
+				${MV} -f "$${f}.new" "$${f}";		\
+			fi;						\
 		elif [ -d "$$f" ]; then					\
 			${SHCOMMENT} "Ignore it, most probably comes from shell globs"; \
 		else							\
@@ -116,4 +131,13 @@ replace-interpreter:
 .  else
 	@${WARNING_MSG} "[replace-interpreter] Empty list of files for ${_lang_}."
 .  endif
+.endfor
+
+_VARGROUPS+=		interp
+.for varname in REPLACE_AWK REPLACE_BASH REPLACE_CSH REPLACE_KSH REPLACE_PERL REPLACE_PERL6 REPLACE_SH
+_PKG_VARS.interp+=	${varname}
+.endfor
+_PKG_VARS.interp+=	REPLACE_INTERPRETER
+.for interp in ${REPLACE_INTERPRETER}
+_DEF_VARS.interp+=	REPLACE.${interp}.old REPLACE.${interp}.new REPLACE_FILES.${interp}
 .endfor

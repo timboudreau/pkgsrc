@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.10 2017/04/30 01:21:32 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/12/13 19:51:46 adam Exp $
 
 PKGNAME=		${DISTNAME:S/sqlrelay/sqlrelay-pgsql/}
-PKGREVISION=		1
+PKGREVISION=		6
 COMMENT=		PostgreSQL support for SQL Relay
 
 .include "../../databases/sqlrelay/Makefile.common"

@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.44 2017/07/03 09:57:53 leot Exp $
+# $NetBSD: Makefile,v 1.53 2019/04/28 15:22:24 rillig Exp $
 
 DISTNAME=		pkgsrc-guide-${PKGVERSION}
 CATEGORIES=		# empty
 MASTER_SITES=		${MASTER_SITE_LOCAL}
-DISTFILES=		htdocs-share-20170703.tar.gz
+DISTFILES=		htdocs-share-20190409.tar.gz
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		http://www.NetBSD.org/docs/pkgsrc/
@@ -16,6 +16,7 @@ PKGVERSION!=		date '+%Y%m%d'
 DIST_SUBDIR=		${PKGBASE}
 USE_LANGUAGES=		# empty
 MAKE_ENV+=		SED=${SED:Q}
+USE_TOOLS+=		perl
 
 PLIST_VARS=		ascii html pdf
 
@@ -63,6 +64,11 @@ pre-extract:
 	${MKDIR} ${WRKSRC}
 	${LN} -s ${FILESDIR}/* ${WRKSRC}
 
+post-extract: generate-help-topics
+generate-help-topics: .PHONY
+	${RUN} ${MAKE} help topic=:index > ${WRKSRC}/help-topics.data
+	${RUN} cd ${WRKSRC} && perl generate-help-topics.pl 
+
 do-build:
 .for _output_ in ${OUTPUTS}
 	@${ECHO} "-----> Building ${_output_} output"
@@ -108,7 +114,7 @@ regen-doc: build
 	cd .. && cvs update pkgsrc.*
 	${MAKE} ${MAKEFLAGS} install-doc
 	@${STEP_MSG} "Committing the files in pkgsrc/doc"
-	cd .. && cvs commit -m "regen" pkgsrc.*
+	cd .. && cvs commit -m "doc/pkgsrc.*: regen" pkgsrc.*
 
 regen-htdocs: build
 	@${STEP_MSG} "Updating the files in htdocs"
@@ -138,7 +144,12 @@ detab:
 
 # Generates a new htdocs-share-*.tar.gz archive from the current
 # contents of the htdocs directory. To make it available, it should
-# be copied to ftp.NetBSD.org/pub/pkgsrc/distfiles/LOCAL_PORTS/.
+# be copied to ftp.NetBSD.org:/pub/pkgsrc/distfiles/LOCAL_PORTS/, i.e.:
+#
+# % scp htdocs-share-*.tar.gz ftp.NetBSD.org:/pub/pkgsrc/distfiles/LOCAL_PORTS/
+# [... adjust DISTFILES variable ...]
+# % make makesum
+#
 .PHONY: htdocs-share
 htdocs-share:
 	cd ${HTDOCSDIR}							\

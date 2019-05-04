@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.24 2017/01/01 08:24:44 mef Exp $
+# $NetBSD: Makefile,v 1.28 2018/09/02 21:03:22 maya Exp $
 
-DISTNAME=	xz-5.2.3
+DISTNAME=	xz-5.2.4
 CATEGORIES=	archivers
-MASTER_SITES=	http://tukaani.org/xz/
+MASTER_SITES=	https://tukaani.org/xz/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://tukaani.org/xz/
-COMMENT=	XZ utilities
+HOMEPAGE=	https://tukaani.org/xz/
+COMMENT=	General-purpose data compression software
 LICENSE=	public-domain AND gnu-gpl-v2
 
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE=	src/liblzma/liblzma.pc.in
 
-GCC_REQD+=		3.0
+TEST_TARGET=		check
 
 CONFLICTS=	lzma-[0-9]* lzma-utils-[0-9]* lzmalib-[0-9]*
 

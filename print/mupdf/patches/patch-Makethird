@@ -1,23 +1,17 @@
-$NetBSD: patch-Makethird,v 1.7 2017/04/12 13:03:08 leot Exp $
+$NetBSD: patch-Makethird,v 1.9 2018/10/04 19:02:33 leot Exp $
 
-o mujs building support with libtool
+- mujs building support with libtool
+- Avoid the internal lcms2 version provided and honors SYS_LCMS2_{CFLAGS,LIBS}.
+  These are handled in patches/patch-ab.
 
---- Makethird.orig	2017-03-31 14:23:45.000000000 +0000
+--- Makethird.orig	2018-09-25 12:39:17.000000000 +0000
 +++ Makethird
-@@ -26,13 +26,13 @@ ifneq "$(wildcard $(MUJS_DIR)/README)" "
- MUJS_OUT := $(OUT)/thirdparty/mujs
- MUJS_SRC := one.c
+@@ -229,7 +229,7 @@ else
+ THIRD_SRC += thirdparty/mujs/one.c
+ THIRD_CFLAGS += -Ithirdparty/mujs
  
--MUJS_OBJ := $(addprefix $(MUJS_OUT)/, $(MUJS_SRC:%.c=%.o))
-+MUJS_OBJ := $(addprefix $(MUJS_OUT)/, $(MUJS_SRC:%.c=%.lo))
- 
--$(MUJS_OUT)/one.o: $(wildcard $(MUJS_DIR)/js*.c $(MUJS_DIR)/utf*.c $(MUJS_DIR)/regex.c $(MUJS_DIR)/*.h)
-+$(MUJS_OUT)/one.lo: $(wildcard $(MUJS_DIR)/js*.c $(MUJS_DIR)/utf*.c $(MUJS_DIR)/regex.c $(MUJS_DIR)/*.h)
- 
- $(MUJS_OUT):
- 	$(MKDIR_CMD)
--$(MUJS_OUT)/%.o: $(MUJS_DIR)/%.c | $(MUJS_OUT)
-+$(MUJS_OUT)/%.lo: $(MUJS_DIR)/%.c | $(MUJS_OUT)
+-$(OUT)/thirdparty/mujs/%.o: thirdparty/mujs/%.c
++$(OUT)/thirdparty/mujs/%.lo: thirdparty/mujs/%.c
  	$(CC_CMD)
  
- MUJS_CFLAGS := -I$(MUJS_DIR)
+ endif

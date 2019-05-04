@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.57 2017/06/05 14:22:20 ryoon Exp $
+# $NetBSD: Makefile,v 1.59 2018/08/22 09:43:04 wiz Exp $
 #
 
 .include "../../comms/pilot-link/Makefile.common"
 
 PKGNAME=		p5-${DISTNAME}
-PKGREVISION=		12
+PKGREVISION=		13
 
 COMMENT=		Perl bindings for pilot-link
 
@@ -40,7 +40,7 @@ BUILD_DIRS+=		src
 BUILD_DIRS+=		${INSTALL_DIRS}
 
 SUBST_CLASSES+=		progs
-SUBST_STAGE.progs=	post-patch
+SUBST_STAGE.progs=	pre-configure
 SUBST_MESSAGE.progs=	Trim programs to build
 SUBST_FILES.progs=	src/Makefile.in
 SUBST_SED.progs=	-e s:@ENABLE_CONDUITS_TRUE@bin_PROGRAMS:@ENABLE_CONDUITS_TRUE@bin_PROGRAMSX:

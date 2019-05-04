@@ -1,8 +1,9 @@
-# $NetBSD: Makefile.common,v 1.23 2017/07/11 19:47:37 adam Exp $
+# $NetBSD: Makefile.common,v 1.31 2019/03/27 06:24:22 adam Exp $
 # used by lang/clang/Makefile
 # used by lang/clang-static-analyzer/Makefile
+# used by lang/clang-tools-extra/Makefile
 
-DISTNAME=	cfe-4.0.1.src
+DISTNAME=	cfe-7.0.1.src
 CATEGORIES=	lang devel
 MASTER_SITES=	http://llvm.org/releases/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.xz
@@ -12,8 +13,6 @@ HOMEPAGE=	http://clang.llvm.org/
 COMMENT=	C language family frontend for LLVM
 LICENSE=	modified-bsd
 
-DISTINFO_FILE=		${.CURDIR}/../../lang/clang/distinfo
-PATCHDIR=		${.CURDIR}/../../lang/clang/patches
 CONFIGURE_DIRS=		${WRKDIR}/build
 CMAKE_ARG_PATH=		${WRKSRC}
 
@@ -21,7 +20,7 @@ USE_LANGUAGES=		c c++11
 USE_CMAKE=		yes
 GCC_REQD+=		4.8
 
-CMAKE_ARGS+=	-DLLVM_CONFIG=${LLVM_CONFIG_PATH}
+CMAKE_ARGS+=	-DLLVM_CONFIG=${LLVM_CONFIG_PATH:Q}
 CMAKE_ARGS+=	-DCMAKE_BUILD_TYPE=Release
 CMAKE_ARGS+=	-DCMAKE_C_COMPILER=${CC:Q}
 CMAKE_ARGS+=	-DCMAKE_CXX_COMPILER=${CXX:Q}
@@ -29,6 +28,9 @@ CMAKE_ARGS+=	-DCMAKE_CXX_COMPILER=${CXX:Q}
 CMAKE_ARGS+=	-DCLANG_ENABLE_ARCMT=OFF
 
 CMAKE_ARGS.Darwin+=	-DCMAKE_LIBTOOL=/usr/bin/libtool
+.if defined(OSX_SDK_PATH)
+CMAKE_ARGS.Darwin+=	-DDEFAULT_SYSROOT=${OSX_SDK_PATH:Q}
+.endif
 
 REPLACE_PERL+=		test/make_test_dirs.pl
 REPLACE_PERL+=		tools/scan-build/bin/scan-build
@@ -62,6 +64,7 @@ REPLACE_PYTHON+=	utils/analyzer/ubiviz
 REPLACE_PYTHON+=	utils/check_cfc/check_cfc.py
 REPLACE_PYTHON+=	utils/check_cfc/obj_diff.py
 REPLACE_PYTHON+=	utils/check_cfc/test_check_cfc.py
+REPLACE_PYTHON+=	utils/hmaptool/hmaptool
 REPLACE_PYTHON+=	utils/token-delta.py
 REPLACE_PYTHON+=	www/builtins.py
 
@@ -84,6 +87,16 @@ SUBST_FILES.libcxx+=		lib/Driver/Tools.cpp
 SUBST_SED.libcxx=		-e 's,(Major >= 7 || Major == 0),(false),'
 
 CMAKE_ARGS+=			-DCLANG_DEFAULT_CXX_STDLIB:STRING="libstdc++"
+.endif
+
+# Enable full LLVM suite on SunOS
+.if ${OPSYS} == "SunOS"
+.include "../../lang/compiler-rt/buildlink3.mk"
+.include "../../lang/libcxx/buildlink3.mk"
+.include "../../lang/libcxxabi/buildlink3.mk"
+.include "../../lang/libunwind/buildlink3.mk"
+CMAKE_ARGS+=    -DCLANG_DEFAULT_RTLIB:STRING="compiler-rt"
+CMAKE_ARGS+=    -DCLANG_DEFAULT_CXX_STDLIB:STRING="libc++"
 .endif
 
 # 3.8.0 -> 3.8
@@ -116,11 +129,11 @@ CMAKE_ARGS+=		-DCLANG_INCLUDE_TESTS=OFF
 .endif
 
 post-extract:
-	${RUN} mkdir -p ${WRKDIR}/build
+	${MKDIR} ${WRKDIR}/build
 
 .include "../../textproc/libxml2/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
+.include "../../lang/python/application.mk"
 .include "../../lang/python/tool.mk"
 DEPENDS+=	llvm-${PKGVERSION_NOREV}{,nb*}:../../lang/llvm
 .include "../../lang/llvm/buildlink3.mk"
-.include "../../mk/bsd.pkg.mk"

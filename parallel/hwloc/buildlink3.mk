@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.3 2013/04/15 20:46:17 adam Exp $
+# $NetBSD: buildlink3.mk,v 1.5 2018/08/16 13:04:25 adam Exp $
 
 BUILDLINK_TREE+=	hwloc
 
@@ -8,6 +8,11 @@ HWLOC_BUILDLINK3_MK:=
 BUILDLINK_API_DEPENDS.hwloc+=	hwloc>=1.4
 BUILDLINK_PKGSRCDIR.hwloc?=	../../parallel/hwloc
 
+.include "../../mk/bsd.fast.prefs.mk"
+.if ${OPSYS} != "Darwin"
+# libpciaccess is marked as broken on Darwin
+.include "../../sysutils/libpciaccess/buildlink3.mk"
+.endif
 .include "../../textproc/libxml2/buildlink3.mk"
 .endif	# HWLOC_BUILDLINK3_MK
 

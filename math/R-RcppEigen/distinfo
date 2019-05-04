@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2016/07/27 03:53:50 wen Exp $
+$NetBSD: distinfo,v 1.3 2018/03/09 20:27:07 minskim Exp $
 
-SHA1 (R/RcppEigen_0.3.2.8.1.tar.gz) = 4dd0664dd4cde479ed7f8b8b7d02974d4b85402e
-RMD160 (R/RcppEigen_0.3.2.8.1.tar.gz) = bfcfda699f96309c6b8cc63d3ac5cce6c227490e
-SHA512 (R/RcppEigen_0.3.2.8.1.tar.gz) = 335fb04c5e3ce73ef49108372c1f3e5510284a2847137b2063beef8a78cea5e7fa4aa303238f0e9bbd812989dcd286c8283336e09132a8788bb8f7888802af46
-Size (R/RcppEigen_0.3.2.8.1.tar.gz) = 1240083 bytes
+SHA1 (R/RcppEigen_0.3.3.4.0.tar.gz) = 93944bf124c3e8e381d65e0371c917d25e1b99aa
+RMD160 (R/RcppEigen_0.3.3.4.0.tar.gz) = 56e7f9d12ff17664dd52f05940a24578df82fcbc
+SHA512 (R/RcppEigen_0.3.3.4.0.tar.gz) = b4d69814a3ec8593959a35933e2ca479b26e0e53dcd7dce0d248764acd73cb8dc1453c03920dea0b28d1c4c5ed268cc8935868435f9b110daf907bfd242131aa
+Size (R/RcppEigen_0.3.3.4.0.tar.gz) = 1631870 bytes

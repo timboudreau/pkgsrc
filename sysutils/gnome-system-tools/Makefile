@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.39 2017/02/12 06:26:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.45 2018/11/14 22:22:25 kleink Exp $
 #
 
 DISTNAME=		gnome-system-tools-2.22.2
-PKGREVISION=		34
+PKGREVISION=		39
 CATEGORIES=		sysutils gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gnome-system-tools/2.22/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		System administraton tools for the GNOME desktop
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.gnome-system-tools

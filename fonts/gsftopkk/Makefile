@@ -1,17 +1,15 @@
-# $NetBSD: Makefile,v 1.12 2017/06/20 20:50:49 markd Exp $
+# $NetBSD: Makefile,v 1.14 2018/05/13 12:06:11 markd Exp $
 
-DISTNAME=	texlive-20170524-source
+DISTNAME=	texlive-20180414-source
 PKGNAME=	gsftopkk-1.19.2
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://math.berkeley.edu/~vojta/gsftopk.html
 COMMENT=	Tool to convert bitmaps to .pk format
-
-CONFLICTS+=	teTeX-bin<=3.0nb34
 
 EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 			${DISTNAME}/texk/gsftopk

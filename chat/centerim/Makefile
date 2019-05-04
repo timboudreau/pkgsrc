@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.38 2017/04/30 01:21:28 ryoon Exp $
+# $NetBSD: Makefile,v 1.46 2019/04/25 07:32:38 maya Exp $
 #
 
 DISTNAME=	centerim-4.22.10
-PKGREVISION=	9
+PKGREVISION=	16
 CATEGORIES=	chat
 MASTER_SITES=	http://www.centerim.org/download/releases/
 MASTER_SITES+=	http://transacid.de/centerim/releases/
@@ -14,7 +14,7 @@ LICENSE=	gnu-gpl-v2
 
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		gmake perl:run
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-ssl --with-openssl=${SSLBASE:Q}

@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.137 2017/07/10 05:13:47 wiz Exp $
+# $NetBSD: Makefile,v 1.164 2019/04/03 00:32:38 ryoon Exp $
 
 DISTNAME=		nss-${NSS_RELEASE:S/.0$//}
-NSS_RELEASE=		3.31.0
+NSS_RELEASE=		3.43.0
+PKGREVISION=		1
 CATEGORIES=		security
 MASTER_SITES=		${MASTER_SITE_MOZILLA_ALL:=security/nss/releases/NSS_${NSS_DIST_DIR_VERSION:S/_0$//}_RTM/src/}
 
@@ -15,7 +16,10 @@ CHECK_PORTABILITY_SKIP+=${MOZILLA_DIR}nss/tests/multinit/multinit.sh
 CHECK_PORTABILITY_SKIP+=${MOZILLA_DIR}js/src/configure
 CHECK_PORTABILITY_SKIP+=${MOZILLA_DIR}configure
 
+CTF_SUPPORTED=		no # https://smartos.org/bugview/OS-6510
+
 USE_GCC_RUNTIME=	yes
+USE_LANGUAGES=		c99
 USE_TOOLS+=		gmake perl pax pkg-config
 MAKE_JOBS_SAFE=		no
 
@@ -49,12 +53,16 @@ SO_SUFFIX=		so.1.0
 .endif
 PLIST_SUBST+=		SO_SUFFIX=${SO_SUFFIX:Q}
 
-.if ${OPSYS} == "SunOS" && (${PKGSRC_COMPILER:Mclang} || ${PKGSRC_COMPILER:Mgcc})
-MAKE_ENV+=	NS_USE_GCC=YES
+.if !empty(PKGSRC_COMPILER:Mclang) || !empty(PKGSRC_COMPILER:Mgcc)
+MAKE_ENV.SunOS+=	NS_USE_GCC=YES
+.endif
+
+.if !empty(PKGSRC_COMPILER:Mclang)
+MAKE_ENV.SunOS+=	CC_IS_CLANG=YES
 .endif
 
 SUBST_CLASSES+=		64bit
-SUBST_STAGE.64bit=	post-patch
+SUBST_STAGE.64bit=	pre-configure
 SUBST_FILES.64bit=	nss/lib/freebl/*
 SUBST_SED.64bit=	-e 's,NSS_USE_64,_LP64,g'
 SUBST_MESSAGE.conf=	Use a generic 64bit check
@@ -101,7 +109,7 @@ SUBST_FILES.config+=	nss.pc nss-config
 INSTALLATION_DIRS=	bin include/nss lib/nss lib/pkgconfig
 DIST=	${WRKSRC}/dist
 
-INSTALL_CMDS+=		certcgi certutil cmsutil crlutil derdump makepqg \
+INSTALL_CMDS+=		certutil cmsutil crlutil derdump makepqg \
 			mangle modutil ocspclnt oidcalc p7content p7env p7sign \
 			p7verify pk12util rsaperf shlibsign signtool signver \
 			ssltap strsclnt symkeyutil vfychain vfyserv
@@ -127,7 +135,7 @@ do-install:
 # For consistency of libxul.so link in www/firefox.
 BUILDLINK_API_DEPENDS.sqlite3+=	sqlite3>=3.8.4.2
 .include "../../databases/sqlite3/buildlink3.mk"
-BUILDLINK_API_DEPENDS.nspr+=	nspr>=4.13.1
+BUILDLINK_API_DEPENDS.nspr+=	nspr>=4.19
 .include "../../devel/nspr/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

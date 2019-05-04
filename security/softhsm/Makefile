@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.34 2017/04/22 21:03:16 adam Exp $
+# $NetBSD: Makefile,v 1.42 2019/04/03 00:33:05 ryoon Exp $
 #
 
 DISTNAME=	softhsm-1.3.7
-PKGREVISION=	8
+PKGREVISION=	14
 CATEGORIES=	security
-MASTER_SITES=	http://www.opendnssec.org/files/source/
+MASTER_SITES=	https://www.opendnssec.org/files/source/
 
 MAINTAINER=	pettai@NetBSD.org
-HOMEPAGE=	http://www.opendnssec.org/softhsm/
+HOMEPAGE=	https://www.opendnssec.org/softhsm/
 COMMENT=	Cryptographic store accessible through a PKCS\#11 interface
 LICENSE=	2-clause-bsd
 
@@ -24,7 +24,7 @@ EGDIR=			${PREFIX}/share/examples/softhsm
 
 SUBST_CLASSES+=         paths
 SUBST_FILES.paths=      ${WRKSRC}/Makefile.in
-SUBST_STAGE.paths=      post-patch
+SUBST_STAGE.paths=      pre-configure
 SUBST_SED.paths=        -e 's,@EGDIR@,${EGDIR},'
 
 CXXFLAGS.NetBSD+=	-D_NETBSD_SOURCE

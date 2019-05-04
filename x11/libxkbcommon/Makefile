@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.17 2017/01/22 13:14:46 wiz Exp $
+# $NetBSD: Makefile,v 1.23 2019/02/24 14:59:07 wiz Exp $
 
-DISTNAME=	libxkbcommon-0.7.1
+DISTNAME=	libxkbcommon-0.8.4
 CATEGORIES=	x11
-MASTER_SITES=	http://xkbcommon.org/download/
+MASTER_SITES=	https://xkbcommon.org/download/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://xkbcommon.org/
+HOMEPAGE=	https://xkbcommon.org/
 COMMENT=	Library to handle keyboard descriptions
 LICENSE=	mit
 

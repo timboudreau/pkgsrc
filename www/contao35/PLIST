@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.15 2017/04/25 15:50:41 taca Exp $
+@comment $NetBSD: PLIST,v 1.20 2018/03/06 16:25:38 taca Exp $
 ${CT_WEBDIR}/.htaccess.default
 ${CT_WEBDIR}/README.md
 ${CT_WEBDIR}/assets/ace/1.1.9/ace.js
@@ -412,8 +412,6 @@ ${CT_WEBDIR}/system/config/default.php
 ${CT_WEBDIR}/system/cron/.htaccess
 ${CT_WEBDIR}/system/cron/cron.php
 ${CT_WEBDIR}/system/docs/CHANGELOG.md
-${CT_WEBDIR}/system/docs/GPL.txt
-${CT_WEBDIR}/system/docs/LGPL.txt
 ${CT_WEBDIR}/system/docs/LIMITATIONS.md
 ${CT_WEBDIR}/system/docs/UPGRADE.md
 ${CT_WEBDIR}/system/helper/exception.php
@@ -3275,6 +3273,10 @@ ${CT_WEBDIR}/vendor/contao-components/compass/css/compass/utilities/tables/_scaf
 ${CT_WEBDIR}/vendor/contao-components/compass/css/compass/utilities/text/_ellipsis.scss
 ${CT_WEBDIR}/vendor/contao-components/compass/css/compass/utilities/text/_nowrap.scss
 ${CT_WEBDIR}/vendor/contao-components/compass/css/compass/utilities/text/_replacement.scss
+${CT_WEBDIR}/vendor/ircmaxell/password-compat/LICENSE.md
+${CT_WEBDIR}/vendor/ircmaxell/password-compat/composer.json
+${CT_WEBDIR}/vendor/ircmaxell/password-compat/lib/password.php
+${CT_WEBDIR}/vendor/ircmaxell/password-compat/version-test.php
 ${CT_WEBDIR}/vendor/leafo/scssphp/LICENSE.md
 ${CT_WEBDIR}/vendor/leafo/scssphp/README.md
 ${CT_WEBDIR}/vendor/leafo/scssphp/bin/pscss
@@ -3305,6 +3307,7 @@ ${CT_WEBDIR}/vendor/leafo/scssphp/src/Type.php
 ${CT_WEBDIR}/vendor/leafo/scssphp/src/Util.php
 ${CT_WEBDIR}/vendor/leafo/scssphp/src/Version.php
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/CONTRIBUTING.md
+${CT_WEBDIR}/vendor/matthiasmullie/minify/Dockerfile
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/LICENSE
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/bin/minifycss
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/bin/minifyjs
@@ -3315,6 +3318,7 @@ ${CT_WEBDIR}/vendor/matthiasmullie/minify/data/js/keywords_reserved.txt
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/data/js/operators.txt
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/data/js/operators_after.txt
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/data/js/operators_before.txt
+${CT_WEBDIR}/vendor/matthiasmullie/minify/docker-compose.yml
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/src/CSS.php
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/src/Exception.php
 ${CT_WEBDIR}/vendor/matthiasmullie/minify/src/Exceptions/BasicException.php
@@ -3327,6 +3331,7 @@ ${CT_WEBDIR}/vendor/matthiasmullie/path-converter/composer.json
 ${CT_WEBDIR}/vendor/matthiasmullie/path-converter/src/Converter.php
 ${CT_WEBDIR}/vendor/matthiasmullie/path-converter/src/ConverterInterface.php
 ${CT_WEBDIR}/vendor/matthiasmullie/path-converter/src/NoConverter.php
+${CT_WEBDIR}/vendor/michelf/php-markdown/.gitignore
 ${CT_WEBDIR}/vendor/michelf/php-markdown/License.md
 ${CT_WEBDIR}/vendor/michelf/php-markdown/Michelf/Markdown.inc.php
 ${CT_WEBDIR}/vendor/michelf/php-markdown/Michelf/Markdown.php
@@ -3467,6 +3472,8 @@ ${CT_WEBDIR}/vendor/simplepie/simplepie/library/SimplePie/Source.php
 ${CT_WEBDIR}/vendor/simplepie/simplepie/library/SimplePie/XML/Declaration/Parser.php
 ${CT_WEBDIR}/vendor/simplepie/simplepie/library/SimplePie/gzdecode.php
 ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.gitattributes
+${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.github/ISSUE_TEMPLATE.md
+${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.github/PULL_REQUEST_TEMPLATE.md
 ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.gitignore
 ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.php_cs.dist
 ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/.travis.yml
@@ -3649,7 +3656,7 @@ ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/lib/swiftmailer_generate_mimes_confi
 ${CT_WEBDIR}/vendor/swiftmailer/swiftmailer/phpunit.xml.dist
 ${CT_WEBDIR}/vendor/tecnickcom/tcpdf/CHANGELOG.TXT
 ${CT_WEBDIR}/vendor/tecnickcom/tcpdf/LICENSE.TXT
-${CT_WEBDIR}/vendor/tecnickcom/tcpdf/README.TXT
+${CT_WEBDIR}/vendor/tecnickcom/tcpdf/README.md
 ${CT_WEBDIR}/vendor/tecnickcom/tcpdf/composer.json
 ${CT_WEBDIR}/vendor/tecnickcom/tcpdf/config/tcpdf_config.php
 ${CT_WEBDIR}/vendor/tecnickcom/tcpdf/fonts/courier.php

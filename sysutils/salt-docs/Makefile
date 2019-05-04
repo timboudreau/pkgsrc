@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.11 2017/01/01 14:43:58 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/25 07:33:21 maya Exp $
 
-DISTNAME=	salt-2015.8.5
+DISTNAME=	salt-2019.2.0
 PKGNAME=	${DISTNAME:S/-/-docs-/}
-CATEGORIES=	sysutils
+PKGREVISION=	1
+CATEGORIES=	sysutils python
 MASTER_SITES=	${MASTER_SITE_PYPI:=s/salt/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -10,9 +11,9 @@ HOMEPAGE=	http://saltstack.org/
 COMMENT=	Documentation for salt
 LICENSE=	apache-2.0
 
-USE_TOOLS+=	gmake
+USE_TOOLS+=	gmake pax
 
-BUILD_DEPENDS+=	gnupg-[0-9]*:../../security/gnupg
+BUILD_DEPENDS+=	${PYPKGPREFIX}-sphinx>=1.2.3nb1*:../../textproc/py-sphinx
 
 NO_CONFIGURE=	yes
 BUILD_DIRS=	doc
@@ -26,16 +27,8 @@ PLIST_SRC=	${WRKDIR}/.PLIST_SRC
 INSTALLATION_DIRS=	${HTMLDIR}
 
 do-install:
-	( cd ${WRKSRC}/doc/_build/html \
-	  && pax -rw -pe . ${DESTDIR}${PREFIX}/${HTMLDIR} )
-	( cd ${DESTDIR}${PREFIX} \
-	  && ${FIND} ${HTMLDIR} -type f -print ) >>${PLIST_SRC}
+	cd ${WRKSRC}/doc/_build/html && pax -rw -pp . ${DESTDIR}${PREFIX}/${HTMLDIR}
+	cd ${DESTDIR}${PREFIX} && ${FIND} ${HTMLDIR} -type f -print >>${PLIST_SRC}
 
-# problem in sphinx config file?
-PYTHON_VERSIONS_INCOMPATIBLE=  34 35 36 # not yet ported as of 0.10.5
-
-# The upstream salt project does not say what version of sphinx is required.
 .include "../../lang/python/pyversion.mk"
-BUILD_DEPENDS+=	${PYPKGPREFIX}-sphinx>=1.2.3nb1*:../../textproc/py-sphinx
-
 .include "../../mk/bsd.pkg.mk"

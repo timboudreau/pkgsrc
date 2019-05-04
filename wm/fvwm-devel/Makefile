@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.51 2016/07/09 06:39:09 wiz Exp $
+# $NetBSD: Makefile,v 1.54 2018/08/22 09:47:21 wiz Exp $
 
 DISTNAME=	fvwm-${FVWM_VER}
-PKGREVISION=	11
+PKGREVISION=	13
 CATEGORIES=	x11 wm
 MASTER_SITES=	ftp://ftp.fvwm.org/pub/fvwm/version-2/
 EXTRACT_SUFX=	.tar.bz2
@@ -48,7 +48,7 @@ SUBST_FILES.perl+=	modules/FvwmScript/Scripts/FvwmScript-Setup95
 SUBST_SED.perl=		-e "s|${TOOLS_CMD.perl}|${PERL5}|"
 
 SUBST_CLASSES+=		mail
-SUBST_STAGE.mail=	post-patch
+SUBST_STAGE.mail=	pre-configure
 SUBST_MESSAGE.mail=	Fixing mail address
 SUBST_FILES.mail+=	bin/fvwm-bug.in
 SUBST_SED.mail=		-e "s|@MAINTAINER@|${MAINTAINER}|"

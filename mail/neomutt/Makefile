@@ -1,29 +1,32 @@
-# $NetBSD: Makefile,v 1.30 2017/07/18 18:39:37 wiz Exp $
+# $NetBSD: Makefile,v 1.46 2018/08/22 09:45:27 wiz Exp $
 
-DISTNAME=		neomutt-20170714
+DISTNAME=		neomutt-20180716
+PKGREVISION=		1
 CATEGORIES=		mail
 MASTER_SITES=		${MASTER_SITE_GITHUB:=neomutt/}
 GITHUB_TAG=		${DISTNAME}
 
 MAINTAINER=		wiz@NetBSD.org
-HOMEPAGE=		http://www.neomutt.org/
+HOMEPAGE=		https://www.neomutt.org/
 COMMENT=		Fork of mutt with integrated community patches
 LICENSE=		gnu-gpl-v2 OR gnu-gpl-v3 # or newer
 
-USE_TOOLS+=		autoconf automake autoreconf msgfmt gmake
+USE_TOOLS+=		msgfmt gmake
 
 BUILD_DEPENDS+=		gettext-tools-[0-9]*:../../devel/gettext-tools
+BUILD_DEPENDS+=		libxslt-[0-9]*:../../textproc/libxslt
+BUILD_DEPENDS+=		docbook-xsl-[0-9]*:../../textproc/docbook-xsl
 
-GNU_CONFIGURE=		yes
+HAS_CONFIGURE=		yes
 EXTRACT_USING=		bsdtar
-CONFIGURE_ARGS+=	--enable-notmuch
-#CONFIGURE_ARGS+=	CFLAGS="-g -O0"
+CONFIGURE_ARGS+=	--notmuch
+CONFIGURE_ARGS+=	--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
 
-EGDIR=			${PREFIX}/share/examples/mutt
-CONF_FILES=		${EGDIR}/Muttrc ${PKG_SYSCONFDIR}/Muttrc
-CONF_FILES+=		${EGDIR}/mime.types ${PKG_SYSCONFDIR}/mime.types
-INSTALLATION_DIRS+=     ${DOCDIR} ${EGDIR}
-INSTALL_MAKE_FLAGS=     ${MAKE_FLAGS} DOTLOCK_GROUP= sysconfdir=${EGDIR}
+EGDIR=			${PREFIX}/share/examples/neomutt
+CONF_FILES=		${EGDIR}/neomuttrc ${PKG_SYSCONFDIR}/neomuttrc
+INSTALLATION_DIRS+=	${EGDIR}
+INSTALL_MAKE_FLAGS=	${MAKE_FLAGS} DOTLOCK_GROUP= sysconfdir=${EGDIR}
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -35,9 +38,6 @@ CONFIGURE_ENV+=		SENDMAIL=/usr/sbin/sendmail
 .endif
 
 .include "options.mk"
-
-pre-configure:
-	cd ${WRKSRC} && autoreconf -fiv
 
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"

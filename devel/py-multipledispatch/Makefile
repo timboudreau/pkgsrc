@@ -1,14 +1,16 @@
-# $NetBSD: Makefile,v 1.2 2017/03/17 19:30:47 minskim Exp $
+# $NetBSD: Makefile,v 1.5 2018/09/06 14:07:00 adam Exp $
 
-DISTNAME=	multipledispatch-0.4.9
+DISTNAME=	multipledispatch-0.6.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=m/multipledispatch/}
 
 MAINTAINER=	minskim@NetBSD.org
-HOMEPAGE=	http://github.com/mrocklin/multipledispatch/
+HOMEPAGE=	https://github.com/mrocklin/multipledispatch
 COMMENT=	Efficient, mostly complete implementation of multiple dispatch
 LICENSE=	modified-bsd
+
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
 
 USE_LANGUAGES=	# none
 

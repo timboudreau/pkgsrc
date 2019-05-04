@@ -1,21 +1,23 @@
-# $NetBSD: Makefile,v 1.80 2016/12/17 13:06:18 rillig Exp $
+# $NetBSD: Makefile,v 1.93 2019/03/20 01:25:48 gutteridge Exp $
 
-DISTNAME=		otp_src_${DIST_VERSION_MAJOR}.${DIST_VERSION_MINOR}
-PKGNAME=		${DISTNAME:S/otp_src_/erlang-/}
+DISTNAME=		OTP-${DIST_VERSION_MAJOR}.${DIST_VERSION_MINOR}${!empty(DIST_VERSION_PATCH):?.:}${DIST_VERSION_PATCH}
+PKGNAME=		${DISTNAME:S/OTP-/erlang-/}
 CATEGORIES=		lang
-MASTER_SITES=		http://www.erlang.org/download/
+MASTER_SITES=		https://github.com/erlang/otp/archive/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		http://www.erlang.org/
 COMMENT=		Concurrent functional programming language
 LICENSE=		apache-2.0
 
+EXTRACT_USING=		bsdtar
 DIST_SUBDIR=		erlang
 
+WRKSRC=			${WRKDIR}/otp-${DISTNAME}
 GNU_CONFIGURE=		yes
 USE_GNU_CONFIGURE_HOST=	${USE_CROSS_COMPILE}
 OVERRIDE_DIRDEPTH=	4
-USE_TOOLS+=		gmake perl:run flex
+USE_TOOLS+=		autoconf awk gmake perl:run flex
 
 CONFIGURE_ARGS+=	--with-ssl=${BUILDLINK_PREFIX.openssl}
 
@@ -42,6 +44,8 @@ CONFIGURE_ARGS+=	--disable-native-ethr-impls\
 
 MAKE_ENV+=		DESTDIR=${DESTDIR}
 
+do-configure-post-hook: replace-interpreter
+
 REPLACE_INTERPRETER+=	escript
 REPLACE.escript.old=	.*escript
 REPLACE.escript.new=	${PREFIX}/bin/escript
@@ -55,7 +59,7 @@ REPLACE_FILES.escript=	\
 	lib/snmp/src/compile/snmpc.src
 
 SUBST_CLASSES+=		target
-SUBST_STAGE.target=	post-patch
+SUBST_STAGE.target=	pre-configure
 SUBST_FILES.target=	make/target.mk
 SUBST_SED.target=	-e "s|=.*config.guess)|= ${MACHINE_GNU_PLATFORM}|"
 SUBST_MESSAGE.target=	Fixing target name.
@@ -75,9 +79,13 @@ CONFIGURE_ARGS.DragonFly+=	--disable-sctp
 CONFIGURE_ARGS+=	--enable-kernel-poll
 .endif
 
+CHECK_RELRO_SKIP+=	lib/erlang/lib/megaco-${VERSION.megaco}/priv/lib/megaco_flex_scanner_drv.so
+CHECK_RELRO_SKIP+=	lib/erlang/lib/megaco-${VERSION.megaco}/priv/lib/megaco_flex_scanner_drv_mt.so
+
 .include "options.mk"
 
-.include "Makefile.versions"
+pre-configure:
+	cd ${WRKSRC} && ./otp_build autoconf
 
 ###
 ### Ensure this gets rebuilt.
@@ -85,8 +93,21 @@ CONFIGURE_ARGS+=	--enable-kernel-poll
 pre-build:
 	${RUN} ${RM} -f ${WRKSRC}/lib/stdlib/ebin/dets_v9.beam
 
+###
+### Generate a list of module versions.
+###
+.PHONY: versions
+versions: do-extract
+	@${ECHO} "# \$$NetBSD\$$" > ${.CURDIR}/versions.mk
+	@${ECHO} "# Do not edit, regenerate using 'make versions'" >> ${.CURDIR}/versions.mk
+	@${ECHO} "_VERSIONS= \\" >> ${.CURDIR}/versions.mk
+	${AWK} -F: '/OTP-${PKGVERSION_NOREV} :/{print $$2}' ${WRKSRC}/otp_versions.table |\
+		${SED} -e 's/# //g' -e 's/-/ /g' >> ${.CURDIR}/versions.mk
+
 post-install:
 	chmod -R go-w ${DESTDIR}${PREFIX}/lib/erlang/lib
+
+.include "Makefile.versions"
 
 .include "../../security/openssl/buildlink3.mk"
 .include "../../mk/termcap.buildlink3.mk"

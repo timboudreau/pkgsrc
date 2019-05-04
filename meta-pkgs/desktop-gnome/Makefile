@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.13 2017/05/19 13:29:03 prlw1 Exp $
+# $NetBSD: Makefile,v 1.15 2017/11/12 16:03:36 khorben Exp $
 #
 
 DISTNAME=	desktop-gnome-0.5
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	meta-pkgs x11 gnome
 MASTER_SITES=	# empty
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Software stack for the NetBSD Desktop Project
-HOMEPAGE=	http://wiki.netbsd.se/Desktop_Project
+#HOMEPAGE=	http://wiki.netbsd.se/Desktop_Project
 
 META_PACKAGE=	yes
 

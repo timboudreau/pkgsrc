@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.25 2017/06/24 08:19:40 adam Exp $
+# $NetBSD: Makefile,v 1.37 2018/09/03 08:36:44 wiz Exp $
 
-DISTNAME=	scipy-0.19.1
+DISTNAME=	scipy-1.1.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	math python
 MASTER_SITES=	${MASTER_SITE_PYPI:=s/scipy/}
 
 MAINTAINER=	markd@NetBSD.org
-HOMEPAGE=	http://www.scipy.org/
+HOMEPAGE=	https://www.scipy.org/
 COMMENT=	Scientific Algorithms Library for Python
 LICENSE=	modified-bsd
 
@@ -27,6 +27,8 @@ BROKEN=		Requires fortran 95
 
 CPPFLAGS+=	-D__STDC_FORMAT_MACROS
 FFLAGS+=	-fPIC
+
+LDFLAGS.Darwin+=	-headerpad_max_install_names
 
 REPLACE_PYTHON+=	scipy/cluster/setup.py
 REPLACE_PYTHON+=	scipy/cluster/tests/test_hierarchy.py
@@ -51,11 +53,6 @@ REPLACE_PYTHON+=	scipy/io/matlab/tests/test_mio.py
 REPLACE_PYTHON+=	scipy/io/matlab/tests/test_mio_funcs.py
 REPLACE_PYTHON+=	scipy/io/setup.py
 REPLACE_PYTHON+=	scipy/io/tests/test_mmio.py
-REPLACE_PYTHON+=	scipy/lib/blas/setup.py
-REPLACE_PYTHON+=	scipy/lib/blas/tests/test_blas.py
-REPLACE_PYTHON+=	scipy/lib/lapack/setup.py
-REPLACE_PYTHON+=	scipy/lib/lapack/tests/test_lapack.py
-REPLACE_PYTHON+=	scipy/lib/setup.py
 REPLACE_PYTHON+=	scipy/linalg/setup.py
 REPLACE_PYTHON+=	scipy/linalg/tests/test_basic.py
 REPLACE_PYTHON+=	scipy/linalg/tests/test_blas.py
@@ -81,11 +78,9 @@ REPLACE_PYTHON+=	scipy/sparse/linalg/tests/test_matfuncs.py
 REPLACE_PYTHON+=	scipy/sparse/setup.py
 REPLACE_PYTHON+=	scipy/spatial/setup.py
 REPLACE_PYTHON+=	scipy/spatial/tests/test_distance.py
-REPLACE_PYTHON+=	scipy/special/generate_ufuncs.py
 REPLACE_PYTHON+=	scipy/special/setup.py
 REPLACE_PYTHON+=	scipy/special/spfun_stats.py
 REPLACE_PYTHON+=	scipy/stats/setup.py
-REPLACE_PYTHON+=	scipy/weave/setup.py
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -93,23 +88,22 @@ REPLACE_PYTHON+=	scipy/weave/setup.py
 .PHONY: fix-darwin-install-name
 post-install: fix-darwin-install-name
 fix-darwin-install-name:
-	${FIND} ${DESTDIR}${PREFIX} -name "*.so" | while read lib; do   \
+	${FIND} ${DESTDIR}${PREFIX} -name "*.so" |                      \
+		while read lib; do                                      \
 		libname=`basename $${lib}`;                             \
 		libdir=`dirname $${lib} | sed -e 's,${DESTDIR},,'`;     \
 		install_name_tool -id $${libdir}/$${libname} $${lib};   \
 	done
 .endif
 
-# TEST_DEPENDS
-BUILD_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
-# support files for tests missing in 0.18.0 on pypi
-# https://github.com/scipy/scipy/issues/6498
-# self test failures reported at
-# https://github.com/scipy/scipy/issues/6499
+# self test failures for 1.1.0 reported at
+# https://github.com/scipy/scipy/issues/9196
+# needs 'make install' first!
 do-test:
 	${PYTHONBIN} -c "import scipy; scipy.test('full')"
-#	cd ${WRKSRC} && ${PYTHONBIN} runtests.py -v
 
 .include "../../lang/python/application.mk"
 .include "../../lang/python/distutils.mk"

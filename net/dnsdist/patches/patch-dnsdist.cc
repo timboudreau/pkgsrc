@@ -1,15 +1,15 @@
-$NetBSD: patch-dnsdist.cc,v 1.1 2017/03/31 20:49:51 fhajny Exp $
+$NetBSD: patch-dnsdist.cc,v 1.3 2018/08/08 15:39:55 fhajny Exp $
 
-Add NetBSD support.
+Bring arg in sync with the code.
 
---- dnsdist.cc.orig	2016-12-29 12:45:46.000000000 +0000
+--- dnsdist.cc.orig	2018-07-10 12:43:20.000000000 +0000
 +++ dnsdist.cc
-@@ -27,7 +27,7 @@
- #include <limits>
- #include "dolog.hh"
- 
--#if defined (__OpenBSD__)
-+#if defined (__OpenBSD__) || defined (__NetBSD__)
- #include <readline/readline.h>
+@@ -2523,7 +2523,7 @@ try
+ #ifdef SO_REUSEPORT
+       SSetsockopt(cs->tcpFD, SOL_SOCKET, SO_REUSEPORT, 1);
  #else
- #include <editline/readline.h>
+-      warnlog("SO_REUSEPORT has been configured on local address '%s' but is not supported", cs.local.toStringWithPort());
++      warnlog("SO_REUSEPORT has been configured on local address '%s' but is not supported", cs->local.toStringWithPort());
+ #endif
+     }
+     if(cs->local.sin4.sin_family == AF_INET6) {

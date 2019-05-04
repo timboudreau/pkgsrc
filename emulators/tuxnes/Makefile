@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.14 2016/02/25 12:50:49 jperkin Exp $
-#
+# $NetBSD: Makefile,v 1.16 2018/07/04 13:40:17 jperkin Exp $
 
 DISTNAME=		tuxnes-0.75
-PKGREVISION=		3
+PKGREVISION=		4
 CATEGORIES=		emulators
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=tuxnes/}
 
@@ -18,13 +17,13 @@ USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 
 SUBST_CLASSES+=		dsp
-SUBST_STAGE.dsp=	post-patch
+SUBST_STAGE.dsp=	pre-configure
 SUBST_MESSAGE.dsp=	Adjusting sound device path.
 SUBST_FILES.dsp=	consts.h
 SUBST_SED.dsp=		-e "s|/dev/dsp|${DEVOSSAUDIO}|"
 
 SUBST_CLASSES.SunOS+=	gld
-SUBST_STAGE.gld=	post-patch
+SUBST_STAGE.gld=	pre-configure
 SUBST_MESSAGE.gld=	Using GNU ld to create table.o
 SUBST_FILES.gld=	Makefile.in
 SUBST_SED.gld=		-e "/ld -r/s/ld/gld/"
@@ -39,6 +38,6 @@ post-install:
 
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../x11/libXpm/buildlink3.mk"
-.include "../../x11/xextproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/oss.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

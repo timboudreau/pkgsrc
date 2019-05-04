@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.7 2017/06/21 07:24:07 markd Exp $
+# $NetBSD: Makefile,v 1.10 2019/01/26 21:37:42 markd Exp $
 
 DISTNAME=	hyphen-latin
-PKGNAME=	tex-${DISTNAME}-3.1.2017
-TEXLIVE_REV=	44401
+PKGNAME=	tex-${DISTNAME}-3.1.2018.49078
+TEXLIVE_REV=	49078
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/lahyph
 COMMENT=	Liturgical Latin hyphenation patterns
 LICENSE=	lppl-1.3c
 
-CONFLICTS+=	teTeX-texmf<=3.0nb12
 DEPENDS+=	tex-hyphen-base-[0-9]*:../../print/tex-hyphen-base
 DEPENDS+=	tex-hyph-utf8-[0-9]*:../../print/tex-hyph-utf8
 

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.47 2016/03/05 11:28:59 jperkin Exp $
+# $NetBSD: Makefile,v 1.50 2018/07/04 13:40:25 jperkin Exp $
 #
 
 DISTNAME=	zyGrib-7.0.0
-PKGREVISION=	3
+PKGREVISION=	5
 CATEGORIES=	misc
 MASTER_SITES=	http://www.zygrib.org/getfile.php?file=
 EXTRACT_SUFX=	.tgz
@@ -21,7 +21,7 @@ USE_TOOLS+=	make
 CONFIGURE_ENV+=	QTDIR=${QTDIR}
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_MESSAGE.paths=	Fixing shared data paths.
 SUBST_FILES.paths=	util/Util.h
 SUBST_VARS.paths=	PREFIX

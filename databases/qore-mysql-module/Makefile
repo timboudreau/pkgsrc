@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.4 2016/08/07 11:44:42 nros Exp $
+# $NetBSD: Makefile,v 1.7 2018/06/08 19:25:39 nros Exp $
 
-DISTNAME=	qore-mysql-module-2.0.1
-PKGREVISION=	6
+DISTNAME=	qore-mysql-module-2.0.2.1
 CATEGORIES=	databases
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qore/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=qorelanguage/}
 EXTRACT_SUFX=	.tar.bz2
+GITHUB_PROJECT=	module-mysql
+GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	nros@NetBSD.org
 HOMEPAGE=	http://www.qore.org/
@@ -13,9 +14,11 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS+=	gmake pax
 PTHREAD_OPTS+=	native
+
+CONFIGURE_ARGS+=--with-libsuffix=""
 
 #install docs
 INSTALLATION_DIRS+=	share/doc/${PKGBASE}

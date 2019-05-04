@@ -1,7 +1,6 @@
-$NetBSD: distinfo,v 1.1 2016/08/21 22:33:12 markd Exp $
+$NetBSD: distinfo,v 1.6 2019/04/25 21:10:45 markd Exp $
 
-SHA1 (khtml-5.25.0.tar.xz) = 3a77cd556b7f6537c584e5557dcb33481f53a523
-RMD160 (khtml-5.25.0.tar.xz) = ffccbb62bd9c7e8a1d3c2567f9f137ef13ec6f2f
-SHA512 (khtml-5.25.0.tar.xz) = bfebb9a7b80eebd67e0256c3d6da87b5c1da23afebd4d641e495eb5a54a30a5e071fe4a9e549c4ebcfda11e858e2ad6005e6facb5ccf5fc2d0a993fc1df00766
-Size (khtml-5.25.0.tar.xz) = 2077868 bytes
-SHA1 (patch-src_CMakeLists.txt) = 8579c2c7d3f22d4df8e38db48e4e379eba370a0d
+SHA1 (khtml-5.57.0.tar.xz) = 7e200950731b1522d848700f9a16c252ec8dccb3
+RMD160 (khtml-5.57.0.tar.xz) = e8025f62f0894ddc78ff77e456954bbfb148f439
+SHA512 (khtml-5.57.0.tar.xz) = 15ee8e93899e37249e6265aa43e92af3136f2ab773144aa7623937456083588f82de11812f68b2a917b2e7a7638a58f8a605b6d5db8fb6427e0fe1af59bc4bc1
+Size (khtml-5.57.0.tar.xz) = 2078272 bytes

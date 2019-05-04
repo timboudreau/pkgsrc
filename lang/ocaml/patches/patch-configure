@@ -1,31 +1,45 @@
-$NetBSD: patch-configure,v 1.23 2017/07/11 17:15:02 he Exp $
+$NetBSD: patch-configure,v 1.35 2019/01/07 18:52:23 jaapb Exp $
 
 All kinds of OS-specific changes to configure
-
---- configure.orig	2016-11-04 16:08:24.000000000 +0000
+Honor LDFLAGS.
+--- configure.orig	2018-10-04 14:23:12.000000000 +0000
 +++ configure
-@@ -726,7 +726,10 @@ if test $with_sharedlibs = "yes"; then
-         *gcc*)
+@@ -797,7 +797,7 @@ sharedcccompopts=''
+ mksharedlib='shared-libs-not-available'
+ rpath=''
+ mksharedlibrpath=''
+-natdynlinkopts=""
++natdynlinkopts="-L/usr/lib -R/usr/lib -R/usr/pkg/lib"
+ 
+ if $with_sharedlibs; then
+   case "$target" in
+@@ -826,10 +826,13 @@ if $with_sharedlibs; then
+       esac;;
+     *-*-solaris2*)
+       case "$cc" in
+-        *gcc*)
++        *clang*|*gcc*)
            sharedcccompopts="-fPIC"
-           if sh ./solaris-ld; then
+-          if sh ./solaris-ld; then
 -            mksharedlib="ld -G"
++          if true; then
 +            case "$target" in
-+            x86_64*) mksharedlib="$bytecc -shared" ;;
-+            *)       mksharedlib="$bytecc -G" ;;
++            x86_64*) mksharedlib="$cc -shared" ;;
++            *)       mksharedlib="$cc -G" ;;
 +            esac
-             byteccrpath="-R"
+             rpath="-R"
              mksharedlibrpath="-R"
            else
-@@ -753,7 +756,7 @@ if test $with_sharedlibs = "yes"; then
-       byteccrpath="-Wl,-rpath,"
+@@ -856,7 +859,7 @@ if $with_sharedlibs; then
+       rpath="-Wl,-rpath,"
        mksharedlibrpath="-rpath "
        shared_libraries_supported=true;;
 -    i[3456]86-*-darwin[89].*)
-+    i[3456]86-*-darwin*)
-       mksharedlib="$bytecc -bundle -flat_namespace -undefined suppress \
++    i[3456]86-*-darwin.*)
+       mksharedlib="$cc -shared -flat_namespace -undefined suppress \
                     -read_only_relocs suppress"
-       bytecccompopts="$dl_defs $bytecccompopts"
-@@ -795,11 +798,7 @@ if test $with_sharedlibs = "yes"; then
+       common_cflags="$dl_defs $common_cflags"
+@@ -905,11 +908,7 @@ if $with_sharedlibs; then
      i[3456]86-*-linux*)           natdynlink=true;;
      i[3456]86-*-gnu*)             natdynlink=true;;
      x86_64-*-linux*)              natdynlink=true;;
@@ -38,7 +52,7 @@ All kinds of OS-specific changes to configure
      x86_64-*-darwin*)             natdynlink=true;;
      s390x*-*-linux*)              natdynlink=true;;
      powerpc*-*-linux*)            natdynlink=true;;
-@@ -813,6 +812,9 @@ if test $with_sharedlibs = "yes"; then
+@@ -922,12 +921,16 @@ if $with_sharedlibs; then
      x86_64-*-openbsd*)            natdynlink=true;;
      i[3456]86-*-netbsd*)          natdynlink=true;;
      x86_64-*-netbsd*)             natdynlink=true;;
@@ -48,15 +62,14 @@ All kinds of OS-specific changes to configure
      i386-*-gnu0.3)                natdynlink=true;;
      i[3456]86-*-haiku*)           natdynlink=true;;
      arm*-*-linux*)                natdynlink=true;;
-@@ -842,6 +844,7 @@ case "$target" in
-   sparc*-*-gnu*)                arch=sparc; system=gnu;;
-   i[3456]86-*-linux*)           arch=i386; system=linux_`sh ./runtest elf.c`;;
-   i[3456]86-*-*bsd*)            arch=i386; system=bsd_`sh ./runtest elf.c`;;
-+  i[3456]86-*-dragonfly*)       arch=i386; system=bsd_`sh ./runtest elf.c`;;
-   i[3456]86-*-nextstep*)        arch=i386; system=nextstep;;
-   i[3456]86-*-solaris*)         if $arch64; then
-                                   arch=amd64; system=solaris
-@@ -851,6 +854,7 @@ case "$target" in
+     arm*-*-freebsd*)              natdynlink=true;;
+     earm*-*-netbsd*)              natdynlink=true;;
+     aarch64-*-linux*)             natdynlink=true;;
++    aarch64-*-netbsd*)             natdynlink=true;;
+   esac
+ fi
+ 
+@@ -965,6 +968,7 @@ case "$target" in
    i[3456]86-*-haiku*)           arch=i386; system=beos;;
    i[3456]86-*-beos*)            arch=i386; system=beos;;
    i[3456]86-*-cygwin*)          arch=i386; system=cygwin;;
@@ -64,23 +77,34 @@ All kinds of OS-specific changes to configure
    i[3456]86-*-darwin*)          if $arch64; then
                                    arch=amd64; system=macosx
                                  else
-@@ -888,6 +892,7 @@ case "$target" in
+@@ -987,6 +991,8 @@ case "$target" in
+   armv6t2*-*-linux-gnueabi)     arch=arm; model=armv6t2; system=linux_eabi;;
+   armv6*-*-linux-gnueabi)       arch=arm; model=armv6; system=linux_eabi;;
+   armv6*-*-freebsd*)            arch=arm; model=armv6; system=freebsd;;
++  armv6-*-netbsdelf*)         arch=arm; model=armv6; system=netbsd;;
++  armv7-*-netbsdelf*)         arch=arm; model=armv7; system=netbsd;;
+   earmv6*-*-netbsd*)            arch=arm; model=armv6; system=netbsd;;
+   earmv7*-*-netbsd*)            arch=arm; model=armv7; system=netbsd;;
+   armv5te*-*-linux-gnueabi)     arch=arm; model=armv5te; system=linux_eabi;;
+@@ -1003,7 +1009,9 @@ case "$target" in
+   x86_64-*-darwin*)             arch=amd64; system=macosx;;
    x86_64-*-mingw*)              arch=amd64; system=mingw;;
    aarch64-*-linux*)             arch=arm64; system=linux;;
++  aarch64-*-netbsd*)             arch=arm64; system=netbsd;;
    x86_64-*-cygwin*)             arch=amd64; system=cygwin;;
 +  x86_64-*-solaris*)            arch=amd64; system=solaris;;
  esac
  
  # Some platforms exist both in 32-bit and 64-bit variants, not distinguished
-@@ -923,7 +928,6 @@ case "$arch,$nativecc,$system,$model" in
-   *,*,nextstep,*)      nativecclinkopts="-posix";;
+@@ -1027,7 +1035,6 @@ nativeccprofopts=''
+ case "$arch,$cc,$system,$model" in
    *,*,rhapsody,*)      if $arch64; then partialld="ld -r -arch ppc64"; fi;;
    amd64,gcc*,macosx,*) partialld="ld -r -arch x86_64";;
 -  amd64,gcc*,solaris,*) partialld="ld -r -m elf_x86_64";;
    power,gcc*,elf,ppc)   partialld="ld -r -m elf32ppclinux";;
    power,gcc*,elf,ppc64)   partialld="ld -r -m elf64ppc";;
    power,gcc*,elf,ppc64le)   partialld="ld -r -m elf64lppc";;
-@@ -941,8 +945,8 @@ case "$arch,$system" in
+@@ -1045,8 +1052,8 @@ case "$arch,$system" in
                      fi;;
    amd64,solaris)  as="${TOOLPREF}as --64"
                    aspp="${TOOLPREF}gcc -m64 -c";;
@@ -91,16 +115,16 @@ All kinds of OS-specific changes to configure
    power,elf)      if $arch64; then
                      as="${TOOLPREF}as -a64 -mppc64"
                      aspp="${TOOLPREF}gcc -m64 -c"
-@@ -991,6 +995,8 @@ case "$arch,$system" in
-   arm,linux*) profiling='prof';;
-   power,elf) profiling='prof';;
-   power,bsd*) profiling='prof';;
-+  *,*,dragonfly) profiling='prof';;
-+  amd64,solaris) profiling='prof';;
-   *) profiling='noprof';;
+@@ -1094,6 +1101,8 @@ case "$arch,$system" in
+   power,elf) profiling='true';;
+   power,bsd*) profiling='true';;
+   power,netbsd) profiling='true';;
++  amd64,solaris) profiling='true';;
++  *,dragonfly) profiling='true';;
+   *) profiling='false';;
  esac
  
-@@ -1554,6 +1560,8 @@ fi
+@@ -1672,6 +1681,8 @@ fi
  x11_include="not found"
  x11_link="not found"
  
@@ -109,7 +133,7 @@ All kinds of OS-specific changes to configure
  if test -z "$x11_include_dir" -a -z "$x11_lib_dir"; then
    if pkg-config --exists x11 2>/dev/null; then
      x11_include=`pkg-config --cflags x11`
-@@ -1600,6 +1608,7 @@ if test "$x11_include" = "not found"; th
+@@ -1718,6 +1729,7 @@ if test "$x11_include" = "not found"; th
      /usr/XFree86/include/X11  \
                                \
      /usr/include              \
@@ -117,7 +141,7 @@ All kinds of OS-specific changes to configure
      /usr/local/include        \
      /usr/unsupported/include  \
      /usr/athena/include       \
-@@ -1657,6 +1666,7 @@ if test "$x11_include" = "not found"; th
+@@ -1775,6 +1787,7 @@ if test "$x11_include" = "not found"; th
                            \
      /usr/lib64            \
      /usr/lib              \
@@ -125,11 +149,10 @@ All kinds of OS-specific changes to configure
      /usr/local/lib        \
      /usr/unsupported/lib  \
      /usr/athena/lib       \
-@@ -1678,19 +1688,16 @@ if test "$x11_include" = "not found"; th
+@@ -1798,18 +1811,16 @@ if test "$x11_include" = "not found"; th
        if test $dir = /usr/lib; then
          x11_link="-lX11"
        else
--        x11_libs="-L$dir"
 -        case "$target" in
 -          *-*-freebsd*|*-*-dragonfly*) x11_link="-L$dir -lX11";;
 -          *-kfreebsd*-gnu) x11_link="-L$dir -lX11";;
@@ -137,7 +160,7 @@ All kinds of OS-specific changes to configure
 -          *) x11_link="-L$dir -lX11";;
 -        esac
 +        x11_libs="-L$dir ${COMPILER_RPATH_FLAG}$dir"
-+        x11_link="-L$dir ${COMPILER_RPATH_FLAG}$dir -lX11"
++	x11_link="-L$dir ${COMPILER_RPATH_FLAG}$dir -lX11"
        fi
        break
      fi
@@ -146,6 +169,15 @@ All kinds of OS-specific changes to configure
  
 +fi # end of disable_x11 test
 +
- if test "x11_include" != "not found"; then
+ if test "$x11_include" != "not found"; then
    if test "$x11_include" = "-I/usr/include"; then
      x11_include=""
+@@ -2060,7 +2071,7 @@ config CFLAGS "$common_cflags $internal_
+ config CPPFLAGS "$common_cppflags $internal_cppflags"
+ config OCAMLC_CFLAGS "$common_cflags $sharedcccompopts"
+ config OCAMLC_CPPFLAGS "$common_cppflags"
+-config LDFLAGS "$ldflags"
++config LDFLAGS "$ldflags $LDFLAGS"
+ config BYTECCLIBS "$cclibs $dllib $pthread_link $instrumented_runtime_libs"
+ config RPATH "$rpath"
+ config EXE "$exe"

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.26 2017/06/27 15:26:05 christos Exp $
+# $NetBSD: Makefile,v 1.29 2019/01/22 22:07:33 christos Exp $
 #
 
 DISTNAME=		strace-4.5.15
-PKGREVISION=		10
+PKGREVISION=		12
 CATEGORIES=		sysutils
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=strace/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		christos@NetBSD.org
-HOMEPAGE=		http://sourceforge.net/projects/strace/
+HOMEPAGE=		https://sourceforge.net/projects/strace/
 COMMENT=		Trace system calls
 LICENSE=		modified-bsd
 

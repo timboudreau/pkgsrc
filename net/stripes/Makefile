@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.21 2016/07/09 06:38:46 wiz Exp $
+# $NetBSD: Makefile,v 1.23 2018/08/22 09:46:07 wiz Exp $
 
 DISTNAME=		stripes-2.1
-PKGREVISION=		6
+PKGREVISION=		7
 CATEGORIES=		net
 MASTER_SITES=		# ftp://ftp.gw.com/sw/stripes/
 
 MAINTAINER=		kim@tac.nyc.ny.us
-HOMEPAGE=		http://www.gw.com/sw/stripes/
+#HOMEPAGE=		http://www.gw.com/sw/stripes/
 COMMENT=		Looking Glass for Zebra and Cisco Routers
 
 DEPENDS+=		p5-CGI>=2.66:../../www/p5-CGI

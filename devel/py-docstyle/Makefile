@@ -1,18 +1,27 @@
-# $NetBSD: Makefile,v 1.1 2017/04/04 13:31:37 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2018/12/05 15:52:42 adam Exp $
 
-DISTNAME=	pydocstyle-1.1.1
+DISTNAME=	pydocstyle-3.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pydocstyle/}
-EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/PyCQA/pydocstyle
+HOMEPAGE=	https://github.com/PyCQA/pydocstyle
 COMMENT=	Python docstring style checker
 LICENSE=	mit
 
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+DEPENDS+=	${PYPKGPREFIX}-snowballstemmer-[0-9]*:../../textproc/py-snowballstemmer
+
+.include "../../lang/python/pyversion.mk"
+.if ${_PYTHON_VERSION} == 27
+DEPENDS+=	${PYPKGPREFIX}-configparser-[0-9]*:../../devel/py-configparser
+.endif
+
+post-extract:
+	${CHMOD} go-w ${WRKSRC}/src/pydocstyle/data/*.txt
+
 post-install:
-	cd ${DESTDIR}${PREFIX}/bin && ${MV} pep257 pep257-${PYVERSSUFFIX} || ${TRUE}
 	cd ${DESTDIR}${PREFIX}/bin && ${MV} pydocstyle pydocstyle-${PYVERSSUFFIX} || ${TRUE}
 
 .include "../../lang/python/egg.mk"

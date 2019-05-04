@@ -1,8 +1,8 @@
-# $NetBSD: options.mk,v 1.1 2014/01/23 14:47:05 wiz Exp $
+# $NetBSD: options.mk,v 1.7 2019/04/29 03:28:39 dholland Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.py-uwsgi
-PKG_SUPPORTED_OPTIONS=	debug openssl pcre uuid yaml zlib
-PKG_SUGGESTED_OPTIONS+=	libxml2 openssl zlib
+PKG_SUPPORTED_OPTIONS=	debug openssl pcre uuid uwsgi-sse_offload yaml
+PKG_SUGGESTED_OPTIONS+=	libxml2 openssl pcre
 
 PKG_OPTIONS_OPTIONAL_GROUPS+=	json xml
 PKG_OPTIONS_GROUP.json=		jansson yajl
@@ -10,66 +10,70 @@ PKG_OPTIONS_GROUP.xml=		expat libxml2
 
 .include "../../mk/bsd.options.mk"
 
-UWSGI_DEBUG=			debug=false;
+UWSGI_DEBUG=			debug=false
 .if !empty(PKG_OPTIONS:Mdebug)
-UWSGI_DEBUG=			debug=true;
+UWSGI_DEBUG=			debug=true
 .endif
 
-UWSGI_XML=			xml=auto;
 .if !empty(PKG_OPTIONS:Mexpat)
 .include "../../textproc/expat/buildlink3.mk"
-UWSGI_XML=			xml=expat;
+UWSGI_XML=			xml=expat
 .elif !empty(PKG_OPTIONS:Mlibxml2)
 .include "../../textproc/libxml2/buildlink3.mk"
-UWSGI_XML=			xml=libxml2;
+UWSGI_XML=			xml=libxml2
 .else
-UWSGI_XML=			xml=false;
+UWSGI_XML=			xml=false
 .endif
 
-UWSGI_JSON=			json=auto;
 .if !empty(PKG_OPTIONS:Mjansson)
 .include "../../textproc/jansson/buildlink3.mk"
-UWSGI_JSON=			json=jansson;
+UWSGI_JSON=			json=jansson
 .elif !empty(PKG_OPTIONS:Myajl)
 .include "../../devel/yajl/buildlink3.mk"
-UWSGI_JSON=			json=yajl;
-BROKEN=		The yajl option requires a yajl.pc file which that package doesn't have.
+UWSGI_JSON=			json=yajl
 .else
-UWSGI_JSON=			json=false;
+UWSGI_JSON=			json=false
 .endif
 
-UWSGI_SSL=			ssl=auto;
 .if !empty(PKG_OPTIONS:Mopenssl)
 .include "../../security/openssl/buildlink3.mk"
-UWSGI_SSL=			ssl=true;
+UWSGI_SSL=                     ssl=true
 .else
-UWSGI_SSL=			ssl=false;
+UWSGI_SSL=                     ssl=false
 .endif
 
-UWSGI_PCRE=			pcre=auto;
 .if !empty(PKG_OPTIONS:Mpcre)
 .include "../../devel/pcre/buildlink3.mk"
-UWSGI_PCRE=			pcre=true;
+UWSGI_PCRE=                    pcre=true
 .else
-UWSGI_PCRE=			pcre=false;
+UWSGI_PCRE=                    pcre=false
 .endif
 
-UWSGI_UUID=			uuid=auto;
+.if !empty(PKG_OPTIONS:Muwsgi-sse_offload)
+SSE_REVISION=			8253573a0db1c7d7b9d968d55669e70e40355bed
+SSE_DISTNAME=			${SSE_REVISION}.zip
+SITES.${SSE_DISTNAME}=		https://github.com/unbit/uwsgi-sse-offload/archive/
+DISTFILES+=			${SSE_DISTNAME}
+UWSGI_SSE=			sse_offload=true
+INSTALL_ENV+=			UWSGI_EMBED_PLUGINS=sse_offload
+
+post-extract: post-extract-sse
+post-extract-sse:
+	mv ${WRKDIR}/uwsgi-sse-offload-${SSE_REVISION} ${WRKSRC}/plugins/sse_offload
+.else
+UWSGI_SSE=			sse_offload=false
+.endif
+
 .if !empty(PKG_OPTIONS:Muuid)
 .include "../../devel/libuuid/buildlink3.mk"
-UWSGI_UUID=			uuid=true;
+UWSGI_UUID=			uuid=true
 .else
-UWSGI_UUID=			uuid=false;
+UWSGI_UUID=			uuid=false
 .endif
 
-UWSGI_YAML=			yaml=auto
 .if !empty(PKG_OPTIONS:Myaml)
 .include "../../textproc/libyaml/buildlink3.mk"
 UWSGI_YAML=			yaml=true
 .else
 UWSGI_YAML=			yaml=false
-.endif
-
-.if !empty(PKG_OPTIONS:Mzlib)
-.include "../../devel/zlib/buildlink3.mk"
 .endif

@@ -1,4 +1,4 @@
-.\" $NetBSD: mksandbox.8,v 1.5 2013/07/20 10:20:42 jperkin Exp $
+.\" $NetBSD: mksandbox.8,v 1.7 2018/08/16 15:40:50 sevan Exp $
 .\"
 .\" Copyright (c) 2012 Thomas Klausner <wiz@NetBSD.org>
 .\" All rights reserved.
@@ -23,7 +23,7 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.Dd May 29, 2013
+.Dd August 16, 2018
 .Dt MKSANDBOX 8
 .Os
 .Sh NAME
@@ -39,6 +39,8 @@
 .Op Fl Fl xsrc Ns = Ns Ar xsrcdir
 .Op Fl Fl without-x
 .Op Fl Fl without-pkgsrc
+.Op Fl Fl without-src
+.Op Fl Fl without-xsrc
 .Op Fl Fl verbose
 .Ar sandbox-dir
 .Sh DESCRIPTION
@@ -81,6 +83,10 @@ instead of the default
 (only needed for some packages).
 .It Fl Fl without-pkgsrc
 Do not mount pkgsrc directories in the sandbox.
+.It Fl Fl without-src
+Do not mount src directory in the sandbox.
+.It Fl Fl without-xsrc
+Do not mount xsrc directory in the sandbox.
 .It Fl Fl without-x
 Do not include X files in the sandbox.
 .It Fl Fl verbose
@@ -99,6 +105,11 @@ The
 .Pa sandbox
 script supports the following commands:
 .Bl -tag -width XXnoXargumentXXXX
+.It Ic chroot
+Start
+.Xr ksh 1
+inside the sandbox and load
+.Pa /etc/shrc .
 .It Ic mount
 Set up the sandbox.
 .It Ic umount
@@ -106,7 +117,8 @@ Tear down the sandbox.
 .It (no argument)
 Start
 .Xr ksh 1
-inside the sandbox.
+inside the sandbox without loading
+.Pa /etc/shrc .
 Can only be called after
 .Ic mount .
 .It Ic command

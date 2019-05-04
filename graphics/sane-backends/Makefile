@@ -1,6 +1,5 @@
-# $NetBSD: Makefile,v 1.67 2016/04/09 14:19:25 richard Exp $
+# $NetBSD: Makefile,v 1.69 2018/05/15 13:19:50 jperkin Exp $
 
-PKGREVISION=	4
 .include "Makefile.common"
 COMMENT=	API for access to scanners, digital cameras, frame grabbers, etc
 
@@ -20,6 +19,9 @@ CONFIGURE_ARGS+=	--with-gphoto2=no
 CONFIGURE_ARGS+=	--with-docdir=${PREFIX}/share/doc/sane-${SANE_VERSION}
 CONFIGURE_ARGS+=	--without-snmp
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
+
+CONFIGURE_ENV.SunOS+=	ac_cv_func_inet_ntop=yes
+CONFIGURE_ENV.SunOS+=	ac_cv_func_inet_pton=yes
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -43,7 +45,8 @@ canon_dr.conf cardscan.conf coolscan.conf coolscan2.conf coolscan3.conf \
 dc210.conf dc240.conf dc25.conf dell1600n_net.conf dll.conf dmc.conf \
 epjitsu.conf epson.conf epson2.conf epsonds.conf fujitsu.conf \
 genesys.conf gt68xx.conf hp.conf hp3900.conf \
-hp4200.conf hp5400.conf hs2p.conf ibm.conf kodak.conf leo.conf lexmark.conf \
+hp4200.conf hp5400.conf hs2p.conf ibm.conf kodak.conf \
+kvs1025.conf leo.conf lexmark.conf \
 ma1509.conf matsushita.conf \
 microtek.conf microtek2.conf mustek.conf mustek_usb.conf \
 nec.conf net.conf \

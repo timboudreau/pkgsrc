@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.3 2017/03/16 23:39:05 wiz Exp $
+# $NetBSD: Makefile,v 1.8 2018/08/16 11:25:57 wiz Exp $
 
-DISTNAME=	guile-2.2.0
+DISTNAME=	guile-2.2.4
 PKGNAME=	${DISTNAME:S/guile/guile22/}
-PKGREVISION=	1
 CATEGORIES=	lang
 MASTER_SITES=	ftp://ftp.gnu.org/gnu/guile/
 
@@ -12,23 +11,29 @@ COMMENT=	Official extension language for the GNU operating system
 LICENSE=	gnu-lgpl-v3
 
 # Currently, 2.0 is primary.
-GUILE_PREFIX=	${PREFIX}/guile/2.2
-#GUILE_PREFIX=	${PREFIX}
+GUILE_SUBDIR=	guile/2.2
+#GUILE_SUBDIR=	# empty
 
 # guile does not like the --build and --host triplets on NetBSD
 HAS_CONFIGURE=	yes
 CONFIGURE_ARGS+=	--disable-shared
 # not until boehm-gc is threaded
 CONFIGURE_ARGS+=	--without-threads
-CONFIGURE_ARGS+=	--prefix=${GUILE_PREFIX}
-CONFIGURE_ARGS+=	--mandir=${GUILE_PREFIX}/${PKGMANDIR}
-CONFIGURE_ARGS+=	--infodir=${GUILE_PREFIX}/${PKGINFODIR}
-
 CONFIGURE_ARGS+=	SHELL=${CONFIG_SHELL}
 
-# When GUILE_PREFIX is non-default, these must be enabled.
+.if !empty(GUILE_SUBDIR)
+# Installation prefix is non-default.
+GUILE_PREFIX=		${PREFIX}/${GUILE_SUBDIR}
+CONFIGURE_ARGS+=	--prefix=${GUILE_PREFIX:Q}
+CONFIGURE_ARGS+=	--infodir=${GUILE_PREFIX:Q}/info
+CONFIGURE_ARGS+=	--mandir=${GUILE_PREFIX:Q}/man
 BUILDLINK_PASSTHRU_DIRS+=	${GUILE_PREFIX}
 LDFLAGS+=			${COMPILER_RPATH_FLAG}${GUILE_PREFIX}/lib
+.else
+CONFIGURE_ARGS+=	--prefix=${PREFIX:Q}
+CONFIGURE_ARGS+=	--infodir=${PREFIX:Q}/${PKGINFODIR:Q}
+CONFIGURE_ARGS+=	--mandir=${PREFIX:Q}/${PKGMANDIR:Q}
+.endif
 
 INFO_FILES=	yes
 USE_LIBTOOL=	yes

@@ -1,28 +1,23 @@
-# $NetBSD: Makefile,v 1.173 2017/04/30 01:21:49 ryoon Exp $
+# $NetBSD: Makefile,v 1.195 2019/03/13 15:42:41 wen Exp $
 
-DISTNAME=		R-3.3.3
-PKGREVISION=		1
-CATEGORIES=		math
-MASTER_SITES=		${MASTER_SITE_R_CRAN:=base/R-3/}
+DISTNAME=	R-3.5.3
+CATEGORIES=	math
+MASTER_SITES=	${MASTER_SITE_R_CRAN:=base/R-3/}
 
-MAINTAINER=		markd@NetBSD.org
-HOMEPAGE=		http://www.R-project.org/
-COMMENT=		Statistical language for data analysis and graphics
-LICENSE=		gnu-gpl-v2
-
-#needs FPC code not found in older versions of NetBSD
-NOT_FOR_PLATFORM=	NetBSD-1.[0-4]*-alpha NetBSD-1.5-alpha \
-			NetBSD-1.5.*-alpha NetBSD-1.5[A-U]-alpha
+MAINTAINER=	markd@NetBSD.org
+HOMEPAGE=	http://www.R-project.org/
+COMMENT=	Statistical language for data analysis and graphics
+LICENSE=	gnu-gpl-v2
 
 USE_GCC_RUNTIME=	yes
 
 BUILD_TARGET=		all info
 INSTALL_TARGET=		install install-info
 TEST_TARGET=		check
-USE_TOOLS+=		gmake gzip:run makeinfo perl:run sed unzip:run xmkmf
-USE_TOOLS+=		pkg-config
 USE_LANGUAGES=		c c++ fortran
 USE_LIBTOOL=		yes
+USE_TOOLS+=		aclocal autoconf autoreconf automake
+USE_TOOLS+=		gmake gzip:run makeinfo perl:run pkg-config sed unzip:run
 TEXINFO_REQD=		5.1
 INFO_FILES=		yes
 
@@ -30,8 +25,8 @@ PTHREAD_AUTO_VARS=	yes
 
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--enable-R-shlib
-CONFIGURE_ARGS+=	--with-x
 CONFIGURE_ARGS+=	--with-readline
+CONFIGURE_ARGS+=	--with-lapack
 CONFIGURE_ARGS+=	--with-tcltk
 CONFIGURE_ARGS+=	--with-tcl-config=${BUILDLINK_PREFIX.tcl}/lib/tclConfig.sh
 CONFIGURE_ARGS+=	--with-tk-config=${BUILDLINK_PREFIX.tk}/lib/tkConfig.sh
@@ -50,17 +45,30 @@ CONFIGURE_ARGS+=	--enable-long-double=no
 USE_GNU_ICONV=		yes		# latin1 support, iconvlist
 .endif
 
-# Disable Mac OS specific support used by R.app
-CONFIGURE_ARGS+=	--disable-R-framework
-CONFIGURE_ARGS+=	--without-aqua
+PLIST_VARS+=		x11
 
-# Use BLAS (math/blas)
+# Disable Mac OS specific support used by R.app
+.if ${OPSYS} == "Darwin"
+CONFIGURE_ARGS+=	--disable-R-framework
+CONFIGURE_ARGS+=	--with-aqua
+CONFIGURE_ARGS+=	--without-x
+.else
+USE_TOOLS+=		xmkmf
+CONFIGURE_ARGS+=	--with-x
+PLIST.x11=		yes
+.endif
+
+# Use BLAS
+.if exists(/System/Library/Frameworks/Accelerate.framework)
+CONFIGURE_ARGS+=	--with-blas="-framework Accelerate"
+.else
 CONFIGURE_ARGS+=	--without-atlas
 CONFIGURE_ARGS+=	--disable-BLAS-shlib
 CONFIGURE_ARGS+=	--with-blas
 CONFIGURE_ARGS+=	--without-blas_risc
 CONFIGURE_ARGS+=	--without-dxml
 CONFIGURE_ARGS+=	--without-libmoto
+.endif
 
 # Work around missing MAIN__() definition used in -lF77 by AC_CHECK_LIB.
 # and other failures due to not linking to support libs during testing
@@ -133,9 +141,11 @@ SUBST_SED.fixwrap=	-e "s,${WRAPPER_BINDIR}/libtool,${PKG_LIBTOOL},g"
 
 BUILDLINK_API_DEPENDS.bzip2+=	bzip2>=1.0.5
 
-.if ${OPSYS} == "NetBSD" && !empty(OS_VERSION:M1.[0-6]*)
-CONFIGURE_ARGS+=	--enable-mbcs=no
-.endif
+# failed to convert strong functions and variables: Invalid type identifier
+CTF_FILES_SKIP+=	lib/R/library/mgcv/libs/mgcv.so
+
+pre-configure:
+	${RUN} cd ${WRKSRC} && autoreconf -fvi
 
 # Fix library names.  Relies on build system using -headerpad_max_install_names.
 .if ${OPSYS} == "Darwin"
@@ -153,6 +163,8 @@ fix-darwin-install-name:
 .include "../../archivers/xz/buildlink3.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"
+.include "../../devel/glib2/buildlink3.mk"
+.include "../../devel/pango/buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"
 # uses callback interface
 .include "../../devel/readline/buildlink3.mk"
@@ -161,10 +173,16 @@ fix-darwin-install-name:
 .include "../../mk/jpeg.buildlink3.mk"
 .include "../../graphics/png/buildlink3.mk"
 .include "../../graphics/tiff/buildlink3.mk"
+.if !exists(/System/Library/Frameworks/Accelerate.framework)
 .include "../../math/blas/buildlink3.mk"
+.include "../../math/lapack/buildlink3.mk"
+.endif
 .include "../../www/curl/buildlink3.mk"
-.include "../../x11/libXt/buildlink3.mk"
 .include "../../x11/tk/buildlink3.mk"
+
+.if ${OPSYS} != "Darwin"
+.include "../../x11/libXt/buildlink3.mk"
+.endif
 
 INSTALL_TEMPLATES+=	../../math/R/files/pkg-index.tmpl
 DEINSTALL_TEMPLATES+=	../../math/R/files/pkg-index.tmpl

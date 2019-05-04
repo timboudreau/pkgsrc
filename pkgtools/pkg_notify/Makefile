@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.25 2016/10/10 07:42:53 wiz Exp $
+# $NetBSD: Makefile,v 1.28 2018/09/27 23:00:48 tnn Exp $
 
 PKGNAME=	pkg_notify-0.4.6
+PKGREVISION=	1
 CATEGORIES=	pkgtools
 
 MAINTAINER=	imil@gcu.info
@@ -22,7 +23,7 @@ CONF_FILES=		${EGDIR}/${PKGBASE}.list \
 .include "../../mk/bsd.prefs.mk"
 
 SUBST_CLASSES+=			pkg_notify
-SUBST_STAGE.pkg_notify=		post-patch
+SUBST_STAGE.pkg_notify=		pre-install
 SUBST_FILES.pkg_notify=		pkg_notify
 SUBST_FILES.pkg_notify+=	pkg_notify.1
 SUBST_SED.pkg_notify=		-e 's|@PKGSRCDIR@|${PKGSRCDIR}|'

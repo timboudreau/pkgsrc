@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.114 2017/04/22 21:03:25 adam Exp $
+# $NetBSD: Makefile,v 1.129 2019/04/03 00:32:27 ryoon Exp $
 
 DISTNAME=	gnomeicu-0.99.12
-PKGREVISION=	59
+PKGREVISION=	73
 CATEGORIES=	chat gnome
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gnomeicu/}
 EXTRACT_SUFX=	.tar.bz2
@@ -18,7 +18,7 @@ BROKEN_GETTEXT_DETECTION=	YES
 
 LIBS.SunOS+=		-lsocket
 
-CONFIGURE_ARGS+=	--sysconfdir=${EGDIR:Q}
+CONFIGURE_ARGS+=	--sysconfdir=${EGDIR}
 
 EGDIR=			${PREFIX}/share/examples/gnomeicu
 CONF_FILES=		${EGDIR}/sound/events/GnomeICU.soundlist \

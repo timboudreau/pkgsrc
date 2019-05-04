@@ -1,7 +1,6 @@
-$NetBSD: distinfo,v 1.3 2016/09/19 09:52:21 fhajny Exp $
+$NetBSD: distinfo,v 1.6 2018/03/06 10:05:49 adam Exp $
 
-SHA1 (yaml-cpp-0.5.3.tar.gz) = f1e4c3963f86cfbaa362265f15559adc2ee23589
-RMD160 (yaml-cpp-0.5.3.tar.gz) = 7596dc6941d4b6ef09481b6a49113a4993b013a4
-SHA512 (yaml-cpp-0.5.3.tar.gz) = cb11acccc5261e4513b597becf6be5d7fef05ef89a11eda3fc7db9e513adf953a2ec9c1bf70b91277076d793f0c65a496c7243d9b4a4240623e5f7034f8d4ad3
-Size (yaml-cpp-0.5.3.tar.gz) = 2016629 bytes
-SHA1 (patch-test_gmock-1.7.0_configure) = 3d6e638bfca8240a273474328f7c28837dfc8e24
+SHA1 (yaml-cpp-0.6.2.tar.gz) = e75a451078f408a432b32f1e416dc067ef01b49b
+RMD160 (yaml-cpp-0.6.2.tar.gz) = 1e99c637e81998b1ad26ff0d1fdffa3abe091d3c
+SHA512 (yaml-cpp-0.6.2.tar.gz) = fea8ce0a20a00cbc75023d1db442edfcd32d0ac57a3c41b32ec8d56f87cc1d85d7dd7a923ce662f5d3a315f91a736d6be0d649997acd190915c1d68cc93795e4
+Size (yaml-cpp-0.6.2.tar.gz) = 1396250 bytes

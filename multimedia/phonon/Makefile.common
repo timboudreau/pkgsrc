@@ -1,11 +1,11 @@
-# $NetBSD: Makefile.common,v 1.2 2016/04/26 08:08:50 markd Exp $
+# $NetBSD: Makefile.common,v 1.5 2018/06/21 00:12:55 markd Exp $
 
 CATEGORIES=	multimedia
-MASTER_SITES=	${MASTER_SITE_KDE:=phonon/4.9.0/}
+MASTER_SITES=	${MASTER_SITE_KDE:=phonon/4.10.1/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	markd@NetBSD.org
-HOMEPAGE=	http://phonon.kde.org/
+HOMEPAGE=	https://phonon.kde.org/
 LICENSE=	gnu-lgpl-v2.1
 
 PATCHDIR=	${.CURDIR}/../../multimedia/phonon/patches

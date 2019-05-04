@@ -1,4 +1,5 @@
-@comment $NetBSD: PLIST,v 1.2 2016/08/21 21:26:01 markd Exp $
+@comment $NetBSD: PLIST,v 1.6 2019/04/25 21:08:10 markd Exp $
+bin/gentrigrams
 bin/parsetrigrams
 include/KF5/SonnetCore/Sonnet/BackgroundChecker
 include/KF5/SonnetCore/Sonnet/GuessLanguage
@@ -33,13 +34,13 @@ lib/libKF5SonnetUi.so.5
 lib/libKF5SonnetUi.so.${PKGVERSION}
 qt5/mkspecs/modules/qt_SonnetCore.pri
 qt5/mkspecs/modules/qt_SonnetUi.pri
-qt5/plugins/kf5/sonnet/aspell.so
-qt5/plugins/kf5/sonnet/hunspell.so
+qt5/plugins/kf5/sonnet/sonnet_aspell.so
+qt5/plugins/kf5/sonnet/sonnet_hunspell.so
+share/examples/kde-xdg/sonnet.categories
 share/kf5/sonnet/trigrams.map
 share/locale/af/LC_MESSAGES/sonnet5_qt.qm
 share/locale/ar/LC_MESSAGES/sonnet5_qt.qm
 share/locale/as/LC_MESSAGES/sonnet5_qt.qm
-share/locale/ast/LC_MESSAGES/sonnet5_qt.qm
 share/locale/be/LC_MESSAGES/sonnet5_qt.qm
 share/locale/be@latin/LC_MESSAGES/sonnet5_qt.qm
 share/locale/bg/LC_MESSAGES/sonnet5_qt.qm

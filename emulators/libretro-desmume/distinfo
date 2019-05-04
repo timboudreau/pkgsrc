@@ -1,0 +1,7 @@
+$NetBSD: distinfo,v 1.2 2018/12/18 16:54:24 nia Exp $
+
+SHA1 (libretro-desmume-20181207-48975f33baeb982795f08bf5bb19d8ecae9859b9.tar.gz) = b41bff26d7913e73fbd249cd4c04c60ff315c24a
+RMD160 (libretro-desmume-20181207-48975f33baeb982795f08bf5bb19d8ecae9859b9.tar.gz) = 486bffb9811502e08fbe85dc08fa9fe937ad3267
+SHA512 (libretro-desmume-20181207-48975f33baeb982795f08bf5bb19d8ecae9859b9.tar.gz) = 49eed78555a09068d939c35a6abdb05fae46876bed380b320b30fa373aa519428d8453aae804cb1277a9fe5c441ebd9185abddbfe8a6aa20f7a11d9ea44492da
+Size (libretro-desmume-20181207-48975f33baeb982795f08bf5bb19d8ecae9859b9.tar.gz) = 11362330 bytes
+SHA1 (patch-desmume_src_frontend_libretro_Makefile.libretro) = 8d43c8c404e0a828d79ce7d16265e95ec70c4525

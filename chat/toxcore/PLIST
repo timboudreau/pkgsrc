@@ -1,0 +1,11 @@
+@comment $NetBSD: PLIST,v 1.2 2019/01/21 07:51:03 maya Exp $
+bin/DHT_bootstrap
+bin/tox-bootstrapd
+include/tox/tox.h
+include/tox/toxav.h
+include/tox/toxencryptsave.h
+lib/libtoxcore.a
+lib/libtoxcore.so
+lib/libtoxcore.so.2
+lib/libtoxcore.so.2.7.0
+lib/pkgconfig/toxcore.pc

@@ -1,68 +1,71 @@
-# $NetBSD: Makefile,v 1.17 2017/04/22 21:03:56 adam Exp $
+# $NetBSD: Makefile,v 1.40 2019/04/03 00:33:06 ryoon Exp $
 
-TORBVER=	6.0.8
-
-DISTNAME=	v6.0.8-esr45.6.0
-PKGNAME=	tor-browser-${TORBVER}
-PKGREVISION=	3
+DISTNAME=	tor-browser-60.5.1esr-8.5-1-build2
+PKGNAME=	tor-browser-8.5
+PKGREVISION=	2
 CATEGORIES=	www
-# Use OpenBSD distfile
-MASTER_SITES=	${MASTER_SITE_OPENBSD:=distfiles/tor-browser/}
+# DISTFILE manually packaged from git checkout
 
 MAINTAINER=	ryoon@NetBSD.org
 HOMEPAGE=	https://www.torproject.org/projects/torbrowser.html.en
 COMMENT=	Tor Browser based on Firefox
 LICENSE=	mpl-1.1
 
-# A name of OpenBSD Ports distfile does not have 'tor-browser' inside.
-DIST_SUBDIR=	tor-browser
-
-EXTRACT_USING=	bsdtar
-WRKSRC=		${WRKDIR}/${DISTNAME:S/v/torb-/}
+WRKSRC=		${WRKDIR}/tor-browser
 
 DEPENDS+=	tor-[0-9]*:../../net/tor
 
+# How to update this package:
+#
+# make a tarball:
+# git clone https://git.torproject.org/tor-browser.git
+# cd tor-browser
+# git fetch --tags
+# git tag -l
+# (choose a tag, here tor-browser-60.5.1esr-8.5-1-build2)
+# git checkout tor-browser-60.5.1esr-8.5-1-build2
+# cd ..
+# tar -cvzf tor-browser-60.5.1esr-8.5-1-build2.tar.gz --exclude .git tor-browser
+#
+# replace all patches with the one from the correspoding www/firefox${ESR_RELEASE}
+# BUT keep patch-xpcom_io_TorFileUtils.cpp!
+# make the patches apply
+#
+# when packaged up, read MESSAGE and test by visiting https://check.torproject.org
+
 # Remove hardcoded build directory.
 SUBST_CLASSES+=			fix-build-dir
-SUBST_STAGE.fix-build-dir+=	pre-configure
+SUBST_STAGE.fix-build-dir=	pre-configure
 SUBST_FILES.fix-build-dir+=	.mozconfig
 SUBST_SED.fix-build-dir+=	-e 's,mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-@CONFIG_GUESS@,,'
 
 MOZILLA_DIR=	# empty
 
-CONFIGURE_ARGS+=	--enable-application=browser
-CONFIGURE_ARGS+=	--disable-tor-browser-update
-CONFIGURE_ARGS+=	--disable-webrtc
-CONFIGURE_ARGS+=	--disable-gio
-CONFIGURE_ARGS+=	--disable-dbus
-CONFIGURE_ARGS+=	--disable-gnomeui
-CONFIGURE_ARGS+=        --disable-libnotify
-CONFIGURE_ARGS+=        --enable-pie
-CONFIGURE_ARGS+=        --enable-tor-data-in-home-dir
+.include "../../mk/bsd.prefs.mk"
+
+CONFIGURE_ARGS+=	--enable-tor-browser-data-outside-app-dir
 CFLAGS+=		-DTOR_BROWSER_DATA_IN_HOME_DIR=1
 CFLAGS+=		-DTOR_BROWSER_DATA_OUTSIDE_APP_DIR=1
-
-# Avoid build failure from security/manager/ssl/src/nsNSSCallbacks.cpp:601
-CFLAGS+=	-fpermissive
+CFLAGS+=		-fPIC
 
 # workaround for link of libxul.so etc.
-LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib/tor-browser ${COMPILER_RPATH_FLAG}${PREFIX}/lib
+LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib/${PKGBASE}
+LDFLAGS+=		${COMPILER_RPATH_FLAG}${PREFIX}/lib
+LDFLAGS.DragonFly+=	-lplc4 -lnspr4
+LDFLAGS.FreeBSD+=	-lplc4 -lnspr4
+LDFLAGS.Linux+=		-lnspr4
 LDFLAGS.SunOS+=		-lm
 
-ALL_ENV+=		MOZILLA_PKG_NAME=tor-browser
+ALL_ENV+=		MOZ_APP_NAME=${PKGBASE}
 
-NOT_PAX_MPROTECT_SAFE+=	lib/tor-browser/firefox
-NOT_PAX_MPROTECT_SAFE+=	lib/tor-browser/firefox-bin
+NOT_PAX_MPROTECT_SAFE+=	lib/${PKGBASE}/tor-browser
+NOT_PAX_MPROTECT_SAFE+=	lib/${PKGBASE}/tor-browser-bin
 
 # Avoid ld "invalid section index" errors.
 BUILDLINK_TRANSFORM.SunOS+=	rm:-fdata-sections
 BUILDLINK_TRANSFORM.SunOS+=	rm:-ffunction-sections
 
-LDFLAGS.DragonFly=	-lplc4 -lnspr4
-LDFLAGS.FreeBSD=	-lplc4 -lnspr4
-LDFLAGS.Linux=		-lnspr4
-
-.include "../../www/firefox45/mozilla-common.mk"
+.include "../../www/firefox60/mozilla-common.mk"
 .include "options.mk"
 
 CHECK_INTERPRETER_SKIP+=lib/firefox-sdk/sdk/bin/header.py
@@ -70,15 +73,11 @@ CHECK_INTERPRETER_SKIP+=lib/firefox-sdk/sdk/bin/typelib.py
 CHECK_INTERPRETER_SKIP+=lib/firefox-sdk/sdk/bin/xpidl.py
 CHECK_INTERPRETER_SKIP+=lib/firefox-sdk/sdk/bin/xpt.py
 
-MOZILLA=	tor-browser
-MOZILLA_ICON=	${WRKSRC}/${OBJDIR}/dist/firefox/browser/chrome/icons/default/default48.png
-MOZILLA_NAME=	TorBrowser
+CHECK_WRKREF_SKIP+=	lib/${PKGBASE}/chrome/toolkit/content/global/buildconfig.html
 
-SUBST_CLASSES+=		sys-dic
-SUBST_STAGE.sys-dic=	pre-configure
-SUBST_MESSAGE.sys-dic=	Reference to system hunspell dictionaries.
-SUBST_FILES.sys-dic=	extensions/spellcheck/hunspell/src/mozHunspell.cpp
-SUBST_VARS.sys-dic=	PREFIX
+MOZILLA=	${PKGBASE}
+MOZILLA_ICON=	${WRKSRC}/browser/branding/official/default48.png
+MOZILLA_NAME=	TorBrowser
 
 post-extract:
 	mv ${WRKSRC}/gfx/ycbcr/yuv_row_arm.s ${WRKSRC}/gfx/ycbcr/yuv_row_arm.S
@@ -86,6 +85,7 @@ post-extract:
 pre-configure:
 	cd ${WRKSRC} && mkdir ${OBJDIR}
 	cd ${WRKSRC} && autoconf
+	cd ${WRKSRC}/${OBJDIR} && touch old-configure.vars
 	cd ${WRKSRC}/js/src && autoconf
 
 post-build:
@@ -97,10 +97,15 @@ post-build:
 
 INSTALLATION_DIRS+=	share/applications share/pixmaps
 post-install:
+	${ECHO} '#! /bin/sh' > ${DESTDIR}${PREFIX}/bin/${MOZILLA}
+	${ECHO} '${PREFIX}/lib/tor-browser/tor-browser-bin "$$@"' >> \
+		${DESTDIR}${PREFIX}/bin/${MOZILLA}
+	${CHMOD} 755 ${DESTDIR}${PREFIX}/bin/${MOZILLA}
 	${INSTALL_DATA} ${WRKDIR}/desktop				\
 	  ${DESTDIR}${PREFIX}/share/applications/${MOZILLA}.desktop
 	${INSTALL_DATA} ${MOZILLA_ICON}					\
 	  ${DESTDIR}${PREFIX}/share/pixmaps/${MOZILLA}.png
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
+.include "../../sysutils/dbus-glib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

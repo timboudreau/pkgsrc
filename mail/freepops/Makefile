@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.33 2017/04/30 01:21:49 ryoon Exp $
+# $NetBSD: Makefile,v 1.38 2018/12/13 19:52:07 adam Exp $
 #
 
 DISTNAME=	freepops-0.2.9
-PKGREVISION=	9
+PKGREVISION=	14
 CATEGORIES=	mail
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=freepops/}
 

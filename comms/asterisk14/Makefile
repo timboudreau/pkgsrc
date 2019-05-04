@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.13 2017/06/21 13:33:47 jnemeth Exp $
+# $NetBSD: Makefile,v 1.31 2019/04/03 00:32:28 ryoon Exp $
 #
 # NOTE: when updating this package, there are two places that sound
 #       tarballs need to be checked; look in ${WRKSRC}/sounds/Makefile
 #       to find out the current sound file versions
 
-DISTNAME=	asterisk-14.5.0
-#PKGREVISION=	6
+DISTNAME=	asterisk-14.7.5
+PKGREVISION=	12
 CATEGORIES=	comms net audio
 MASTER_SITES=	http://downloads.asterisk.org/pub/telephony/asterisk/
 MASTER_SITES+=	http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/
@@ -133,6 +133,10 @@ PLIST.mgcp=	yes
 .  endif
 .endfor
 
+.if ${OPSYS} == "SunOS"
+PLIST.mgcp=	yes
+.endif
+
 PLIST_VARS+=	unbound
 .if exists(/usr/include/unbound.h)
 PLIST.unbound=	yes
@@ -141,7 +145,7 @@ PLIST.unbound=	yes
 .include "options.mk"
 
 # check sounds/Makefile for current version when upgrading package
-DISTFILES+=	asterisk-extra-sounds-en-gsm-1.5.tar.gz
+DISTFILES+=	asterisk-extra-sounds-en-gsm-1.5.1.tar.gz
 
 # Override default paths in config files
 SUBST_CLASSES+=		configs
@@ -251,9 +255,9 @@ post-patch:
 
 post-install:
 # check sounds directory for current versions when upgrading package
-	${TAR} xzf ${WRKSRC}/sounds/asterisk-core-sounds-en-gsm-1.5.tar.gz -C ${DESTDIR}${ASTDATADIR}/sounds/en
+	${TAR} xzf ${WRKSRC}/sounds/asterisk-core-sounds-en-gsm-1.6.tar.gz -C ${DESTDIR}${ASTDATADIR}/sounds/en
 	${TAR} xzf ${WRKSRC}/sounds/asterisk-moh-opsound-wav-2.03.tar.gz -C ${DESTDIR}${ASTDATADIR}/moh
-	${TAR} xzf ${DISTDIR}/${DIST_SUBDIR}/asterisk-extra-sounds-en-gsm-1.5.tar.gz -C ${DESTDIR}${ASTDATADIR}/sounds/en
+	${TAR} xzf ${DISTDIR}/${DIST_SUBDIR}/asterisk-extra-sounds-en-gsm-1.5.1.tar.gz -C ${DESTDIR}${ASTDATADIR}/sounds/en
 	${INSTALL_DATA} ${WRKSRC}/BUGS ${DESTDIR}${PREFIX}/share/doc/${PKGBASE}
 	${INSTALL_DATA} ${WRKSRC}/CHANGES ${DESTDIR}${PREFIX}/share/doc/${PKGBASE}
 	${INSTALL_DATA} ${WRKSRC}/COPYING ${DESTDIR}${PREFIX}/share/doc/${PKGBASE}
@@ -288,4 +292,5 @@ post-install:
 .include "../../www/curl/buildlink3.mk"
 .include "../../mk/curses.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
+.include "../../mk/termcap.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

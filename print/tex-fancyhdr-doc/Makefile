@@ -1,15 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2017/06/21 06:13:15 markd Exp $
+# $NetBSD: Makefile,v 1.7 2017/09/06 16:49:34 wiz Exp $
 
 DISTNAME=	fancyhdr.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-3.9
-TEXLIVE_REV=	44479
+PKGNAME=	tex-${DISTNAME:S/./-/}-3.9a
+TEXLIVE_REV=	44730
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/fancyhdr
 COMMENT=	Documentation for tex-fancyhdr
 LICENSE=	lppl-1.3c
-
-CONFLICTS+=	teTeX-texmf<=3.0nb13
 
 .include "../../print/texlive/package.mk"
 .include "../../mk/bsd.pkg.mk"

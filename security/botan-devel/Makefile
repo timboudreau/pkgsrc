@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.21 2017/04/30 01:21:24 ryoon Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/25 07:33:15 maya Exp $
 
 DISTNAME=	Botan-2.1.0
 PKGNAME=	${DISTNAME:tl}
-PKGREVISION=	1
+PKGREVISION=	7
 CATEGORIES=	security
-MASTER_SITES=	http://botan.randombit.net/releases/
+MASTER_SITES=	https://botan.randombit.net/releases/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	joerg@NetBSD.org
-HOMEPAGE=	http://botan.randombit.net/
+HOMEPAGE=	https://botan.randombit.net/
 COMMENT=	Portable, easy to use, and efficient C++ crypto library
 LICENSE=	2-clause-bsd
 
@@ -20,6 +20,7 @@ PYTHON_FOR_BUILD_ONLY=	yes
 CONFIG_SHELL=		${PYTHONBIN}
 CONFIGURE_SCRIPT=	./configure.py
 CONFIGURE_ARGS+=	--prefix=${PREFIX} --with-zlib --with-boost --destdir=${DESTDIR}${PREFIX}
+CONFIGURE_ARGS+=	--docdir=share/doc
 
 REPLACE_PYTHON+=	*.py src/scripts/*.py
 
@@ -46,7 +47,7 @@ USE_TOOLS+=	gmake
 
 PY_PATCHPLIST=	yes
 
-MAKE_FLAGS.SunOS+=	USER_APP_LINKS_TO=-lnsl
+LDFLAGS.SunOS+=	-lnsl -lsocket
 
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../devel/boost-libs/buildlink3.mk"

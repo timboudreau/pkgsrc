@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/02/12 06:26:14 ryoon Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/26 14:12:50 maya Exp $
 
 DISTNAME=	terminator-0.98
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	3
+PKGREVISION=	7
 CATEGORIES=	x11
 MASTER_SITES=	https://launchpad.net/terminator/trunk/${PKGVERSION_NOREV}/+download/
 
@@ -11,7 +11,7 @@ HOMEPAGE=	https://launchpad.net/terminator
 COMMENT=	Terminator, multiple terminals in one window
 LICENSE=	gnu-gpl-v2
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.98
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.98
 
 REPLACE_PYTHON+= *.py
 REPLACE_PYTHON+= terminatorlib/*.py

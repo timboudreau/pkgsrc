@@ -1,14 +1,16 @@
-# $NetBSD: Makefile,v 1.4 2016/06/08 17:43:28 wiz Exp $
+# $NetBSD: Makefile,v 1.10 2019/01/22 09:45:22 adam Exp $
 
-DISTNAME=	more-itertools-2.2
+DISTNAME=	more-itertools-5.0.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=m/more-itertools/}
 
 MAINTAINER=	imil@NetBSD.org
 HOMEPAGE=	https://github.com/erikrose/more-itertools
 COMMENT=	More routines for operating on iterables, beyond itertools
 LICENSE=	mit
+
+DEPENDS+=	${PYPKGPREFIX}-six>=1.0.0:../../lang/py-six
 
 USE_LANGUAGES=	# none
 

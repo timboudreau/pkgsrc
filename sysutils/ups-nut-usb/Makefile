@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.5 2015/11/10 08:52:38 mrg Exp $
+# $NetBSD: Makefile,v 1.9 2018/09/21 00:59:53 jym Exp $
 
 .include "../../sysutils/ups-nut/Makefile.common"
 
 PKGNAME=		${DISTNAME:S/nut/ups-nut-usb/}
-PKGREVISION=		1
 COMMENT=		Network UPS Tools USB drivers
 
 DEPENDS+=		ups-nut-2.*:../../sysutils/ups-nut
@@ -26,5 +25,5 @@ do-install:
 		    ${DESTDIR}${PREFIX}/${PKGMANDIR}/man8/; \
 	done
 
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

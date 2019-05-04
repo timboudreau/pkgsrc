@@ -1,5 +1,5 @@
 #! @PERL@
-# $NetBSD: url2pkg.pl,v 1.34 2016/09/27 17:10:09 wiz Exp $
+# $NetBSD: url2pkg.pl,v 1.38 2018/08/22 20:48:38 maya Exp $
 #
 
 # Copyright (c) 2010 The NetBSD Foundation, Inc.
@@ -16,13 +16,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-# This product includes software developed by the NetBSD
-# Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -76,45 +69,53 @@ sub print_section($$) {
 
 	my $width = 0;
 	foreach my $var (@{$vars}) {
-		my $len = length($var->[0]);
+		my $varname = $var->[0];
+		my $len = (length("$varname= ") + 7) & -8;
 		$width = ($len > $width) ? $len : $width;
 	}
 
 	foreach my $var (@{$vars}) {
-		my $len = length($var->[0]) + 1;
-		my $adjlen = (($width + 1 + 1) + 7) &-8;
-		my $ntabs = (7 + $adjlen - $len) / 8;
-		printf $f ("%s=%s%s\n", $var->[0], "\t" x $ntabs, $var->[1]);
+		my ($varname, $varvalue) = @$var;
+		my $ntabs = ($width - length("$varname=") + 7) / 8;
+		printf $f ("%s=%s%s\n", $varname, "\t" x $ntabs, $varvalue);
 	}
 	printf $f ("\n");
 }
 
-#
-# Introduction to the magic_* subroutines.
-#
-# The following routines are called after the distfiles have been
-# downloaded and extracted. They may inspect the extracted files
+# The following magic_* subroutines are called after the distfiles have
+# been downloaded and extracted. They inspect the extracted files
 # to automatically define some variables in the package Makefile.
 #
 # The following variables may be used in the magic_* subroutines:
-# $distname contains the package name, including the version number.
-# $abs_wrkdir is an absolute pathname to the working directory, which
-# contains the extracted distfiles. $abs_wrksrc is the absolute pathname
-# to a subdirectory of $abs_wrkdir, in which you can usually find the
-# package-provided Makefiles or configure scripts.
+#
+# $distname
+#	contains the package name, including the version number.
+# $abs_wrkdir
+#	the absolute pathname to the working directory, containing
+#	the extracted distfiles.
+# $abs_wrksrc
+#	the absolute pathname to a subdirectory of $abs_wrkdir,
+#	typically containing package-provided Makefiles or configure
+#	scripts.
 #
 # The following lists may be extended by the magic_* routines and
-# will later appear in the package Makefile: @depends and @build_depends
-# contain the dependencies of the package, in the form
-# "package>=version". @includes is a list of pathnames relative to the
-# package path. All these files will be included at the bottom of the
-# Makefile. @build_vars is a list of [varname, value] items that contain
-# variables that will be defined in the fourth paragraph of the package
-# Makefile, where the build configuration takes place. The @extra_vars
-# are similar to the @build_vars, but separated by an empty line in the
-# Makefile. The @todo items are inserted below the second paragraph in
-# the Makefile.
+# will later appear in the package Makefile:
 #
+# @depends
+# @build_depends
+#	the dependencies of the package, in the form "package>=version".
+# @includes
+#	a list of pathnames relative to the package path.
+#	All these files will be included at the bottom of the Makefile.
+# @build_vars
+#	a list of [varname, value] items that contain variables that
+#	will be defined in the fourth paragraph of the package Makefile,
+#	where the build configuration takes place.
+# @extra_vars
+#	similar to the @build_vars, but separated by an empty line in
+#	the Makefile, therefore forming the fifth paragraph.
+# @todo
+#	these are inserted below the second paragraph in the Makefile.
 
 my ($distname, $abs_wrkdir, $abs_wrksrc);
 my (@wrksrc_files, @wrksrc_dirs);
@@ -402,7 +403,7 @@ sub generate_initial_package($) {
 
 	print ("url2pkg> Running \"make distinfo\" ...\n");
 	(system { $make } ($make, "distinfo")) == 0 or die;
-	
+
 	print ("url2pkg> Running \"make extract\" ...\n");
 	(system { $make } ($make, "extract")) == 0 or die;
 }
@@ -432,7 +433,7 @@ sub adjust_package_from_extracted_distfiles()
 	if (@files == 1) {
 		if ($files[0] ne $distname) {
 			push(@build_vars, ["WRKSRC", "\${WRKDIR}/$files[0]"]);
-		}		
+		}
 		$abs_wrksrc = "${abs_wrkdir}/$files[0]";
 	} else {
 		push(@build_vars, ["WRKSRC", "\${WRKDIR}" .

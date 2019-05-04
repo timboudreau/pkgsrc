@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.10 2017/01/19 06:59:53 wen Exp $
+$NetBSD: distinfo,v 1.13 2018/07/04 12:45:57 wen Exp $
 
-SHA1 (yabasic-2.77.3.tar.gz) = 121dc8cbd120380c0fd3f540d22e02908687e57f
-RMD160 (yabasic-2.77.3.tar.gz) = c5c8546f4615a96460b31803d8e98b35da3da8f9
-SHA512 (yabasic-2.77.3.tar.gz) = 7a776619552eea338ba5fa84d89205bcffec46ccd23c42ed566a2b6e52f0ce7d756b8c1372db0de6957bec5eb6d574beb0cb2a0610dbd262becdebff50a0ed42
-Size (yabasic-2.77.3.tar.gz) = 489892 bytes
+SHA1 (yabasic-2.79.2.tar.gz) = 65a89e307d52f899e46a3ec077f96b58853c7641
+RMD160 (yabasic-2.79.2.tar.gz) = 227a011c4ba7d889062c97c3729c730c4e7a9f6b
+SHA512 (yabasic-2.79.2.tar.gz) = 2720c15e598d4500f57454517d19d453ed51f963a8a021dec28dcbb0c19103c638a1f5c588c466cc963def0c1318eee37b53d799a4609037d1affe6896e6bdd8
+Size (yabasic-2.79.2.tar.gz) = 1137964 bytes

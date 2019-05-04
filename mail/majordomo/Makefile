@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.52 2017/01/19 18:52:16 agc Exp $
+# $NetBSD: Makefile,v 1.55 2018/08/22 09:45:26 wiz Exp $
 
 DISTNAME=		majordomo-1.94.5
-PKGREVISION=		21
+PKGREVISION=		23
 CATEGORIES=		mail
 MASTER_SITES=		ftp://ftp.sgi.com/other/majordomo/1.94.5/
 MASTER_SITES+=		ftp://ftp-europe.sgi.com/other/majordomo/1.94.5/
 EXTRACT_SUFX=		.tgz
 
 MAINTAINER=		spz@NetBSD.org
-HOMEPAGE=		http://www.greatcircle.com/majordomo/
+HOMEPAGE=		https://www.greatcircle.com/majordomo/
 COMMENT=		The Majordomo mailing list manager
 
 LICENSE=		majordomo-license

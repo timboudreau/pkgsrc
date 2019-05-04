@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.25 2017/04/22 21:03:12 adam Exp $
+# $NetBSD: Makefile,v 1.34 2019/04/25 07:33:03 maya Exp $
 
 DISTNAME=	mono-2.10.9
-PKGREVISION=	20
+PKGREVISION=	28
 CATEGORIES=	lang
 MASTER_SITES=	http://download.mono-project.com/sources/mono/
 EXTRACT_SUFX=	.tar.bz2
@@ -122,19 +122,19 @@ MAKE_DIRS+=	${PKG_SYSCONFDIR}/mono/mconfig
 TEST_TARGET=	check
 
 SUBST_CLASSES+=			fix-prefix
-SUBST_STAGE.fix-prefix=		post-patch
+SUBST_STAGE.fix-prefix=		pre-configure
 SUBST_MESSAGE.fix-prefix=	Fixing relative prefix
 SUBST_FILES.fix-prefix=		${PKGCONFIG_OVERRIDE}
 SUBST_SED.fix-prefix=		-e 's,$${pcfiledir}/../..,\@prefix\@,g'
 
 SUBST_CLASSES+=			fix-mcs
-SUBST_STAGE.fix-mcs=		post-patch
+SUBST_STAGE.fix-mcs=		pre-configure
 SUBST_MESSAGE.fix-mcs=		Fixing mcs default prefix
 SUBST_FILES.fix-mcs=		mcs/build/config-default.make
 SUBST_SED.fix-mcs=		-e 's,/usr/local,${PREFIX},g'
 
 SUBST_CLASSES+=			fix-cfgdir
-SUBST_STAGE.fix-cfgdir=		post-patch
+SUBST_STAGE.fix-cfgdir=		pre-configure
 SUBST_MESSAGE.fix-cfgdir=	Fixing configuration files install dir
 SUBST_FILES.fix-cfgdir=		mcs/tools/mconfig/Makefile
 SUBST_SED.fix-cfgdir=		-e 's,$$(sysconfdir)/mono,${EGDIR},g'

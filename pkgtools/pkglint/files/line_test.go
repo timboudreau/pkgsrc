@@ -1,110 +1,57 @@
-package main
+package pkglint
 
 import (
-	check "gopkg.in/check.v1"
+	"gopkg.in/check.v1"
 )
 
-func (s *Suite) Test_Line_modifications(c *check.C) {
-	s.Init(c)
-	s.UseCommandLine("--show-autofix")
+func (s *Suite) Test_RawLine_String(c *check.C) {
+	t := s.Init(c)
 
-	line := NewLine("fname", 1, "dummy", s.NewRawLines(1, "original\n")).(*LineImpl)
+	line := t.NewLine("filename", 123, "text")
 
-	c.Check(line.changed, equals, false)
-	c.Check(line.raw, check.DeepEquals, s.NewRawLines(1, "original\n"))
-
-	line.AutofixReplaceRegexp(`(.)(.*)(.)`, "$3$2$1")
-
-	c.Check(line.changed, equals, true)
-	c.Check(line.raw, check.DeepEquals, s.NewRawLines(1, "original\n", "lriginao\n"))
-
-	line.changed = false
-	line.AutofixReplace("i", "u")
-
-	c.Check(line.changed, equals, true)
-	c.Check(line.raw, check.DeepEquals, s.NewRawLines(1, "original\n", "lruginao\n"))
-	c.Check(line.raw[0].textnl, equals, "lruginao\n")
-
-	line.changed = false
-	line.AutofixReplace("lruginao", "middle")
-
-	c.Check(line.changed, equals, true)
-	c.Check(line.raw, check.DeepEquals, s.NewRawLines(1, "original\n", "middle\n"))
-	c.Check(line.raw[0].textnl, equals, "middle\n")
-
-	line.AutofixInsertBefore("before")
-	line.AutofixInsertBefore("between before and middle")
-	line.AutofixInsertAfter("between middle and after")
-	line.AutofixInsertAfter("after")
-
-	c.Check(line.modifiedLines(), check.DeepEquals, []string{
-		"before\n",
-		"between before and middle\n",
-		"middle\n",
-		"between middle and after\n",
-		"after\n"})
-
-	line.AutofixDelete()
-
-	c.Check(line.modifiedLines(), check.DeepEquals, []string{
-		"before\n",
-		"between before and middle\n",
-		"",
-		"between middle and after\n",
-		"after\n"})
+	c.Check(line.raw[0].String(), equals, "123:text\n")
 }
 
-func (s *Suite) Test_Line_show_autofix_AutofixReplace(c *check.C) {
-	s.Init(c)
-	s.UseCommandLine("--show-autofix", "--source")
-	line := NewLineMulti("Makefile", 27, 29, "# old", s.NewRawLines(
-		27, "before\n",
-		28, "The old song\n",
-		29, "after\n"))
+func (s *Suite) Test_NewLine__assertion(c *check.C) {
+	t := s.Init(c)
 
-	if !line.AutofixReplace("old", "new") {
-		line.Warnf("Using \"old\" is deprecated.")
-	}
-
-	s.CheckOutputLines(
-		"",
-		"> before",
-		"- The old song",
-		"+ The new song",
-		"> after",
-		"WARN: Makefile:27--29: Using \"old\" is deprecated.",
-		"AUTOFIX: Makefile:27--29: Replacing \"old\" with \"new\".")
+	t.ExpectPanic(
+		func() { NewLine("filename", 123, "text", nil) },
+		"Pkglint internal error: use NewLineMulti for creating a Line with no RawLine attached to it")
 }
 
-func (s *Suite) Test_Line_show_autofix_AutofixInsertBefore(c *check.C) {
-	s.Init(c)
-	s.UseCommandLine("--show-autofix", "--source")
-	line := NewLine("Makefile", 30, "original", s.NewRawLines(30, "original\n"))
+func (s *Suite) Test_Line_IsMultiline(c *check.C) {
+	t := s.Init(c)
 
-	if !line.AutofixInsertBefore("inserted") {
-		line.Warnf("Dummy")
-	}
+	t.Check(t.NewLine("filename", 123, "text").IsMultiline(), equals, false)
+	t.Check(NewLineEOF("filename").IsMultiline(), equals, false)
 
-	s.CheckOutputLines(
-		"",
-		"+ inserted",
-		"> original",
-		"WARN: Makefile:30: Dummy",
-		"AUTOFIX: Makefile:30: Inserting a line \"inserted\" before this line.")
+	t.Check(NewLineMulti("filename", 123, 125, "text", nil).IsMultiline(), equals, true)
 }
 
-func (s *Suite) Test_Line_show_autofix_AutofixDelete(c *check.C) {
-	s.Init(c)
-	s.UseCommandLine("--show-autofix", "--source")
-	line := NewLine("Makefile", 30, "to be deleted", s.NewRawLines(30, "to be deleted\n"))
+// In case of a fatal error, pkglint quits in a controlled manner,
+// and the trace log shows where the fatal error happened.
+func (s *Suite) Test_Line_Fatalf__trace(c *check.C) {
+	t := s.Init(c)
 
-	if !line.AutofixDelete() {
-		line.Warnf("Dummy")
+	line := t.NewLine("filename", 123, "")
+	t.EnableTracingToLog()
+
+	inner := func() {
+		defer trace.Call0()()
+		line.Fatalf("Cannot continue because of %q and %q.", "reason 1", "reason 2")
+	}
+	outer := func() {
+		defer trace.Call0()()
+		inner()
 	}
 
-	s.CheckOutputLines(
-		"",
-		"- to be deleted",
-		"WARN: Makefile:30: Dummy",
-		"AUTOFIX: Makefile:30: Deleting this line.")
+	t.ExpectFatal(
+		outer,
+		"TRACE: + (*Suite).Test_Line_Fatalf__trace.func2()",
+		"TRACE: 1 + (*Suite).Test_Line_Fatalf__trace.func1()",
+		"TRACE: 1 2   Fatalf: \"Cannot continue because of %q and %q.\", [reason 1 reason 2]",
+		"TRACE: 1 - (*Suite).Test_Line_Fatalf__trace.func1()",
+		"TRACE: - (*Suite).Test_Line_Fatalf__trace.func2()",
+		"FATAL: filename:123: Cannot continue because of \"reason 1\" and \"reason 2\".")
 }

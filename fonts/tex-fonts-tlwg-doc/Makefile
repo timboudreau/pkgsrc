@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.1 2016/08/07 07:17:37 markd Exp $
+# $NetBSD: Makefile,v 1.3 2019/01/27 00:41:13 markd Exp $
 
 DISTNAME=	fonts-tlwg.doc
-PKGNAME=	tex-${DISTNAME:S/./-/}-0.6.3
-TEXLIVE_REV=	41366
+PKGNAME=	tex-${DISTNAME:S/./-/}-0.7.1
+TEXLIVE_REV=	49085
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/fonts-tlwg
 COMMENT=	Documentation for tex-fonts-tlwg
-LICENSE=	gnu-gpl-v2
+LICENSE=	gnu-gpl-v2 AND lppl-1.3c
 
 .include "../../print/texlive/package.mk"
 .include "../../mk/bsd.pkg.mk"

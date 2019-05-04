@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.12 2016/07/09 06:38:30 wiz Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:45:26 wiz Exp $
 #
 
 DISTNAME=	mailhops-1.4
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	mail
 MASTER_SITES=	http://www.spinnaker.de/mutt/
-EXTRACT_SUFX=		
+EXTRACT_SUFX=
 
 LICENSE=	gnu-gpl-v2
 

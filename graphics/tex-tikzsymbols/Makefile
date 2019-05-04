@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.3 2017/06/21 13:25:34 markd Exp $
+# $NetBSD: Makefile,v 1.5 2019/01/23 11:29:54 markd Exp $
 
 DISTNAME=	tikzsymbols
-PKGNAME=	tex-${DISTNAME}-4.02
-TEXLIVE_REV=	44350
+PKGNAME=	tex-${DISTNAME}-4.10a
+TEXLIVE_REV=	47730
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/tikzsymbols

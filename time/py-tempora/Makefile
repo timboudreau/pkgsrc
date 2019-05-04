@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2017/07/19 17:06:49 adam Exp $
+# $NetBSD: Makefile,v 1.11 2019/04/19 10:01:13 adam Exp $
 
-DISTNAME=	tempora-1.8
+DISTNAME=	tempora-1.14.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	time python
 MASTER_SITES=	${MASTER_SITE_PYPI:=t/tempora/}
@@ -10,18 +10,22 @@ HOMEPAGE=	https://github.com/jaraco/tempora
 COMMENT=	Objects and routines pertaining to date and time
 LICENSE=	mit
 
+DEPENDS+=	${PYPKGPREFIX}-jaraco.functools-[0-9]*:../../devel/py-jaraco.functools
 DEPENDS+=	${PYPKGPREFIX}-pytz-[0-9]*:../../time/py-pytz
 DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
 BUILD_DEPENDS+=	${PYPKGPREFIX}-setuptools_scm>=1.15.0:../../devel/py-setuptools_scm
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test>=2.8:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-freezegun-[0-9]*:../../devel/py-freezegun
+TEST_DEPENDS+=	${PYPKGPREFIX}-test>=2.8:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-flake8-[0-9]*:../../devel/py-test-flake8
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-sugar>=0.9.1:../../devel/py-test-sugar
 
-USE_LANGUAGES=		# none
+USE_LANGUAGES=	# none
 
 post-install:
 	cd ${DESTDIR}${PREFIX}/bin && ${MV} calc-prorate calc-prorate${PYVERSSUFFIX} || ${TRUE}
 
 do-test:
-	cd ${WRKSRC}/tests && ${SETENV} ${TEST_ENV} py.test-${PYVERSSUFFIX}
+	cd ${WRKSRC}/tests && py.test-${PYVERSSUFFIX}
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

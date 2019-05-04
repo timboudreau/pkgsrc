@@ -1,16 +1,15 @@
-# $NetBSD: Makefile,v 1.42 2017/01/19 18:52:25 agc Exp $
-#
+# $NetBSD: Makefile,v 1.44 2018/01/25 10:41:37 jperkin Exp $
 
 DISTNAME=		fam-2.7.0
 PKGREVISION=		9
 CATEGORIES=		sysutils devel
-MASTER_SITES=		ftp://oss.sgi.com/projects/fam/download/stable/
+#MASTER_SITES=		ftp://oss.sgi.com/projects/fam/download/stable/
 MASTER_SITES+=		${MASTER_SITE_GENTOO:=distfiles/}
 
 CONFLICTS+=		gamin-[0-9]*
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://oss.sgi.com/projects/fam/
+#HOMEPAGE=		http://oss.sgi.com/projects/fam/
 COMMENT=		File Alteration Monitor
 LICENSE=		gnu-gpl-v2 AND gnu-lgpl-v2.1 # fam and libfam
 
@@ -77,6 +76,11 @@ SUBST_SED.dirent=	-e 's,sys/dir.h,dirent.h,g'
 SUBST_SED.dirent+=	-e 's/struct direct/struct dirent/g'
 
 .include "../../mk/compiler.mk"
+
+# type 'unsigned long' to 'rpcprog_t' (aka 'unsigned int')
+.if !empty(PKGSRC_COMPILER:Mclang)
+CXXFLAGS.SunOS+=	-Wno-c++11-narrowing
+.endif
 
 .if !empty(PKGSRC_COMPILER:Msunpro)
 BUILDLINK_TRANSFORM+=	rm:-lstdc++

@@ -1,25 +1,25 @@
-# $NetBSD: Makefile,v 1.16 2017/05/02 13:27:59 wiz Exp $
+# $NetBSD: Makefile,v 1.31 2019/04/03 00:33:03 ryoon Exp $
 
+PKGREVISION= 1
 .include "../../print/poppler/Makefile.common"
 
 PKGNAME=		poppler-qt5-${POPPLER_VERS}
 COMMENT=		PDF rendering library (QT5 wrapper)
 MAINTAINER=		pkgsrc-users@NetBSD.org
 
-GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--disable-cairo-output
-CONFIGURE_ARGS+=	--enable-poppler-qt5
-CONFIGURE_ARGS+=	--disable-poppler-qt4
-CONFIGURE_ARGS+=	--disable-gtk-test
-CONFIGURE_ARGS+=	--disable-utils
-CONFIGURE_ENV+=		MOCQT5=${QTDIR}/bin/moc
-
-USE_TOOLS+=		gmake
+CMAKE_ARGS+=    -DENABLE_SPLASH=ON
+CMAKE_ARGS+=    -DBUILD_GTK_TESTS=OFF
+CMAKE_ARGS+=    -DENABLE_GLIB=OFF
+CMAKE_ARGS+=    -DENABLE_UTILS=OFF
+CMAKE_ARGS+=    -DENABLE_CPP=OFF
+CMAKE_ARGS+=    -DENABLE_QT5=ON
+# Don't build libcurl based HTTP support. ## might want to include
+CMAKE_ARGS+=    -DENABLE_LIBCURL=OFF
 
 BUILDLINK_API_DEPENDS.poppler+= poppler>=${POPPLER_VERS}
 .include "../../print/poppler/buildlink3.mk"
 
-PKGCONFIG_OVERRIDE+=	${WRKSRC}/poppler-qt5.pc.in
+PKGCONFIG_OVERRIDE+=	${WRKSRC}/poppler-qt5.pc.cmake
 
 INSTALLATION_DIRS+=	lib include/poppler lib/pkgconfig
 

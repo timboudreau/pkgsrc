@@ -1,12 +1,12 @@
-$NetBSD: patch-unix_configure,v 1.11 2017/07/16 11:42:59 wiz Exp $
+$NetBSD: patch-unix_configure,v 1.13 2018/12/09 18:35:44 adam Exp $
 
-Support MirBSD, DragonFly.
+Support MirBSD.
 Honor LDFLAGS.
 Standardize file names.
 
---- unix/configure.orig	2016-07-26 14:07:50.000000000 +0000
+--- unix/configure.orig	2018-11-16 19:02:48.000000000 +0000
 +++ unix/configure
-@@ -4388,10 +4388,10 @@ fi
+@@ -4391,10 +4391,10 @@ fi
      # LDFLAGS_ARCH so they eventually end up in LDFLAGS even if [load]
      # is disabled by the user. [Bug 1016796]
      LDFLAGS_ARCH=""
@@ -19,7 +19,7 @@ Standardize file names.
      CFLAGS_DEBUG=-g
      if test "$GCC" = yes; then
  
-@@ -5352,7 +5352,7 @@ fi
+@@ -5357,7 +5357,7 @@ fi
  	    CC_SEARCH_FLAGS=""
  	    LD_SEARCH_FLAGS=""
  	    ;;
@@ -27,22 +27,22 @@ Standardize file names.
 +	OpenBSD-*|MirBSD-*)
  	    arch=`arch -s`
  	    case "$arch" in
- 	    vax)
-@@ -5381,7 +5381,7 @@ fi
- fi
+ 	    alpha|sparc64)
+@@ -5378,7 +5378,7 @@ fi
  
- 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
--		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}.so.${SHLIB_VERSION}'
-+		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}.so'
- 		LDFLAGS="-Wl,-export-dynamic"
- 		;;
- 	    esac
-@@ -5412,11 +5412,10 @@ fi
+ 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
+ 	    SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}.so${SHLIB_VERSION}'
+-	    LDFLAGS="-Wl,-export-dynamic"
++	    LDFLAGS="-Wl,--export-dynamic"
+ 	    CFLAGS_OPTIMIZE="-O2"
+ 	    if test "${TCL_THREADS}" = "1"; then
+ 
+@@ -5396,11 +5396,10 @@ fi
  	NetBSD-*)
  	    # NetBSD has ELF and can use 'cc -shared' to build shared libs
  	    SHLIB_CFLAGS="-fPIC"
--	    SHLIB_LD='${CC} -shared ${SHLIB_CFLAGS}'
-+	    SHLIB_LD='${CC} -shared ${SHLIB_CFLAGS} ${LDFLAGS}'
+-	    SHLIB_LD='${CC} ${SHLIB_CFLAGS} -shared'
++	    SHLIB_LD='${CC} ${SHLIB_CFLAGS} -shared ${LDFLAGS}'
  	    SHLIB_SUFFIX=".so"
  	    DL_OBJS="tclLoadDl.o"
  	    DL_LIBS=""
@@ -50,25 +50,7 @@ Standardize file names.
  	    if test $doRpath = yes; then
  
  		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
-@@ -5433,7 +5432,7 @@ fi
- fi
- 
- 	    ;;
--	FreeBSD-*)
-+	FreeBSD-*|DragonFly-*)
- 	    # This configuration from FreeBSD Ports.
- 	    SHLIB_CFLAGS="-fPIC"
- 	    SHLIB_LD="${CC} -shared"
-@@ -6641,7 +6640,7 @@ fi
- 	    BSD/OS*) ;;
- 	    CYGWIN_*|MINGW32_*) ;;
- 	    IRIX*) ;;
--	    NetBSD-*|FreeBSD-*|OpenBSD-*) ;;
-+	    NetBSD-*|FreeBSD-*|OpenBSD-*|MirBSD-*) ;;
- 	    Darwin-*) ;;
- 	    SCO_SV-3.2*) ;;
- 	    *) SHLIB_CFLAGS="-fPIC" ;;
-@@ -6662,12 +6661,12 @@ fi
+@@ -6646,12 +6645,12 @@ fi
  
      if test "$SHARED_LIB_SUFFIX" = ""; then
  
@@ -83,20 +65,20 @@ Standardize file names.
  fi
  
      DLL_INSTALL_DIR="\$(LIB_INSTALL_DIR)"
-@@ -6683,7 +6682,11 @@ fi
+@@ -6667,7 +6666,11 @@ fi
  
  else
  
 -            INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) "$(LIB_INSTALL_DIR)/$(LIB_FILE)"'
 +       if test "${SHLIB_SUFFIX}" = ".dylib" ; then
-+            INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) "$(LIB_INSTALL_DIR)/libtk$(MAJOR_VERSION)$(MINOR_VERSION).$(SHLIB_VERSION)$(SHLIB_SUFFIX)"'
++            INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) "$(LIB_INSTALL_DIR)/libtk$(MAJOR_VERSION)$(MINOR_VERSION)$(SHLIB_VERSION)$(SHLIB_SUFFIX)"'
 +        else
-+            INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) "$(LIB_INSTALL_DIR)/$(LIB_FILE).$(SHLIB_VERSION)"'
++            INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) "$(LIB_INSTALL_DIR)/$(LIB_FILE)$(SHLIB_VERSION)"'
 +        fi
  
  fi
  
-@@ -6718,7 +6721,7 @@ else
+@@ -6702,7 +6705,7 @@ else
  
  fi
  
@@ -105,7 +87,7 @@ Standardize file names.
  
      # Define TCL_LIBS now that we know what DL_LIBS is.
      # The trick here is that we don't want to change the value of TCL_LIBS if
-@@ -9850,7 +9853,7 @@ echo $ECHO_N "checking for X11 libraries
+@@ -9713,7 +9716,7 @@ echo $ECHO_N "checking for X11 libraries
  	    if test -r $i/libX11.a -o -r $i/libX11.so -o -r $i/libX11.sl -o -r $i/libX11.dylib; then
  		echo "$as_me:$LINENO: result: $i" >&5
  echo "${ECHO_T}$i" >&6
@@ -114,7 +96,7 @@ Standardize file names.
  		x_libraries="$i"
  		break
  	    fi
-@@ -9859,7 +9862,7 @@ echo "${ECHO_T}$i" >&6
+@@ -9722,7 +9725,7 @@ echo "${ECHO_T}$i" >&6
  	if test "$x_libraries" = ""; then
  	    XLIBSW=-lX11
  	else
@@ -123,7 +105,7 @@ Standardize file names.
  	fi
      fi
      if test "$XLIBSW" = nope ; then
-@@ -9955,11 +9958,6 @@ fi
+@@ -9818,11 +9821,6 @@ fi
  #	   be replaced by spaces.
  #--------------------------------------------------------------------
  
@@ -135,7 +117,7 @@ Standardize file names.
  if test "${TCL_LD_SEARCH_FLAGS}" = '-L${LIB_RUNTIME_DIR}'; then
      LIB_RUNTIME_DIR=`echo ${LIB_RUNTIME_DIR} |sed -e 's/:/ -L/g'`
  fi
-@@ -11195,14 +11193,10 @@ else
+@@ -11058,14 +11056,10 @@ else
  	TK_LIB_FLAG="-ltk`echo ${TK_VERSION} | tr -d .`"
  	TK_BUILD_LIB_SPEC="-L\$(TOP_DIR)/win ${TK_LIB_FLAG}"
      else
@@ -151,7 +133,7 @@ Standardize file names.
  fi
  
  #--------------------------------------------------------------------
-@@ -11214,11 +11208,7 @@ fi
+@@ -11077,11 +11071,7 @@ fi
  eval "TK_STUB_LIB_FILE=libtkstub${TK_UNSHARED_LIB_SUFFIX}"
  eval "TK_STUB_LIB_DIR=${libdir}"
  
@@ -164,7 +146,7 @@ Standardize file names.
  
  TK_BUILD_STUB_LIB_SPEC="-L`pwd | sed -e 's/ /\\\\ /g'` ${TK_STUB_LIB_FLAG}"
  TK_STUB_LIB_SPEC="-L${TK_STUB_LIB_DIR} ${TK_STUB_LIB_FLAG}"
-@@ -12039,6 +12031,7 @@ s,@APP_RSRC_FILE@,$APP_RSRC_FILE,;t t
+@@ -11902,6 +11892,7 @@ s,@APP_RSRC_FILE@,$APP_RSRC_FILE,;t t
  s,@REZ@,$REZ,;t t
  s,@REZ_FLAGS@,$REZ_FLAGS,;t t
  s,@LTLIBOBJS@,$LTLIBOBJS,;t t

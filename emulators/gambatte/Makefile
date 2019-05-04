@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.27 2016/03/05 11:28:28 jperkin Exp $
+# $NetBSD: Makefile,v 1.30 2019/01/02 19:19:51 tnn Exp $
 #
 
 DISTNAME=	gambatte_src-0.4.1
 PKGNAME=	${DISTNAME:S/_src//}
-PKGREVISION=	22
+PKGREVISION=	23
 CATEGORIES=	emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gambatte/}
 
@@ -11,9 +11,7 @@ MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://gambatte.sourceforge.net/
 COMMENT=	Game Boy Color emulator
 
-BUILD_DEPENDS+=	scons-[0-9]*:../../devel/scons
-
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 INSTALLATION_DIRS=	bin share/doc/gambatte
 
 SUBST_CLASSES+=		sdl
@@ -25,8 +23,8 @@ SUBST_STAGE.sdl=	pre-build
 .include "options.mk"
 
 do-build:
-	cd ${WRKSRC}/libgambatte && ${PKGSRC_SETENV} ${MAKE_ENV} scons
-	cd ${WRKSRC}/gambatte_sdl && ${PKGSRC_SETENV} ${MAKE_ENV} scons
+	cd ${WRKSRC}/libgambatte && ${PKGSRC_SETENV} ${MAKE_ENV} ${SCONSBIN}
+	cd ${WRKSRC}/gambatte_sdl && ${PKGSRC_SETENV} ${MAKE_ENV} ${SCONSBIN}
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/gambatte_sdl/gambatte_sdl \
@@ -34,5 +32,7 @@ do-install:
 	${INSTALL_DATA} ${WRKSRC}/README ${DESTDIR}${PREFIX}/share/doc/gambatte
 
 .include "../../devel/SDL/buildlink3.mk"
+PYTHON_FOR_BUILD_ONLY?=	yes
+.include "../../devel/scons/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.33 2016/07/09 06:38:37 wiz Exp $
+# $NetBSD: Makefile,v 1.35 2018/08/22 09:45:46 wiz Exp $
 #
 
 DISTNAME=	pdmenu_1.2.65
 PKGNAME=	${DISTNAME:S/_/-/}
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	misc
 MASTER_SITES=	http://www.kitenet.net/programs/pdmenu/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.kitenet.net/~joey/code/pdmenu.html
+#HOMEPAGE=	http://www.kitenet.net/~joey/code/pdmenu.html
 COMMENT=	Simple console menu program
 
 WRKSRC=		${WRKDIR}/pdmenu

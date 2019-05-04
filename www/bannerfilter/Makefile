@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.17 2016/07/09 06:39:11 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/08/22 09:47:23 wiz Exp $
 #
 
 DISTNAME=	bannerfilter-1.31
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	www
 MASTER_SITES=	http://phroggy.com/files/unix/
 
@@ -18,7 +18,7 @@ CONF_FILES=	${SHAREDIR}/bannerfilter.conf ${PKG_SYSCONFDIR}/bannerfilter.conf
 REPLACE_PERL=	redirector.pl
 
 SUBST_CLASSES+=	bf
-SUBST_STAGE.bf=	post-patch
+SUBST_STAGE.bf=	pre-configure
 SUBST_FILES.bf=	bannerfilter.conf
 SUBST_SED.bf=	-e s,@SHAREDIR@,${SHAREDIR},g
 

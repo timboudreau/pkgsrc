@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.5 2017/04/30 01:21:50 ryoon Exp $
+# $NetBSD: Makefile,v 1.11 2018/12/13 19:52:09 adam Exp $
 
 DISTNAME=		vowpal_wabbit-8.2.0
-PKGREVISION=		4
+PKGREVISION=		9
 CATEGORIES=		math
 MASTER_SITES=		${MASTER_SITE_GITHUB:=JohnLangford/}
 
@@ -22,6 +22,7 @@ GNU_CONFIGURE=		yes
 LIBTOOLIZE=		${PREFIX}/bin/libtoolize
 
 CONFIGURE_ARGS+=	--with-boost=${BUILDLINK_PREFIX.boost-headers}
+LDFLAGS.SunOS+=		-lsocket -lnsl
 
 pre-configure:
 	set -e; \

@@ -1,9 +1,19 @@
-# $NetBSD: subst.mk,v 1.55 2016/01/31 17:27:41 rillig Exp $
+# $NetBSD: subst.mk,v 1.60 2019/04/28 12:31:15 rillig Exp $
 #
-# This Makefile fragment implements a general text replacement facility.
-# Package makefiles define a ``class'', for each of which a particular
-# substitution description can be defined.  For each class of files, a
-# target subst-<class> is created to perform the text replacement.
+# The subst framework replaces text in one or more files in the WRKSRC
+# directory. Packages can define several ``classes'' of replacements.
+# Each such class defines:
+#
+#	- in which stage of the build process the replacement happens
+#	- which files are affected by the replacement
+#	- which text or pattern is replaced by which replacement text
+#
+# A typical example is:
+#
+#	SUBST_CLASSES+=		prefix
+#	SUBST_STAGE.prefix=	pre-configure
+#	SUBST_FILES.prefix=	./configure doc/*.html
+#	SUBST_SED.prefix=	-e 's,/usr/local,${PREFIX},g'
 #
 # Package-settable variables:
 #
@@ -29,12 +39,12 @@
 #
 # SUBST_VARS.<class>
 #	List of variables that are substituted whenever they appear in
-#	the form @VARNAME@. This is basically a short-cut for
+#	the form @VARNAME@. This is basically a shortcut for
 #
 #		-e 's,@VARNAME@,${VARNAME},g'
 #
-#	also taking care of (most) quoting issues. You can use both
-#	SUBST_SED and SUBST_VARS in a single class.
+#	that even works when ${VARNAME} contains arbitrary characters.
+#	Both SUBST_SED and SUBST_VARS can be used in a single class.
 #
 # SUBST_FILTER_CMD.<class>
 #	Filter used to perform the actual substitution on the specified
@@ -44,6 +54,10 @@
 #	By default, each file is checked whether it really is a text file
 #	before any substitutions are done to it. Since that test is not
 #	perfect, it can be disabled by setting this variable to "yes".
+#
+# SUBST_SHOW_DIFF.<class>
+#	During development of a package, this can be set to "yes" to see
+#	the actual changes as a unified diff.
 #
 # See also:
 #	PLIST_SUBST
@@ -59,6 +73,8 @@ _PKG_VARS.subst=	SUBST_CLASSES
 _PKG_VARS.subst+=	${pv}.${c}
 .  endfor
 .endfor
+_SORTED_VARS.subst=	SUBST_CLASSES SUBST_FILES.* SUBST_VARS.*
+_LISTED_VARS.subst=	SUBST_SED.* SUBST_FILTER_CMD.*
 
 ECHO_SUBST_MSG?=	${STEP_MSG}
 
@@ -78,8 +94,11 @@ SUBST_FILTER_CMD.${_class_}?=	${SED} ${SUBST_SED.${_class_}}
 SUBST_VARS.${_class_}?=		# none
 SUBST_MESSAGE.${_class_}?=	Substituting "${_class_}" in ${SUBST_FILES.${_class_}}
 .  for v in ${SUBST_VARS.${_class_}}
-SUBST_FILTER_CMD.${_class_} +=	-e s,@${v}@,${${v}:S|\\|\\\\|gW:S|,|\\,|gW:S|&|\\\&|gW:Q},g
+SUBST_FILTER_CMD.${_class_}+=	-e s,@${v:C|[^A-Za-z0-9_]|\\\\&|gW:Q}@,${${v}:S|\\|\\\\|gW:S|,|\\,|gW:S|&|\\\&|gW:S|${.newline}|\\${.newline}|gW:Q},g
 .  endfor
+.  if !empty(SUBST_SHOW_DIFF.${_class_}:Uno:M[Yy][Ee][Ss])
+_SUBST_KEEP.${_class_}?=	${DIFF} -u "$$file" "$$tmpfile" || true
+.  endif
 _SUBST_KEEP.${_class_}?=	${DO_NADA}
 SUBST_SKIP_TEXT_CHECK.${_class_}?=	no
 

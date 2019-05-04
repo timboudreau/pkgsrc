@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.37 2017/05/19 13:18:18 prlw1 Exp $
+# $NetBSD: options.mk,v 1.39 2018/01/16 07:48:47 maya Exp $
 
 # Recommended package options for various setups:
 #
@@ -59,7 +59,7 @@ CONFIGURE_ARGS+=	--with-acl-support
 ###
 PLIST_VARS+=		cups
 .if !empty(PKG_OPTIONS:Mcups)
-.  include "../../print/cups/buildlink3.mk"
+.  include "../../print/cups-base/buildlink3.mk"
 CONFIGURE_ARGS+=	--enable-cups
 PLIST.cups=		yes
 INSTALLATION_DIRS+=	libexec/cups/backend
@@ -117,6 +117,9 @@ samba-pam-smbpass-install:
 		${INSTALL_DATA} $${f} \
 			${DESTDIR}${PREFIX}/${EGDIR}/pam_smbpass/$${f};	\
 	done
+.else
+CONFIGURE_ARGS+=	--without-pam
+CONFIGURE_ARGS+=	--without-pam_smbpass
 .endif
 
 ###

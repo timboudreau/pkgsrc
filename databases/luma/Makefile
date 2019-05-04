@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.41 2017/01/01 14:43:26 wiz Exp $
+# $NetBSD: Makefile,v 1.46 2019/04/26 13:13:46 maya Exp $
 
 DISTNAME=	luma-3.0.7
+PKGREVISION=	1
 CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=luma/}
 EXTRACT_SUFX=	.zip
@@ -10,10 +11,12 @@ HOMEPAGE=	http://luma.sourceforge.net/
 COMMENT=	LDAP browser
 LICENSE=	gnu-gpl-v2
 
+DEPENDS+=	${PYPKGPREFIX}-ldap-[0-9]*:../../databases/py-ldap
+
 REPLACE_PYTHON=		luma/luma.py
 INSTALLATION_DIRS=	${PKGMANDIR}/man1 ${PYSITELIB}/luma/plugins/browser
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-qt3-base, py-ldap
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-ldap
 
 SUBST_CLASSES+=		luma
 SUBST_STAGE.luma=	pre-configure
@@ -39,7 +42,6 @@ post-install:
 	${MV} ${DESTDIR}${PREFIX}/share/man/man1/luma.1.gz ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1
 	${CP} -R ${WRKSRC}/luma/plugins/browser/templates ${DESTDIR}${PREFIX}/${PYSITELIB}/luma/plugins/browser/templates
 
-.include "../../databases/py-ldap/buildlink3.mk"
 .include "../../lang/python/application.mk"
 .include "../../lang/python/distutils.mk"
 .include "../../x11/py-qt4/buildlink3.mk"

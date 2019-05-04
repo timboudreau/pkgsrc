@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.3 2015/11/03 03:28:43 agc Exp $
+$NetBSD: distinfo,v 1.7 2018/05/02 12:03:08 wiz Exp $
 
-SHA1 (Safe-Isa-1.000005.tar.gz) = a13a97faf7c58500b8efcbcddb27fdd42e4aeac7
-RMD160 (Safe-Isa-1.000005.tar.gz) = 31aeec8d10d69abea008234d9578f383cb64e6d7
-SHA512 (Safe-Isa-1.000005.tar.gz) = 5b3fc6503dc85eb20306af5eb5b10d36a1e0d1e7cd2ff0ee361857d581e8550a194647bdbbb7fedb40b808f36afc004c51e934b62616e73ac282562dda76308e
-Size (Safe-Isa-1.000005.tar.gz) = 5311 bytes
+SHA1 (Safe-Isa-1.000010.tar.gz) = 34422776da303102f3dc5f585329234998b7a631
+RMD160 (Safe-Isa-1.000010.tar.gz) = cb2810b7e5fa70468f8de6fbf5284d7422b7770c
+SHA512 (Safe-Isa-1.000010.tar.gz) = 121288c7c59d97f4e48c1e50795d835cac0638a1edb1116876813cc2fe955efced9916222f6b16e4c1dbd5149c9d68c19bc77584f999c411e4c22e2f28ea1838
+Size (Safe-Isa-1.000010.tar.gz) = 6546 bytes

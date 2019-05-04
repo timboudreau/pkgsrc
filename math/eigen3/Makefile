@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.8 2016/09/13 14:57:39 prlw1 Exp $
+# $NetBSD: Makefile,v 1.10 2019/03/09 14:14:39 wen Exp $
 
-DISTNAME=	3.2.9
+DISTNAME=	3.3.7
 PKGNAME=	eigen3-${DISTNAME}
 CATEGORIES=	math
 MASTER_SITES=   http://bitbucket.org/eigen/eigen/get/
@@ -16,7 +16,10 @@ USE_LANGUAGES+= c c++
 USE_CMAKE= yes
 CMAKE_ARG_PATH= ..
 CONFIGURE_DIRS= _build
-WRKSRC=		${WRKDIR}/eigen-eigen-dc6cfdf9bcec
+WRKSRC=		${WRKDIR}/eigen-eigen-323c052e1731
+
+CMAKE_ARGS+=	-DCMAKEPACKAGE_INSTALL_DIR=${PREFIX}/lib/cmake/eigen3
+CMAKE_ARGS+=	-DPKGCONFIG_INSTALL_DIR=${PREFIX}/lib/pkgconfig
 
 PKGCONFIG_OVERRIDE+=    eigen.pc.in
 

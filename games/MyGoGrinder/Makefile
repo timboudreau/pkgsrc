@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.8 2015/02/21 08:10:13 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2018/06/15 09:18:55 wiz Exp $
 
-DISTNAME=	MyGoGrinder-2.3.0
+DISTNAME=	MyGoGrinder-2.3.1
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mygogrinder/}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/mygogrinder/
+HOMEPAGE=	https://sourceforge.net/projects/mygogrinder/
 COMMENT=	Program to solve Go (Weiqi, Baduk) problems
 LICENSE=	gnu-gpl-v2
 
 WRKSRC=		${WRKDIR}/MyGoGrinder
 USE_LANGUAGES=	# none
 
-USE_JAVA=       run
-USE_JAVA2=      yes
+USE_JAVA=	run
+USE_JAVA2=	yes
 USE_TOOLS+=	pax
 
 INSTALLATION_DIRS+=	bin

@@ -1,37 +1,43 @@
-# $NetBSD: Makefile,v 1.14 2016/07/09 06:38:10 wiz Exp $
+# $NetBSD: Makefile,v 1.16 2018/11/20 17:30:47 maya Exp $
 
-DISTNAME=	luaposix-release-v31
-PKGNAME=	${DISTNAME:S/lua/${LUA_PKGPREFIX}-/:S/release-v//}
-PKGREVISION=	6
+DISTNAME=	luaposix-34.0.4
+PKGNAME=	${DISTNAME:S/lua/${LUA_PKGPREFIX}-/}
+PKGREVISION=	1
 CATEGORIES=	devel
-MASTER_SITES=	-https://github.com/luaposix/luaposix/archive/release-v31.tar.gz
+MASTER_SITES=	${MASTER_SITE_GITHUB:=luaposix/}
+GITHUB_PROJECT=	luaposix
+GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	ryoon@NetBSD.org
 HOMEPAGE=	https://github.com/luaposix/luaposix
-COMMENT=	POSIX library (including curses) for lua
+COMMENT=	POSIX library for Lua language
 LICENSE=	mit
 
-LUA_VERSIONS_INCOMPATIBLE=	53
-
-GNU_CONFIGURE=	yes
 USE_LANGUAGES=	c c99
-USE_TOOLS+=	perl:build
-USE_LIBTOOL=	yes
-
-GNU_CONFIGURE_LIBDIR=	${PREFIX}/${LUA_CDIR}
-CONFIGURE_ARGS+=	--docdir=${PREFIX}/${LUA_DOCDIR}
-CONFIGURE_ARGS+=	--datadir=${PREFIX}/${LUA_LDIR}
 
 INSTALLATION_DIRS+=	${LUA_LDIR} ${LUA_CDIR}
 
 .include "../../lang/lua/luaversion.mk"
 
+DEPENDS+=	${LUA_PKGPREFIX}-std-normalize-[0-9]*:../../devel/lua-std-normalize
+DEPENDS+=	${LUA_PKGPREFIX}-std-_debug-[0-9]*:../../devel/lua-std-_debug
 .if ${LUA_PKGPREFIX} == "lua51"
-DEPENDS+=	lua51-BitOp-[0-9]*:../../devel/lua-BitOp
+DEPENDS+=	lua51-bitlib-[0-9]*:../../devel/lua-bitlib
 .endif
 
-post-patch:
-	${TOUCH} ${WRKSRC}/configure ${WRKSRC}/aclocal.m4 ${WRKSRC}/Makefile.in
+LIBFLAG+=	${LDFLAGS} -shared -fPIC
+
+do-build:
+	cd ${WRKSRC} && \
+		env ${MAKE_ENV} \
+		${LUA_INTERPRETER} ./build-aux/luke LIBFLAG=${LIBFLAG:Q}
+
+do-install:
+	cd ${WRKSRC} && \
+		env ${MAKE_ENV} \
+		${LUA_INTERPRETER} ./build-aux/luke \
+			PREFIX=${DESTDIR}${PREFIX} \
+			install
 
 .include "../../lang/lua/module.mk"
 .include "../../lang/lua/tool.mk"

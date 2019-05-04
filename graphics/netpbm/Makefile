@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.212 2017/05/24 16:10:24 jperkin Exp $
+# $NetBSD: Makefile,v 1.219 2018/08/22 09:45:14 wiz Exp $
 
-DISTNAME=	netpbm-10.77.02
+DISTNAME=	netpbm-10.79.04
+PKGREVISION=	1
 CATEGORIES=	graphics
 MASTER_SITES=	#
 # manually created from svn checkout of
@@ -11,7 +12,7 @@ MASTER_SITES=	#
 # svn checkout http://svn.code.sf.net/p/netpbm/code/userguide netpbm-userguide
 # cd netpbm-userguide && for i in *.html; do python2.7 ../netpbm/buildtools/makeman $i; done && cd ..
 # tar -cvzf /archive/distfiles/netpbm-docs-r${SVN_REVISION}.tar.gz netpbm-userguide/*.[0-9]
-DISTFILES=	${DISTNAME}${EXTRACT_SUFX} netpbm-docs-r2897${EXTRACT_SUFX}
+DISTFILES=	${DISTNAME}${EXTRACT_SUFX} netpbm-docs-r3052${EXTRACT_SUFX}
 
 MAINTAINER=	adam@NetBSD.org
 HOMEPAGE=	http://netpbm.sourceforge.net/
@@ -23,8 +24,8 @@ USE_FEATURES=	snprintf
 
 INSTALL_TARGET=	install-dev install-run
 MAKE_ENV+=	INSTALL=${INSTALL:Q} STRIPFLAG=${_STRIPFLAG_INSTALL:Q} \
-		pkgdir=${STAGEDIR:Q} MACHINE=${MACHINE:Q}
-MAKE_FLAGS+=	PKGMANDIR=${PKGMANDIR:Q}
+		pkgdir=${STAGEDIR} MACHINE=${MACHINE:Q}
+MAKE_FLAGS+=	PKGMANDIR=${PKGMANDIR}
 MAKE_FLAGS+=	CFLAGS_FOR_BUILD=${CFLAGS:Q}
 MAKE_FLAGS+=	LDFLAGS_FOR_BUILD=${LDFLAGS:Q}
 MAKE_FILE=	GNUmakefile
@@ -36,13 +37,14 @@ REPLACE_PERL+=	editor/ppmquant
 REPLACE_PERL+=	editor/ppmshadow
 REPLACE_PERL+=	generator/ppmrainbow
 REPLACE_PERL+=	manweb
+REPLACE_SH+=	buildtools/stamp-date
 STAGEDIR=	${WRKDIR}/staging
 WRKSRC=		${WRKDIR}/netpbm
 
 WRAPPER_REORDER_CMDS+=	reorder:l:rle:netpbm
 
 SUBST_CLASSES+=		rgb_txt
-SUBST_STAGE.rgb_txt=	post-patch
+SUBST_STAGE.rgb_txt=	pre-configure
 SUBST_MESSAGE.rgb_txt=	Configure RGB_TXT
 SUBST_FILES.rgb_txt=	config.mk
 SUBST_SED.rgb_txt+=	-e 's,/usr/share/netpbm/rgb.txt,${PREFIX}/share/netpbm/rgb.txt,'
@@ -69,7 +71,8 @@ MAKE_FLAGS+=	NETWORKLD="-lsocket -lresolv"
 .include "../../mk/compiler.mk"
 
 # Ridiculous but they hardcode it in every file so we have no choice.
-.if ${OPSYS} == "SunOS" && !empty(CC_VERSION:Mgcc-[7-9]*)
+.if ${OPSYS} == "SunOS" && \
+    (!empty(CC_VERSION:Mgcc-[6-9]*) || !empty(PKGSRC_COMPILER:Mclang))
 SUBST_CLASSES+=		xopen
 SUBST_STAGE.xopen=	pre-configure
 SUBST_FILES.xopen=	*.c */*.c */*/*.c */*/*/*.c */*/*/*/*.c */*/*/*/*/*.c

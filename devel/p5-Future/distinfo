@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.8 2017/07/10 00:13:43 wen Exp $
+$NetBSD: distinfo,v 1.11 2018/12/01 03:03:39 wen Exp $
 
-SHA1 (Future-0.35.tar.gz) = 8a6bcc5cf1d383d64a4eeb78b4b0c1fe0a477d74
-RMD160 (Future-0.35.tar.gz) = a9ace4ae16f755966215067a85da230033bd78bd
-SHA512 (Future-0.35.tar.gz) = f4d6f8a8b186e1b0f6ca22ccdf0ad06b4ea47f915a03e4d29546ed45e4eced9b81a5bf02b122f334cf4ab11ee5e94843760a542923911ec2c388654ee3dd4526
-Size (Future-0.35.tar.gz) = 84461 bytes
+SHA1 (Future-0.39.tar.gz) = a186b07984553a5c124f23625f1e668dddf75e72
+RMD160 (Future-0.39.tar.gz) = 71e4b0f8d20bbe35fe9cd9e791acc357228a9025
+SHA512 (Future-0.39.tar.gz) = c1813bf6411e10abd0087e3458888245f024e7602c2c61e3199fe1acbb549d0443d7f9d613907b1b961f26f443bdc1ef859a9cd4504e606c605d261d066155b3
+Size (Future-0.39.tar.gz) = 88840 bytes

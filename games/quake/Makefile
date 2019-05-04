@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.50 2017/01/19 18:52:10 agc Exp $
+# $NetBSD: Makefile,v 1.53 2018/03/07 11:57:30 wiz Exp $
 
 DISTNAME=	q1source
 PKGNAME=	quake-2.30
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	games x11
 MASTER_SITES=	ftp://ftp.fu-berlin.de/pc/msdos/games/idgames/idstuff/source/
 MASTER_SITES+=	ftp://ftp.idsoftware.com/idstuff/source/
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.idsoftware.com/
+HOMEPAGE=	https://www.idsoftware.com/
 COMMENT=	Legendary first person shoot'em up game
 
 DEPENDS+=	quakedata-[0-9]*:../../games/quakedata
@@ -18,11 +18,11 @@ ONLY_FOR_PLATFORM=	*-*-i386
 
 WRKSRC=		${WRKDIR}
 USE_TOOLS+=	gmake
-MAKE_ENV+=	MAINDIR=${WRKSRC:Q}
+MAKE_ENV+=	MAINDIR=${WRKSRC}
 
 
 MAKE_ENV+=	MESA_DIR=${BUILDLINK_PREFIX.Mesa}
-MAKE_ENV+=	X11BASE=${X11BASE:Q}
+MAKE_ENV+=	X11BASE=${X11BASE}
 
 LDFLAGS+=	${LIBOSSAUDIO}
 
@@ -56,6 +56,6 @@ do-install:
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../x11/libXxf86dga/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/oss.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

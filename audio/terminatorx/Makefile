@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.46 2017/02/12 06:25:06 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.53 2018/11/14 22:21:06 kleink Exp $
 
 DISTNAME=	terminatorX-3.82
 PKGNAME=	${DISTNAME:S/X/x/}
-PKGREVISION=	30
+PKGREVISION=	35
 CATEGORIES=	audio
 MASTER_SITES=	http://terminatorx.org/dist/
 EXTRACT_SUFX=	.tar.bz2
@@ -17,7 +16,7 @@ DEPENDS+=	mpg123-[0-9]*:../../audio/mpg123
 DEPENDS+=	sox-[0-9]*:../../audio/sox
 DEPENDS+=	vorbis-tools-[0-9]*:../../audio/vorbis-tools
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
 USE_TOOLS+=		pkg-config
 GNU_CONFIGURE=		yes
@@ -26,7 +25,7 @@ LIBS+=			${LIBOSSAUDIO}
 CONFIGURE_ARGS+=	--disable-alsa
 
 SUBST_CLASSES+=		oss
-SUBST_STAGE.oss=	post-patch
+SUBST_STAGE.oss=	pre-configure
 SUBST_FILES.oss=	src/tX_global.c
 SUBST_SED.oss=		-e "s,/dev/dsp,${DEVOSSAUDIO},g"
 SUBST_MESSAGE.oss=	Fixing hardcoded audio device.
@@ -39,7 +38,7 @@ SUBST_MESSAGE.oss=	Fixing hardcoded audio device.
 .include "../../mk/omf-scrollkeeper.mk"
 .include "../../x11/gtk2/buildlink3.mk"
 .include "../../x11/libXxf86dga/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 
 .include "../../mk/oss.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

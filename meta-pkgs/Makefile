@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.95 2017/06/22 09:44:29 markd Exp $
+# $NetBSD: Makefile,v 1.101 2019/01/14 13:09:05 taca Exp $
 #
 
 COMMENT=	Collections of other packages
@@ -21,8 +21,8 @@ SUBDIR+=	gnome-platform
 SUBDIR+=	gnuradio
 SUBDIR+=	gnustep
 SUBDIR+=	gstreamer0.10-plugins
+#SUBDIR+=	kde	# currently just Makefile fragments
 SUBDIR+=	kde-telepathy
-SUBDIR+=	kde3
 SUBDIR+=	kde4
 SUBDIR+=	kf5
 SUBDIR+=	libdbusmenu
@@ -43,13 +43,15 @@ SUBDIR+=	netbsd-doc-print
 SUBDIR+=	netbsd-www
 SUBDIR+=	p5-gnome-bindings
 SUBDIR+=	php56-extensions
-SUBDIR+=	php70-extensions
 SUBDIR+=	php71-extensions
+SUBDIR+=	php72-extensions
+SUBDIR+=	php73-extensions
 SUBDIR+=	pkg_developer
 SUBDIR+=	pkgsrc-guide-tools
 SUBDIR+=	pulseaudio-tools
 SUBDIR+=	py-gnome-bindings
 SUBDIR+=	py-tryton-platform
+SUBDIR+=	qmail-server
 SUBDIR+=	ruby-gnome2
 SUBDIR+=	ruby-redmine-plugins
 SUBDIR+=	ruby-redmine-themes

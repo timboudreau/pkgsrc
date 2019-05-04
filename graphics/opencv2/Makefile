@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.10 2017/05/03 08:38:43 jperkin Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/25 07:32:59 maya Exp $
 
 DISTNAME=	opencv-2.4.11
-PKGREVISION=	6
+PKGREVISION=	13
 CATEGORIES=	graphics devel
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=opencvlibrary/}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	anthony.mallet@laas.fr
-HOMEPAGE=	http://code.opencv.org/projects/OpenCV/wiki/WikiStart
+HOMEPAGE=	https://opencv.org/
 COMMENT=	Library for computer vision problems
 LICENSE=	modified-bsd
 
@@ -36,7 +36,7 @@ CHECK_WRKREF_SKIP=	${PREFIX}/lib/libopencv_core.*
 .include "options.mk"
 
 CMAKE_ARGS+=		-DZLIB_ROOT=${BUILDLINK_PREFIX.zlib}
-CMAKE_ARGS.SunOS+=	-DENABLE_PRECOMPILED_HEADERS=NO
+CMAKE_ARGS+=		-DENABLE_PRECOMPILED_HEADERS=NO
 
 PLIST_VARS+=	opencl
 

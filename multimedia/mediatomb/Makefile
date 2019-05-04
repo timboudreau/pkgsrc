@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.53 2017/04/30 01:21:55 ryoon Exp $
+# $NetBSD: Makefile,v 1.65 2019/04/03 00:32:55 ryoon Exp $
 
 DISTNAME=	mediatomb-0.12.1
-PKGREVISION=	32
+PKGREVISION=	43
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mediatomb/}
 
@@ -39,7 +39,7 @@ MEDIATOMB_HOME=		${PKG_HOME.${MEDIATOMB_USER}}
 SUBST_CLASSES+=		config
 SUBST_FILES.config=	config.xml mediatomb.desktop
 SUBST_VARS.config=	MEDIATOMB_HOME PREFIX OPSYS
-SUBST_STAGE.config=	post-patch
+SUBST_STAGE.config=	pre-configure
 
 INSTALLATION_DIRS+=	share/applications share/examples/mediatomb
 

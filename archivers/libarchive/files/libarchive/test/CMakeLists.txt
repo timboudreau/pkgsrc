@@ -69,6 +69,7 @@ IF(ENABLE_TEST)
     test_compat_uudecode_large.c
     test_compat_xz.c
     test_compat_zip.c
+    test_compat_zstd.c
     test_empty_write.c
     test_entry.c
     test_entry_strmode.c
@@ -182,6 +183,7 @@ IF(ENABLE_TEST)
     test_read_format_zip_winzip_aes.c
     test_read_format_zip_winzip_aes_large.c
     test_read_format_zip_zip64.c
+    test_read_format_zip_with_invalid_traditional_eocd.c
     test_read_large.c
     test_read_pax_schily_xattr.c
     test_read_pax_truncated.c
@@ -225,6 +227,7 @@ IF(ENABLE_TEST)
     test_write_filter_program.c
     test_write_filter_uuencode.c
     test_write_filter_xz.c
+    test_write_filter_zstd.c
     test_write_format_7zip.c
     test_write_format_7zip_empty.c
     test_write_format_7zip_large.c
@@ -270,6 +273,7 @@ IF(ENABLE_TEST)
     test_write_format_zip_zip64.c
     test_write_open_memory.c
     test_write_read_format_zip.c
+    test_xattr_platform.c
     test_zip_filename_encoding.c
   )
 

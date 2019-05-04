@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.1 2015/04/19 23:23:10 rodent Exp $
+# $NetBSD: Makefile,v 1.4 2019/04/25 07:33:25 maya Exp $
 
-DISTNAME=	sord-0.12.2
+DISTNAME=	sord-0.16.2
+PKGREVISION=	1
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.drobilla.net/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://drobilla.net/software/sord/
 COMMENT=	Lightweight C library for storing RDF data in memory
 LICENSE=	isc
@@ -31,7 +32,7 @@ do-install:
 	cd ${WRKSRC} && ${SETENV} ${INSTALL_ENV} ${PYTHONBIN} ./waf install
 
 .include "../../devel/pcre/buildlink3.mk"
-BUILDLINK_API_DEPENDS.serd+=	serd>=0.18.0
+BUILDLINK_API_DEPENDS.serd+=	serd>=0.30.0
 .include "../../textproc/serd/buildlink3.mk"
 .include "../../lang/python/application.mk"
 .include "../../mk/bsd.pkg.mk"

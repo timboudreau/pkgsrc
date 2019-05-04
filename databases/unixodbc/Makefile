@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.37 2016/02/14 10:19:22 jperkin Exp $
+# $NetBSD: Makefile,v 1.40 2018/08/14 13:04:24 adam Exp $
 
-DISTNAME=	unixODBC-2.3.4
+DISTNAME=	unixODBC-2.3.7
 PKGNAME=	${DISTNAME:S/ODBC/odbc/}
 CATEGORIES=	databases
 MASTER_SITES=	ftp://ftp.unixodbc.org/pub/unixODBC/
@@ -13,13 +13,16 @@ LICENSE=	gnu-lgpl-v2.1
 CONFLICTS+=		iodbc<3.52.7nb2
 
 USE_LIBTOOL=		yes
-USE_TOOLS+=		flex yacc # to get libodbctxt.la
+USE_TOOLS+=		gmake flex yacc # to get libodbctxt.la
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 CONFIGURE_ARGS+=	--disable-gui
 CONFIGURE_ARGS+=	--enable-driverc
 CONFIGURE_ARGS+=	--enable-drivers
 CONFIGURE_ARGS+=	--enable-threads
+PKGCONFIG_OVERRIDE+=	DriverManager/odbc.pc.in
+PKGCONFIG_OVERRIDE+=	cur/odbccr.pc.in
+PKGCONFIG_OVERRIDE+=	odbcinst/odbcinst.pc.in
 PTHREAD_OPTS+=		require
 
 .include "../../mk/pthread.buildlink3.mk"

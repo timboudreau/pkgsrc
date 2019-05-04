@@ -1,4 +1,4 @@
-$NetBSD: patch-gio_giomodule.c,v 1.1 2017/07/11 11:52:42 jperkin Exp $
+$NetBSD: patch-gio_giomodule.c,v 1.3 2018/05/21 08:39:38 jperkin Exp $
 
 Re-enable gdesktopappinfo on Darwin.
 

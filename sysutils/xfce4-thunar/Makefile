@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.49 2017/06/23 16:39:54 youri Exp $
+# $NetBSD: Makefile,v 1.60 2019/02/17 15:58:54 youri Exp $
 
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-VERSION=	1.6.11
+VERSION=	1.8.4
 DISTNAME=	Thunar-${VERSION}
 PKGNAME=	xfce4-thunar-${VERSION}
 CATEGORIES=	sysutils
-MASTER_SITES=	http://archive.xfce.org/src/xfce/thunar/1.6/
+MASTER_SITES=	http://archive.xfce.org/src/xfce/thunar/1.8/
 
 HOMEPAGE=	http://docs.xfce.org/xfce/thunar/start
 COMMENT=	Xfce file manager
 
-PKGCONFIG_OVERRIDE+=	thunarx/thunarx-2.pc.in
+PKGCONFIG_OVERRIDE+=	thunarx/thunarx-3.pc.in
 
 PKG_SYSCONFSUBDIR=	xdg/Thunar
 EGDIR=			${XFCE4_EGBASE}/Thunar
@@ -26,8 +26,6 @@ CONF_FILES=	${EGDIR}/uca.xml ${PKG_SYSCONFDIR}/uca.xml
 .include "../../sysutils/desktop-file-utils/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../sysutils/libnotify/buildlink3.mk"
-.include "../../x11/gtk2/buildlink3.mk"
-.include "../../x11/libxfce4util/buildlink3.mk"
 .include "../../x11/libxfce4ui/buildlink3.mk"
 .include "../../x11/xfce4-exo/buildlink3.mk"
 .include "../../x11/xfce4-panel/buildlink3.mk"

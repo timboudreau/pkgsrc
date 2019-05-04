@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.71 2017/06/05 14:22:16 ryoon Exp $
+# $NetBSD: Makefile,v 1.75 2018/11/24 03:30:00 wen Exp $
 
-DISTNAME=	Archive-Tar-2.24
+DISTNAME=	Archive-Tar-2.32
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	1
 CATEGORIES=	archivers perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Archive/}
 

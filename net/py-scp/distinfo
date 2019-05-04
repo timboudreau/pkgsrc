@@ -1,5 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/06/07 09:43:15 he Exp $
+$NetBSD: distinfo,v 1.6 2019/04/09 10:53:29 adam Exp $
 
-SHA1 (scp-0.10.2.tar.gz) = 1dad2243baaef07ed6d29b1e7db141b36cc57d08
-RMD160 (scp-0.10.2.tar.gz) = 3fd7533adab08f4e1ffe4f7300f06e695a4c9b0e
-Size (scp-0.10.2.tar.gz) = 6230 bytes
+SHA1 (scp-0.13.2.tar.gz) = ebdb55c819e75473d8782ab49235ff141d6c94da
+RMD160 (scp-0.13.2.tar.gz) = cf960d74d8d73f98280ab2592736936ceca218e5
+SHA512 (scp-0.13.2.tar.gz) = 76c9f80efd95dc3f41013c133c34e0ba1ec988c6ca5ba8339cc7b393c2c47c866a373d85281cd4987f9d0c33512693c20788bb201244477050c3c61179cb47c8
+Size (scp-0.13.2.tar.gz) = 11517 bytes

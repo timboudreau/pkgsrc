@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.56 2017/02/12 06:25:56 ryoon Exp $
+# $NetBSD: Makefile,v 1.65 2018/11/14 22:22:20 kleink Exp $
 
 DISTNAME=	xpp-1.5
-PKGREVISION=	17
+PKGREVISION=	25
 CATEGORIES=	print x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=cups/}
 
@@ -22,6 +22,6 @@ INSTALLATION_DIRS+=	${DOCDIR}
 post-install:
 	cd ${WRKSRC} && ${INSTALL_DATA} LICENSE README ${DESTDIR}${DOCDIR}
 
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../x11/fltk/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

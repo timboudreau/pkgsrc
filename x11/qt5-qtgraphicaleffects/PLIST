@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.1 2013/12/13 14:38:35 ryoon Exp $
+@comment $NetBSD: PLIST,v 1.4 2018/06/19 07:21:24 adam Exp $
 qt5/qml/QtGraphicalEffects/Blend.qml
 qt5/qml/QtGraphicalEffects/BrightnessContrast.qml
 qt5/qml/QtGraphicalEffects/ColorOverlay.qml
@@ -24,12 +24,24 @@ qt5/qml/QtGraphicalEffects/RectangularGlow.qml
 qt5/qml/QtGraphicalEffects/RecursiveBlur.qml
 qt5/qml/QtGraphicalEffects/ThresholdMask.qml
 qt5/qml/QtGraphicalEffects/ZoomBlur.qml
+qt5/qml/QtGraphicalEffects/libqtgraphicaleffectsplugin.so
+qt5/qml/QtGraphicalEffects/plugins.qmltypes
+qt5/qml/QtGraphicalEffects/private/DropShadowBase.qml
+qt5/qml/QtGraphicalEffects/private/DropShadowBase.qmlc
 qt5/qml/QtGraphicalEffects/private/FastGlow.qml
+qt5/qml/QtGraphicalEffects/private/FastGlow.qmlc
 qt5/qml/QtGraphicalEffects/private/FastInnerShadow.qml
+qt5/qml/QtGraphicalEffects/private/FastInnerShadow.qmlc
 qt5/qml/QtGraphicalEffects/private/FastMaskedBlur.qml
+qt5/qml/QtGraphicalEffects/private/FastMaskedBlur.qmlc
 qt5/qml/QtGraphicalEffects/private/GaussianDirectionalBlur.qml
+qt5/qml/QtGraphicalEffects/private/GaussianDirectionalBlur.qmlc
 qt5/qml/QtGraphicalEffects/private/GaussianGlow.qml
+qt5/qml/QtGraphicalEffects/private/GaussianGlow.qmlc
 qt5/qml/QtGraphicalEffects/private/GaussianInnerShadow.qml
+qt5/qml/QtGraphicalEffects/private/GaussianInnerShadow.qmlc
 qt5/qml/QtGraphicalEffects/private/GaussianMaskedBlur.qml
-qt5/qml/QtGraphicalEffects/private/SourceProxy.qml
+qt5/qml/QtGraphicalEffects/private/GaussianMaskedBlur.qmlc
+qt5/qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate.so
+qt5/qml/QtGraphicalEffects/private/qmldir
 qt5/qml/QtGraphicalEffects/qmldir

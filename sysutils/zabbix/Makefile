@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.1 2017/05/21 17:30:03 adam Exp $
+# $NetBSD: Makefile,v 1.24 2019/04/10 17:49:59 jperkin Exp $
 
 .include "Makefile.common"
 
@@ -16,8 +16,11 @@ CONFIGURE_ARGS+=	--with-iconv=${BUILDLINK_PREFIX.iconv}
 CONFIGURE_ARGS+=	--with-jabber
 CONFIGURE_ARGS+=	--with-ldap=${BUILDLINK_PREFIX.openldap-client}
 CONFIGURE_ARGS+=	--with-libcurl
+CONFIGURE_ARGS+=	--with-libevent=${BUILDLINK_PREFIX.libevent}
+CONFIGURE_ARGS+=	--with-libpcre=${BUILDLINK_PREFIX.pcre}
 CONFIGURE_ARGS+=	--with-libxml2
 CONFIGURE_ARGS+=	--with-openssl=${BUILDLINK_PREFIX.openssl}
+CONFIGURE_ARGS+=	--with-zlib=${BUILDLINK_PREFIX.zlib}
 
 EGDIR=		share/examples/zabbix
 CONF_FILES+=	${EGDIR}/zabbix_agentd.conf ${PKG_SYSCONFDIR}/zabbix_agentd.conf
@@ -43,16 +46,25 @@ PKG_GROUPS+=		${ZABBIX_GROUP}
 PKG_USERS+=		${ZABBIX_USER}:${ZABBIX_GROUP}
 PKG_GECOS.${ZABBIX_USER}=Zabbix user
 
+FILES_SUBST+=		ZABBIX_USER=${ZABBIX_USER}
+FILES_SUBST+=		ZABBIX_GROUP=${ZABBIX_GROUP}
+
+SMF_INSTANCES=		agent proxy server
+
 post-install:
 	cd ${WRKSRC}/database/${ZABBIX_DB_TYPE}; \
 		${PAX} -rw . ${DESTDIR}${PREFIX}/share/zabbix/
+	rm ${DESTDIR}${PREFIX}/share/zabbix/Makefile*
 
 .include "options.mk"
 
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../databases/openldap-client/buildlink3.mk"
+.include "../../devel/libevent/buildlink3.mk"
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../textproc/iksemel/buildlink3.mk"
 .include "../../textproc/libxml2/buildlink3.mk"
 .include "../../www/curl/buildlink3.mk"
+.include "../../devel/pcre/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

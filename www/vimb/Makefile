@@ -1,38 +1,36 @@
-# $NetBSD: Makefile,v 1.13 2017/04/22 21:04:03 adam Exp $
+# $NetBSD: Makefile,v 1.30 2019/04/03 00:33:13 ryoon Exp $
 
-DISTNAME=	vimb-2.12
+DISTNAME=	vimb-3.4.0
 PKGREVISION=	1
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_GITHUB:=fanglingsu/}
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://fanglingsu.github.io/vimb/
+HOMEPAGE=	https://fanglingsu.github.io/vimb/
 COMMENT=	Vim-like webkit browser
 LICENSE=	gnu-gpl-v3
 
 USE_TOOLS+=	gmake pkg-config
+USE_LANGUAGES=	c99
 
 CFLAGS.NetBSD+=	-D_NETBSD_SOURCE	# needed for LOCK_* macros in <fcntl.h>
 LDFLAGS.SunOS+=	-lsocket -lnsl
 
 # Bump _XOPEN_SOURCE version to 600 in order to avoid "Compiler or options
-# invalid for pre-UNIX 03 X/Open applications" error on SunOS and correctly
-# define _POSIX_SOURCE
+# invalid for pre-UNIX 03 X/Open applications" error on SunOS
 SUBST_CLASSES+=		configmk
 SUBST_STAGE.configmk=	pre-configure
-SUBST_MESSAGE.configmk=	Bump _XOPEN_SOURCE version and correctly define _POSIX_SOURCE
+SUBST_MESSAGE.configmk=	Bump _XOPEN_SOURCE version
 SUBST_FILES.configmk=	config.mk
 SUBST_SED.configmk+=	-e '/_XOPEN_SOURCE/ s/500/600/'
-SUBST_SED.configmk+=	-e '/_POSIX_SOURCE/ s/-D_POSIX_SOURCE/-D_POSIX_SOURCE=1/'
 
 EGDIR=		${PREFIX}/share/examples/vimb
 
-MAKE_ENV+=	EXAMPLEDIR="${EGDIR}" MANDIR="${PREFIX}/${PKGMANDIR}"
+MAKE_FLAGS+=	EXAMPLEPREFIX="${DESTDIR}${EGDIR}"
+MAKE_FLAGS+=	MANPREFIX="${DESTDIR}${PREFIX}/${PKGMANDIR}"
+MAKE_FLAGS+=	RUNPREFIX="${PREFIX}"
 
-NOT_PAX_MPROTECT_SAFE+=	bin/vimb
-
-.include "../../net/libsoup/buildlink3.mk"
-.include "../../www/webkit24-gtk/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-.include "../../x11/gtk2/buildlink3.mk"
+.include "../../www/webkit-gtk/buildlink3.mk"
+.include "../../x11/gtk3/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

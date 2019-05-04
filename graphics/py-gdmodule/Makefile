@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.12 2017/02/28 15:20:07 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/26 14:12:40 maya Exp $
 
 DISTNAME=	gdmodule-0.59
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	graphics python
 MASTER_SITES=	${MASTER_SITE_GITHUB:=Solomoriah/}
 GITHUB_PROJECT=	gdmodule
@@ -13,7 +13,7 @@ HOMEPAGE=	https://github.com/Solomoriah/gdmodule
 COMMENT=	Python interface to gd graphics library
 LICENSE=	original-bsd
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.59
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.59
 
 SUBST_CLASSES+=		pkgpath
 SUBST_STAGE.pkgpath=	pre-configure

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.1 2017/04/22 17:09:17 taca Exp $
+# $NetBSD: Makefile,v 1.6 2019/04/15 06:11:33 wiz Exp $
 
-DISTNAME=	minima-2.1.1
+DISTNAME=	minima-2.5.0
 PKGNAME=	${RUBY_PKGPREFIX}-jekyll-${DISTNAME}
 CATEGORIES=	www
 
@@ -11,7 +11,11 @@ LICENSE=	mit
 
 #
 # gemspec says dependency, but this package is really part of jekyll.
-#DEPENDS+=	${RUBY_PKGPREFIX}-jekyll>=3.3<4:../../www/ruby-jekyll
+#DEPENDS+=	${RUBY_PKGPREFIX}-jekyll>=3.5<4:../../www/ruby-jekyll
+DEPENDS+=	${RUBY_PKGPREFIX}-jekyll-feed>=0.9<1:../../www/ruby-jekyll-feed
+DEPENDS+=	${RUBY_PKGPREFIX}-jekyll-seo-tag>=2.1<3:../../www/ruby-jekyll-seo-tag
+
+RUBY_VERSIONS_ACCEPTED=	24 25 26
 
 .include "../../lang/ruby/gem.mk"
 .include "../../mk/bsd.pkg.mk"

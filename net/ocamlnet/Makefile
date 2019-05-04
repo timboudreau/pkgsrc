@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.39 2017/07/17 12:30:55 jaapb Exp $
+# $NetBSD: Makefile,v 1.62 2019/04/03 00:33:00 ryoon Exp $
 #
 
-DISTNAME=		ocamlnet-4.1.2
-PKGREVISION=		5
+DISTNAME=		ocamlnet-4.1.6
+PKGREVISION=		9
 CATEGORIES=		net
 MASTER_SITES=		http://download.camlcity.org/download/
 
@@ -30,7 +30,6 @@ OCAML_FINDLIB_DIRS= \
 PLIST_VARS+=		xti
 .if ${OCAML_USE_OPT_COMPILER} == "yes"
 BUILD_TARGET+=		opt
-MAKE_ENV+=		HAVE_SHARED=1
 .endif
 .if ${OPSYS} == "SunOS"
 PLIST.xti=		yes
@@ -38,17 +37,6 @@ OCAML_FINDLIB_DIRS+=	rpc-xti
 .endif
 
 .include "options.mk"
-
-.if !empty(PKG_OPTIONS:Mcmxs)
-post-build:
-	for i in ${OCAML_FINDLIB_DIRS}; do \
-		cd ${WRKSRC}/src/$$i && \
-		for j in *.cmxa; do \
-			k=`echo $$j | sed -e 's/cmxa$$/cmxs$$/'`; \
-			ocamlopt -linkall -shared -o $$k $$j; \
-		done; \
-	done
-.endif
 
 .include "../../devel/pcre-ocaml/buildlink3.mk"
 .include "../../archivers/ocaml-zip/buildlink3.mk"

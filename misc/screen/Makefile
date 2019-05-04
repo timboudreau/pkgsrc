@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.103 2017/07/18 23:02:18 kim Exp $
+# $NetBSD: Makefile,v 1.108 2018/09/13 12:15:14 jperkin Exp $
 
-DISTNAME=	screen-4.6.1
-#PKGREVISION=	1
+DISTNAME=	screen-4.6.2
+PKGREVISION=	1
 CATEGORIES=	misc shells
 MASTER_SITES=	${MASTER_SITE_GNU:=screen/}
 
@@ -26,6 +26,7 @@ PLIST_SUBST+=		DISTNAME=${DISTNAME:Q}
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-sys-screenrc=${PKG_SYSCONFDIR}/screenrc
 CONFIGURE_ARGS+=	--enable-telnet
+CONFIGURE_ARGS+=	--enable-colors256
 
 PKG_SHELL=		bin/screen
 
@@ -38,12 +39,18 @@ SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	etc/etcscreenrc doc/screen.1
 SUBST_SED.paths+=	-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
 SUBST_SED.paths+=	-e 's,@EXAMPLES@,${PREFIX}/share/examples/screen,g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 PLIST_VARS+=		terminfo
 
+.include "../../mk/compiler.mk"
+
 .if ${OPSYS} == "SunOS"
+.  if !empty(PKGSRC_COMPILER:Mclang) || !empty(CC_VERSION:Mgcc-[6-9]*)
+CPPFLAGS+=	-D_XOPEN_SOURCE=600 -D__EXTENSIONS__
+.  else
 CPPFLAGS+=	-D_XOPEN_SOURCE=500 -D__EXTENSIONS__
+.  endif
 .  if ${CURSES_DEFAULT} == "curses"
 INSTALLATION_DIRS+=	share/lib/terminfo
 PLIST.terminfo=		yes

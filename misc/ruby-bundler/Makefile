@@ -1,12 +1,17 @@
-# $NetBSD: Makefile,v 1.25 2017/06/05 14:32:24 taca Exp $
+# $NetBSD: Makefile,v 1.34 2019/04/15 06:11:32 wiz Exp $
 
-DISTNAME=	bundler-1.15.1
+DISTNAME=	bundler-1.17.3
 CATEGORIES=	misc
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://gembundler.com/
+HOMEPAGE=	https://bundler.io/
 COMMENT=	Manage your application's dependencies
 LICENSE=	mit
+
+#
+# Currently, ruby26-base has the same version of bundler.
+#
+RUBY_VERSIONS_ACCEPTED=	24 25
 
 RUBYGEM_OPTIONS+=	--format-executable
 

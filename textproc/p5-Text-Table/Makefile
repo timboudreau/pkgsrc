@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.5 2017/06/05 14:24:52 ryoon Exp $
+# $NetBSD: Makefile,v 1.7 2018/08/22 09:47:02 wiz Exp $
 
-DISTNAME=	Text-Table-1.132
+DISTNAME=	Text-Table-1.133
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	textproc perl5

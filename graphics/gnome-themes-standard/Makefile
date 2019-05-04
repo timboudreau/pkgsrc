@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.6 2017/02/12 06:25:28 ryoon Exp $
+# $NetBSD: Makefile,v 1.12 2018/11/14 22:21:40 kleink Exp $
 
 DISTNAME=	gnome-themes-standard-3.20.2
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	graphics gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-themes-standard/${PKGVERSION_NOREV:R}/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	youri@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Default themes for the GNOME desktop
 LICENSE=	gnu-gpl-v2
 

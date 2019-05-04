@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.28 2017/07/10 00:21:31 maya Exp $
-#
+# $NetBSD: Makefile,v 1.31 2018/08/22 09:45:19 wiz Exp $
 
 PKGNAME=	gcc-aux-${SNAPSHOT}
-PKGREVISION=	1
+PKGREVISION=	3
 DISTNAME=	gcc-${GCC_VERSION}
 CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_GNU:=gcc/gcc-${GCC_VERSION}/}
 DISTFILES=	${DISTNAME}.tar.bz2
 
-MAINTAINER=	draco@marino.st
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.dragonlace.net/
 COMMENT=	GNAT Ada compiler based on GCC ${GCC_BRANCH}
 LICENSE=	gnu-gpl-v3 AND gnu-lgpl-v3

@@ -1,40 +1,32 @@
-# $NetBSD: Makefile,v 1.10 2017/05/03 08:38:43 jperkin Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/25 07:32:59 maya Exp $
 
-DISTNAME=	opencv_contrib-3.2.0
+.include "../../graphics/opencv/Makefile.common"
+
+DISTNAME=	opencv_contrib-${OPENCV_VERSION}
 PKGNAME=	${DISTNAME:S/_contrib/-contrib-face/}
-CATEGORIES=	graphics devel
-MASTER_SITES=	${MASTER_SITE_GITHUB:=Itseez/}
-EXTRACT_SUFX=	.zip
+PKGREVISION=	1
 GITHUB_PROJECT=	opencv_contrib
 
 MAINTAINER=	markd@NetBSD.org
-HOMEPAGE=	http://code.opencv.org/projects/OpenCV/wiki/WikiStart
 COMMENT=	OpenCV face recognition contributed module
-LICENSE=	modified-bsd
 
-DISTFILES=	${DEFAULT_DISTFILES} opencv-${PKGVERSION_NOREV}.zip
+DISTFILES=	${DEFAULT_DISTFILES} opencv-${PKGVERSION_NOREV}${EXTRACT_SUFX}
 
-USE_CMAKE=		yes
-USE_LANGUAGES=		c c++11
-USE_LIBTOOL=		yes
-USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		gmake pkg-config
+# This is ugly, but we shouldn't let optional code download
+# at configure time. Especially when it needs to be patched
+# because of lame coding.
+SUBST_CLASSES+=		tnn
+SUBST_FILES.tnn=	${WRKDIR}/${DISTNAME}/modules/dnn_modern/CMakeLists.txt
+SUBST_MESSAGE.tnn=	Disabling build-time fetch
+SUBST_STAGE.tnn=	pre-configure
+SUBST_SED.tnn=		-e 's,3.2,999,'
 
-INSTALL_DIRS=	modules/face
+INSTALL_DIRS=	build/modules/face build/modules/plot build/modules/tracking
 
-WRKSRC=		${WRKDIR}/opencv-${PKGVERSION_NOREV}/
+WRKSRC=		${WRKDIR}/opencv-${PKGVERSION_NOREV}
 
-PATCHDIR=	${.CURDIR}/../../graphics/opencv/patches
-
-CMAKE_ARGS+=	-D WITH_FFMPEG=OFF
-CMAKE_ARGS+=	-D BUILD_DOCS=OFF
-
-# jasper uses SIZE_MAX and friends in its headers.
-CXXFLAGS+=		-D__STDC_LIMIT_MACROS
-
-CMAKE_ARGS+=		-DZLIB_ROOT=${BUILDLINK_PREFIX.zlib}
-CMAKE_ARGS.SunOS+=	-DENABLE_PRECOMPILED_HEADERS=NO
-CMAKE_ARGS+=		-DWITH_EIGEN=NO
+CMAKE_ARGS+=	-DBUILD_DOCS=OFF
+CMAKE_ARGS+=	-DWITH_FFMPEG=OFF
 
 CMAKE_ARGS+=		-DOPENCV_EXTRA_MODULES_PATH=${WRKDIR}/${DISTNAME}/modules
 CMAKE_ARGS+=		-DBUILD_opencv_adas=OFF
@@ -44,7 +36,10 @@ CMAKE_ARGS+=		-DBUILD_opencv_ccalib=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_contrib_world=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_cvv=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_datasets=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_dnn_objdetect=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_hdf=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_hfs=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_img_hash=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_latentsvm=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_line_descriptor=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_matlab=OFF
@@ -54,34 +49,33 @@ CMAKE_ARGS+=		-DBUILD_opencv_rgbd=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_saliency=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_surface_matching=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_text=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_tracking=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_xfeatures2d=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_ximgproc=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_xobjdetect=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_xphoto=OFF
 
+CMAKE_ARGS+=		-DBUILD_opencv_dnn=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_flann=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_photo=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_video=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_videoio=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_highgui=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_ml=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_python2=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_python3=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_stitching=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_superres=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_ts=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_features2d=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_calib3d=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_stitching=OFF
+CMAKE_ARGS+=		-DBUILD_opencv_videoio=OFF
 CMAKE_ARGS+=		-DBUILD_opencv_videostab=OFF
-CMAKE_ARGS+=		-DBUILD_opencv_python2=OFF
 
-CONFIGURE_ENV+=		MACHINE_ARCH=${MACHINE_ARCH}
+# At least as of 3.4.6, these are dependencies of the 'face' module
+# and need to be built and installed ('photo' and 'video' are
+# part of the main opencv package already
+#CMAKE_ARGS+=		-DBUILD_opencv_calib3d=OFF
+#CMAKE_ARGS+=		-DBUILD_opencv_features2d=OFF
+#CMAKE_ARGS+=		-DBUILD_opencv_photo=OFF
+#CMAKE_ARGS+=		-DBUILD_opencv_plot=OFF
+#CMAKE_ARGS+=		-DBUILD_opencv_tracking=OFF
+#CMAKE_ARGS+=		-DBUILD_opencv_video=OFF
 
-.include "../../devel/zlib/buildlink3.mk"
-.include "../../graphics/jasper/buildlink3.mk"
-.include "../../graphics/libwebp/buildlink3.mk"
 BUILDLINK_API_DEPENDS.opencv+=	opencv>=${PKGVERSION_NOREV}
 .include "../../graphics/opencv/buildlink3.mk"
-.include "../../graphics/openexr/buildlink3.mk"
-.include "../../graphics/png/buildlink3.mk"
-.include "../../graphics/tiff/buildlink3.mk"
-.include "../../mk/jpeg.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

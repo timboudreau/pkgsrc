@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.95 2017/02/12 06:24:40 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.101 2018/11/14 22:21:16 kleink Exp $
 
 DISTNAME=		libglade-2.6.4
-PKGREVISION=		25
+PKGREVISION=		29
 CATEGORIES=		devel gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/libglade/2.6/}
 EXTRACT_SUFX=		.tar.bz2
 
-MAINTAINER=		drochner@NetBSD.org
+MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		http://www.jamesh.id.au/software/libglade/
 COMMENT=		Runtime interpreter for GLADE GUI files
 LICENSE=		gnu-lgpl-v2
@@ -21,7 +20,7 @@ CONFLICTS+=		libglade2-[0-9]*
 
 CONFIGURE_ARGS+=	--without-xml-catalog
 
-XML_ENTRIES=	system http://glade.gnome.org/glade-2.0.dtd \
+XML_ENTRIES=	system https://glade.gnome.org/glade-2.0.dtd \
 		${PREFIX}/share/xml/libglade/glade-2.0.dtd
 
 BUILDLINK_API_DEPENDS.atk+=		atk>=1.9.0

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.20 2017/01/01 14:43:28 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/26 13:13:48 maya Exp $
 
 DISTNAME=	pytable-0.8.3a
 PKGNAME=	${PYPKGPREFIX}-table-0.8.3a
@@ -13,7 +13,7 @@ COMMENT=	Python RDBMS wrapper for various databases
 DEPENDS+=	${PYPKGPREFIX}-basicproperty-[0-9]*:../../lang/py-basicproperty
 
 # py-basicproperty isn't compatible to 3.x
-PYTHON_VERSIONS_INCOMPATIBLE=   34 35 36
+PYTHON_VERSIONS_INCOMPATIBLE=    36 37
 
 USE_LANGUAGES=	# none
 

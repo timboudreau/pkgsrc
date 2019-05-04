@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.186 2017/02/12 06:26:10 ryoon Exp $
+# $NetBSD: Makefile,v 1.192 2018/11/14 22:22:40 kleink Exp $
 #
 
 DISTNAME=	gdm-2.20.11
-PKGREVISION=	24
+PKGREVISION=	28
 CATEGORIES=	x11 gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gdm/2.20/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Gnome Display Manager - a re-implementation of the xdm program
 
 DEPENDS+=	zenity>=2.16.0:../../x11/zenity
@@ -83,7 +83,7 @@ SUBST_SED.desktop+=	-e 's|^PreFetchProgram=.*$$|PreFetchProgram=${PREFIX}/libexe
 
 SUBST_CLASSES+=		gdmsetup
 SUBST_MESSAGE.gdmsetup=	Patching gdmsetup theme installer to use ${REAL_ROOT_USER}:${REAL_ROOT_GROUP}
-SUBST_STAGE.gdmsetup=	post-patch
+SUBST_STAGE.gdmsetup=	pre-configure
 SUBST_FILES.gdmsetup=	gui/gdmsetup.c
 SUBST_SED.gdmsetup=	-e 's/root:root/${REAL_ROOT_USER}:${REAL_ROOT_GROUP}/g'
 

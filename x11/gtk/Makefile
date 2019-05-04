@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.138 2016/07/09 06:39:16 wiz Exp $
+# $NetBSD: Makefile,v 1.140 2018/08/22 09:48:01 wiz Exp $
 
 DISTNAME=		gtk+-1.2.10
-PKGREVISION=		16
+PKGREVISION=		17
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gtk+/1.2/}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gtk.org/
+HOMEPAGE=		https://www.gtk.org/
 COMMENT=		GIMP Toolkit v1 - libraries for building X11 user interfaces
 LICENSE=		gnu-lgpl-v2
 

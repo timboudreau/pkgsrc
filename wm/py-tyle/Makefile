@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.15 2017/01/01 14:44:02 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2019/04/26 14:12:48 maya Exp $
 
 DISTNAME=	pytyle-0.7.5
 PKGNAME=	${DISTNAME:S/py/${PYPKGPREFIX}-/}
@@ -7,7 +7,7 @@ CATEGORIES=	wm
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=pytyle/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/pytyle/
+HOMEPAGE=	https://sourceforge.net/projects/pytyle/
 COMMENT=	Manual tiling manager
 LICENSE=	gnu-gpl-v3
 
@@ -17,7 +17,7 @@ PYTHON_SELF_CONFLICT=	yes
 
 USE_LANGUAGES=	#none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.7.5
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.7.5
 
 .include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

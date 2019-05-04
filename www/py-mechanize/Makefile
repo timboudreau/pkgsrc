@@ -1,21 +1,20 @@
-# $NetBSD: Makefile,v 1.18 2017/01/19 18:52:29 agc Exp $
+# $NetBSD: Makefile,v 1.25 2019/04/17 09:48:23 wiz Exp $
 
-DISTNAME=	mechanize-0.2.5
+DISTNAME=	mechanize-0.4.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	www
+CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=m/mechanize/}
-MASTER_SITES+=	http://wwwsearch.sourceforge.net/mechanize/src/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://wwwsearch.sourceforge.net/mechanize/
+HOMEPAGE=	https://github.com/python-mechanize/mechanize
 COMMENT=	Stateful programmatic web browsing in Python
+LICENSE=	modified-bsd
+
+DEPENDS+=	${PYPKGPREFIX}-html5lib>=0.999999999:../../textproc/py-html5lib
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.2.5
-
-do-test:
-	${RUN}cd ${WRKSRC}; ${PYTHONBIN} test.py
+PYTHON_VERSIONS_ACCEPTED=	27
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

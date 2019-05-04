@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.7 2017/06/28 16:12:09 jperkin Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/25 07:33:31 maya Exp $
 
+PKGREVISION= 1
 .include "../../meta-pkgs/mate/Makefile.common"
 
-DISTNAME=	mate-screensaver-${VERSION:R}.1
+DISTNAME=	mate-screensaver-${VERSION}
 CATEGORIES=	x11
 
 COMMENT=	Screen saver and locker for the MATE desktop
@@ -27,7 +28,10 @@ CONF_FILES+=	${PREFIX}/share/examples/mate-screensaver/xdg/menus/mate-screensave
 
 PLIST_VARS+=		pam
 
-.if ${OPSYS} != "Darwin" && ${OPSYS} != "SunOS"
+.if ${OPSYS} == "Darwin" || ${OPSYS} == "SunOS" || ${OPSYS} == "Linux"
+CONFIGURE_ARGS+=	--disable-pam
+SPECIAL_PERMS+=		libexec/mate-screensaver-dialog ${SETUID_ROOT_PERMS}
+.else
 DEPENDS+=		pam-pwauth_suid-[0-9]*:../../security/pam-pwauth_suid
 INSTALLATION_DIRS+=	${PREFIX}/share/examples/pam.d
 
@@ -50,8 +54,6 @@ pamd:
 MAKE_DIRS+=	/etc/pam.d
 CONF_FILES+=	${PREFIX}/share/examples/pam.d/mate-screensaver \
 		/etc/pam.d/mate-screensaver
-
-.include "../../mk/bsd.prefs.mk"
 
 DEPENDS+=	consolekit-[0-9]*:../../sysutils/consolekit
 .endif

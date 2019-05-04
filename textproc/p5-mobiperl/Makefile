@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:25:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:47:12 wiz Exp $
 #
 
 DISTNAME=	mobiperl-0.0.43
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	10
+PKGREVISION=	11
 CATEGORIES=	textproc
 # no https support in pkgsrc
 MASTER_SITES=	# https://dev.mobileread.com/dist/tompe/mobiperl/
 EXTRACT_SUFX=	.tar
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://dev.mobileread.com/trac/mobiperl/wiki
+#HOMEPAGE=	https://dev.mobileread.com/trac/mobiperl/wiki
 COMMENT=	Tools for generating and manipulating MobiPocket files
 LICENSE=	gnu-gpl-v3
 

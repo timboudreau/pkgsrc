@@ -1,12 +1,15 @@
-$NetBSD: distinfo,v 1.51 2017/07/04 11:40:48 fhajny Exp $
+$NetBSD: distinfo,v 1.73 2019/04/23 18:47:16 nia Exp $
 
-SHA1 (erlang/otp_src_20.0.tar.gz) = 4f0bad82024bb99210d8960f60b0e14821dcf939
-RMD160 (erlang/otp_src_20.0.tar.gz) = dd7163abc4f736947c53e2cb893afd87739b7340
-SHA512 (erlang/otp_src_20.0.tar.gz) = f73ea74fd149392c72925ea163eafe62ed4470405c61d1c7e557c4f3c94546b4385b073d5d53017f1f5422bdf203ea346fa3d672f49bca4cceec26c51de68951
-Size (erlang/otp_src_20.0.tar.gz) = 87346046 bytes
+SHA1 (erlang/OTP-21.3.6.tar.gz) = 9b10259443efc4a6be4e287d3fc1d8ed83ae605c
+RMD160 (erlang/OTP-21.3.6.tar.gz) = c2a9048d35191a63fd1f7b23a4608646d142a784
+SHA512 (erlang/OTP-21.3.6.tar.gz) = 4ba430ccacde9366233c085f641712b2745360315ce32447e19eb25ee2c734e4be88fe2ccb68a9bda9c6ee7f257330adcad9fc421a8038ab14dba426c9466227
+Size (erlang/OTP-21.3.6.tar.gz) = 54030023 bytes
 SHA1 (patch-ab) = 5f1602f3a49c05fd4c45884a7cd6be8d3f287ac3
 SHA1 (patch-ay) = f5f1accdb11e404ba4779b056228431e3080e4cd
-SHA1 (patch-erts_configure) = dba8d72974e8c493cf2bb90e6b149a84dd9073da
-SHA1 (patch-erts_emulator_drivers_common_inet__drv.c) = b7784e5e8e025ca75d5279a63e0cb3f74c54bd6a
-SHA1 (patch-erts_emulator_sys_common_erl__poll.c) = b2068ed4f1994407cb2ec3cd10220bebae85b01d
+SHA1 (patch-erts_configure.in) = 2154871858bab389509e908b38ae479a55709b97
+SHA1 (patch-erts_emulator_drivers_common_inet__drv.c) = e34674aea2fa5092b5215944cb5639738df647bb
+SHA1 (patch-erts_emulator_sys_unix_sys__uds.c) = a165f977221acc8aba2ef30ca23d149a10af060a
+SHA1 (patch-erts_etc_unix_run__erl.c) = dbcd6819949874da19daa554335567c444d7abe2
+SHA1 (patch-erts_lib__src_common_erl__printf.c) = 04b97c91d5c7a02c6a61ada0524ef2a2d9ad2e8b
+SHA1 (patch-lib_crypto_c__src_Makefile.in) = 0ab1db36c03999524e933d60f913ff5608b0622e
 SHA1 (patch-make_output.mk.in) = d7b3da58bfb471d52c41242e2a03d1598ce24e62

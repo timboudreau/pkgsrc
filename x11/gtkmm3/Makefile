@@ -1,18 +1,19 @@
-# $NetBSD: Makefile,v 1.22 2017/05/03 08:38:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.31 2018/11/14 22:22:43 kleink Exp $
 
-DISTNAME=	gtkmm-3.22.0
+DISTNAME=	gtkmm-3.22.2
 PKGNAME=	${DISTNAME:S/gtkmm/gtkmm3/1}
-PKGREVISION=	2
+PKGREVISION=	5
 CATEGORIES=	x11 gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gtkmm/${PKGVERSION_NOREV:R}/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gtkmm.org/
+HOMEPAGE=	https://www.gtkmm.org/
 COMMENT=	C++ Interfaces for GTK+ and GNOME (v3)
 LICENSE=	gnu-lgpl-v2.1 AND gnu-gpl-v2
 
 USE_LANGUAGES=		c c++11
+GCC_REQD+=		4.9
 USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake perl pkg-config
 GNU_CONFIGURE=		yes

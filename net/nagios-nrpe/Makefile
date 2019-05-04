@@ -1,15 +1,16 @@
-# $NetBSD: Makefile,v 1.30 2016/07/09 06:38:43 wiz Exp $
+# $NetBSD: Makefile,v 1.34 2018/08/22 09:45:54 wiz Exp $
 #
 
-DISTNAME=		nrpe-2.15
+DISTNAME=		nrpe-3.2.0
 PKGNAME=		nagios-${DISTNAME}
-PKGREVISION=		3
+PKGREVISION=		2
 CATEGORIES=		net sysutils
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=nagios/}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.nagios.org/
+HOMEPAGE=		https://www.nagios.org/
 COMMENT=		Nagios remote program execution daemon
+LICENSE=		gnu-gpl-v2
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -37,7 +38,6 @@ RCD_SCRIPTS+=		nrpe
 SMF_NAME=		nrpe
 FILES_SUBST+=		NAGIOS_USER=${NAGIOS_USER}
 FILES_SUBST+=		NAGIOS_GROUP=${NAGIOS_GROUP}
-FILES_SUBST+=		NAGIOSDIR=${NAGIOSDIR}
 
 INSTALLATION_DIRS+=	sbin libexec/nagios share/examples/nagios
 

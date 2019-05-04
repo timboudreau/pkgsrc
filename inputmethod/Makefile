@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.69 2017/04/22 17:35:15 taca Exp $
+# $NetBSD: Makefile,v 1.76 2018/08/18 01:22:30 ryoon Exp $
 #
 
 COMMENT=	Input method tools and libraries
@@ -14,13 +14,15 @@ SUBDIR+=	canna-lib
 SUBDIR+=	canna-server
 SUBDIR+=	dbskkd-cdb
 SUBDIR+=	fcitx
+SUBDIR+=	fcitx-configtool
+SUBDIR+=	fcitx-qt5
+SUBDIR+=	fcitx-skk
 SUBDIR+=	gcin
 SUBDIR+=	gtk-im-libthai
 SUBDIR+=	ibus
 SUBDIR+=	ibus-anthy
 SUBDIR+=	ibus-array
 SUBDIR+=	ibus-chewing
-SUBDIR+=	ibus-el
 SUBDIR+=	ibus-handwrite
 SUBDIR+=	ibus-hangul
 SUBDIR+=	ibus-input-pad
@@ -81,12 +83,10 @@ SUBDIR+=	scim-hangul
 SUBDIR+=	scim-input-pad
 SUBDIR+=	scim-m17n
 SUBDIR+=	scim-pinyin
-SUBDIR+=	scim-python
 SUBDIR+=	scim-sinhala
 SUBDIR+=	scim-skk
 SUBDIR+=	scim-tables
 SUBDIR+=	scim-tables-vietnamese-ext
-SUBDIR+=	scim-tegaki
 SUBDIR+=	scim-thai
 SUBDIR+=	scim-tomoe
 SUBDIR+=	scim-uim
@@ -101,6 +101,7 @@ SUBDIR+=	skkfep
 SUBDIR+=	skkinput
 SUBDIR+=	skkserv
 SUBDIR+=	skktools
+SUBDIR+=	tamago-tsunagi
 SUBDIR+=	tc
 SUBDIR+=	tegaki-pygtk
 SUBDIR+=	tegaki-python

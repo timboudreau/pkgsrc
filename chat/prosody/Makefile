@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.27 2017/03/01 16:38:31 fhajny Exp $
+# $NetBSD: Makefile,v 1.29 2018/12/15 21:12:19 wiz Exp $
 #
 
-DISTNAME=		prosody-0.9.12
+DISTNAME=		prosody-0.10.0
 CATEGORIES=		chat
 MASTER_SITES=		http://prosody.im/downloads/source/
 
-MAINTAINER=		filip@joyent.com
+MAINTAINER=		fhajny@NetBSD.org
 HOMEPAGE=		http://prosody.im/
 COMMENT=		Flexible communications server for Jabber/XMPP written in Lua
 LICENSE=		mit
@@ -16,10 +16,11 @@ DEPENDS+=		${LUA_PKGPREFIX}-sec>=0.3.3:../../security/lua-sec
 DEPENDS+=		${LUA_PKGPREFIX}-socket>=2.0:../../net/lua-socket
 
 HAS_CONFIGURE=		yes
+USE_LANGUAGES+=		c c99
 USE_TOOLS+=		gmake
 BUILD_DEFS+=		VARBASE
 
-LUA_VERSIONS_ACCEPTED=	51
+LUA_VERSIONS_ACCEPTED=	52 51
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -34,10 +35,10 @@ OWN_DIRS_PERMS+=	${PROSODY_LOG} ${PROSODY_USER} ${PROSODY_GROUP} 0770
 OWN_DIRS_PERMS+=	${PROSODY_RUN} ${PROSODY_USER} ${PROSODY_GROUP} 0770
 MAKE_DIRS+=		${PKG_SYSCONFDIR}/certs
 
-PKG_USERS_VARS=		PROSODY_USER
-PKG_GROUPS_VARS=	PROSODY_GROUP
-PKG_GROUPS=		${PROSODY_GROUP}
-PKG_USERS=		${PROSODY_USER}:${PROSODY_GROUP}
+PKG_USERS_VARS=			PROSODY_USER
+PKG_GROUPS_VARS=		PROSODY_GROUP
+PKG_GROUPS=			${PROSODY_GROUP}
+PKG_USERS=			${PROSODY_USER}:${PROSODY_GROUP}
 PKG_GECOS.${PROSODY_USER}=	Prosody daemon user
 PKG_HOME.${PROSODY_USER}=	${PROSODY_DATA}
 PKG_SHELL.${PROSODY_USER}=	${NOLOGIN}
@@ -68,6 +69,8 @@ CFLAGS+=		-fPIC -Wall -DLUA_COMPAT_MODULE
 MAKE_ENV.SunOS+=	SOCKET_LIB=-lsocket
 
 RCD_SCRIPTS=		prosody
+
+TEST_TARGET=		test
 
 .include "../../lang/lua/application.mk"
 .include "../../lang/lua/tool.mk"

@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2017/04/04 14:33:24 wiz Exp $
+@comment $NetBSD: PLIST,v 1.6 2018/12/16 14:15:11 adam Exp $
 bin/radon-${PYVERSSUFFIX}
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
@@ -9,6 +9,9 @@ ${PYSITELIB}/${EGG_INFODIR}/top_level.txt
 ${PYSITELIB}/radon/__init__.py
 ${PYSITELIB}/radon/__init__.pyc
 ${PYSITELIB}/radon/__init__.pyo
+${PYSITELIB}/radon/__main__.py
+${PYSITELIB}/radon/__main__.pyc
+${PYSITELIB}/radon/__main__.pyo
 ${PYSITELIB}/radon/cli/__init__.py
 ${PYSITELIB}/radon/cli/__init__.pyc
 ${PYSITELIB}/radon/cli/__init__.pyo
@@ -33,6 +36,15 @@ ${PYSITELIB}/radon/raw.pyo
 ${PYSITELIB}/radon/tests/__init__.py
 ${PYSITELIB}/radon/tests/__init__.pyc
 ${PYSITELIB}/radon/tests/__init__.pyo
+${PYSITELIB}/radon/tests/data/__init__.py
+${PYSITELIB}/radon/tests/data/__init__.pyc
+${PYSITELIB}/radon/tests/data/__init__.pyo
+${PYSITELIB}/radon/tests/data/no_encoding.py
+${PYSITELIB}/radon/tests/data/no_encoding.pyc
+${PYSITELIB}/radon/tests/data/no_encoding.pyo
+${PYSITELIB}/radon/tests/data/py3unicode.py
+${PLIST.py3x}${PYSITELIB}/radon/tests/data/py3unicode.pyc
+${PLIST.py3x}${PYSITELIB}/radon/tests/data/py3unicode.pyo
 ${PYSITELIB}/radon/tests/run.py
 ${PYSITELIB}/radon/tests/run.pyc
 ${PYSITELIB}/radon/tests/run.pyo

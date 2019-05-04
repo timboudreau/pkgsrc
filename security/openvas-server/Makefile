@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.14 2017/03/31 10:32:20 wiz Exp $
+# $NetBSD: Makefile,v 1.16 2018/07/04 13:40:34 jperkin Exp $
 #
 
 DISTNAME=	openvas-server-2.0.0
-PKGREVISION=	11
+PKGREVISION=	12
 CATEGORIES=	security
 MASTER_SITES=	http://wald.intevation.org/frs/download.php/550/
 
@@ -18,7 +18,7 @@ USE_TOOLS+=	pkg-config gettext:run
 RCD_SCRIPTS=	openvasd
 
 SUBST_CLASSES+=		user
-SUBST_STAGE.user=	post-patch
+SUBST_STAGE.user=	pre-configure
 SUBST_FILES.user=	openvas-adduser.in openvas-mkcert-client.in
 SUBST_FILES.user+=	openvas-mkcert.in openvas-rmuser.in
 SUBST_SED.user=		-e "s|/usr/bin/gettext|${BUILDLINK_PREFIX.gettext}/bin/gettext|g"

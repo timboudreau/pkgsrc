@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.72 2017/04/22 21:03:36 adam Exp $
+# $NetBSD: Makefile,v 1.91 2019/04/26 13:13:58 maya Exp $
 
 DISTNAME=	gcompris-12.11
-PKGREVISION=	26
+PKGREVISION=	40
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gcompris/}
 EXTRACT_SUFX=	.tar.bz2
@@ -19,12 +19,11 @@ USE_PKGLOCALEDIR=	YES
 GNU_CONFIGURE=		YES
 USE_LIBTOOL=		YES
 CHECK_PORTABILITY_SKIP+= macosx/build-gtk.sh
-INFO_FILES=	yes
+INFO_FILES=		yes
 
 PTHREAD_AUTO_VARS=	yes
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-sqlite2, py-gtk2
-PYTHON_VERSIONED_DEPENDENCIES=	cairo:link
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-sqlite2, py-gtk2
 
 PKG_SUPPORTED_OPTIONS=	gnet
 PKG_OPTIONS_VAR=	PKG_OPTIONS.gcompris
@@ -50,10 +49,10 @@ post-install:
 .include "../../audio/SDL_mixer/buildlink3.mk"
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../databases/py-sqlite2/buildlink3.mk"
+.include "../../graphics/py-cairo/buildlink3.mk"
 .include "../../databases/sqlite3/buildlink3.mk"
 .include "../../devel/libgnomeui/buildlink3.mk"
 .include "../../graphics/librsvg/buildlink3.mk"
-.include "../../lang/python/versioned_dependencies.mk"
 .include "../../lang/python/application.mk"
 .include "../../multimedia/gstreamer0.10/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"

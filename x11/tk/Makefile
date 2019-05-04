@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.82 2014/10/31 21:11:18 adam Exp $
+# $NetBSD: Makefile,v 1.84 2018/12/09 18:35:44 adam Exp $
 
 DISTNAME=	tk${TK_VERSION}-src
 PKGNAME=	tk-${TK_VERSION}

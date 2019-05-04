@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.8 2015/04/02 22:35:06 wiz Exp $
+# $NetBSD: Makefile,v 1.10 2019/03/17 08:04:00 wiz Exp $
 
-DISTNAME=		libXdmcp-1.1.2
+DISTNAME=		libXdmcp-1.1.3
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -16,6 +16,5 @@ GNU_CONFIGURE=		yes
 
 .include "../../meta-pkgs/modular-xorg/hacks.mk"
 
-.include "../../x11/xproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

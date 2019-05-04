@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.16 2017/04/22 21:03:15 adam Exp $
+# $NetBSD: Makefile,v 1.25 2019/04/03 00:32:59 ryoon Exp $
 
 GITHUB_TAG=	V4.4.0
 DISTNAME=	${GITHUB_TAG}
 PKGNAME=	libzrtpcpp${DISTNAME:S/V/-/1}
-PKGREVISION=	7
+PKGREVISION=	14
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_GITHUB:=wernerd/}
 GITHUB_PROJECT=	ZRTPCPP
 DIST_SUBDIR=	${PKGBASE}
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://www.gnutelephony.org/index.php/GNU_ZRTP
+MAINTAINER=	pkgsrc-users@NetBSD.org
+#HOMEPAGE=	http://www.gnutelephony.org/index.php/GNU_ZRTP
 COMMENT=	ZRTP extension for GNU ccRTP
 LICENSE=	gnu-gpl-v3
 

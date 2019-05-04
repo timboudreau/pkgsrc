@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2016/07/09 06:38:32 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2018/08/22 09:45:35 wiz Exp $
 #
 
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	math
-MASTER_SITES=	${MASTER_SITE_R_CRAN:=contrib/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	${R_HOMEPAGE_BASE}/genetics/

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.123 2017/04/22 21:03:16 adam Exp $
+# $NetBSD: Makefile,v 1.132 2019/04/03 00:33:04 ryoon Exp $
 
 DISTNAME=	heimdal-1.5.3
-PKGREVISION=	14
+PKGREVISION=	20
 CATEGORIES=	security
 MASTER_SITES=	http://www.h5l.org/dist/src/
 
@@ -67,21 +67,13 @@ CONFIGURE_ARGS+=	--with-readline=${BUILDLINK_PREFIX.editlinereadline}
 CONFIGURE_ARGS+=	--with-libedit=${BUILDLINK_PREFIX.editlinereadline}
 .endif
 
-PLIST_VARS+=		glob vis
+PLIST_VARS+=		glob vis hcrypto afskauth
+
 .if ${OPSYS} == "SunOS"
 PLIST.vis=	yes
 PLIST.glob=	yes
 .endif
 
-# Linux does not have include/vis.h and expected include/glob.h.
-.if ${OPSYS} == "Linux"
-PLIST.vis=	yes
-PLIST.glob=	yes
-# Without this I get undefined references to pthread_getspecific
-PTHREAD_AUTO_VARS=	yes
-.endif
-
-PLIST_VARS+=		afskauth hcrypto
 .if ${OPSYS} == "IRIX"
 PLIST.afskauth=		yes
 .endif
@@ -115,11 +107,28 @@ CHECK_BUILTIN.openssl:=no
 PLIST.hcrypto=		yes
 .endif
 
+# Linux does not have include/vis.h and expected include/glob.h.
+.if ${OPSYS} == "Linux"
+PLIST.vis=	yes
+PLIST.glob=	yes
+# Without this I get undefined references to pthread_getspecific
+PTHREAD_AUTO_VARS=	yes
+.if !empty(USE_BUILTIN.openssl:Myes) && \
+	empty(BUILTIN_VERSION.openssl:M1.0*)
+PLIST.hcrypto=		yes
+.endif
+.endif
+
 .if ${OPSYS} == "MirBSD"
 .if !empty(USE_BUILTIN.openssl:Myes)
 PLIST.hcrypto=		yes
 .endif
 PLIST.vis=		yes
+# all of the tools need to link against pthread, force it.
+PTHREAD_AUTO_VARS=	yes
+.endif
+
+.if ${OPSYS} == "Minix"
 # all of the tools need to link against pthread, force it.
 PTHREAD_AUTO_VARS=	yes
 .endif

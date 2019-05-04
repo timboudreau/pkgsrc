@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.19 2016/02/25 16:20:53 jperkin Exp $
+# $NetBSD: Makefile,v 1.21 2018/07/18 00:06:23 joerg Exp $
 #
 
 DISTNAME=	waste-source
@@ -10,7 +10,7 @@ CATEGORIES=	net
 MASTER_SITES=	http://slackerbitch.free.fr/waste/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://waste.2mbit.com/index2.html
+#HOMEPAGE=	http://waste.2mbit.com/index2.html
 COMMENT=	Secure file sharing network
 
 WRKSRC=		${WRKDIR}/waste
@@ -24,7 +24,7 @@ NO_BIN_ON_FTP=		${RESTRICTED}
 NO_SRC_ON_CDROM=	${RESTRICTED}
 NO_BIN_ON_CDROM=	${RESTRICTED}
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 LDFLAGS.DragonFly+=	-lmd
 

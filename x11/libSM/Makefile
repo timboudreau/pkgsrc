@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2014/10/09 14:07:14 wiz Exp $
+# $NetBSD: Makefile,v 1.15 2018/10/10 19:55:25 wiz Exp $
 
-DISTNAME=		libSM-1.2.2
+DISTNAME=		libSM-1.2.3
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -22,7 +22,6 @@ CONFIGURE_ARGS+=	--without-libuuid
 .include "../../meta-pkgs/modular-xorg/hacks.mk"
 
 .include "../../x11/libICE/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/xtrans/buildlink3.mk"
-
 .include "../../mk/bsd.pkg.mk"

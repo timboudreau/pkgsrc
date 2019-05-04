@@ -1,16 +1,14 @@
-# $NetBSD: Makefile,v 1.48 2017/05/29 11:09:46 jperkin Exp $
+# $NetBSD: Makefile,v 1.60 2018/12/13 19:52:05 adam Exp $
 #
 
 PLUGIN_NAME=    archive
-PKGREVISION= 2
+PKGREVISION= 4
 .include "../../mail/claws-mail/plugins.mk"
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 COMMENT=	Adds archiving to Claws-Mail
 
 CONFIGURE_ARGS+= --enable-${PLUGIN_NAME}-plugin
-
-PLIST_SRC+=	PLIST
 
 DEPENDS+=	claws-mail-${CLAWS_VERSION}{,nb[0-9]*}:../../mail/claws-mail
 

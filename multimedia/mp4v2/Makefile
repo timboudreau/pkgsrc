@@ -1,19 +1,21 @@
-# $NetBSD: Makefile,v 1.2 2017/04/17 08:48:01 wiz Exp $
+# $NetBSD: Makefile,v 1.6 2019/04/07 18:23:52 adam Exp $
 
-DISTNAME=		mp4v2-2.0.0
-CATEGORIES=		multimedia
-MASTER_SITES=		http://mp4v2.googlecode.com/files/
-EXTRACT_SUFX=		.tar.bz2
+DISTNAME=	mp4v2-4.1.0.0
+CATEGORIES=	multimedia
+MASTER_SITES=	${MASTER_SITE_GITHUB:=TechSmith/}
+GITHUB_TAG=	Release-ThirdParty-MP4v2-${PKGVERSION_NOREV}
 
-MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://code.google.com/p/mp4v2/
-COMMENT=		Library for reading and modifying mp4 files
-LICENSE=		mpl-1.1
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/TechSmith/mp4v2
+COMMENT=	Library for reading and modifying mp4 files
+LICENSE=	mpl-1.1
 
-USE_LANGUAGES=		c c++
-USE_TOOLS+=		gmake
-USE_PKGLOCALEDIR=	yes
+WRKSRC=		${WRKDIR}/mp4v2-${GITHUB_TAG}
+
+USE_LANGUAGES=		c c++03
 USE_LIBTOOL=		yes
+USE_PKGLOCALEDIR=	yes
+USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 MAKE_FILE=		GNUmakefile
 

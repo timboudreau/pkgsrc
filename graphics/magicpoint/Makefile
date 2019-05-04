@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.97 2016/07/09 06:38:22 wiz Exp $
+# $NetBSD: Makefile,v 1.100 2018/08/22 09:45:14 wiz Exp $
 
 DISTNAME=		magicpoint-1.13a
-PKGREVISION=		28
+PKGREVISION=		30
 CATEGORIES=		x11 graphics
 MASTER_SITES=		ftp://sh.wide.ad.jp/WIDE/free-ware/mgp/
 
@@ -23,9 +23,9 @@ USE_TOOLS+=		pkg-config
 CONFIGURE_ARGS+=	--enable-freetype-charset16
 CONFIGURE_ARGS+=	--enable-locale
 CONFIGURE_ARGS+=	--enable-gif
-CONFIGURE_ARGS+=	--with-searchpath=${BUILDLINK_DIR:Q}
-CONFIGURE_ENV+=		BUILDLINK_DIR=${BUILDLINK_DIR:Q}
-CONFIGURE_ENV+=		mgp_cv_path_perl=${TOOLS_PERL5:Q}
+CONFIGURE_ARGS+=	--with-searchpath=${BUILDLINK_DIR}
+CONFIGURE_ENV+=		BUILDLINK_DIR=${BUILDLINK_DIR}
+CONFIGURE_ENV+=		mgp_cv_path_perl=${TOOLS_PERL5}
 
 DOCDIR=			share/doc/mgp
 EGDIR=			share/examples/mgp

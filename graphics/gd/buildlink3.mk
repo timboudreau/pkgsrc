@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.41 2017/04/15 15:50:42 kim Exp $
+# $NetBSD: buildlink3.mk,v 1.44 2018/09/10 13:34:16 kim Exp $
 
 BUILDLINK_TREE+=	gd
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	gd
 GD_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.gd+=	gd>=2.0.15nb1
-BUILDLINK_ABI_DEPENDS.gd+=	gd>=2.2.4nb1
+BUILDLINK_ABI_DEPENDS.gd+=	gd>=2.2.5nb2
 BUILDLINK_PKGSRCDIR.gd?=	../../graphics/gd
 
 .include "../../mk/bsd.fast.prefs.mk"
@@ -25,6 +25,7 @@ pkgbase := gd
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
+.include "../../graphics/libimagequant/buildlink3.mk"
 .include "../../graphics/libwebp/buildlink3.mk"
 .include "../../graphics/png/buildlink3.mk"
 .include "../../mk/jpeg.buildlink3.mk"

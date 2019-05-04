@@ -1,11 +1,11 @@
-# $NetBSD: buildlink3.mk,v 1.2 2017/06/20 19:06:42 bsiegert Exp $
+# $NetBSD: buildlink3.mk,v 1.4 2019/02/16 19:37:48 bsiegert Exp $
 
 BUILDLINK_TREE+=	MoarVM
 
 .if !defined(MOARVM_BUILDLINK3_MK)
 MOARVM_BUILDLINK3_MK:=
 
-BUILDLINK_API_DEPENDS.MoarVM+=	MoarVM>=2017.06
+BUILDLINK_API_DEPENDS.MoarVM+=	MoarVM>=2018.12
 BUILDLINK_PKGSRCDIR.MoarVM?=	../../devel/MoarVM
 
 .include "../../devel/libatomic_ops/buildlink3.mk"

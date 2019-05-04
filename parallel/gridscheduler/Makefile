@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.21 2016/07/09 06:38:47 wiz Exp $
+# $NetBSD: Makefile,v 1.24 2018/08/22 09:46:10 wiz Exp $
 
 PKGNAME=	gridscheduler-2011.11.1
-PKGREVISION=	2
+PKGREVISION=	3
 DISTNAME=	GE2011.11p1
 CATEGORIES=	parallel sysutils
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gridscheduler/}
@@ -87,7 +87,7 @@ PKG_FAIL_REASON+=	"SGE_ARCH and SGE_BUILDARCH need to be configured for your OS"
 SGE_BUILDARCH?=		${SGE_BUILDARCH_cmd:sh}
 
 # Some hacks to get it properly linked:
-MAKE_ENV+=	SGE_ARCH=$(SGE_ARCH) SGE_ROOT=$(SGE_ROOT)
+MAKE_ENV+=	SGE_ARCH=${SGE_ARCH} SGE_ROOT=${SGE_ROOT}
 
 LDFLAGS+=	-R${SGE_ROOT}/lib/${SGE_ARCH}
 BUILDLINK_PASSTHRU_RPATHDIRS+=	${SGE_ROOT}/lib/${SGE_ARCH}
@@ -113,7 +113,7 @@ post-patch:
 	${ECHO} "BERKELEYDBBASE=${BUILDLINK_PREFIX.db4}" ) > ${WRKSRC}/source/distinst.private
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	source/dist/util/arch_variables
 SUBST_SED.paths=	-e 's;@rcd_dir@;${RCD_SCRIPTS_DIR};'
 

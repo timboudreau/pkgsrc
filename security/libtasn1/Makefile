@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.69 2017/02/26 08:45:44 adam Exp $
+# $NetBSD: Makefile,v 1.73 2018/10/13 23:23:20 leot Exp $
 
-DISTNAME=	libtasn1-4.10
+DISTNAME=	libtasn1-4.13
 CATEGORIES=	security devel
 MASTER_SITES=	${MASTER_SITE_GNU:=libtasn1/}
 
@@ -10,7 +10,7 @@ COMMENT=	ASN.1 structure parser library
 LICENSE=	gnu-fdl-v1.3 AND gnu-lgpl-v2.1 AND gnu-gpl-v3
 
 USE_LIBTOOL=		yes
-USE_TOOLS+=		makeinfo
+USE_TOOLS+=		bison makeinfo
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-packager="pkgsrc"
 CONFIGURE_ARGS+=	--with-packager-version="${PKGVERSION}"

@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.2 2016/04/26 08:54:32 fhajny Exp $
+# $NetBSD: Makefile,v 1.5 2019/03/20 16:02:10 jperkin Exp $
 
 DISTNAME=	libtelnet-0.21
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_GITHUB:=seanmiddleditch/}
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://github.com/seanmiddleditch/libtelnet/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://github.com/seanmiddleditch/libtelnet/
 COMMENT=	RFC-complient TELNET implementation as a C library
 LICENSE=	mit
 
@@ -15,8 +15,6 @@ GNU_CONFIGURE=	yes
 
 # __EXTENSIONS__ needed by patch-util_telnet-client.c
 CPPFLAGS.SunOS+=	-D__EXTENSIONS__
-# Needed on at least NetBSD for addrinfo
-CPPLAGS+=		-D_XOPEN_SOURCE=520
 LIBS.SunOS+=		-lnsl -lsocket
 
 PKGCONFIG_OVERRIDE+=	libtelnet.pc.in

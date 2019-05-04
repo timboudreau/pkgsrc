@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.12 2017/02/28 15:20:02 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2019/03/18 16:17:46 gdt Exp $
 #
 
 DISTNAME=	virtuoso-opensource-6.1.6
-PKGREVISION=	11
+PKGREVISION=	19
 CATEGORIES=	databases
 MASTER_SITES=	http://sourceforge.net/projects/virtuoso/files/virtuoso/6.1.6/
 
 MAINTAINER=	jaapb@NetBSD.org
-HOMEPAGE=	http://virtuoso.openlinksw.com/
+HOMEPAGE=	https://virtuoso.openlinksw.com/
 COMMENT=	Universal SQL/Application server
 LICENSE=	gnu-gpl-v2 # with exemptions
 

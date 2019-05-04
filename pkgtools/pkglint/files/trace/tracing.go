@@ -9,56 +9,73 @@ import (
 	"strings"
 )
 
-var (
+// Tracer produces a hierarchical structure of log events.
+type Tracer struct {
 	Tracing bool
 	Out     io.Writer
-)
-
-var traceDepth int
-
-func Ref(rv interface{}) ref {
-	return ref{rv}
+	depth   int
 }
 
-func (r ref) String() string {
-	ptr := reflect.ValueOf(r.intf)
-	ref := reflect.Indirect(ptr)
-	return fmt.Sprintf("%v", ref)
+// Result marks an argument of Tracer.Call as a result of that function.
+// It is only logged when exiting from the function but not when entering it.
+type Result struct {
+	pointer interface{}
 }
 
-func Stepf(format string, args ...interface{}) {
-	if Tracing {
+func (t *Tracer) Stepf(format string, args ...interface{}) {
+	if t.Tracing {
 		msg := fmt.Sprintf(format, args...)
-		io.WriteString(Out, fmt.Sprintf("TRACE: %s  %s\n", traceIndent(), msg))
+		_, _ = io.WriteString(t.Out, fmt.Sprintf("TRACE: %s  %s\n", t.traceIndent(), msg))
 	}
 }
 
-func Step1(format string, arg0 string) {
-	Stepf(format, arg0)
+func (t *Tracer) Step1(format string, arg0 string) {
+	t.Stepf(format, arg0)
 }
 
-func Step2(format string, arg0, arg1 string) {
-	Stepf(format, arg0, arg1)
+func (t *Tracer) Step2(format string, arg0, arg1 string) {
+	t.Stepf(format, arg0, arg1)
 }
 
-func Call0() func() {
-	return traceCall()
+// Call0 is used to trace a no-arguments function call.
+//
+// Usage:
+//  if trace.Tracing {
+//      defer trace.Call0()()
+//  }
+func (t *Tracer) Call0() func() {
+	return t.traceCall()
 }
 
-func Call1(arg1 string) func() {
-	return traceCall(arg1)
+// Call1 is used to trace a function call with a single string argument.
+//
+// Usage:
+//  if trace.Tracing {
+//      defer trace.Call1(str1)()
+//  }
+func (t *Tracer) Call1(arg1 string) func() {
+	return t.traceCall(arg1)
 }
 
-func Call2(arg1, arg2 string) func() {
-	return traceCall(arg1, arg2)
+// Call2 is used to trace a function call with 2 string arguments.
+//
+// Usage:
+//  if trace.Tracing {
+//      defer trace.Call2(str1, str2)()
+//  }
+func (t *Tracer) Call2(arg1, arg2 string) func() {
+	return t.traceCall(arg1, arg2)
 }
 
-func Call(args ...interface{}) func() {
-	return traceCall(args...)
-}
-
-type ref struct {
-	intf interface{}
+// Call records a function call in the tracing log, both when entering and
+// when leaving the function.
+//
+// Usage:
+//  if trace.Tracing {
+//      defer trace.Call(arg1, arg2, trace.Result(result1), trace.Result(result2))()
+// }
+func (t *Tracer) Call(args ...interface{}) func() {
+	return t.traceCall(args...)
 }
 
 // http://stackoverflow.com/questions/13476349/check-for-nil-and-nil-interface-in-go
@@ -69,46 +86,82 @@ func isNil(a interface{}) bool {
 	return a == nil || reflect.ValueOf(a).IsNil()
 }
 
-func argsStr(args ...interface{}) string {
-	argsStr := ""
-	for i, arg := range args {
-		if i != 0 {
-			argsStr += ", "
+func argsStr(args []interface{}) string {
+	var rv strings.Builder
+	for _, arg := range args {
+		if rv.Len() > 0 {
+			rv.WriteString(", ")
 		}
 		if str, ok := arg.(fmt.Stringer); ok && !isNil(str) {
-			argsStr += str.String()
+			rv.WriteString(str.String())
 		} else {
-			argsStr += fmt.Sprintf("%#v", arg)
+			_, _ = fmt.Fprintf(&rv, "%#v", arg)
 		}
 	}
-	return argsStr
+	return rv.String()
 }
 
-func traceIndent() string {
-	indent := ""
-	for i := 0; i < traceDepth; i++ {
-		indent += fmt.Sprintf("%d ", i+1)
+func (t *Tracer) traceIndent() string {
+	var indent strings.Builder
+	for i := 0; i < t.depth; i++ {
+		_, _ = fmt.Fprintf(&indent, "%d ", i+1)
 	}
-	return indent
+	return indent.String()
 }
 
-func traceCall(args ...interface{}) func() {
-	if !Tracing {
+func (t *Tracer) traceCall(args ...interface{}) func() {
+	if !t.Tracing {
 		panic("Internal pkglint error: calls to trace.Call must only occur in tracing mode")
 	}
 
-	funcname := "?"
+	functionName := "?"
 	if pc, _, _, ok := runtime.Caller(2); ok {
 		if fn := runtime.FuncForPC(pc); fn != nil {
-			funcname = strings.TrimPrefix(fn.Name(), "netbsd.org/pkglint.")
+			functionName = strings.TrimPrefix(fn.Name(), "netbsd.org/pkglint.")
 		}
 	}
-	indent := traceIndent()
-	io.WriteString(Out, fmt.Sprintf("TRACE: %s+ %s(%s)\n", indent, funcname, argsStr(args...)))
-	traceDepth++
+	indent := t.traceIndent()
+	_, _ = fmt.Fprintf(t.Out, "TRACE: %s+ %s(%s)\n", indent, functionName, argsStr(withoutResults(args)))
+	t.depth++
 
 	return func() {
-		traceDepth--
-		io.WriteString(Out, fmt.Sprintf("TRACE: %s- %s(%s)\n", indent, funcname, argsStr(args...)))
+		t.depth--
+		_, _ = fmt.Fprintf(t.Out, "TRACE: %s- %s(%s)\n", indent, functionName, argsStr(withResults(args)))
 	}
+}
+
+// Result marks an argument as a result and is only logged when the function returns.
+//
+// Usage: defer trace.Call(arg1, arg2, tracing.Result(&result1), tracing.Result(&result2))()
+func (t *Tracer) Result(rv interface{}) Result {
+	if reflect.ValueOf(rv).Kind() != reflect.Ptr {
+		panic(fmt.Sprintf("Result must be called with a pointer to the result, not %#v.", rv))
+	}
+	return Result{rv}
+}
+
+func withoutResults(args []interface{}) []interface{} {
+	for i, arg := range args {
+		if _, ok := arg.(Result); ok {
+			return args[0:i]
+		}
+	}
+	return args
+}
+
+func withResults(args []interface{}) []interface{} {
+	for i, arg := range args {
+		if _, ok := arg.(Result); ok {
+			var awr []interface{}
+			awr = append(awr, args[0:i]...)
+			awr = append(awr, "=>")
+			for _, res := range args[i:] {
+				pointer := reflect.ValueOf(res.(Result).pointer)
+				actual := reflect.Indirect(pointer).Interface()
+				awr = append(awr, actual)
+			}
+			return awr
+		}
+	}
+	return args
 }

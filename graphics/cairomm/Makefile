@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.39 2016/11/28 15:34:09 wiz Exp $
+# $NetBSD: Makefile,v 1.42 2018/11/14 22:21:35 kleink Exp $
 
 DISTNAME=	cairomm-1.12.2
+PKGREVISION=	3
 CATEGORIES=	graphics
 MASTER_SITES=	http://cairographics.org/releases/
 

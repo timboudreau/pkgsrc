@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/01/20 21:43:59 markd Exp $
+$NetBSD: distinfo,v 1.3 2019/01/22 12:09:31 markd Exp $
 
-SHA1 (tex-cleveref-32513/cleveref.doc.tar.xz) = 6bc82e601b982c39293b367a11ee362420ecd645
-RMD160 (tex-cleveref-32513/cleveref.doc.tar.xz) = 3c409dbef36816900dffc2665a53b2103e40e21b
-SHA512 (tex-cleveref-32513/cleveref.doc.tar.xz) = e708c1064a46630911ae25db4af186e61cf30e82457b0d392e018c81fe511406ae71e4b7695717eb8cc1d6b83d9309e3ad7fff68674ff71169015b472a2078a6
-Size (tex-cleveref-32513/cleveref.doc.tar.xz) = 382128 bytes
+SHA1 (tex-cleveref-47525/cleveref.doc.tar.xz) = f1db594fdfc13229048abf8c2a54c757ecd4555b
+RMD160 (tex-cleveref-47525/cleveref.doc.tar.xz) = 0e8607dfc77d03332bcc45e1ae029a898ae5357a
+SHA512 (tex-cleveref-47525/cleveref.doc.tar.xz) = da89a6208341219e452f56ec0c1bf669e85bc8628e5ff0222887efddfbd702a2c1cd492a8711ca70a2ead820144efbff3830ed10f4d600984f5de97a7aba29dc
+Size (tex-cleveref-47525/cleveref.doc.tar.xz) = 386944 bytes

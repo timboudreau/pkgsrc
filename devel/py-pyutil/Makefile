@@ -1,29 +1,26 @@
-# $NetBSD: Makefile,v 1.17 2017/02/14 10:26:28 wiz Exp $
+# $NetBSD: Makefile,v 1.21 2019/04/26 13:13:53 maya Exp $
 
-DISTNAME=	pyutil-2.0.0
+DISTNAME=	pyutil-3.1.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pyutil/}
 
 MAINTAINER=	gdt@ir.bbn.com
-HOMEPAGE=	http://pypi.python.org/pypi/pyutil
+HOMEPAGE=	https://github.com/tpltnt/pyutil
 COMMENT=	Collection of mature utilities for Python programmers
 LICENSE=	gnu-gpl-v2
 
-DEPENDS+=	${PYPKGPREFIX}-setuptools_trial-[0-9]*:../../devel/py-setuptools_trial
-DEPENDS+=	${PYPKGPREFIX}-simplejson-[0-9]*:../../converters/py-simplejson
-DEPENDS+=	${PYPKGPREFIX}-zbase32-[0-9]*:../../converters/py-zbase32
+DEPENDS+=	${PYPKGPREFIX}-simplejson>=2.1.0:../../converters/py-simplejson
+DEPENDS+=	${PYPKGPREFIX}-zbase32>=1.0:../../converters/py-zbase32
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock>=1.3.0:../../devel/py-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-twisted>=15.5.0:../../net/py-twisted
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-zbase32
-
-REPLACE_PYTHON+=	pyutil/test/current/test_mathutil.py
-REPLACE_PYTHON+=	pyutil/benchmarks/bench_xor.py pyutil/lineutil.py pyutil/scripts/*.py pyutil/test/*/*.py
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-zbase32
 
 post-extract:
-	cd ${WRKSRC}; ${RM} pyutil/*.py~
+	${FIND} ${WRKSRC} -name __pycache__ -or -name '*.pyc' -exec ${RM} -R {} +
 
-.include "../../lang/python/application.mk"
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

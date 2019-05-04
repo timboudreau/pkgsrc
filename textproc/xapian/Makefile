@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.31 2017/07/10 17:29:58 schmonz Exp $
+# $NetBSD: Makefile,v 1.34 2018/08/26 13:25:33 schmonz Exp $
 
 .include "../../textproc/xapian/Makefile.common"
 
 DISTNAME=		xapian-core-${VERSION}
 PKGNAME=		${DISTNAME:S/-core-/-/}
 
-HOMEPAGE=		http://xapian.org/
+HOMEPAGE=		https://xapian.org/
 COMMENT=		Probabilistic Information Retrieval search engine
 
 TEST_TARGET=		check

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/06/22 10:53:00 markd Exp $
+$NetBSD: distinfo,v 1.3 2019/01/26 02:58:05 markd Exp $
 
-SHA1 (tex-apa6-44477/apa6.tar.xz) = ee77553a8ddab074181452b6f7190b54752bd799
-RMD160 (tex-apa6-44477/apa6.tar.xz) = 6fb38a5076ea2b43e0aade535152f54931a5bb48
-SHA512 (tex-apa6-44477/apa6.tar.xz) = 4759ab4d4c2f0f278a385a08782c4ddd41870ac3e10db0eead84ca7734133715de06a5bf87f52911ff820284b8827959179a70a3aaaebca1ffc1f4b8b106ad91
-Size (tex-apa6-44477/apa6.tar.xz) = 13736 bytes
+SHA1 (tex-apa6-48546/apa6.tar.xz) = 01ecedfe1e548bc50db2712312802e5cd43b3913
+RMD160 (tex-apa6-48546/apa6.tar.xz) = 6d590e1c529e2a80ed3efe96d17d4f49782a97b4
+SHA512 (tex-apa6-48546/apa6.tar.xz) = 7a50c51d51591df5f95b6f2921c34357d3623c5e5a8939f779995f14bcadc72f44cdd855bb5f47fa1d83df89f0bf4161c9cd363e8a425b1209482f80cd7f89a1
+Size (tex-apa6-48546/apa6.tar.xz) = 13780 bytes

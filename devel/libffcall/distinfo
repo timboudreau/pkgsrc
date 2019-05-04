@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/02/25 21:08:53 wiz Exp $
+
+SHA1 (libffcall-2.1.tar.gz) = aa2bf00587dec333704cbda19fb6786370bd7762
+RMD160 (libffcall-2.1.tar.gz) = 3241840c8a2884b4b74e1486ac12ae265c4322d9
+SHA512 (libffcall-2.1.tar.gz) = da73375fb45b7d764c06437a517c2a90abf7d5de6afe0a8ca19e6dfafd2a8c7107e39d230ecbc8edfdd5926b16a0c13b7bb9319287047c47de1241b2f6ae805e
+Size (libffcall-2.1.tar.gz) = 943235 bytes

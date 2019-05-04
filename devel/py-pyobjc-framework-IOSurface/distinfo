@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/01/08 12:08:43 adam Exp $
+
+SHA1 (pyobjc-framework-IOSurface-5.1.2.tar.gz) = 41ed38ddf4a5054ba347b160b53cd0bfe5e8dee7
+RMD160 (pyobjc-framework-IOSurface-5.1.2.tar.gz) = d67c76c65b9bc1faf647db7e88547b18a56378ee
+SHA512 (pyobjc-framework-IOSurface-5.1.2.tar.gz) = 5dfb6bf06de8056a27fedbd8515a7ef95a53b0e7ff17eea81402f61bd94364c20acc5ef8821cad579698cdedbbc670d77b17ef995afd731a2f4befe782b8b777
+Size (pyobjc-framework-IOSurface-5.1.2.tar.gz) = 13854 bytes

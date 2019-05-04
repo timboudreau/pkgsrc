@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.9 2017/06/05 14:23:53 ryoon Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:44:56 wiz Exp $
 
-DISTNAME=	experimental-0.016
+DISTNAME=	experimental-0.020
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5
@@ -12,7 +12,6 @@ COMMENT=	Replace functions with ones that succeed or die with lexical scope
 LICENSE=	${PERL5_LICENSE}
 
 PERL5_PACKLIST=		auto/experimental/.packlist
-PERL5_MODULE_TYPE=	Module::Build::Tiny
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/bsd.pkg.mk"

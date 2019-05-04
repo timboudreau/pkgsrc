@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.2 2016/02/10 10:49:26 wiz Exp $
+# $NetBSD: Makefile,v 1.4 2019/04/06 08:56:01 wiz Exp $
 
 DISTNAME=	paratype-ttf-20140616
 CATEGORIES=	fonts
@@ -8,20 +8,16 @@ DIST_SUBDIR=	${DISTNAME}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.paratype.com/public/
+HOMEPAGE=	https://www.paratype.com/public/
 COMMENT=	Public Fonts for Minority Languages of Russia
 LICENSE=	paratype
 
 WRKSRC=		${WRKDIR}
-USE_LANGUAGES=	# none
 
-FONTS_DIRS.ttf=		${PREFIX}/share/fonts/X11/TTF
-INSTALLATION_DIRS+=	share/doc/paratype-ttf share/fonts/X11/TTF
-
-do-build:
+INSTALLATION_DIRS+=	share/doc/paratype-ttf
 
 do-install:
 	${INSTALL_DATA} ${WRKSRC}/*txt ${DESTDIR}${PREFIX}/share/doc/paratype-ttf
-	${INSTALL_DATA} ${WRKSRC}/*ttf ${DESTDIR}${PREFIX}/share/fonts/X11/TTF
 
+.include "../../mk/fonts.mk"
 .include "../../mk/bsd.pkg.mk"

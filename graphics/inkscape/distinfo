@@ -1,17 +1,38 @@
-$NetBSD: distinfo,v 1.59 2017/02/16 09:46:54 adam Exp $
+$NetBSD: distinfo,v 1.68 2019/02/25 18:57:03 maya Exp $
 
-SHA1 (inkscape-0.92.1.tar.bz2) = bede1252b344dc08abb6736084364d8125a6dffc
-RMD160 (inkscape-0.92.1.tar.bz2) = 5748920692ac64bb3e1822b7cb9e96c727b23c55
-SHA512 (inkscape-0.92.1.tar.bz2) = f8f3bfb812a214216c3ffac7064a4619f847cf9810417c782481dba12e6c6a44123c8b8a9289fbf5287f2e6b6df39a641d94a000d842faee5ff808eec86187a0
-Size (inkscape-0.92.1.tar.bz2) = 31222684 bytes
-SHA1 (patch-CMakeScripts_Pod2man.cmake) = ffe09dc53a841fff288cd4fffcb2c0e47e05ebd8
+SHA1 (inkscape-0.92.3.tar.bz2) = e1886317f8e6d4fb340f6a783fe410aaff9f28a7
+RMD160 (inkscape-0.92.3.tar.bz2) = 95648c6b491e09920662e03a51f2278a0ff10392
+SHA512 (inkscape-0.92.3.tar.bz2) = af3c0f672a108e583f3c92cde1451b3f1f5319c1669891005c230e73b3485aa8951af6d7b21c7ccd9e4acbca8eaa5a3bb61ae1d828e81885bc7b61a8ae933687
+Size (inkscape-0.92.3.tar.bz2) = 31606442 bytes
+SHA1 (patch-CMakeScripts_DefineDependsandFlags.cmake) = e8182366802adb05073efdc03a73202fd9b8d18b
+SHA1 (patch-CMakeScripts_Pod2man.cmake) = 6176956791ae3e8eb007345e5ec19100812bdeb8
 SHA1 (patch-ag) = 6b6000f3940ec6db9404a206f9757928c1d5740b
 SHA1 (patch-aj) = 31d6cc8bb179629023bd04bcac0fd935b2c9636d
 SHA1 (patch-ap) = 412509a03d26e925548e3371529a1273db958611
 SHA1 (patch-aq) = fb7de44d33fdc5895ce84ca8d44ff6a6c328c402
-SHA1 (patch-src_CMakeLists.txt) = 47c2a225667b6e5554ab579df1cb323742bcd08c
-SHA1 (patch-src_extension_internal_pdfinput_pdf-parser.cpp) = 7a1aab18cc36756fad1cddbb18cab1ef1431f590
-SHA1 (patch-src_extension_internal_pdfinput_pdf-parser.h) = ba408f45544853f9323f8bd879bd55604072bb7a
+SHA1 (patch-po_CMakeLists.txt) = aa03a91f656c239b8bfaeae8acd753b16be58aca
+SHA1 (patch-src_CMakeLists.txt) = ccd5eeca81891f83c5eaf8cb80d33f001beaf55c
+SHA1 (patch-src_extension_internal_emf-inout.cpp) = 4fe6c24007b54d55d11502876e759f62a290922e
+SHA1 (patch-src_extension_internal_emf-print.cpp) = 5da493a452afa4b11bbb204c430fc3e63332c927
+SHA1 (patch-src_extension_internal_metafile-print.cpp) = 798a2f15986cd81d13bf576b1641a810d4d40573
+SHA1 (patch-src_extension_internal_pdfinput_pdf-input.cpp) = 8bee946274725c12a3c743e8dec3e235c1402fcc
+SHA1 (patch-src_extension_internal_pdfinput_pdf-input.h) = d437b4994d66099ac2c1eaf6bac5d29bd83f9a76
+SHA1 (patch-src_extension_internal_pdfinput_pdf-parser.cpp) = 6ce050246963f762dd97992bfb96f3af5989ccae
+SHA1 (patch-src_extension_internal_pdfinput_pdf-parser.h) = 93d0758b279b179c574a1a42483b02e80f680198
+SHA1 (patch-src_extension_internal_pdfinput_poppler-transition-api.h) = 2a1fc9ceee5d9bcb6138950661c61d6bd70fdd3d
+SHA1 (patch-src_extension_internal_pdfinput_svg-builder.cpp) = dd3f5b8678fbfaf9829fa5d33c8ff8882d337196
+SHA1 (patch-src_extension_internal_pdfinput_svg-builder.h) = ac05f9bed662705dcdfca8b791a348fb5350873c
+SHA1 (patch-src_extension_internal_wmf-inout.cpp) = b49b504d1cf9388d2ad7e1c91c339e7c3d5ffdf5
+SHA1 (patch-src_extension_internal_wmf-print.cpp) = b658d7a0697aaed55671507fe88ce93619ef1070
+SHA1 (patch-src_gradient-drag.cpp) = d6fc1f587a9ad404715fa6e70fe07823a3c68b0c
 SHA1 (patch-src_io_inkjar.cpp) = 060d59225cfe7b66db5e9f41e76860df9ce12d01
+SHA1 (patch-src_live__effects_lpe-ellipse__5pts.cpp) = e909a5b2e65f931246e5b3de7145739d1b6f6209
+SHA1 (patch-src_live__effects_lpe-lattice.cpp) = 17040a794a312ebecb63dd7b19be8f3337b18c47
+SHA1 (patch-src_live__effects_lpe-lattice2.cpp) = bcff9e9177895168a4ef888376f1c3942e7786fb
+SHA1 (patch-src_sp-ellipse.cpp) = e0b273e14c8174712b40f2c83c2e5408644bb9c9
+SHA1 (patch-src_svg_svg-length.cpp) = 41679ab161275577ccd3f525653e7766ca4f92c6
 SHA1 (patch-src_trace_siox.cpp) = daeff4626dace6997f64ab9c96b0bfb304e724c8
+SHA1 (patch-src_ui_dialog_grid-arrange-tab.cpp) = 0ea5b92f2bf923efd149a11d9fff3d5a1d5e5421
 SHA1 (patch-src_ui_tool_node.h) = 2900ab737d6b9245aabefee5e79564bdbaec57bc
+SHA1 (patch-src_util_fixed__point.h) = 40b38724541a9dd5ea241370b23dfb55d93cbb58
+SHA1 (patch-src_widgets_desktop-widget.cpp) = 2ccfad3614fe4e40162b2788db68e86f4a1dc6c9

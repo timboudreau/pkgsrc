@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.105 2016/03/05 11:27:53 jperkin Exp $
+# $NetBSD: Makefile,v 1.116 2019/03/18 16:17:50 gdt Exp $
 #
 
 # XXX The version number is the last one before the agpl change.
 DISTNAME=	ghostscript-9.05
-PKGREVISION=	8
+PKGREVISION=	17
 CATEGORIES=	print meta-pkgs
 MASTER_SITES=	# empty
 
@@ -15,7 +15,7 @@ META_PACKAGE=	yes
 PKG_OPTIONS_VAR=		PKG_OPTIONS.gs_type
 PKG_OPTIONS_OPTIONAL_GROUPS=	ghostscript
 PKG_OPTIONS_GROUP.ghostscript+=	ghostscript-agpl ghostscript-gpl
-PKG_SUGGESTED_OPTIONS+=		ghostscript-gpl
+PKG_SUGGESTED_OPTIONS+=		ghostscript-agpl
 
 .include "../../mk/bsd.options.mk"
 

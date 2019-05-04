@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.7 2015/12/29 04:54:38 dholland Exp $
+# $NetBSD: Makefile,v 1.9 2019/01/22 14:08:47 he Exp $
 #
 
 DISTNAME=	tclreadline-2.1.0
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	devel lang
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tclreadline/}
 
@@ -15,6 +15,9 @@ USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--with-tcl=${PREFIX}/lib
 
+# Need real readline; otherwise rl_extend_line_buffer is undefined
+READLINE_DEFAULT=	readline
+
 EGDIR=		${PREFIX}/share/examples/tclreadline
 
 MESSAGE_SUBST+=		EGDIR=${EGDIR}
@@ -23,7 +26,7 @@ SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKSRC}/pkgIndex.tcl.in
 SUBST_FILES.paths+=	${WRKSRC}/tclreadlineInit.tcl.in
 SUBST_FILES.paths+=	${WRKSRC}/tclreadlineSetup.tcl.in
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_SED.paths=	-e 's,\/usr\/local,${PREFIX},'
 SUBST_SED.paths+=	-e 's,\/usr\/locanl,${PREFIX},'
 

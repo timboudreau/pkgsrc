@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.6 2017/04/15 15:50:42 kim Exp $
+# $NetBSD: options.mk,v 1.8 2018/09/10 13:34:16 kim Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.gd
 PKG_SUPPORTED_OPTIONS=	tiff x11

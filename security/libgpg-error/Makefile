@@ -1,11 +1,9 @@
-# $NetBSD: Makefile,v 1.57 2017/03/05 12:29:19 wiz Exp $
+# $NetBSD: Makefile,v 1.71 2019/03/20 05:43:20 adam Exp $
 
-DISTNAME=	libgpg-error-1.27
+DISTNAME=	libgpg-error-1.36
 CATEGORIES=	security
 MASTER_SITES=	ftp://ftp.gnupg.org/gcrypt/libgpg-error/
 MASTER_SITES+=	ftp://ftp.ring.gr.jp/pub/net/gnupg/libgpg-error/
-MASTER_SITES+=	ftp://mirror.switch.ch/mirror/gnupg/libgpg-error/
-MASTER_SITES+=	ftp://ftp.freenet.de/pub/ftp.gnupg.org/gcrypt/libgpg-error/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	minskim@NetBSD.org
@@ -14,12 +12,11 @@ COMMENT=	Definitions of common error values for all GnuPG components
 LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2.1
 
 USE_LIBTOOL=		yes
-USE_TOOLS+=		gmake
 USE_PKGLOCALEDIR=	yes
+USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
-MAKE_ENV+=		LC_ALL="C"
-MAKE_JOBS_SAFE=		no
 INFO_FILES=		yes
+TEST_TARGET=		check
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -29,28 +26,9 @@ CONFIGURE_ENV+=		CC_FOR_BUILD=${NATIVE_CC:Q}
 CONFIGURE_ENV+=		CC_FOR_BUILD=${CC:Q}\ ${CFLAGS:M*:Q}
 .endif
 
-# XXX See HACKS
-.if ${OPSYS} == "IRIX" || !empty(MACHINE_PLATFORM:MNetBSD-[3-9]*)
-USE_TOOLS+=		awk
-.else
-USE_TOOLS+=		gawk
-.endif
-
 .if !empty(MACHINE_PLATFORM:MSunOS-5.10-*)
 LIBS+=	-lrt
 .endif
-
-# On Dragonfly i386, Pkgsrc libintl segfaults on bindtextdomain function
-# while locking a thread.  Until that's resolved, stop libgpg-error from
-# using NLS which invokes that function during initialization.
-PLIST_VARS+=	nls
-.if ${OPSYS} == "DragonFly" && ${MACHINE} == "i386"
-CONFIGURE_ARGS+=	--disable-nls
-.else
-PLIST.nls=	yes
-.endif
-
-TEST_TARGET=		check
 
 .include "../../converters/libiconv/buildlink3.mk"
 .include "../../devel/gettext-lib/buildlink3.mk"

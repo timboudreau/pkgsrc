@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.43 2017/02/07 23:56:14 joerg Exp $
+# $NetBSD: Makefile,v 1.45 2018/07/04 13:40:17 jperkin Exp $
 
 DISTNAME=	dosbox-0.74
-PKGREVISION=	9
+PKGREVISION=	10
 CATEGORIES=	emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dosbox/}
 
@@ -22,7 +22,7 @@ LDFLAGS.SunOS+=		-lsocket
 INSTALLATION_DIRS=	share/doc/dosbox
 
 SUBST_CLASSES+=		fixme
-SUBST_STAGE.fixme=	post-patch
+SUBST_STAGE.fixme=	pre-configure
 SUBST_FILES.fixme=	docs/dosbox.1
 SUBST_SED.fixme=	-e s,/usr/share/,${PREFIX}/share/,g
 

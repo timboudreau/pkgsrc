@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.6 2016/12/15 10:11:39 schmonz Exp $
+# $NetBSD: Makefile,v 1.8 2018/08/26 19:33:42 schmonz Exp $
 #
 
-DISTNAME=	agedu-20160920.853cea9
+DISTNAME=	agedu-20180522.5b12791
 CATEGORIES=	sysutils
 MASTER_SITES=	${HOMEPAGE}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.chiark.greenend.org.uk/~sgtatham/agedu/
+HOMEPAGE=	https://www.chiark.greenend.org.uk/~sgtatham/agedu/
 COMMENT=	Utility for tracking down wasted disk space
 LICENSE=	mit
 

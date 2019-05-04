@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.20 2017/01/01 14:43:56 wiz Exp $
+# $NetBSD: Makefile,v 1.23 2019/04/26 13:14:14 maya Exp $
 
 DISTNAME=	ansible-1.9.4
 PKGREVISION=	2
@@ -38,6 +38,7 @@ SUBST_FILES.prefix+=    plugins/README.md plugins/inventory/cobbler.py
 SUBST_FILES.prefix+=    plugins/inventory/collins.py
 SUBST_MESSAGE.prefix=   Fixing PREFIX path.
 SUBST_SED.prefix=       -e "s,@PREFIX@,${PREFIX},"
+SUBST_SED.prefix+=      -e "s,@PKG_SYSCONFBASE@,${PKG_SYSCONFBASE},"
 SUBST_SED.prefix+=      -e "s,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},"
 
 SUBST_CLASSES+=         pythonbin
@@ -46,7 +47,7 @@ SUBST_FILES.pythonbin=  Makefile
 SUBST_MESSAGE.pythonbin=        Fixing path to PYTHONBIN.
 SUBST_SED.pythonbin=    -e "s,PYTHON=python,PYTHON=${PYTHONBIN},"
 
-PYTHON_VERSIONS_INCOMPATIBLE=   34 35 36 # py-paramiko
+PYTHON_VERSIONS_INCOMPATIBLE=    36 37 # py-paramiko
 
 REPLACE_PYTHON=         lib/ansible/runner/action_plugins/synchronize.py
 REPLACE_PYTHON+=        lib/ansible/utils/module_docs.py
@@ -54,13 +55,13 @@ REPLACE_PYTHON+=        lib/ansible/utils/module_docs.py
 MANPAGES=       ansible-doc.1 ansible-pull.1 ansible-galaxy.1 ansible-vault.1
 MANPAGES+=      ansible-playbook.1 ansible.1
 
-INSTALLATION_DIRS=      bin ${PKGMANDIR}/man1 ${PKG_SYSCONFDIR}/ansible
+INSTALLATION_DIRS=      bin ${PKGMANDIR}/man1
 INSTALLATION_DIRS+=     ${EGDIR}/playbooks
 INSTALLATION_DIRS+=     share/ansible/roles
 
 CHECK_INTERPRETER_SKIP= share/ansible/*
 
-MAKE_DIRS=		${PKG_SYSCONFDIR}/ansible ${PREFIX}/share/ansible
+MAKE_DIRS=		${PREFIX}/share/ansible
 MAKE_DIRS+=		${PREFIX}/share/ansible/ansible_plugins
 MAKE_DIRS+=		${PREFIX}/share/ansible/ansible_plugins/action_plugins
 MAKE_DIRS+=		${PREFIX}/share/ansible/ansible_plugins/callback_plugins

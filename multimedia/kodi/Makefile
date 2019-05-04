@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.24 2017/04/30 01:21:55 ryoon Exp $
+# $NetBSD: Makefile,v 1.48 2019/04/26 13:14:06 maya Exp $
 
 PKGNAME=	kodi-15.2
-PKGREVISION=	16
+PKGREVISION=	37
 DISTNAME=	15.2-Isengard
 CATEGORIES=	multimedia
 MASTER_SITES=	http://mirrors.kodi.tv/releases/source/
 
 MAINTAINER=	jmcneill@invisible.ca
-HOMEPAGE=	http://kodi.tv/
+HOMEPAGE=	https://kodi.tv/
 COMMENT=	Open source software media center
 LICENSE=	gnu-gpl-v2
 
@@ -36,7 +36,7 @@ CONFIG_SUB_OVERRIDE=    lib/libmpeg2/.auto/config.sub \
 
 CONFIGURE_ENV+=		ac_cv_path_SWIG_EXE=${PREFIX}/bin/swig2.0
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # insists on < 3.0 as of 15.2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # insists on < 3.0 as of 15.2
 
 # These need to be ported
 CONFIGURE_ARGS+=	--disable-projectm

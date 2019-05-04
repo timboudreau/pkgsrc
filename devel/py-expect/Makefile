@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.24 2017/01/01 14:43:32 wiz Exp $
+# $NetBSD: Makefile,v 1.28 2019/04/26 14:12:36 maya Exp $
 
 DISTNAME=	ExpectPy-1.9b1
 PKGNAME=	${PYPKGPREFIX}-expect-1.9b1
@@ -7,7 +7,7 @@ CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=expectpy/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/expectpy/
+HOMEPAGE=	https://sourceforge.net/projects/expectpy/
 COMMENT=	Expect module for Python
 
 USE_LIBTOOL=	yes
@@ -20,7 +20,7 @@ CONFIGURE_ENV+=	PYTH_CONFIGDIR=${BUILDLINK_PREFIX.${PYPACKAGE}}/${PYLIB}/config
 INSTALL_TARGET=	installshared
 PY_PATCHPLIST=	yes
 PLIST_SUBST+=	PYLIB=${PYLIB:Q} PYPKGPREFIX=${PYPKGPREFIX:Q}
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.9b1
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.9b1
 
 EXAMPLESDIR=	${PREFIX}/share/examples/${PYPKGPREFIX}-expect
 EXAMPLESFILES=	ask.py glob.py ping.py telnet.py xping.py

@@ -1,9 +1,10 @@
-$NetBSD: distinfo,v 1.13 2015/11/03 23:33:34 agc Exp $
+$NetBSD: distinfo,v 1.25 2019/01/15 12:05:56 wiz Exp $
 
-SHA1 (gnumeric-1.12.23.tar.xz) = 2b8d649175967340412a5d0e2a1bc20f641dc293
-RMD160 (gnumeric-1.12.23.tar.xz) = e58b0bd7b41d187684eabc1a360ea892f18293eb
-SHA512 (gnumeric-1.12.23.tar.xz) = 58f7667196cef453a24689640d21f7de20b052502fcd8f18c9abbe3ca6210d183e0bd53080ba0d6686f145400f404e75f4ed691c90801c5e2cb9f0168420cca0
-Size (gnumeric-1.12.23.tar.xz) = 18515672 bytes
+SHA1 (gnumeric-1.12.44.tar.xz) = d6c632ace32d748bbb1f8e90a38a936d792d4bf9
+RMD160 (gnumeric-1.12.44.tar.xz) = f007ae63227026434ddd8db564606b9df3a80ce7
+SHA512 (gnumeric-1.12.44.tar.xz) = ea21dcdf5fdf4e02bb9d83671675f2409f12ee928611604d7589e0047ce5d75bf6ac51e6a5322c4af520428acdccf4c2b3b8e3fc6530030e162268aea94a503f
+Size (gnumeric-1.12.44.tar.xz) = 18010384 bytes
 SHA1 (patch-aa) = 87781e2955442d8edc803cd732b949017b0f4f27
 SHA1 (patch-ab) = f6fe7aed7ab857f1d8292fd99950bda7a9fb96fa
-SHA1 (patch-gnumeric.desktop.in) = 74972fd2429d7f5ed0248e29dcca361cc0d1e2a4
+SHA1 (patch-plugins_python-loader_python-loader.c) = 00417e5e46e3c5ccbae62ff4c2e8121d0d4f7b9f
+SHA1 (patch-src_mathfunc.c) = 76a1f67fa96f449400258ab679d1a05bcf771b3d

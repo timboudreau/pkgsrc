@@ -1,35 +1,30 @@
-# $NetBSD: Makefile,v 1.27 2017/07/03 18:17:45 joerg Exp $
+# $NetBSD: Makefile,v 1.38 2019/04/26 17:06:21 leot Exp $
 
-DISTNAME=	cffi-1.10.0
+DISTNAME=	cffi-1.12.3
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-PKGREVISION=	1
-CATEGORIES=	devel
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/cffi/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://pypi.python.org/pypi/cffi/
+HOMEPAGE=	https://cffi.readthedocs.io/
 COMMENT=	Foreign Function Interface for Python calling C code
 LICENSE=	mit
 
+USE_LANGUAGES=	c c++ # c++ for testing only
 USE_TOOLS+=	pkg-config
-USE_LANGUAGES=	c c++
 
 DEPENDS+=	${PYPKGPREFIX}-cparser-[0-9]*:../../devel/py-cparser
-BUILD_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
 
 DISTUTILS_BUILDDIR_IN_TEST_ENV=	yes
 
-USE_LANGUAGES=	c
-
-.if !empty(PKGSRC_RUN_TEST:M[yY][eE][sS])
-USE_LANGUAGES+=	c++
-.endif
-
+# to avoid py-hypothesis
+TEST_ENV+=	PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 TEST_ENV+=	TMPDIR=${WRKDIR}/tmp
 
 do-test:
 	${MKDIR} ${WRKDIR}/tmp
-	cd ${WRKSRC} && ${PKGSRC_SETENV} ${TEST_ENV} ${PREFIX}/bin/py.test-${PYVERSSUFFIX} -v
+	cd ${WRKSRC} && ${SETENV} ${TEST_ENV} pytest-${PYVERSSUFFIX} testing
 
 .include "../../devel/libffi/buildlink3.mk"
 .include "../../lang/python/egg.mk"

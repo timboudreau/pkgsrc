@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.8 2015/11/03 01:56:30 agc Exp $
+$NetBSD: distinfo,v 1.10 2019/02/25 14:10:29 taca Exp $
 
-SHA1 (activeldap-3.2.2.gem) = d8784edc09dd29abc052bafa0f9ae3a6143ce767
-RMD160 (activeldap-3.2.2.gem) = 210ee4504357ea747b7bea67357e0b19025ee1be
-SHA512 (activeldap-3.2.2.gem) = f3a802fa1e05b2140fc0c14035ce4ec7037496a2de50908a1143bf3a2c89cf9de6a339ead075b38e7f8b8f7f78314cfd9fe414b64e71e89bdd8dce6b9ab7a1ad
-Size (activeldap-3.2.2.gem) = 218624 bytes
+SHA1 (activeldap-5.2.3.gem) = e54a443a4f2434b8a47a210193bd3c781b116f7d
+RMD160 (activeldap-5.2.3.gem) = 5fb6cde7ad3b4468f4bf0515409870179e0d46ae
+SHA512 (activeldap-5.2.3.gem) = 30fb4b70975e5a911d736ce8579f3ff0c13d326499660a6fdd25bc4e4d20ad615c038c0b50bdf1722775f6313e9c132a004c86fdb9d3a356f78171f78c5d171b
+Size (activeldap-5.2.3.gem) = 226304 bytes

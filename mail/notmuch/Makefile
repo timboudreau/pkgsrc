@@ -1,26 +1,29 @@
-# $NetBSD: Makefile,v 1.30 2017/06/14 20:24:51 wiz Exp $
+# $NetBSD: Makefile,v 1.49 2019/04/25 07:33:04 maya Exp $
 
-DISTNAME=	notmuch-0.24.2
+DISTNAME=	notmuch-0.28.3
+PKGREVISION=	3
 CATEGORIES=	mail
-MASTER_SITES=	http://notmuchmail.org/releases/
+MASTER_SITES=	https://notmuchmail.org/releases/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://notmuchmail.org/
+HOMEPAGE=	https://notmuchmail.org/
 COMMENT=	Mail indexer
 LICENSE=	gnu-gpl-v3
 
-BUILD_DEPENDS+=	${PYPKGPREFIX}-sphinx-[0-9]*:../../textproc/py-sphinx
-
 HAS_CONFIGURE=	yes
 USE_LANGUAGES=	c c++
-USE_TOOLS+=	gmake pkg-config
+USE_TOOLS+=	bash gmake makeinfo pkg-config
 MAKE_FLAGS+=	PYTHON=${PYTHONBIN}
+INFO_FILES=	yes
 #TEST_TARGET=	check
+
+REPLACE_BASH+=	emacs/notmuch-emacs-mua
 
 .include "options.mk"
 
 CONFIGURE_ARGS+=	--prefix=${PREFIX}
 CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
+CONFIGURE_ARGS+=	--infodir=${PREFIX}/info
 CONFIGURE_ARGS+=	--without-ruby
 
 SUBST_CLASSES.SunOS+=	gnuld
@@ -36,9 +39,13 @@ SUBST_MESSAGE.sphinx=	Fix sphinx command names.
 
 LDFLAGS.SunOS+=	-lnsl
 
+post-extract:
+	${MV} ${WRKSRC}/version ${WRKSRC}/version.txt
+
 .include "../../lang/python/application.mk"
-.include "../../mail/gmime/buildlink3.mk"
-BUILDLINK_API_DEPENDS.xapian+=	xapian>=1.2.6
+BUILDLINK_API_DEPENDS.gmime3+=	gmime3>=3.0.3
+.include "../../mail/gmime3/buildlink3.mk"
+BUILDLINK_API_DEPENDS.xapian+=	xapian>=1.4
 .include "../../textproc/xapian/buildlink3.mk"
 .include "../../devel/talloc/buildlink3.mk"
 BUILDLINK_API_DEPENDS.zlib+=	zlib>=1.2.5.2

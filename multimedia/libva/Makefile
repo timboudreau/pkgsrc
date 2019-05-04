@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.15 2017/03/12 09:27:07 leot Exp $
-#
+# $NetBSD: Makefile,v 1.20 2019/04/28 11:55:45 rillig Exp $
 
-DISTNAME=	libva-1.7.3
-PKGREVISION=	5
+DISTNAME=	libva-2.3.0
 CATEGORIES=	multimedia
-MASTER_SITES=	http://www.freedesktop.org/software/vaapi/releases/libva/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=01org/}
 EXTRACT_SUFX=	.tar.bz2
+GITHUB_RELEASE=	${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.freedesktop.org/wiki/Software/vaapi
+HOMEPAGE=	https://github.com/01org/libva
 COMMENT=	Video Acceleration API
 LICENSE=	mit
 
@@ -47,7 +46,6 @@ pre-configure:
 
 # To avoid a PLIST mismatch with base Xorg
 CONFIGURE_ARGS+=	--disable-glx
-CONFIGURE_ARGS+=	--disable-egl
 
 .include "../../x11/libXfixes/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"

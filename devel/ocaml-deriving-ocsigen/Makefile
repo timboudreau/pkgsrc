@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.13 2017/07/11 14:14:20 jaapb Exp $
+# $NetBSD: Makefile,v 1.19 2018/11/12 16:10:19 jaapb Exp $
 #
 
-VERSION=	0.7.1
+VERSION=	0.8.1
 GITHUB_PROJECT=	deriving
 DISTNAME=	${GITHUB_PROJECT}-${VERSION}
 PKGNAME=	ocaml-${GITHUB_PROJECT}-ocsigen-${VERSION}
@@ -11,15 +11,14 @@ CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=ocsigen/}
 
 MAINTAINER=	jaapb@NetBSD.org
-HOMEPAGE=	http://github.com/ocsigen/deriving
+HOMEPAGE=	https://github.com/ocsigen/deriving
 LICENSE=	mit
 
 USE_TOOLS=	gmake
 OCAML_USE_OASIS_DYNRUN=	yes
 OCAML_FINDLIB_DIRS=	deriving
 
-# Package actually needs ocaml-oasis to be installed
-.include "../../devel/ocaml-optcomp/buildlink3.mk"
 .include "../../lang/camlp4/buildlink3.mk"
+.include "../../math/ocaml-num/buildlink3.mk"
 .include "../../mk/ocaml.mk"
 .include "../../mk/bsd.pkg.mk"

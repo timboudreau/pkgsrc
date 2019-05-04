@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.15 2016/07/09 06:38:48 wiz Exp $
+# $NetBSD: Makefile,v 1.17 2018/08/22 09:46:11 wiz Exp $
 
 PKGNAME=	pkg_p5up2date-0.06
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	pkgtools
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -24,11 +24,11 @@ SUBST_MESSAGE.tools=	Substituting tool locations.
 SUBST_FILES.tools=	pkg_p5up2date.pl
 SUBST_VARS.tools=	PKG_INFO_CMD MAKE PERL5
 
-SUBST_CLASSES+=		pkgsrcdir
-SUBST_STAGE.pkgsrcdir=	pre-configure
-SUBST_MESSAGE.pkgsrcdir=Recording default path of pkgsrc base directory.
-SUBST_FILES.pkgsrcdir=	pkg_p5up2date.pl
-SUBST_SED.pkgsrcdir=	-e 's,@PKGSRCDIR@,${PKGSRCDIR},g'
+SUBST_CLASSES+=			pkgsrcdir
+SUBST_STAGE.pkgsrcdir=		pre-configure
+SUBST_MESSAGE.pkgsrcdir=	Recording default path of pkgsrc base directory.
+SUBST_FILES.pkgsrcdir=		pkg_p5up2date.pl
+SUBST_SED.pkgsrcdir=		-e 's,@PKGSRCDIR@,${PKGSRCDIR},g'
 
 # REPLACE_PERL+=		pkg_p5up2date.pl
 

@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.85 2016/12/03 03:09:26 marino Exp $
+# $NetBSD: Makefile,v 1.99 2019/04/07 22:02:20 wiz Exp $
 
-DISTNAME=	gc-7.6.0
+DISTNAME=	gc-8.0.4
 PKGNAME=	${DISTNAME:S/gc/boehm-gc/}
-PKGREVISION=	2
 CATEGORIES=	devel
 MASTER_SITES=	http://www.hboehm.info/gc/gc_source/
 
@@ -23,7 +22,7 @@ TEST_TARGET=		check
 
 .include "../../mk/bsd.prefs.mk"
 
-.if !empty(MACHINE_PLATFORM:MDarwin-10.6*)
+.if !empty(MACHINE_PLATFORM:MDarwin-10.6.*)
 CFLAGS+=		-D_XOPEN_SOURCE
 .endif
 
@@ -32,7 +31,9 @@ CFLAGS+=		-D_XOPEN_SOURCE
 post-install:
 	${INSTALL_MAN} ${WRKSRC}/doc/gc.man ${DESTDIR}${PREFIX}/${PKGMANDIR}/man3/gc.3
 
-do-test:
+# historical pkgsrc test target, can be removed in one of the next updates
+.PHONY: manual-do-test
+manual-do-test:
 	cd ${WRKSRC} && \
 	${RM} -f gctest && ${MAKE_PROGRAM} gctest && ./gctest && \
 	${RM} -f test_cpp && ${MAKE_PROGRAM} test_cpp && ./test_cpp 10

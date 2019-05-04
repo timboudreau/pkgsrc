@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.98 2017/07/07 04:51:47 adam Exp $
+# $NetBSD: Makefile,v 1.108 2019/04/03 00:32:39 ryoon Exp $
 
 PKGNAME=	p5-subversion-${SVNVER}
+PKGREVISION=	1
 COMMENT=	Perl bindings for Subversion
 
 .include "../../devel/subversion/Makefile.common"

@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:24:47 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:46:57 wiz Exp $
 
-DISTNAME=	Template-Plugin-Latex-3.09
+DISTNAME=	Template-Plugin-Latex-3.12
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	textproc
@@ -16,7 +15,7 @@ DEPENDS+=	p5-Template-Toolkit>=2.16:../../www/p5-Template-Toolkit
 DEPENDS+=	p5-LaTeX-Driver>=0.07:../../print/p5-LaTeX-Driver
 DEPENDS+=	p5-LaTeX-Encode>=0.02:../../print/p5-LaTeX-Encode
 DEPENDS+=	p5-LaTeX-Table-[0-9]*:../../print/p5-LaTeX-Table
-# for make test
+# TEST_DEPENDS
 BUILD_DEPENDS+=	p5-Package-DeprecationManager-[0-9]*:../../devel/p5-Package-DeprecationManager
 
 PERL5_PACKLIST=		auto/Template/Plugin/Latex/.packlist

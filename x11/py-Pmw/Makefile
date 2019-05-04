@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.34 2017/01/01 14:44:08 wiz Exp $
+# $NetBSD: Makefile,v 1.36 2019/04/26 13:14:24 maya Exp $
 
 DISTNAME=	Pmw.1.3.2
 EGG_NAME=	${DISTNAME:S/./-/}
@@ -17,7 +17,7 @@ DEPENDS+=	blt>=2.4i:../../x11/blt
 USE_LANGUAGES=	# empty
 
 PYSETUPSUBDIR=	src
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37
 
 .include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

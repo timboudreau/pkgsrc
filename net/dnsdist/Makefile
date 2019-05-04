@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.1 2017/03/31 20:49:51 fhajny Exp $
+# $NetBSD: Makefile,v 1.9 2018/12/15 21:12:22 wiz Exp $
 
-DISTNAME=	dnsdist-1.1.0
+DISTNAME=	dnsdist-1.3.2
 CATEGORIES=	net
 MASTER_SITES=	https://downloads.powerdns.com/releases/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://dnsdist.org/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://dnsdist.org/
 COMMENT=	Highly DNS-, DoS- and abuse-aware loadbalancer
 LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS+=	gmake pkg-config
 
 .include "../../mk/bsd.prefs.mk"
@@ -30,8 +30,9 @@ CONF_FILES+=	share/examples/dnsdist/dnsdist.conf \
 
 CONFIGURE_ARGS+=	--enable-dnscrypt
 CONFIGURE_ARGS+=	--enable-libsodium
-CONFIGURE_ARGS+=	--enable-protobuf
 CONFIGURE_ARGS+=	--enable-re2
+CONFIGURE_ARGS+=	--with-protobuf
+CONFIGURE_ARGS+=	--without-net-snmp
 CONFIGURE_ENV+=		LIBEDIT_CFLAGS="-I${BUILDLINK_PREFIX.libedit}/include"
 CONFIGURE_ENV+=		LIBEDIT_LIBS="-L${BUILDLINK_PREFIX.libedit}/lib -ledit"
 

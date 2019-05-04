@@ -1,4 +1,4 @@
-# $NetBSD: mozilla-common.mk,v 1.11 2017/01/01 14:43:37 wiz Exp $
+# $NetBSD: mozilla-common.mk,v 1.15 2019/04/26 13:13:55 maya Exp $
 #
 # common Makefile fragment for mozilla packages based on gecko 2.0.
 #
@@ -7,7 +7,7 @@
 
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		pkg-config perl gmake autoconf213 unzip zip
-USE_LANGUAGES+=		c99 c++
+USE_LANGUAGES+=		c99 gnu++03
 UNLIMIT_RESOURCES+=	datasize
 
 CHECK_PORTABILITY_SKIP+=${MOZILLA_DIR}security/nss/tests/libpkix/libpkix.sh
@@ -48,7 +48,7 @@ CONFIG_SUB_OVERRIDE+=		${MOZILLA_DIR}nsprpub/build/autoconf/config.sub
 CONFIG_SUB_OVERRIDE+=		${MOZILLA_DIR}/js/ctypes/libffi/config.sub
 
 PYTHON_FOR_BUILD_ONLY=		yes
-PYTHON_VERSIONS_INCOMPATIBLE=  34 35 36 # not yet ported as of 1.9.2.28
+PYTHON_VERSIONS_INCOMPATIBLE=   36 37 # not yet ported as of 1.9.2.28
 .include "../../lang/python/application.mk"
 CONFIGURE_ENV+=		PYTHON=${PYTHONBIN:Q}
 
@@ -69,6 +69,13 @@ CONFIGURE_ENV.NetBSD+=	ac_cv_thread_keyword=no
 .if ${OPSYS} == "SunOS"
 # native libbz2.so hides BZ2_crc32Table
 PREFER.bzip2?=	pkgsrc
+
+# As yet unclear why these libraries are missing SSP
+CHECK_SSP_SKIP+=	lib/xulrunner192-sdk/sdk/lib/libplc4.so
+CHECK_SSP_SKIP+=	lib/xulrunner192-sdk/sdk/lib/libxpcom.so
+CHECK_SSP_SKIP+=	lib/xulrunner192/libplc4.so
+CHECK_SSP_SKIP+=	lib/xulrunner192/libxpcom.so
+CHECK_SSP_SKIP+=	lib/xulrunner192/plugins/libunixprintplugin.so
 .endif
 
 .if ${OPSYS} == "Linux"

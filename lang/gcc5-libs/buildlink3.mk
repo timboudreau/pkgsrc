@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.1 2015/07/16 12:07:07 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.3 2018/01/07 13:04:19 rillig Exp $
 
 BUILDLINK_TREE+=	gcc5-libs
 
@@ -11,7 +11,7 @@ BUILDLINK_API_DEPENDS.gcc5-libs+=	gcc5-libs>=5.1.0
 BUILDLINK_API_DEPENDS.gcc5-libs+=	{gcc5,gcc5-libs}>=5.1.0
 .endif
 BUILDLINK_PKGSRCDIR.gcc5-libs=		../../lang/gcc5-libs
-BUILDLINK_DEPMETHOD.gcc5-libs?=	full
+BUILDLINK_DEPMETHOD.gcc5-libs?=		full
 
 BUILDLINK_PASSTHRU_DIRS+=	${BUILDLINK_PREFIX.gcc5-libs}/gcc5
 
@@ -29,7 +29,7 @@ GCC_TARGET_MACHINE?=	${MACHINE_GNU_PLATFORM}
 
 ${SPECS_LIBGCC}:
 	@${ECHO} "*link_libgcc:" >${SPECS_LIBGCC}
-	@${ECHO} "%D $(LINKER_RPATH_FLAG)${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib/%M" >>${SPECS_LIBGCC}
+	@${ECHO} "%D ${LINKER_RPATH_FLAG}${LIBGCC_PREFIX}/${GCC_TARGET_MACHINE}/lib/%M" >>${SPECS_LIBGCC}
 
 _WRAP_EXTRA_ARGS.CC+=	-specs=${SPECS_LIBGCC}
 _WRAP_EXTRA_ARGS.CXX+=	-specs=${SPECS_LIBGCC}

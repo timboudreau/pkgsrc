@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.55 2017/04/30 01:22:04 ryoon Exp $
+# $NetBSD: Makefile,v 1.62 2018/12/13 19:52:27 adam Exp $
 
 PKGNAME=	${PYPKGPREFIX}-kde4-${_KDE_VERSION}
-PKGREVISION=	8
+PKGREVISION=	15
 DISTNAME=	pykde4-${_KDE_VERSION}
 CATEGORIES=	misc
 COMMENT=	Python bindings for the KDE integrated X11 desktop
@@ -53,7 +53,7 @@ post-install:
 .include "../../lang/python/extension.mk"
 .include "../../misc/kdepimlibs4/buildlink3.mk"
 #.include "../../misc/nepomuk-core/buildlink3.mk"
-.include "../../security/polkit-qt/buildlink3.mk"
+#.include "../../security/polkit-qt/buildlink3.mk"
 .include "../../x11/kdelibs4/buildlink3.mk"
 .include "../../x11/py-sip/buildlink3.mk"
 .include "../../x11/py-qt4/buildlink3.mk"

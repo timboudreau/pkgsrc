@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.21 2017/02/08 11:50:02 prlw1 Exp $
+@comment $NetBSD: PLIST,v 1.24 2018/06/24 10:20:08 wiz Exp $
 bin/ant
 bin/antRun
 lib/java/ant/ant-antlr.jar
@@ -18,6 +18,7 @@ lib/java/ant/ant-jmf.jar
 lib/java/ant/ant-jsch.jar
 lib/java/ant/ant-junit.jar
 lib/java/ant/ant-junit4.jar
+lib/java/ant/ant-junitlauncher.jar
 lib/java/ant/ant-launcher.jar
 lib/java/ant/ant-netrexx.jar
 lib/java/ant/ant-swing.jar
@@ -107,6 +108,7 @@ share/doc/java/ant/Tasks/jjtree.html
 share/doc/java/ant/Tasks/jlink.html
 share/doc/java/ant/Tasks/jspc.html
 share/doc/java/ant/Tasks/junit.html
+share/doc/java/ant/Tasks/junitlauncher.html
 share/doc/java/ant/Tasks/junitreport.html
 share/doc/java/ant/Tasks/length.html
 share/doc/java/ant/Tasks/loadfile.html
@@ -339,6 +341,7 @@ share/doc/java/ant/api/org/apache/tools/ant/filters/UniqFilter.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/package-frame.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/package-summary.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/package-tree.html
+share/doc/java/ant/api/org/apache/tools/ant/filters/util/ChainReaderHelper.ChainReader.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/util/ChainReaderHelper.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/util/JavaClassHelper.html
 share/doc/java/ant/api/org/apache/tools/ant/filters/util/package-frame.html
@@ -661,6 +664,7 @@ share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/IsReference.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/IsSet.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/IsSigned.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/IsTrue.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/JavaVersion.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/Matches.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/Not.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/condition/Or.html
@@ -784,7 +788,9 @@ share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpoo
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/MethodHandleCPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/MethodRefCPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/MethodTypeCPInfo.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/ModuleCPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/NameAndTypeCPInfo.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/PackageCPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/StringCPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/Utf8CPInfo.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/depend/constantpool/package-frame.html
@@ -809,6 +815,7 @@ share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/IPlanetEjbcTas
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/InnerClassFilenameFilter.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/JbossDeploymentTool.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/JonasDeploymentTool.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/OrionDeploymentTool.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/WeblogicDeploymentTool.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/WeblogicTOPLinkDeploymentTool.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/ejb/WebsphereDeploymentTool.html
@@ -943,6 +950,17 @@ share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junit/XMLResultAgg
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junit/package-frame.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junit/package-summary.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junit/package-tree.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/JUnitLauncherTask.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/ListenerDefinition.ListenerType.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/ListenerDefinition.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/NamedTest.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/SingleTestClass.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/TestClasses.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/TestExecutionContext.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/TestResultFormatter.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/package-frame.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/package-summary.html
+share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/junitlauncher/package-tree.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/native2ascii/BuiltinNative2Ascii.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/native2ascii/DefaultNative2Ascii.html
 share/doc/java/ant/api/org/apache/tools/ant/taskdefs/optional/native2ascii/KaffeNative2Ascii.html
@@ -1129,6 +1147,7 @@ share/doc/java/ant/api/org/apache/tools/ant/types/Parameterizable.html
 share/doc/java/ant/api/org/apache/tools/ant/types/Path.PathElement.html
 share/doc/java/ant/api/org/apache/tools/ant/types/Path.html
 share/doc/java/ant/api/org/apache/tools/ant/types/PatternSet.NameEntry.html
+share/doc/java/ant/api/org/apache/tools/ant/types/PatternSet.PatternFileNameEntry.html
 share/doc/java/ant/api/org/apache/tools/ant/types/PatternSet.html
 share/doc/java/ant/api/org/apache/tools/ant/types/Permissions.Permission.html
 share/doc/java/ant/api/org/apache/tools/ant/types/Permissions.html
@@ -1301,6 +1320,8 @@ share/doc/java/ant/api/org/apache/tools/ant/types/selectors/NoneSelector.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/NotSelector.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/OrSelector.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/OwnedBySelector.html
+share/doc/java/ant/api/org/apache/tools/ant/types/selectors/PosixGroupSelector.html
+share/doc/java/ant/api/org/apache/tools/ant/types/selectors/PosixPermissionsSelector.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/PresentSelector.FilePresence.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/PresentSelector.html
 share/doc/java/ant/api/org/apache/tools/ant/types/selectors/ReadableSelector.html
@@ -1401,6 +1422,7 @@ share/doc/java/ant/api/org/apache/tools/ant/util/ScriptRunnerCreator.html
 share/doc/java/ant/api/org/apache/tools/ant/util/ScriptRunnerHelper.html
 share/doc/java/ant/api/org/apache/tools/ant/util/SourceFileScanner.html
 share/doc/java/ant/api/org/apache/tools/ant/util/SplitClassLoader.html
+share/doc/java/ant/api/org/apache/tools/ant/util/StreamUtils.html
 share/doc/java/ant/api/org/apache/tools/ant/util/StringTokenizer.html
 share/doc/java/ant/api/org/apache/tools/ant/util/StringUtils.html
 share/doc/java/ant/api/org/apache/tools/ant/util/SymbolicLinkUtils.html

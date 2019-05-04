@@ -1,10 +1,11 @@
-# $NetBSD: Makefile,v 1.6 2017/06/14 13:28:57 fhajny Exp $
+# $NetBSD: Makefile,v 1.10 2019/04/25 07:33:15 maya Exp $
 
-DISTNAME=	hitch-1.4.6
+DISTNAME=	hitch-1.5.0
+PKGREVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	https://hitch-tls.org/source/
 
-MAINTAINER=	filip@joyent.com
+MAINTAINER=	fhajny@NetBSD.org
 HOMEPAGE=	https://hitch-tls.org/
 COMMENT=	High performance SSL/TLS proxy
 LICENSE=	2-clause-bsd

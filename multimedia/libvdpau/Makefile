@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/02/24 00:59:13 maya Exp $
+# $NetBSD: Makefile,v 1.13 2019/02/28 22:46:41 wiz Exp $
 
-DISTNAME=	libvdpau-1.1.1
-PKGREVISION=	1
+DISTNAME=	libvdpau-1.2
 CATEGORIES=	multimedia
-MASTER_SITES=	http://people.freedesktop.org/~aplattner/vdpau/
+MASTER_SITES=	https://gitlab.freedesktop.org/vdpau/libvdpau/uploads/14b620084c027d546fa0b3f083b800c6/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	cheusov@NetBSD.org
@@ -32,5 +31,5 @@ PKG_SKIP_REASON+=	"VDPAU is not available on this platform"
 
 .include "../../x11/libX11/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"
-.include "../../x11/dri2proto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

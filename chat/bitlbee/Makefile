@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.72 2017/05/14 11:39:32 leot Exp $
+# $NetBSD: Makefile,v 1.78 2019/04/25 07:32:37 maya Exp $
 
 DISTNAME=		bitlbee-3.5.1
+PKGREVISION=		2
 CATEGORIES=		chat
 MASTER_SITES=		http://get.bitlbee.org/src/
 
 MAINTAINER=		tonio@NetBSD.org
-HOMEPAGE=		http://www.bitlbee.org/
+HOMEPAGE=		https://www.bitlbee.org/
 COMMENT=		IRC to other chat networks gateway
 LICENSE=		gnu-gpl-v2
 
@@ -30,19 +31,23 @@ CONFIGURE_ARGS+=	--ssl=gnutls
 PKG_SYSCONFSUBDIR=	bitlbee
 CONF_FILES=		${DATADIR}/motd.txt ${PKG_SYSCONFDIR}/motd.txt
 CONF_FILES+=		${EGDIR}/bitlbee.conf ${PKG_SYSCONFDIR}/bitlbee.conf
-OWN_DIRS+=		${VARBASE}/run/bitlbee
 
-BUILD_DEFS+=		VARBASE
+BUILD_DEFS+=		VARBASE BITLBEE_USER BITLBEE_GROUP
+FILES_SUBST+=		BITLBEE_USER=${BITLBEE_USER} BITLBEE_GROUP=${BITLBEE_GROUP}
 
 EGDIR=			${PREFIX}/share/examples/bitlbee
 DATADIR=		${PREFIX}/share/bitlbee
 DOCDIR=			${PREFIX}/share/doc/bitlbee
 STATEDIR=		${VARBASE}/db/bitlbee
 
-OWN_DIRS_PERMS=		${STATEDIR} bitlbee nobody 700
+BITLBEE_USER?=		bitlbee
+BITLBEE_GROUP?=		nobody
 
-PKG_GROUPS=		nobody
-PKG_USERS=		bitlbee:nobody
+OWN_DIRS_PERMS=		${STATEDIR} ${BITLBEE_USER} ${BITLBEE_GROUP} 700
+OWN_DIRS_PERMS+=	${VARBASE}/run/bitlbee ${BITLBEE_USER} ${BITLBEE_GROUP} 700
+
+PKG_GROUPS=		${BITLBEE_GROUP}
+PKG_USERS=		${BITLBEE_USER}:${BITLBEE_GROUP}
 PKG_HOME.bitlbee=	${VARBASE}/db/bitlbee
 
 INSTALLATION_DIRS=	${PKGMANDIR}/man5 ${PKGMANDIR}/man8 sbin

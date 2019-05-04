@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.80 2017/05/12 08:38:41 jperkin Exp $
+# $NetBSD: Makefile,v 1.92 2019/03/16 14:01:45 wiz Exp $
 
-DISTNAME=	zsh-5.3.1
+DISTNAME=	zsh-5.7.1
+PKGREVISION=	1
 CATEGORIES=	shells
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=zsh/}
 EXTRACT_SUFX=	.tar.xz
@@ -43,9 +44,12 @@ CONFIGURE_ENV.NetBSD+=	zsh_cv_sys_dynamic_execsyms=yes
 INSTALLATION_DIRS+=	share/doc/zsh
 
 PLIST_VARS+=	xattr
-.if exists(/usr/include/sys/xattr.h)
+.if exists(/usr/include/sys/xattr.h) || \
+    exists(/usr/include/${NATIVE_MACHINE_GNU_ARCH}-${LOWER_OPSYS}-gnu/sys/xattr.h) || \
+    defined(OSX_SDK_PATH) && exists(${OSX_SDK_PATH}/usr/include/sys/xattr.h)
 PLIST.xattr=	yes
 .endif
+PRINT_PLIST_AWK+=	{if ($$0 ~ /attr.so/) {$$0 = "$${PLIST.xattr}" $$0;}}
 
 MAKE_JOBS_SAFE=		no
 INSTALL_TARGET=		install install.info

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.3 2013/06/11 19:51:27 asau Exp $
+# $NetBSD: Makefile,v 1.5 2018/01/01 18:16:36 rillig Exp $
 
 DISTNAME=	clojure-1.5.1
 CATEGORIES=	lang
-MASTER_SITES=	http://repo1.maven.org/maven2/org/clojure/clojure/$(PKGVERSION_NOREV)/
+MASTER_SITES=	http://repo1.maven.org/maven2/org/clojure/clojure/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	ryoon@NetBSD.org
-HOMEPAGE=	http://clojure.org/
+HOMEPAGE=	https://clojure.org/
 COMMENT=	Dynamic programming language that targets the Java VM
 LICENSE=	epl-v1.0
 

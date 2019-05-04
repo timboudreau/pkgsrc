@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.25 2016/04/20 12:10:31 nros Exp $
+# $NetBSD: Makefile,v 1.27 2018/01/01 18:16:35 rillig Exp $
 #
 
 DISTNAME=	rio007
@@ -8,7 +8,7 @@ MASTER_SITES=	http://www.world.co.uk/sba/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.world.co.uk/sba/rio.html
+#HOMEPAGE=	http://www.world.co.uk/sba/rio.html
 COMMENT=	Utility to display and manage files on the Diamond Rio PMP300
 LICENSE=	gnu-gpl-v2
 
@@ -17,7 +17,7 @@ ONLY_FOR_PLATFORM=	NetBSD-*-i386 NetBSD-*-x86_64
 WRKSRC=		${WRKDIR}/rio107
 MAKE_FILE=	makefile
 USE_LANGUAGES=	c++
-LIBS.NetBSD=	-l$(MACHINE_ARCH)
+LIBS.NetBSD=	-l${MACHINE_ARCH}
 
 INSTALLATION_DIRS=	bin
 SPECIAL_PERMS=		bin/rio ${SETUID_ROOT_PERMS}

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.32 2017/05/16 21:54:21 snj Exp $
+# $NetBSD: Makefile,v 1.35 2018/07/04 13:40:33 jperkin Exp $
 
-DISTNAME=	dropbear-2016.74
+DISTNAME=	dropbear-2017.75
 CATEGORIES=	security
 MASTER_SITES=	http://matt.ucc.asn.au/dropbear/releases/
 EXTRACT_SUFX=	.tar.bz2
@@ -25,7 +25,7 @@ PKG_SUPPORTED_OPTIONS=	pam
 CONFIGURE_ARGS+=	--enable-pam
 SUBST_CLASSES+=		pam
 SUBST_MESSAGE.pam=	Enabling PAM in options.h
-SUBST_STAGE.pam=	post-patch
+SUBST_STAGE.pam=	pre-configure
 SUBST_FILES.pam=	options.h
 SUBST_SED.pam=		-e "s/ENABLE_SVR_PASSWORD_AUTH/ENABLE_SVR_PAM_AUTH/"
 .endif
@@ -46,6 +46,7 @@ CPPFLAGS+=		-DDROPBEAR_PATH_SSH_PROGRAM="\"${PREFIX}/bin/dbclient\""
 CPPFLAGS+=		-DXAUTH_COMMAND="\"${XAUTHBASE}/bin/xauth\""
 
 CFLAGS.NetBSD+=		-DHAVE_NETINET_IN_SYSTM_H
+LDFLAGS.SunOS+=		-lsocket -lnsl
 
 INSTALLATION_DIRS=	share/doc/dropbear ${PKGMANDIR}/man1 ${PKGMANDIR}/man8
 

@@ -1,8 +1,4 @@
-# $NetBSD: Makefile,v 1.6 2017/06/27 16:17:09 jperkin Exp $
-
-MAINTAINER=	youri@NetBSD.org
-HOMEPAGE=	http://www.mate-desktop.org/
-LICENSE=	gnu-gpl-v3
+# $NetBSD: Makefile,v 1.22 2019/03/16 17:58:22 gutteridge Exp $
 
 PKGNAME=	mate-${VERSION}
 CATEGORIES=	meta-pkgs
@@ -20,15 +16,17 @@ DEPENDS+=	caja-extensions>=${VERSION}:../../sysutils/caja-extensions
 DEPENDS+=	engrampa>=${VERSION}:../../archivers/engrampa
 DEPENDS+=	eom>=${VERSION}:../../graphics/eom
 DEPENDS+=	libmatekbd>=${VERSION}:../../x11/libmatekbd
+DEPENDS+=	libmatemixer>=${VERSION}:../../audio/libmatemixer
 DEPENDS+=	libmateweather>=${VERSION}:../../misc/libmateweather
 DEPENDS+=	marco>=${VERSION}:../../wm/marco
 DEPENDS+=	mate-applets>=${VERSION}:../../x11/mate-applets
 DEPENDS+=	mate-backgrounds>=${VERSION}:../../graphics/mate-backgrounds
+DEPENDS+=	mate-calc>=${VERSION}:../../misc/mate-calc
 DEPENDS+=	mate-common>=${VERSION}:../../devel/mate-common
 DEPENDS+=	mate-control-center>=${VERSION}:../../x11/mate-control-center
 DEPENDS+=	mate-desktop>=${VERSION}:../../x11/mate-desktop
 DEPENDS+=	mate-icon-theme>=${VERSION}:../../graphics/mate-icon-theme
-DEPENDS+=	mate-icon-theme-faenza>=${VERSION}:../../graphics/mate-icon-theme-faenza
+DEPENDS+=	mate-icon-theme-faenza>=1.20.0:../../graphics/mate-icon-theme-faenza
 DEPENDS+=	mate-indicator-applet>=${VERSION}:../../x11/mate-indicator-applet
 DEPENDS+=	mate-media>=${VERSION}:../../multimedia/mate-media
 DEPENDS+=	mate-menus>=${VERSION}:../../x11/mate-menus
@@ -41,10 +39,10 @@ DEPENDS+=	mate-screensaver>=${VERSION}:../../x11/mate-screensaver
 DEPENDS+=	mate-sensors-applet>=${VERSION}:../../sysutils/mate-sensors-applet
 DEPENDS+=	mate-session-manager>=${VERSION}:../../x11/mate-session-manager
 DEPENDS+=	mate-settings-daemon>=${VERSION}:../../x11/mate-settings-daemon
-DEPENDS+=	mate-system-monitor>=${VERSION}:../../sysutils/mate-system-monitor
+#DEPENDS+=	mate-system-monitor>=${VERSION}:../../sysutils/mate-system-monitor
 DEPENDS+=	mate-terminal>=${VERSION}:../../x11/mate-terminal
-DEPENDS+=	mate-themes>=${VERSION}:../../graphics/mate-themes
-DEPENDS+=	mate-user-share>=${VERSION}:../../net/mate-user-share
+DEPENDS+=	mate-themes>=3.22.19:../../graphics/mate-themes
+#DEPENDS+=	mate-user-share>=${VERSION}:../../net/mate-user-share
 DEPENDS+=	mate-utils>=${VERSION}:../../misc/mate-utils
 DEPENDS+=	mozo>=${VERSION}:../../x11/mozo
 DEPENDS+=	pluma>=${VERSION}:../../editors/pluma

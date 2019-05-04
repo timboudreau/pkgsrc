@@ -1,21 +1,21 @@
-# $NetBSD: Makefile,v 1.20 2017/01/19 18:52:15 agc Exp $
+# $NetBSD: Makefile,v 1.24 2018/12/09 21:05:33 adam Exp $
 
 DISTNAME=	amavisd-new-${VERSION}${PATCHLEVEL}
 PKGNAME=	amavisd-new-${VERSION}${PATCHLEVEL:S/-//}
 CATEGORIES=	mail security
-MASTER_SITES=	http://www.ijs.si/software/amavisd/
+MASTER_SITES=	https://www.ijs.si/software/amavisd/
 MASTER_SITES+=	http://mirrors.catpipe.net/amavisd-new/
 MASTER_SITES+=	http://mirror.mainloop.se/amavisd/
 MASTER_SITES+=	http://mirror.cedratnet.com/amavisd-new/
 MASTER_SITES+=	http://mirror.omroep.nl/amavisd-new/
-EXTRACT_SUFX=	.tar.xz
+EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	spz@NetBSD.org
-HOMEPAGE=	http://www.ijs.si/software/amavisd/
+HOMEPAGE=	https://www.ijs.si/software/amavisd/
 COMMENT=	Daemonized interface between MTA and content checkers
 LICENSE=	gnu-gpl-v2
 
-VERSION=	2.11.0
+VERSION=	2.11.1
 PATCHLEVEL=	# empty
 
 DEPENDS+=	p5-Archive-Zip>=1.14:../../archivers/p5-Archive-Zip

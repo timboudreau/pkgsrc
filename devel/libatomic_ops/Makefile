@@ -1,16 +1,14 @@
-# $NetBSD: Makefile,v 1.13 2017/05/29 12:55:10 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2019/03/02 14:51:53 adam Exp $
 
-DISTNAME=	libatomic_ops-7.6.0
+DISTNAME=	libatomic_ops-7.6.10
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=ivmai/}
+GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/ivmai/libatomic_ops
 COMMENT=	Multi-platform library of atomic operations by Hans Boehm
 LICENSE=	gnu-gpl-v2
-
-GITHUB_PROJECT=	libatomic_ops
-GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 USE_LANGUAGES+=		c
 USE_LIBTOOL=		yes
@@ -20,5 +18,9 @@ PKGCONFIG_OVERRIDE=	pkgconfig/atomic_ops.pc.in
 TEST_TARGET=		check
 
 INSTALL_MAKE_FLAGS=	pkgdatadir=${PREFIX}/share/doc/libatomic_ops
+
+.if !empty(MACHINE_PLATFORM:MNetBSD-*-sparc)
+CPPFLAGS+=	-DAO_NO_SPARC_V9=1
+.endif
 
 .include "../../mk/bsd.pkg.mk"

@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.22 2017/01/01 14:43:53 wiz Exp $
+# $NetBSD: Makefile,v 1.26 2019/04/26 13:14:10 maya Exp $
 
 DISTNAME=	scapy-2.3.2
+PKGREVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_GITHUB:=secdev/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
@@ -16,7 +17,7 @@ DEPENDS+=	${PYPKGPREFIX}-readline-[0-9]*:../../devel/py-readline
 
 NO_BUILD=	yes
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-libpcap, py-libdnet
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-libpcap, py-libdnet
 
 INSTALLATION_DIRS+=	share/examples/scapy
 
@@ -26,7 +27,7 @@ CONF_FILES=	${PREFIX}/share/examples/scapy/ethertypes \
 		${PKG_SYSCONFDIR}/ethertypes
 
 SUBST_CLASSES+=		config
-SUBST_STAGE.config=	post-patch
+SUBST_STAGE.config=	pre-configure
 SUBST_FILES.config=	scapy/data.py setup.py
 SUBST_SED.config=	-e "s|@PKG_SYSCONFDIR@|${PKG_SYSCONFDIR}|g"
 SUBST_SED.config+=	-e "s|share/man|${PKGMANDIR}|g"

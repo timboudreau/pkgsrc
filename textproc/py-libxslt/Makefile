@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.49 2017/05/15 18:07:40 dholland Exp $
+# $NetBSD: Makefile,v 1.54 2019/03/19 17:25:40 prlw1 Exp $
 
 .include "../../textproc/libxslt/Makefile.common"
 
@@ -12,7 +12,7 @@ COMMENT=	Python wrapper for libxslt
 DEPENDS+=	${PYPKGPREFIX}-expat-[0-9]*:../../textproc/py-expat
 DEPENDS+=	${PYPKGPREFIX}-libxml2>=2.6.8:../../textproc/py-libxml2
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.1.28
+PYTHON_VERSIONS_ACCEPTED=	27
 
 PYSETUPSUBDIR=	python
 NO_CONFIGURE=	yes
@@ -35,8 +35,11 @@ post-extract: setuppy
 setuppy:
 	${CP} ${FILESDIR}/setup.py ${WRKSRC}/python
 
+# this must come before py-libxml2's bl3 or the direct dependence is lost
+.include "../../lang/python/pyversion.mk"
+
 .include "../../textproc/py-libxml2/buildlink3.mk"
-BUILDLINK_API_DEPENDS.libxslt+=	libxslt>=${PKGVERSION}
+BUILDLINK_API_DEPENDS.libxslt+=	libxslt>=${PKGVERSION_NOREV}
 .include "../../textproc/libxslt/buildlink3.mk"
 .include "../../lang/python/extension.mk"
 .include "../../lang/python/distutils.mk"

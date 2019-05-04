@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.60 2017/04/22 21:04:03 adam Exp $
+# $NetBSD: Makefile,v 1.75 2019/04/03 00:33:14 ryoon Exp $
 #
 
 DISTNAME=	grandr_applet-0.4
-PKGREVISION=	53
+PKGREVISION=	67
 CATEGORIES=	x11
-MASTER_SITES=	http://dekorte.homeip.net/download/grandr-applet/
+#MASTER_SITES=	http://dekorte.homeip.net/download/grandr-applet/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://dekorte.homeip.net/download/grandr-applet/
+#HOMEPAGE=	http://dekorte.homeip.net/download/grandr-applet/
 COMMENT=	GNOME panel applet for controlling the X RandR extension
 
 GNU_CONFIGURE=		yes

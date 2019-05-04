@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.60 2017/02/12 06:26:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.71 2018/11/29 11:21:57 prlw1 Exp $
 #
 
 DISTNAME=	gnome-settings-daemon-2.32.1
-PKGREVISION=	37
+PKGREVISION=	46
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-settings-daemon/2.32/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	GNOME settings daemon
 
 GNU_CONFIGURE=	yes
@@ -47,8 +47,8 @@ BUILDLINK_API_DEPENDS.dbus-glib+=	dbus-glib>=0.74
 .include "../../x11/gnome-desktop/buildlink3.mk"
 BUILDLINK_API_DEPENDS.gtk2+=		gtk2+>=2.21.2
 .include "../../x11/gtk2/buildlink3.mk"
-BUILDLINK_API_DEPENDS.libgnomekbd+=	libgnomekbd>=2.31.2
-.include "../../x11/libgnomekbd/buildlink3.mk"
+BUILDLINK_API_DEPENDS.libgnomekbd2+=	libgnomekbd2>=2.31.2
+.include "../../x11/libgnomekbd2/buildlink3.mk"
 BUILDLINK_API_DEPENDS.libxklavier+=	libxklavier>=5.0
 .include "../../x11/libxklavier/buildlink3.mk"
 

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.9 2017/01/12 11:58:23 rodent Exp $
+$NetBSD: distinfo,v 1.12 2018/12/16 18:24:08 adam Exp $
 
-SHA1 (py-flask-user/Flask-User-0.6.11.tar.gz) = a2213077e9ad0007c1c1a06ec828785c262b5d16
-RMD160 (py-flask-user/Flask-User-0.6.11.tar.gz) = a4a1a748e4d16fab8c8d85cb0f7e78f7f2a80780
-SHA512 (py-flask-user/Flask-User-0.6.11.tar.gz) = b39fd96c43ca76077198ed5a38e2098f83903e1969c1bdb4322e29403e2e46d74dd37694d4d431191fe675083b83012faa0677cb0cc9ed551746a39c5448347c
-Size (py-flask-user/Flask-User-0.6.11.tar.gz) = 59530 bytes
+SHA1 (Flask-User-1.0.1.5.tar.gz) = 483db59ca059de020a29d7d4e1f7e53361ba4377
+RMD160 (Flask-User-1.0.1.5.tar.gz) = b85f341af684e09609fd8b025c7ad6f1680c7271
+SHA512 (Flask-User-1.0.1.5.tar.gz) = b780ffa5d658a8906e64b5e0d859697a7092bbef7b6f920d561bd63edeb3a611227adeffb376456f5a269ee64c99c41d1e14f0c096ce26decefa8fbe7d35d877
+Size (Flask-User-1.0.1.5.tar.gz) = 76799 bytes

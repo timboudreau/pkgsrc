@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.71 2017/06/28 15:35:48 he Exp $
+# $NetBSD: Makefile,v 1.76 2019/02/12 20:47:14 adam Exp $
 
-DISTNAME=	libvpx-1.6.1
-PKGREVISION=	1
+DISTNAME=	libvpx-1.8.0
 CATEGORIES=	multimedia
 MASTER_SITES=	${MASTER_SITE_GITHUB:=webmproject/}
 GITHUB_PROJECT=	libvpx
@@ -103,7 +102,11 @@ SUBST_SED.clang=	-e 's/-DINLINE_ASM/-DINLINE_ASM ${CLANG_INTEGRATED_AS}/'
 CONFIGURE_ARGS+=	--target=mips32-linux-gcc
 .endif
 
-.if !empty(MACHINE_PLATFORM:MNetBSD-*-*arm*)
+.if ${OPSYS} == "NetBSD" && ${MACHINE_ARCH} == "powerpc"
+CONFIGURE_ARGS+= 	--target=generic-gnu
+.endif
+
+.if !empty(MACHINE_PLATFORM:MNetBSD-*-*arm*) || !empty(MACHINE_PLATFORM:MNetBSD-*-*aarch64*)
 CONFIGURE_ARGS+=	--disable-runtime-cpu-detect
 .endif
 

@@ -1,0 +1,16 @@
+$NetBSD: patch-easyrsa,v 1.2 2018/10/11 09:13:30 adam Exp $
+
+Set a sane default for config file. Needs to be SUBSTed.
+
+--- easyrsa.orig	2018-09-15 04:21:19.000000000 +0000
++++ easyrsa
+@@ -1137,6 +1137,9 @@ vars_setup() {
+ 	# EASYRSA, if defined:
+ 	elif [ -n "$EASYRSA" ] && [ -f "$EASYRSA/vars" ]; then
+ 		vars="$EASYRSA/vars"
++	# sysconf location:
++	elif [ -f "@SYSCONFDIR@/vars" ]; then
++		vars="@SYSCONFDIR@/vars"
+ 	# program location:
+ 	elif [ -f "$prog_vars" ]; then
+ 		vars="$prog_vars"

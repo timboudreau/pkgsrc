@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.24 2015/03/11 00:51:06 mef Exp $
+# $NetBSD: Makefile,v 1.26 2019/04/25 07:33:15 maya Exp $
 
 DISTNAME=	flawfinder-1.31
+PKGREVISION=	1
 CATEGORIES=	security devel
-MASTER_SITES=	http://www.dwheeler.com/flawfinder/
+MASTER_SITES=	https://www.dwheeler.com/flawfinder/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.dwheeler.com/flawfinder/
+HOMEPAGE=	https://www.dwheeler.com/flawfinder/
 COMMENT=	Python program to find flaws in C/C++ programs
 LICENSE=	gnu-gpl-v2
 

@@ -1,10 +1,8 @@
-# $NetBSD: Makefile,v 1.9 2016/07/09 06:38:33 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2019/02/09 13:05:16 wen Exp $
 
-DISTNAME=	ppl-1.1
-PKGREVISION=	3
+DISTNAME=	ppl-1.2
 CATEGORIES=	math
-#MASTER_SITES=	ftp://gcc.gnu.org/pub/gcc/infrastructure/
-MASTER_SITES=	ftp://ftp.cs.unipr.it/pub/ppl/releases/1.1/
+MASTER_SITES=	ftp://ftp.cs.unipr.it/pub/ppl/releases/1.2/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.cs.unipr.it/ppl/
@@ -15,7 +13,7 @@ USE_LIBTOOL=	yes
 USE_TOOLS+=	autoconf automake gmake perl
 DEPENDS+=	gsed-[0-9]*:../../textproc/gsed
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c gnu++03
 GNU_CONFIGURE=	yes
 
 MAKE_ENV+=	lt_cv_path_SED=${PREFIX}/bin/gsed
@@ -25,7 +23,7 @@ CONFIGURE_ARGS+=	--with-gmp-prefix=${PREFIX}
 do-build:
 	set -e; cd ${WRKSRC}; ${SETENV} ${MAKE_ENV} ${GMAKE}
 
-TEST_TARGET=	-k check
+TEST_TARGET=	check
 
 .include "../../devel/gmp/buildlink3.mk"
 .include "../../math/mpfr/buildlink3.mk"

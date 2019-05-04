@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.26 2016/11/18 08:07:47 wiz Exp $
+# $NetBSD: Makefile,v 1.28 2018/05/19 00:52:34 wiz Exp $
 
-DISTNAME=	xf86-video-vmware-13.2.1
+DISTNAME=	xf86-video-vmware-13.3.0
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_XORG:=driver/}
 EXTRACT_SUFX=	.tar.bz2
@@ -34,8 +34,7 @@ pre-configure:
 .endif
 
 .include "../../x11/modular-xorg-server/buildlink3.mk"
-.include "../../x11/randrproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 BUILDLINK_DEPMETHOD.libXext?=	build
 .include "../../x11/libXext/buildlink3.mk"
-.include "../../x11/xineramaproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

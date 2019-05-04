@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.64 2016/11/30 14:29:09 sevan Exp $
+# $NetBSD: Makefile,v 1.66 2018/07/04 13:40:08 jperkin Exp $
 
 DISTNAME=	p7zip_16.02_src_all
 PKGNAME=	${DISTNAME:S/_src_all//S/_/-/}
@@ -12,7 +12,7 @@ HOMEPAGE=	http://p7zip.sourceforge.net/
 COMMENT=	File archiver with high compression
 LICENSE=	gnu-lgpl-v2.1 AND unrar-license
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03 # c++11 breaks on Clang 7svn
 USE_TOOLS+=		gmake
 MAKE_FILE=		makefile
 MAKE_JOBS_SAFE=		no # missing header when compiling sfx
@@ -33,7 +33,7 @@ INSTALLATION_DIRS+=	share/doc/p7zip/switches
 SUBST_CLASSES+=		lib
 SUBST_FILES.lib+=	CPP/7zip/UI/Common/LoadCodecs.cpp
 SUBST_SED.lib+=		-e "s,getenv(.P7ZIP_HOME_DIR.),\"${PREFIX}/lib/\","
-SUBST_STAGE.lib=	post-patch
+SUBST_STAGE.lib=	pre-configure
 
 .include "../../mk/dlopen.buildlink3.mk"
 BUILDLINK_TRANSFORM+=	opt:-ldl:${BUILDLINK_LDADD.dl:Q}

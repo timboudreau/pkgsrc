@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.53 2016/03/05 11:28:41 jperkin Exp $
+# $NetBSD: Makefile,v 1.57 2019/04/25 07:32:59 maya Exp $
 
 DISTNAME=		veusz-1.21
-PKGREVISION=		2
+PKGREVISION=		4
 CATEGORIES=		graphics
 MASTER_SITES=		http://download.gna.org/veusz/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://home.gna.org/veusz/
+#HOMEPAGE=		https://veusz.github.io/
 COMMENT=		Scientific plotting package
 LICENSE=		gnu-gpl-v2
 

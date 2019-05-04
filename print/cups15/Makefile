@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.16 2017/01/19 18:52:22 agc Exp $
+# $NetBSD: Makefile,v 1.22 2018/08/22 09:46:12 wiz Exp $
 #
 # The CUPS author is very good about taking back changes into the main
 # CUPS distribution.  The correct place to send patches or bug-fixes is:
@@ -8,10 +8,10 @@ DISTNAME=	cups-${DIST_VERS}-source
 PKGNAME=	cups-${DIST_VERS:S/-/./g}
 BASE_VERS=	1.5.4
 DIST_VERS=	${BASE_VERS}
-PKGREVISION=	16
+PKGREVISION=	17
 
 # Fix for https://www.cups.org/str.php?L4609
-PATCH_SITES=	http://www.cups.org/strfiles.php/3482/
+PATCH_SITES=	https://www.cups.org/strfiles.php/3482/
 PATCHFILES=	str4609-1.5.patch
 
 CATEGORIES=	print
@@ -21,7 +21,7 @@ MASTER_SITES+=	ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/${BASE_VER
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	sbd@NetBSD.org
-HOMEPAGE=	http://www.cups.org/
+HOMEPAGE=	https://www.cups.org/
 COMMENT=	Common UNIX Printing System (1.5 branch)
 LICENSE=	gnu-gpl-v2 AND gnu-lgpl-v2
 
@@ -143,23 +143,23 @@ OWN_DIRS_PERMS+=	${CUPS_CACHE}/rss ${REAL_ROOT_USER} ${CUPS_GROUP} 0775
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKDIR}/cups.pam
 SUBST_SED.paths+=	-e 's,@LOCALBASE@,${LOCALBASE},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 SUBST_CLASSES+=		rpathfix
 SUBST_FILES.rpathfix=	cups-config.in
 SUBST_MESSAGE.rpathfix=	Adding rpath to cups-config.
 SUBST_SED.rpathfix=	-e 's|@EXPORT_LDFLAGS@|${COMPILER_RPATH_FLAG}${PREFIX}/lib|g'
-SUBST_STAGE.rpathfix=	post-patch
+SUBST_STAGE.rpathfix=	pre-configure
 
 .if !empty(OPSYS:MNetBSD) && !empty(MACHINE_ARCH:Mpowerpc)
 SUBST_CLASSES+=		piefix
 SUBST_FILES.piefix=	Makedefs.in
 SUBST_MESSAGE.piefix=	Removing PIE flags
 SUBST_SED.piefix=	-e 's|@PIEFLAGS@||g'
-SUBST_STAGE.piefix=	post-patch
+SUBST_STAGE.piefix=	pre-configure
 .endif
 
-INSTALLATION_DIRS=	${DOCDIR} ${EGDIR} ${MIMEDIR} ${CUPS_CONFDIR}
+INSTALLATION_DIRS=	${DOCDIR} ${EGDIR} ${MIMEDIR}
 INSTALL_ENV+=		DSTROOT=${DESTDIR}
 
 pre-configure:

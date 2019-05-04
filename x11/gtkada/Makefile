@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.39 2017/02/12 06:24:54 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.47 2019/04/25 07:33:30 maya Exp $
 
 DISTNAME=	gtkada-${GTKADA_VERSION}
-PKGREVISION=	14
+PKGREVISION=	20
 CATEGORIES=	x11
 MASTER_SITES=	http://downloads.dragonlace.net/src/
 EXTRACT_SUFX=	.tar.bz2
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 DISTFILES+=	gtkada-rm-${GTKADA_VERSION}${EXTRACT_SUFX}
 
-MAINTAINER=	draco@marino.st
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://libre.adacore.com/libre/tools/gtkada/
 COMMENT=	Ada graphical toolkit based on Gtk+
 LICENSE=	gnu-gpl-v2
@@ -27,13 +26,13 @@ CONFIGURE_ARGS+=	--enable-nls \
 MAKE_ENV+=		PROCESSORS=${MAKE_JOBS}
 
 SUBST_CLASSES+=		docs lgnat sphinx
-SUBST_STAGE.docs=	post-patch
+SUBST_STAGE.docs=	pre-configure
 SUBST_FILES.docs=	Makefile.in
 SUBST_SED.docs=		-e 's/^all: \(.*\)/all: \1 docs/g'
-SUBST_STAGE.lgnat=	post-patch
+SUBST_STAGE.lgnat=	pre-configure
 SUBST_FILES.lgnat=	src/tools/Makefile.in testgtk/Makefile.in
 SUBST_SED.lgnat=	-e 's|-largs|-largs -lgnat|'
-SUBST_STAGE.sphinx=	post-patch
+SUBST_STAGE.sphinx=	pre-configure
 SUBST_FILES.sphinx=	docs/gtkada_ug/Makefile
 SUBST_SED.sphinx=	-e 's|sphinx-build|${PREFIX}/bin/sphinx-build${PYVERSSUFFIX}|'
 

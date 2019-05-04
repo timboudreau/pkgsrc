@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.14 2015/04/25 14:24:48 tnn Exp $
-#
+# $NetBSD: Makefile,v 1.17 2018/11/14 22:22:20 kleink Exp $
 
 DISTNAME=	KeePass-2.23
-PKGREVISION=	4
+PKGREVISION=	6
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=keepass/}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://keepass.info/
+HOMEPAGE=	https://keepass.info/
 COMMENT=	Free, open source, light-weight and easy-to-use password manager
 LICENSE=	gnu-gpl-v2
 

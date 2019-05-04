@@ -1,16 +1,15 @@
-# $NetBSD: Makefile,v 1.56 2017/01/19 18:52:12 agc Exp $
-#
+# $NetBSD: Makefile,v 1.59 2018/03/07 11:57:31 wiz Exp $
 
 DISTNAME=	libggi-2.2.2.src
 PKGNAME=	${DISTNAME:S/.src//}
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	graphics
 MASTER_SITES=	http://www.ggi-project.org/ftp/ggi/v2.2/
 MASTER_SITES+=	${MASTER_SITE_SOURCEFORGE:=ggi/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.ggi-project.org/
+#HOMEPAGE=	http://www.ggi-project.org/
 COMMENT=	General Graphics Interface library is a flexible drawing library
 
 MAKE_JOBS_SAFE=		no
@@ -21,7 +20,7 @@ USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--disable-debug
 CONFIGURE_ARGS+=	--with-x
-CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR:Q}
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 
 PKG_SYSCONFSUBDIR=	ggi
 EGDIR=			${PREFIX}/share/examples/ggi
@@ -51,7 +50,7 @@ PLIST.libvgl=		yes
 	exists(${X11BASE}/include/X11/extensions/xf86dga.h)
 .include "../../x11/libXxf86dga/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
-.include "../../x11/xf86dgaproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 PLIST.xf86dga=		yes
 .endif
 

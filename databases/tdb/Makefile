@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.32 2017/01/01 14:43:28 wiz Exp $
+# $NetBSD: Makefile,v 1.39 2019/04/25 07:32:42 maya Exp $
 
-DISTNAME=	tdb-1.3.8
+DISTNAME=	tdb-1.4.0
+PKGREVISION=	1
 CATEGORIES=	databases
 MASTER_SITES=	http://www.samba.org/ftp/tdb/
 
@@ -15,30 +16,37 @@ BUILD_DEPENDS+=	docbook-xsl-[0-9]*:../../textproc/docbook-xsl
 # both install tdbtool and tdbdump
 CONFLICTS+=	samba<3.6.6nb3
 
+PYTHON_VERSIONS_INCOMPATIBLE=	27
+
 USE_TOOLS+=		gmake
 HAS_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--disable-python
+CONFIG_SHELL=		${PYTHONBIN}
+CONFIGURE_SCRIPT=	${WRKSRC}/buildtools/bin/waf
+CONFIGURE_ARGS+=	configure
 CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
-
+CONFIGURE_ARGS+=	--abi-check-disable
+CONFIGURE_ARGS+=	--disable-symbol-versions
+.if defined(MAKE_JOBS) && !empty(MAKE_JOBS) && !(defined(MAKE_JOBS_SAFE) && !empty(MAKE_JOBS_SAFE:M[nN][oO]))
+CONFIGURE_ARGS+=	--jobs=${MAKE_JOBS}
+.else
+CONFIGURE_ARGS+=	--jobs=1
+.endif
 PKGCONFIG_OVERRIDE=	tdb.pc.in
-
-PYTHON_FOR_BUILD_ONLY=	yes
-REPLACE_PYTHON+= buildtools/bin/waf
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.2.12
+TEST_TARGET=		test
 
 USE_GCC_RUNTIME=	yes
 
-.include "../../mk/bsd.prefs.mk"
+PY_PATCHPLIST=		yes
+REPLACE_PYTHON+=	buildtools/bin/waf
+MAKE_FLAGS+=		WAF_BINARY=${PYTHONBIN}\ ${WRKSRC}/buildtools/bin/waf
 
-.if ${OPSYS} == "Darwin"
-post-build:
-	@install_name_tool -id ${PREFIX}/lib/libtdb.dylib \
-		${WRKSRC}/bin/default/libtdb.dylib
-
-post-install:
-	@install_name_tool -id ${PREFIX}/lib/libtdb.dylib \
-		${DESTDIR}${PREFIX}/lib/libtdb.${PKGVERSION_NOREV}.dylib
-.endif
+SUBST_CLASSES+=		docbook
+SUBST_MESSAGE.docbook=	Fixing docbook URLs.
+SUBST_FILES.docbook+=	buildtools/wafsamba/samba_conftests.py
+SUBST_FILES.docbook+=	buildtools/wafsamba/wafsamba.py
+SUBST_STAGE.docbook=	pre-configure
+SUBST_SED.docbook+=	-e 's,http://docbook.sourceforge.net/release/xsl/current,${PREFIX}/share/xsl/docbook,g'
 
 .include "../../lang/python/application.mk"
+.include "../../lang/python/extension.mk"
 .include "../../mk/bsd.pkg.mk"

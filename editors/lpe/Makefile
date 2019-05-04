@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.24 2012/10/03 11:43:36 asau Exp $
+# $NetBSD: Makefile,v 1.26 2018/07/04 13:40:16 jperkin Exp $
 #
 
 DISTNAME=	lpe-1.2.6
@@ -7,7 +7,7 @@ CATEGORIES=	editors
 MASTER_SITES=	ftp://ftp.twu.net/users/cdsmith/lpe/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://cdsmith.twu.net/professional/opensource/lpe.html
+#HOMEPAGE=	http://cdsmith.twu.net/professional/opensource/lpe.html
 COMMENT=	Small and efficient programmer's editor for UNIX systems
 
 MAKE_JOBS_SAFE=		no
@@ -26,7 +26,7 @@ MAKE_ENV=		EXPORT_SYMBOLS_LDFLAGS="${EXPORT_SYMBOLS_LDFLAGS}"
 CFLAGS=			-DPREFIX="\"${PREFIX}\""
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	man/lpe.1.cs man/lpe.1.de man/lpe.1.en man/lpe.1.es
 SUBST_SED.paths=	-e 's,@PREFIX@,${PREFIX},'
 

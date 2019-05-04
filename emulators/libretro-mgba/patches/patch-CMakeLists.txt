@@ -1,0 +1,29 @@
+$NetBSD: patch-CMakeLists.txt,v 1.3 2019/04/25 12:44:23 nia Exp $
+
+Avoid checking for a C++ compiler, since C++ isn't required for a
+libretro build.
+
+Fix locale detection.
+
+--- CMakeLists.txt.orig	2019-02-25 01:33:16.000000000 +0000
++++ CMakeLists.txt
+@@ -5,7 +5,7 @@ endif()
+ if(POLICY CMP0072)
+ 	cmake_policy(SET CMP0072 NEW)
+ endif()
+-project(mGBA)
++project(mGBA C)
+ set(BINARY_NAME mgba CACHE INTERNAL "Name of output binaries")
+ if(NOT MSVC)
+ 	set(GCC_STD "c99")
+@@ -391,7 +391,9 @@ if(HAVE_LOCALTIME_R)
+ 	list(APPEND FUNCTION_DEFINES HAVE_LOCALTIME_R)
+ endif()
+ 
+-if(HAVE_NEWLOCALE AND HAVE_FREELOCALE AND HAVE_USELOCALE OR APPLE)
++check_include_files("locale.h" HAVE_LOCALE)
++
++if(HAVE_LOCALE OR APPLE)
+ 	list(APPEND FUNCTION_DEFINES HAVE_LOCALE)
+ 	if (HAVE_SNPRINTF_L)
+ 		list(APPEND FUNCTION_DEFINES HAVE_SNPRINTF_L)

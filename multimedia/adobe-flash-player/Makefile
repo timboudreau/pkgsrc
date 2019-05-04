@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.6 2017/07/15 09:31:00 tsutsui Exp $
+# $NetBSD: Makefile,v 1.33 2019/04/10 14:18:03 tsutsui Exp $
 
-FLASH_VERSION=		26.0.0.137
+FLASH_VERSION=		32.0.0.171
 DISTNAME=		flash_player_npapi_linux.${FLASH_ARCH}
 PKGNAME=		adobe-flash-player-${FLASH_VERSION}
 DIST_SUBDIR=		${PKGNAME_NOREV}
@@ -8,7 +8,7 @@ CATEGORIES=		multimedia www
 MASTER_SITES=		https://fpdownload.macromedia.com/get/flashplayer/pdc/${FLASH_VERSION}/
 
 MAINTAINER=		tsutsui@NetBSD.org
-HOMEPAGE=		http://www.adobe.com/products/flashplayer.html
+HOMEPAGE=		https://www.adobe.com/products/flashplayer.html
 COMMENT=		Adobe Flash Player Browser NPAPI plugin
 LICENSE=		flash-license
 
@@ -24,8 +24,6 @@ NOT_FOR_PLATFORM=	NetBSD-[0-5]*-* NetBSD-6.[0-1].*-* NetBSD-7.0.*-*
 
 WRKSRC=			${WRKDIR}
 BUILD_DIRS=		# empty
-
-CRYPTO=			yes
 
 EMUL_PLATFORMS=		linux-i386 linux-x86_64
 EMUL_MODULES.linux=	gtk2 x11 glx krb5 alsa curl nss nspr

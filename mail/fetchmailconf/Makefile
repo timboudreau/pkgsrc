@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.94 2017/01/01 14:43:45 wiz Exp $
+# $NetBSD: Makefile,v 1.100 2019/04/26 14:12:41 maya Exp $
 
-DISTNAME=	fetchmail-6.3.22
+DISTNAME=	fetchmail-6.3.26
 PKGNAME=	${DISTNAME:S/fetchmail/fetchmailconf/}
-PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	mail
-MASTER_SITES=	http://download.berlios.de/fetchmail/
-EXTRACT_SUFX=	.tar.bz2
+MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=fetchmail/}
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://fetchmail.berlios.de/
+HOMEPAGE=	http://www.fetchmail.info/
 COMMENT=	Configuration tool for fetchmail
 
 DEPENDS+=	${DISTNAME}{,nb*}:../../mail/fetchmail
@@ -31,7 +31,7 @@ INSTALL_TARGET=		install-pythonPYTHON
 
 PLIST_SUBST+=		PYSITELIB=${PYSITELIB}
 REPLACE_PYTHON=	fetchmailconf.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 6.3.22
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 6.3.22
 
 post-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/fetchmailconf.py ${DESTDIR}${PREFIX}/bin/fetchmailconf

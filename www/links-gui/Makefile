@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.79 2017/02/12 06:26:09 ryoon Exp $
+# $NetBSD: Makefile,v 1.86 2019/04/07 19:49:12 leot Exp $
 
 PKGNAME=	${DISTNAME:S/links/&-gui/}
-PKGREVISION=	2
 COMMENT=	Lynx-like text and graphics WWW browser
 
 USE_TOOLS+=		pkg-config
@@ -20,6 +19,8 @@ PKG_SUPPORTED_OPTIONS+=	svg
 CONFIGURE_ARGS+=	--without-librsvg
 .endif
 
+.include "../../fonts/fontconfig/buildlink3.mk"
+.include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/png/buildlink3.mk"
 .include "../../graphics/tiff/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"

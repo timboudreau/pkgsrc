@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.22 2017/04/22 21:03:15 adam Exp $
+# $NetBSD: Makefile,v 1.29 2019/04/03 00:33:00 ryoon Exp $
 
 DISTNAME=	monotorrent-0.72
-PKGREVISION=	16
+PKGREVISION=	22
 CATEGORIES=	net
 MASTER_SITES=	http://projects.qnetp.net/attachments/download/13/
 
@@ -15,7 +15,7 @@ USE_TOOLS+=	gmake bsdtar pkg-config
 EXTRACT_USING=	bsdtar
 
 SUBST_CLASSES+=		fix-mcs
-SUBST_STAGE.fix-mcs=	post-patch
+SUBST_STAGE.fix-mcs=	pre-configure
 SUBST_MESSAGE.fix-mcs=	Fix compiler name
 SUBST_FILES.fix-mcs=	configure MonoTorrent/Makefile.in
 SUBST_SED.fix-mcs=	-e 's,gmcs,mcs,'

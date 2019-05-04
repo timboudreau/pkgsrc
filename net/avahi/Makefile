@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.69 2017/04/22 21:03:47 adam Exp $
+# $NetBSD: Makefile,v 1.85 2019/04/03 00:32:56 ryoon Exp $
 
 DISTNAME=		avahi-0.6.32
-PKGREVISION=		6
+PKGREVISION=		18
 CATEGORIES=		net
 MASTER_SITES=		https://github.com/lathiat/avahi/releases/download/v${PKGVERSION_NOREV}/
 
@@ -38,7 +38,7 @@ RCD_SCRIPTS=		avahidaemon
 BUILD_DEFS+=		VARBASE PKG_SYSCONFBASE
 PLIST_SRC=		${PKGDIR}/PLIST
 PKG_SYSCONFSUBDIR=	avahi
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c99 c++
 
 PKG_USERS=		${AVAHI_USER}:${AVAHI_GROUP}
 PKG_GROUPS=		${AVAHI_GROUP}
@@ -47,7 +47,7 @@ PKG_GECOS.${AVAHI_USER}=	Avahi user
 .include "options.mk"
 
 CFLAGS.NetBSD+=		-D_NETBSD_SOURCE
-CPPFLAGS.SunOS+=	--std=c99 -D_XOPEN_SOURCE=600
+CPPFLAGS.SunOS+=	-D_XOPEN_SOURCE=600
 # Not yet reported upstream.
 CPPFLAGS.Darwin+=	-D__APPLE_USE_RFC_3542
 
@@ -77,6 +77,7 @@ CONFIGURE_ARGS+=	--disable-doxygen-dot
 CONFIGURE_ARGS+=	--disable-doxygen-html --disable-doxygen-xml
 CONFIGURE_ARGS+=	--disable-xmltoman
 CONFIGURE_ARGS+=	--disable-autoipd
+CONFIGURE_ARGS+=	--disable-qt3
 CONFIGURE_ARGS+=	--with-distro=none
 
 INSTALL_MAKE_FLAGS+=	sysconfdir=${PREFIX}/share/examples

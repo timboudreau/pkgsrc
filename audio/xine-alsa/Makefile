@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.17 2017/01/16 23:45:11 wiz Exp $
+# $NetBSD: Makefile,v 1.22 2018/11/23 08:06:29 ryoon Exp $
 
+PKGREVISION= 1
 .include "../../multimedia/xine-lib/Makefile.common"
 
 PKGNAME=	${XINE_PKGNAME:S/lib/alsa/}
-PKGREVISION=	5
 CATEGORIES=	audio
 COMMENT=	The ALSA output plugin for xine-lib
 

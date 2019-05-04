@@ -1,22 +1,21 @@
-# $NetBSD: Makefile,v 1.41 2017/04/30 01:21:30 ryoon Exp $
+# $NetBSD: Makefile,v 1.55 2019/04/03 00:32:30 ryoon Exp $
 #
 
-DISTNAME=		apache-couchdb-2.0.0
+DISTNAME=		apache-couchdb-2.1.1
 PKGNAME=		${DISTNAME:S/apache-//}
-PKGREVISION=		4
+PKGREVISION=		9
 CATEGORIES=		databases
 MASTER_SITES=		${MASTER_SITE_APACHE:=couchdb/source/${PKGVERSION_NOREV}/}
 
-MAINTAINER=		filip@joyent.com
+MAINTAINER=		fhajny@NetBSD.org
 HOMEPAGE=		http://couchdb.apache.org/
 COMMENT=		Document database server, accessible via a RESTful JSON API
 LICENSE=		apache-2.0
 
 HAS_CONFIGURE=		yes
 USE_LANGUAGES=		c c++
-USE_TOOLS+=		gmake install-info pax pkg-config
+USE_TOOLS+=		gmake pax pkg-config
 USE_LIBTOOL=		yes
-INFO_FILES=		yes
 BUILD_DEFS+=		VARBASE
 
 BUILD_DEPENDS+=		help2man-[0-9]*:../../converters/help2man
@@ -66,17 +65,20 @@ SUBST_FILES.paths+=	rel/overlay/etc/default.ini
 SUBST_FILES.paths+=	src/config/src/config_app.erl
 SUBST_VARS.paths=	COUCH_DBDIR COUCH_LOGDIR COUCH_RUNDIR PREFIX PKG_SYSCONFDIR
 
+CHECK_PORTABILITY_SKIP+=	build-aux/print-committerlist.sh
+
 CONFIGURE_ARGS+=	--rebar\ ${PREFIX}/bin/rebar
 CONFIGURE_ARGS+=	--user\ ${COUCH_USER}
 CONFIGURE_ARGS+=	--skip-deps
 CONFIGURE_ARGS+=	--with-curl
 
 BUILD_TARGET=		release
+TEST_TARGET=		check
 
 INSTALLATION_DIRS+=	bin couchdb/lib
 INSTALLATION_DIRS+=	couchdb/share/server couchdb/share/www/docs
-INSTALLATION_DIRS+=	${PKGINFODIR} ${PKGMANDIR}/man1
-INSTALLATION_DIRS+=	share/doc/couchdb share/examples/couchdb
+INSTALLATION_DIRS+=	${PKGMANDIR}/man1
+INSTALLATION_DIRS+=	share/examples/couchdb
 
 RCD_SCRIPTS+=		couchdb
 
@@ -88,6 +90,9 @@ GENERATE_PLIST=		cd ${DESTDIR}${PREFIX}; ${FIND}				\
 				couchdb/erts-* couchdb/lib			\
 				\( -type f -o -type l \) -print |		\
 				${SORT} -u;
+# Ignore dynamically generated parts when doing print-PLIST
+PRINT_PLIST_AWK+=	/^couchdb\/erts-/ { next; }
+PRINT_PLIST_AWK+=	/^couchdb\/lib\// { next; }
 
 # We need to know the version of erts and subst it inside the SMF manifest
 .include "../../lang/erlang/Makefile.versions"
@@ -100,12 +105,8 @@ do-install:
 		${DESTDIR}${PREFIX}/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/rel/couchdb/bin/couchjs			\
 		${DESTDIR}${PREFIX}/bin
-	${INSTALL_INFO} ${WRKSRC}/rel/couchdb/share/docs/CouchDB.info		\
-		${DESTDIR}${PREFIX}/${PKGINFODIR}/CouchDB.info
 	${INSTALL_MAN} ${WRKSRC}/rel/couchdb/share/docs/couchdb.1		\
 		${DESTDIR}${PREFIX}/${PKGMANDIR}/man1
-	${INSTALL_DATA} ${WRKSRC}/share/docs/pdf/CouchDB.pdf			\
-		${DESTDIR}${PREFIX}/share/doc/couchdb
 	cd ${WRKSRC}/rel/couchdb/share && ${PAX} -rw -pp server www		\
 		${DESTDIR}${PREFIX}/couchdb/share
 	cd ${WRKSRC}/rel/couchdb/etc && ${PAX} -rw -pp *.ini vm.args		\

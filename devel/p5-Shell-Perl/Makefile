@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:23:35 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:44:37 wiz Exp $
 #
 
-DISTNAME=	Shell-Perl-0.0026
+DISTNAME=	Shell-Perl-0.004
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

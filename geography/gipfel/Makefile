@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.14 2015/04/25 14:23:05 tnn Exp $
+# $NetBSD: Makefile,v 1.16 2018/03/12 11:16:37 wiz Exp $
 #
 
 DISTNAME=	gipfel-0.4.0
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	geography graphics
 MASTER_SITES=	http://www.ecademix.com/JohannesHofmann/
 
 MAINTAINER=	johannes.hofmann@gmx.de
-HOMEPAGE=	http://www.ecademix.com/JohannesHofmann/gipfel.html
+#HOMEPAGE=	http://www.ecademix.com/JohannesHofmann/gipfel.html
 COMMENT=	Photogrammetry For Mountain Images
 LICENSE=	gnu-gpl-v3
 

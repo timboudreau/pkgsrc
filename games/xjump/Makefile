@@ -1,20 +1,20 @@
-# $NetBSD: Makefile,v 1.17 2017/01/19 18:52:11 agc Exp $
+# $NetBSD: Makefile,v 1.19 2018/01/14 15:26:49 rillig Exp $
 
 DISTNAME=		xjump_2.7.5.orig
 PKGNAME=		xjump-2.7.5
 PKGREVISION=		4
 CATEGORIES=		games
 MASTER_SITES=		ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles
-MASTER_SITES+=		http://www.gtlib.cc.gatech.edu/pub/debian/pool/main/x/xjump/
+#MASTER_SITES+=		http://www.gtlib.cc.gatech.edu/pub/debian/pool/main/x/xjump/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gtlib.cc.gatech.edu/pub/debian/pool/main/x/xjump/
+#HOMEPAGE=		http://www.gtlib.cc.gatech.edu/pub/debian/pool/main/x/xjump/
 COMMENT=		Jumping game for X
 
 WRKSRC=			${WRKDIR}/xjump-2.7.5.orig
 BUILD_TARGET=		xjump
 INSTALLATION_DIRS=	bin
-MAKE_ENV+=		VARBASE=${VARBASE:Q}
+MAKE_ENV+=		VARBASE=${VARBASE}
 
 SETGIDGAME=		yes
 SPECIAL_PERMS=		bin/xjump ${SETGID_GAMES_PERMS}

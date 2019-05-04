@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.15 2016/04/20 12:10:27 nros Exp $
+# $NetBSD: Makefile,v 1.17 2018/02/27 23:56:07 khorben Exp $
 
 DISTNAME=		ifp-line-0.3
+PKGREVISION=		1
 CATEGORIES=		audio
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=ifp-driver/}
 
@@ -17,5 +18,5 @@ GNU_CONFIGURE=		yes
 USE_FEATURES+=		fts_open
 
 .include "../../converters/libiconv/buildlink3.mk"
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

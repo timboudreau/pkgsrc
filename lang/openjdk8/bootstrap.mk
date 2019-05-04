@@ -1,4 +1,4 @@
-# $NetBSD: bootstrap.mk,v 1.10 2017/06/06 03:36:34 ryoon Exp $
+# $NetBSD: bootstrap.mk,v 1.13 2018/11/12 10:42:07 tnn Exp $
 #
 # This file contains a map of available binary bootstrap toolchains
 # and which kit to use for each supported platform.
@@ -25,7 +25,9 @@
 
 ONLY_FOR_PLATFORM=	NetBSD-[5-9].*-i386 NetBSD-[5-9].*-x86_64
 ONLY_FOR_PLATFORM+=	NetBSD-[7-9].*-sparc64 NetBSD-[7-9].*-earmv[67]hf
+ONLY_FOR_PLATFORM+=	NetBSD-*-aarch64
 ONLY_FOR_PLATFORM+=	DragonFly-[34].*-* SunOS-*-* FreeBSD-10.*-x86_64
+ONLY_FOR_PLATFORM+=	Linux-*-x86_64
 
 BOOT.nb5-i386=		bootstrap-jdk-1.7.76-netbsd-5-i386-20150301.tar.xz
 BOOT.nb5-amd64=		bootstrap-jdk-1.7.76-netbsd-5-amd64-20150301.tar.xz
@@ -35,6 +37,7 @@ BOOT.nb7-i386=		bootstrap-jdk-1.7.76-netbsd-7-i386-20150301.tar.xz
 BOOT.nb7-amd64=		bootstrap-jdk-1.7.76-netbsd-7-amd64-20150301.tar.xz
 BOOT.nb7-sparc64=	bootstrap-jdk-1.7.76-netbsd-7-sparc64-20150301.tar.xz
 BOOT.nb7-earmv6hf=	bootstrap-jdk-1.7.76-netbsd-7-earmv6hf-20150306.tar.xz
+BOOT.nb8-aarch64=	bootstrap-jdk-1.8.181-netbsd-8-aarch64-20180917.tar.xz
 BOOT.fbsd10-amd64=	bootstrap-jdk-1.7.76-freebsd-10-amd64-20150301.tar.xz
 
 #XXX should be regenerated
@@ -81,6 +84,11 @@ DISTFILES+=		${BOOT.nb7-earmv6hf}
 EXTRACT_ONLY+=		${BOOT.nb7-earmv6hf}
 .endif
 
+.if !empty(MACHINE_PLATFORM:MNetBSD-*-aarch64) || make(distinfo)
+DISTFILES+=		${BOOT.nb8-aarch64}
+EXTRACT_ONLY+=		${BOOT.nb8-aarch64}
+.endif
+
 .if !empty(MACHINE_PLATFORM:MDragonFly-3.6*-x86_64) || make(distinfo)
 DISTFILES+=		${BOOT.dfly3.6-amd64}
 EXTRACT_ONLY+=		${BOOT.dfly3.6-amd64}
@@ -94,6 +102,10 @@ EXTRACT_ONLY+=		${BOOT.dfly3.8-amd64}
 .if !empty(MACHINE_PLATFORM:MFreeBSD-10.*-x86_64) || make(distinfo)
 DISTFILES+=		${BOOT.fbsd10-amd64}
 EXTRACT_ONLY+=		${BOOT.fbsd10-amd64}
+.endif
+
+.if ${OPSYS} == "Linux"
+# TODO adoptopenjdk?
 .endif
 
 .if ${OPSYS} == "SunOS"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.45 2017/06/05 14:24:16 ryoon Exp $
+# $NetBSD: Makefile,v 1.48 2018/08/22 09:45:52 wiz Exp $
 
 DISTNAME=	freeradius-server-${RADVER}
 PKGNAME=	${DISTNAME:S/-server//}
-PKGREVISION=	1
+PKGREVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	ftp://ftp.freeradius.org/pub/freeradius/
 EXTRACT_SUFX=	.tar.bz2
@@ -70,14 +70,14 @@ REPLACE_PERL=		src/modules/rlm_counter/rad_counter
 REPLACE_PERL+=		scripts/radsqlrelay
 
 SUBST_CLASSES+=		make
-SUBST_STAGE.make=	post-patch
+SUBST_STAGE.make=	pre-configure
 SUBST_FILES.make=	src/modules/rlm_sql/drivers/rlm_sql_postgresql/Makefile.in
 SUBST_SED.make+=	-e "s|RLM_SQL_LIBS	=|RLM_SQL_LIBS	= \
 			-L${PREFIX}/lib|g"
 SUBST_MESSAGE.make=	Fixing Makefiles.
 
 SUBST_CLASSES+=		config
-SUBST_STAGE.config=	post-patch
+SUBST_STAGE.config=	pre-configure
 SUBST_FILES.config=	raddb/radiusd.conf.in
 SUBST_SED.config=	-e "s|@@RADIUS_USER@@|${RADIUS_USER}|g"
 SUBST_SED.config+=	-e "s|@@RADIUS_GROUP@@|${RADIUS_GROUP}|g"

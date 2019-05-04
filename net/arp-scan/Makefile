@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.9 2016/07/09 06:38:40 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2018/08/22 09:45:51 wiz Exp $
 #
 
 DISTNAME=	arp-scan-1.9
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	net
 MASTER_SITES=	http://www.nta-monitor.com/files/arp-scan/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.nta-monitor.com/tools-resources/security-tools/arp-scan
+#HOMEPAGE=	http://www.nta-monitor.com/tools-resources/security-tools/arp-scan
 COMMENT=	Discovery and fingerprinting tool using ARP
 LICENSE=	gnu-gpl-v3
 

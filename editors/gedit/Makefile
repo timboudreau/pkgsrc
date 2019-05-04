@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.138 2017/02/12 06:24:43 ryoon Exp $
+# $NetBSD: Makefile,v 1.144 2018/11/14 21:17:22 bsiegert Exp $
 #
 
 DISTNAME=		gedit-2.30.4
-PKGREVISION=		27
+PKGREVISION=		32
 CATEGORIES=		editors gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gedit/2.30/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/projects/gedit/
+HOMEPAGE=		https://www.gnome.org/projects/gedit/
 COMMENT=		Lightweight GNOME2 text editor
 LICENSE=		gnu-gpl-v2
 

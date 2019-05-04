@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.2 2016/03/05 11:29:25 jperkin Exp $
+# $NetBSD: Makefile,v 1.5 2018/06/08 20:49:42 nros Exp $
 
 DISTNAME=	qore-xmlsec-module-0.0.2
-PKGREVISION=	5
+PKGREVISION=	8
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qore/}
 
@@ -12,7 +12,7 @@ LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 PTHREAD_OPTS+=	native
 
 CONFIGURE_ARGS+=--with-xmlsec-dir=${BUILDLINK_PREFIX.xmlsec1}

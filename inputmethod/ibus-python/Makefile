@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.11 2017/01/01 14:43:44 wiz Exp $
+# $NetBSD: Makefile,v 1.17 2019/04/26 13:14:02 maya Exp $
 
 .include "../../inputmethod/ibus/Makefile.common"
 
@@ -7,14 +7,15 @@ PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/ibus/ibus-python/}
 COMMENT=	Python library for Intelligent Input Bus
 LICENSE=	gnu-lgpl-v2.1
 
-GNU_CONFIGURE=	yes
-USE_LIBTOOL=	yes
-USE_TOOLS+=	pkg-config intltool msgfmt gmake
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=		c c++
+USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
+USE_TOOLS+=		pkg-config intltool msgfmt gmake
+GNU_CONFIGURE=		yes
 
-DEPENDS+=		ibus>=${PKGVERSION_NOREV}:../../inputmethod/ibus
-DEPENDS+=		${PYPKGPREFIX}-gtk2-[0-9]*:../../x11/py-gtk2
+DEPENDS+=	ibus>=${PKGVERSION_NOREV}:../../inputmethod/ibus
+DEPENDS+=	${PYPKGPREFIX}-gobject3-[0-9]*:../../devel/py-gobject3
+DEPENDS+=	${PYPKGPREFIX}-gtk2-[0-9]*:../../x11/py-gtk2
 
 PKGCONFIG_OVERRIDE+=	ibus-1.0.pc.in
 
@@ -25,6 +26,8 @@ CONFIGURE_ARGS+=	--disable-nls
 CONFIGURE_ARGS+=	--disable-libnotify
 CONFIGURE_ARGS+=	--disable-engine
 CONFIGURE_ARGS+=	--disable-surround-text
+CONFIGURE_ARGS+=	--disable-emoji-dict
+CONFIGURE_ARGS+=	--disable-unicode-dict
 
 .include "../../mk/compiler.mk"
 .if !empty(CC_VERSION:Mgcc-4.1.[0-9]*)
@@ -34,14 +37,12 @@ BUILDLINK_TRANSFORM+=	rm:-Wno-unused-but-set-variable
 NO_BUILD=	yes
 INSTALL_DIRS=	bindings ibus
 
-CONFIGURE_ARGS+=		--disable-dconf
-CONFIGURE_ARGS+=		--disable-gconf
-CONFIGURE_ARGS+=		--enable-python-library
-CONFIGURE_ENV+=			PYTHON2=${PYTHONBIN}
+CONFIGURE_ARGS+=	--disable-dconf
+CONFIGURE_ARGS+=	--enable-python-library
+CONFIGURE_ENV+=		PYTHON2=${PYTHONBIN}
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2, py-gobject3
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
-.include "../../devel/py-gobject3/buildlink3.mk"
 PY_PATCHPLIST=	yes
 .include "../../lang/python/extension.mk"
 BUILDLINK_API_DEPENDS.py-dbus+=	${PYPKGPREFIX}-dbus>=0.83.0

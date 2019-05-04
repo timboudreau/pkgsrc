@@ -1,17 +1,16 @@
-# $NetBSD: Makefile,v 1.28 2017/05/31 19:29:26 jlam Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/02 07:43:07 adam Exp $
 
-DISTNAME=	redis-3.2.9
-PKGREVISION=	1
+DISTNAME=	redis-5.0.4
 CATEGORIES=	databases
 MASTER_SITES=	http://download.redis.io/releases/
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://redis.io/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://redis.io/
 COMMENT=	Persistent key-value database with built-in net interface
 LICENSE=	modified-bsd
 
 USE_LANGUAGES=		c99
-USE_TOOLS+=		gmake pax
+USE_TOOLS+=		gmake
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -38,7 +37,7 @@ OWN_DIRS_PERMS+=	${REDIS_LOGDIR} ${REDIS_USER} ${REDIS_GROUP} 0770
 
 PKG_GROUPS+=		${REDIS_GROUP}
 PKG_USERS+=		${REDIS_USER}:${REDIS_GROUP}
-PKG_GECOS.${REDIS_USER}= Redis daemon user
+PKG_GECOS.${REDIS_USER}=Redis daemon user
 PKG_HOME.${REDIS_USER}=	${REDIS_DBDIR}
 
 FILES_SUBST+=		REDIS_USER=${REDIS_USER}
@@ -47,7 +46,7 @@ FILES_SUBST+=		REDIS_DATADIR=${REDIS_DATADIR}
 
 SUBST_CLASSES+=		fix-paths
 SUBST_STAGE.fix-paths=	pre-configure
-SUBST_MESSAGE.fix-paths= Fixing paths.
+SUBST_MESSAGE.fix-paths=Fixing paths.
 SUBST_FILES.fix-paths=	redis.conf
 SUBST_VARS.fix-paths=	REDIS_DATADIR REDIS_LOGDIR REDIS_PIDDIR
 
@@ -56,13 +55,16 @@ CHECK_PORTABILITY_SKIP+=	deps/jemalloc/configure
 post-extract:
 	${CHMOD} -R g-w ${WRKSRC}
 
+.if ${MACHINE_ARCH} == "i386"
+# Need 8 byte atomics.
+CFLAGS+=		-march=i586
+.endif
+
 post-install:
 	${INSTALL_DATA} ${WRKSRC}/redis.conf ${DESTDIR}${EGDIR}/redis.conf.example
 .for file in ${DOCFILES}
 	${INSTALL_DATA} ${WRKSRC}/${file} ${DESTDIR}${PREFIX}/${DOCDIR}/${file}
 .endfor
-	cd ${WRKSRC}/utils && pax -rwpp . ${DESTDIR}${EGDIR}/utils/
-	cd ${WRKSRC}/tests && pax -rwpp . ${DESTDIR}${EGDIR}/tests/
 
 do-test:
 	cd ${WRKSRC} && ${SH} runtest

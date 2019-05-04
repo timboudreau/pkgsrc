@@ -1,8 +1,6 @@
-$NetBSD: distinfo,v 1.25 2015/10/25 13:50:22 jmcneill Exp $
+$NetBSD: distinfo,v 1.28 2019/03/02 11:01:55 leot Exp $
 
-SHA1 (midori_0.5.11_all_.tar.bz2) = 64c86935028feb5f89d799c2acacaad67764da6f
-RMD160 (midori_0.5.11_all_.tar.bz2) = 66aaf624d39fbb86c1bec42972fba7998965ef50
-SHA512 (midori_0.5.11_all_.tar.bz2) = 237310d1f0bf70796474b9ec5be6755927e66acd2b527d04db39696c5e2f7ea2d11f7deb51ba3f5c151a450ab71e642282a1386e34253aaea1d8602ce76ac87d
-Size (midori_0.5.11_all_.tar.bz2) = 1428791 bytes
-SHA1 (patch-CMakeLists.txt) = 68d0232b254e4094118b7f029162bf669f096d45
-SHA1 (patch-config_CMakeLists.txt) = 5ac4af9f980749659058fb55e7fd25ad6226861f
+SHA1 (midori-v8.0.tar.gz) = ad4c766ba364eda5fefa349d923ecfa61b5a7a9c
+RMD160 (midori-v8.0.tar.gz) = a7759a0c0b68e0f8440c3bca133b6c914744c6e8
+SHA512 (midori-v8.0.tar.gz) = 3a8cbca941637160a41f8a638e2153ddd5d8930a3d26df2031d90de40234743f5663c853ddf655673331b8a9ec07c65d8920768a4744fa5412bc2eddf2b8d81f
+Size (midori-v8.0.tar.gz) = 1899654 bytes

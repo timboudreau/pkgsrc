@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.3 2017/02/11 10:18:52 adam Exp $
+# $NetBSD: Makefile,v 1.5 2018/11/09 18:12:26 adam Exp $
 
 PKGNAME=	${DISTNAME:C/-/95-contrib-/}
 COMMENT=	Contrib subtree of tools and plug-ins

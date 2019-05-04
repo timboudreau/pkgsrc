@@ -1,26 +1,26 @@
-# $NetBSD: Makefile,v 1.87 2017/07/03 11:10:41 adam Exp $
+# $NetBSD: Makefile,v 1.105 2019/02/12 13:11:56 adam Exp $
 
-DISTNAME=	Django-1.11.3
+DISTNAME=	Django-1.11.20
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:tl}
 CATEGORIES=	www python
-MASTER_SITES=	http://www.djangoproject.com/m/releases/${PKGVERSION_NOREV:R}/
+MASTER_SITES=	https://www.djangoproject.com/m/releases/${PKGVERSION_NOREV:R}/
 
 MAINTAINER=	joerg@NetBSD.org
-HOMEPAGE=	http://www.djangoproject.com/
+HOMEPAGE=	https://www.djangoproject.com/
 COMMENT=	Django, a high-level Python Web framework
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=		# empty
-REPLACE_PYTHON=		${WRKSRC}/django/bin/django-admin.py
-REPLACE_PYTHON+=	${WRKSRC}/django/conf/project_template/manage.py-tpl
-
 DEPENDS+=	${PYPKGPREFIX}-pytz-[0-9]*:../../time/py-pytz
 
+USE_LANGUAGES=	# none
+
+REPLACE_PYTHON+=	django/bin/django-admin.py
+REPLACE_PYTHON+=	django/conf/project_template/manage.py-tpl
+
 post-install:
-	${MV} ${DESTDIR}${PREFIX}/bin/django-admin \
-		${DESTDIR}${PREFIX}/bin/django-admin${PYVERSSUFFIX} || ${TRUE}
-	${MV} ${DESTDIR}${PREFIX}/bin/django-admin.py \
-		${DESTDIR}${PREFIX}/bin/django-admin${PYVERSSUFFIX}.py || ${TRUE}
+	cd ${DESTDIR}${PREFIX}/bin && \
+		${MV} django-admin django-admin-${PYVERSSUFFIX} && \
+		${MV} django-admin.py django-admin-${PYVERSSUFFIX}.py || ${TRUE}
 
 .include "../../lang/python/application.mk"
 .include "../../lang/python/egg.mk"

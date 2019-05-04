@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.1 2017/07/13 14:36:27 taca Exp $
+# $NetBSD: Makefile,v 1.7 2019/02/25 14:44:50 taca Exp $
 
-DISTNAME=	byebug-9.0.6
+DISTNAME=	byebug-11.0.0
 CATEGORIES=	devel
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/deivid-rodriguez/byebug
+HOMEPAGE=	https://github.com/deivid-rodriguez/byebug
 COMMENT=	Ruby 2.0 fast debugger - base + CLI
 LICENSE=	2-clause-bsd
 

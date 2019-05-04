@@ -1,4 +1,4 @@
-# $NetBSD: help.awk,v 1.27 2013/08/31 21:27:53 rillig Exp $
+# $NetBSD: help.awk,v 1.33 2019/04/28 12:10:24 rillig Exp $
 #
 
 # This program extracts the inline documentation from *.mk files.
@@ -7,8 +7,9 @@
 #
 
 BEGIN {
-	no = 0; yes = 1; always = 1;
+	no = 0; yes = 1;
 
+	debug = ENVIRON["HELP_DEBUG"] != "";
 	topic = ENVIRON["TOPIC"];
 	uctopic = toupper(topic);
 	lctopic = tolower(topic);
@@ -27,6 +28,7 @@ BEGIN {
 	print_noncomment_lines = yes; # for make targets, this isn't useful
 	print_index = (topic == ":index");
 				# whether to print only the list of keywords
+	delete all_appearances;	# all files where the topic appears as text
 }
 
 # Help topics are separated by either completely empty lines or by the
@@ -36,6 +38,11 @@ BEGIN {
 function end_of_topic() {
 
 	if (comment_lines <= 2 || ignore_this_section) {
+		if (comment_lines <= 2) {
+			dprint("Ignoring section because of too small comment.");
+		} else {
+			dprint("Ignoring section because of a previous decision.");
+		}
 		cleanup();
 		return;
 	}
@@ -50,10 +57,7 @@ function end_of_topic() {
 			print "";
 		found_anything = yes;
 
-		kw = "";
-		for (i in keywords)
-			kw = kw " " i;
-		print "===> "last_fname " (keywords:" kw "):";
+		print "===> " last_fname " (keywords:" sorted_keys(keywords, " ") "):";
 
 		for (i = 0; i < nlines; i++) {
 			if (print_noncomment_lines || (lines[i] ~ /^#/))
@@ -61,6 +65,29 @@ function end_of_topic() {
 		}
 	}
 	cleanup();
+}
+
+# Returns the sorted keys of the array, each prefixed by the prefix.
+function sorted_keys(array, prefix,   elem, list, listlen, i, j, tmp, result) {
+	listlen = 0;
+	for (elem in array)
+		list[listlen++] = elem;
+
+	for (i = 0; i < listlen; i++) {
+		for (j = i + 1; j < listlen; j++) {
+			if (list[j] < list[i]) {
+				tmp = list[i];
+				list[i] = list[j];
+				list[j] = tmp;
+			}
+		}
+	}
+
+	result = "";
+	for (i = 0; i < listlen; i++) {
+		result = result prefix list[i];
+	}
+	return result;
 }
 
 function cleanup() {
@@ -73,7 +100,13 @@ function cleanup() {
 	ignore_this_section = no;
 }
 
-always {
+function dprint(msg) {
+	if (debug) {
+		print(FILENAME ":" FNR ": " msg);
+	}
+}
+
+{
 	ignore_this_line = (ignore_next_empty_line && $0 == "#") || $0 == "";
 	ignore_next_empty_line = no;
 }
@@ -94,6 +127,7 @@ always {
 		w = ($i == toupper($i)) ? tolower($i) : $i;
 		sub(/,$/, "", w);
 		keywords[w] = yes;
+		dprint("Adding keyword " w);
 	}
 	ignore_this_line = yes;
 	ignore_next_empty_line = yes;
@@ -104,6 +138,7 @@ always {
 }
 
 $1 == "#" && $2 == "Copyright" {
+	dprint("Ignoring the section because it contains \"Copyright\".");
 	ignore_this_section = yes;
 }
 
@@ -123,7 +158,7 @@ $1 ~ /:$/ && $2 == ".PHONY" {
 # be all-lowercase (make targets) or all-uppercase (variable names).
 # Everything else is assumed to belong to the explaining text.
 #
-NF >= 1 && !/^[\t.]/ && !/^#*$/ {
+NF >= 1 && !/^[\t.]/ && !/^#*$/ && !/^#\t\t/ {
 	w = ($1 ~ /^\#[A-Z]/) ? substr($1, 2) : ($1 == "#") ? $2 : $1;
 
 	# Reduce VAR.<param>, VAR.${param} and VAR.* to VAR.
@@ -137,7 +172,7 @@ NF >= 1 && !/^[\t.]/ && !/^#*$/ {
 		# Words in mixed case are not taken as keywords. If you
 		# want them anyway, list them in a "Keywords:" line.
 
-	} else if (w !~ /^[_A-Za-z][-0-9A-Z_a-z]*[0-9A-Za-z](:|\?=|=)?$/) {
+	} else if (w !~ /^[A-Za-z][-0-9A-Z_a-z]*[0-9A-Za-z](:|\?=|=)?$/) {
 		# Keywords must consist only of letters, digits, hyphens
 		# and underscores; except for some trailing type specifier.
 
@@ -173,17 +208,25 @@ $1 == "#" {
 	end_of_topic();
 }
 
-always {
+index(tolower($0), topic) != 0 {
+	all_appearances[FILENAME] = yes;
+}
+
+{
 	last_fname = FILENAME;
 }
 
 END {
 	end_of_topic();
 	if (print_index) {
-		for (k in all_keywords) {
-			print all_keywords[k] "\t" k;
-		}
+		print "Available help topics:";
+		print sorted_keys(all_keywords, "\n");
 	} else if (!found_anything) {
-		print "No help found for "topic".";
+		appearances = sorted_keys(all_appearances, "\n");
+		if (appearances != "") {
+			print "No help found for " topic ", but it appears in:\n" appearances;
+		} else {
+			print "No help found for " topic ".";
+		}
 	}
 }

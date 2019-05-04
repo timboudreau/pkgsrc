@@ -1,13 +1,12 @@
-# $NetBSD: Makefile,v 1.44 2017/02/12 06:25:59 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.50 2018/11/14 22:22:24 kleink Exp $
 
 DISTNAME=		gkrellm-est-20040710
-PKGREVISION=		33
+PKGREVISION=		37
 CATEGORIES=		sysutils
-MASTER_SITES=		http://cubidou.nerim.net/gkrellm-est/
+#MASTER_SITES=		http://cubidou.nerim.net/gkrellm-est/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://cubidou.nerim.net/gkrellm-est/
+#HOMEPAGE=		http://cubidou.nerim.net/gkrellm-est/
 COMMENT=		GKrellM plugin that controls EST-capable processors
 
 NO_CONFIGURE=		yes
@@ -15,7 +14,6 @@ USE_TOOLS+=		pkg-config
 
 ONLY_FOR_PLATFORM=	NetBSD-2.0[F-Z]*-i386 NetBSD-2.99.*-i386
 ONLY_FOR_PLATFORM+=	NetBSD-[3-9].*-i386
-ONLY_FOR_PLATFORM+=	DragonFly-1.[7-9].*-i386 DragonFly-[2-9].*-i386
 
 INSTALLATION_DIRS=	lib/gkrellm2/plugins
 

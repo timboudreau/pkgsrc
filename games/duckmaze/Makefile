@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.19 2015/04/25 14:22:54 tnn Exp $
+# $NetBSD: Makefile,v 1.21 2019/04/25 07:32:54 maya Exp $
 #
 
 DISTNAME=	duckmaze-pc-0.2
 PKGNAME=	duckmaze-0.2
-PKGREVISION=	16
+PKGREVISION=	17
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=duckmaze/}
 EXTRACT_SUFX=	.zip
@@ -15,9 +15,9 @@ COMMENT=	Puzzle game
 USE_LANGUAGES=	# none
 USE_TOOLS+=	pax
 
-DM= ${WRKDIR}/duckmaze
+DM=	${WRKDIR}/duckmaze
 
-REPLACE_PYTHON=level.py level_editor.py mopelib/mopelib.py duckmaze.py
+REPLACE_PYTHON=	level.py level_editor.py mopelib/mopelib.py duckmaze.py
 
 do-build:
 	${ECHO} "#!/bin/sh" >${DM}

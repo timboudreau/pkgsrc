@@ -1,9 +1,7 @@
-$NetBSD: distinfo,v 1.7 2015/11/04 01:18:06 agc Exp $
+$NetBSD: distinfo,v 1.10 2019/04/25 23:35:28 markd Exp $
 
-SHA1 (qca-2.0.3.tar.bz2) = 9c868b05b81dce172c41b813de4de68554154c60
-RMD160 (qca-2.0.3.tar.bz2) = 333cfdce91fedfaec09c205528de52d7b569c521
-SHA512 (qca-2.0.3.tar.bz2) = c1120ffb373e294fbcc76e21dc2f503ebd3398b26d0ffa7ab7ee3a3e1a4228159358b59c2673ac4a1c2363771e61da54a5080b201c65d586ceda2e3b2facc1bb
-Size (qca-2.0.3.tar.bz2) = 4530731 bytes
-SHA1 (patch-aa) = e9c7791aac4b8764100a95a596e109e6ebb6abf0
-SHA1 (patch-configure) = c114e4f6c2982f8293d37b332a44781fd884412b
-SHA1 (patch-src_botantools_botan_botan_secmem.h) = 4cb74801291dadb4d2c15c741bbb3b836135fcd9
+SHA1 (qca-2.2.1.tar.xz) = 012f1259126f1ce40402f236c7531f3e1d1c89da
+RMD160 (qca-2.2.1.tar.xz) = dddc3cf240dc5424b9df13fc1bf41c8e04f3b814
+SHA512 (qca-2.2.1.tar.xz) = 3a0e8aa7cf3ea9a7244facaf1d521ebca2753af37636e7bf5f21c57ae880ac9682ae7d6d9fa5ce41b73568ff9538214956b89cd41228c2cb828d9068c2031a9c
+Size (qca-2.2.1.tar.xz) = 691676 bytes
+SHA1 (patch-CMakeLists.txt) = 4867c54f8bff523233a11201bdb021e6e81a10ed

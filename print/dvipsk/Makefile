@@ -1,29 +1,30 @@
-# $NetBSD: Makefile,v 1.16 2017/06/20 20:50:50 markd Exp $
+# $NetBSD: Makefile,v 1.22 2019/04/28 11:31:13 rillig Exp $
 
-DISTNAME=	texlive-20170524-source
-PKGNAME=	dvipsk-5.997
+DISTNAME=	texlive-20180414-source
+PKGNAME=	dvipsk-5.998
+PKGREVISION=	1
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	minskim@NetBSD.org
 HOMEPAGE=	http://www.radicaleye.com/dvips.html
 COMMENT=	DVI-to-PostScript translator
 
-CONFLICTS+=	teTeX-bin<3.0nb24
-CONFLICTS+=	teTeX-texmf<3.0nb9
-BUILD_DEPENDS+=	tex-texconfig-[0-9]*:../../print/tex-texconfig
+BUILD_DEPENDS+=	tex-tetex-[0-9]*:../../print/tex-tetex
 DEPENDS+=	tex-dvips>=2013:../../print/tex-dvips
 
 EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 			${DISTNAME}/texk/dvipsk
 
-GNU_CONFIGURE=	yes
 INFO_FILES=	yes
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config
-CONFIGURE_DIRS=	texk/dvipsk
 
+GNU_CONFIGURE=		yes
+# texk/dvipsk/squeeze/configure doesn't know --with-system-kpathsea
+GNU_CONFIGURE_STRICT=	no
+CONFIGURE_DIRS=		texk/dvipsk
 CONFIGURE_ARGS+=	--with-system-kpathsea
 
 PKG_SYSCONFSUBDIR=	texmf

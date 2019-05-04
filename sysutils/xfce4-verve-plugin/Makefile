@@ -1,11 +1,10 @@
-# $NetBSD: Makefile,v 1.7 2017/06/23 16:47:49 youri Exp $
+# $NetBSD: Makefile,v 1.16 2019/01/18 13:08:01 youri Exp $
 
-PKGREVISION= 3
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-DISTNAME=	xfce4-verve-plugin-1.1.0
+DISTNAME=	xfce4-verve-plugin-2.0.0
 CATEGORIES=	sysutils
-MASTER_SITES=	http://archive.xfce.org/src/panel-plugins/xfce4-verve-plugin/1.1/
+MASTER_SITES=	http://archive.xfce.org/src/panel-plugins/xfce4-verve-plugin/2.0/
 
 HOMEPAGE=	http://goodies.xfce.org/projects/panel-plugins/xfce4-verve-plugin
 COMMENT=	Xfce command line plugin

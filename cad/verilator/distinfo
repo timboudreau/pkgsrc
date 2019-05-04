@@ -1,0 +1,7 @@
+$NetBSD: distinfo,v 1.2 2019/04/01 12:22:53 ryoon Exp $
+
+SHA1 (verilator-4.012.tgz) = 653688c0dc8521d8d3ab9f9e94180f2271ec08ff
+RMD160 (verilator-4.012.tgz) = d15a54b8243caf5e22c3f9c6f6ff76ee7a37219b
+SHA512 (verilator-4.012.tgz) = b2ebe685e5801eb25e76cc9820def7586324b4854651756e0df4c4e21b218ebc2bafd3ef8157d22d90cf6f940089d6d4ac9981e26abf602a5b47f58d878c05ea
+Size (verilator-4.012.tgz) = 2513309 bytes
+SHA1 (patch-Makefile.in) = 3c91715cdfaba04120ada7a328b46e0571767e06

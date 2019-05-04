@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.104 2017/01/19 18:52:20 agc Exp $
+# $NetBSD: Makefile,v 1.110 2018/08/22 09:46:07 wiz Exp $
 
-DISTNAME=	rsync-3.1.2
+DISTNAME=	rsync-3.1.3
+PKGREVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	http://rsync.samba.org/ftp/rsync/
 MASTER_SITES+=	http://rsync.samba.org/ftp/rsync/old-versions/
@@ -18,6 +19,8 @@ CONFIGURE_ARGS+=	--with-included-popt
 CONFIGURE_ARGS+=	--with-rsyncd-conf=${PKG_SYSCONFDIR}/rsyncd.conf
 TEST_TARGET=		test
 
+USE_TOOLS+=	perl
+
 PKG_SYSCONFSUBDIR=	rsync
 
 RCD_SCRIPTS=		rsyncd
@@ -26,7 +29,7 @@ SMF_NAME=		rsyncd
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Fixing hardcoded paths.
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	rsync.1 rsyncd.conf.5
 SUBST_SED.paths=	-e 's|/etc/rsyncd|${PKG_SYSCONFDIR}/rsyncd|g'
 SUBST_SED.paths+=	-e 's|/usr/bin/rsync|${PREFIX}/bin/rsync|g'

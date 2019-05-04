@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.89 2017/04/22 21:03:42 adam Exp $
+# $NetBSD: Makefile,v 1.97 2019/04/03 00:32:51 ryoon Exp $
 
 DISTNAME=	dspam-3.10.2
-PKGREVISION=	18
+PKGREVISION=	25
 CATEGORIES=	mail
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dspam/}
 
@@ -26,7 +26,7 @@ REPLACE_PERL+=		webui/cgi-bin/templates/*/strings.pl
 PKGCONFIG_OVERRIDE+=	src/dspam.pc.in
 
 SUBST_CLASSES+=		cgi
-SUBST_STAGE.cgi=	post-patch
+SUBST_STAGE.cgi=	pre-configure
 SUBST_FILES.cgi=	webui/cgi-bin/templates/nav_performance.html
 SUBST_FILES.cgi+=	webui/cgi-bin/configure.pl.in
 SUBST_FILES.cgi+=	webui/cgi-bin/dspam.cgi webui/cgi-bin/admin.cgi

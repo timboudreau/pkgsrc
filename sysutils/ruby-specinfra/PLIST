@@ -1,5 +1,6 @@
-@comment $NetBSD: PLIST,v 1.1 2017/06/10 16:38:25 taca Exp $
+@comment $NetBSD: PLIST,v 1.4 2018/09/23 16:10:09 taca Exp $
 ${GEM_HOME}/cache/${GEM_NAME}.gem
+${GEM_LIBDIR}/.github/stale.yml
 ${GEM_LIBDIR}/.gitignore
 ${GEM_LIBDIR}/.gitmodules
 ${GEM_LIBDIR}/.travis.yml
@@ -17,6 +18,7 @@ ${GEM_LIBDIR}/lib/specinfra/backend/cmd.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/docker.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/dockerfile.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/exec.rb
+${GEM_LIBDIR}/lib/specinfra/backend/jexec.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/lxc.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/powershell/command.rb
 ${GEM_LIBDIR}/lib/specinfra/backend/powershell/script_helper.rb
@@ -56,6 +58,9 @@ ${GEM_LIBDIR}/lib/specinfra/command/alpine/base/process.rb
 ${GEM_LIBDIR}/lib/specinfra/command/alpine/base/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/amazon.rb
 ${GEM_LIBDIR}/lib/specinfra/command/amazon/base.rb
+${GEM_LIBDIR}/lib/specinfra/command/amazon/v2.rb
+${GEM_LIBDIR}/lib/specinfra/command/amazon/v2/port.rb
+${GEM_LIBDIR}/lib/specinfra/command/amazon/v2/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/arch.rb
 ${GEM_LIBDIR}/lib/specinfra/command/arch/base.rb
 ${GEM_LIBDIR}/lib/specinfra/command/arch/base/file.rb
@@ -118,6 +123,9 @@ ${GEM_LIBDIR}/lib/specinfra/command/debian/base/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/debian/v8.rb
 ${GEM_LIBDIR}/lib/specinfra/command/debian/v8/port.rb
 ${GEM_LIBDIR}/lib/specinfra/command/debian/v8/service.rb
+${GEM_LIBDIR}/lib/specinfra/command/devuan.rb
+${GEM_LIBDIR}/lib/specinfra/command/devuan/base.rb
+${GEM_LIBDIR}/lib/specinfra/command/devuan/base/package.rb
 ${GEM_LIBDIR}/lib/specinfra/command/elementary.rb
 ${GEM_LIBDIR}/lib/specinfra/command/elementary/base.rb
 ${GEM_LIBDIR}/lib/specinfra/command/eos.rb
@@ -140,10 +148,13 @@ ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/inventory.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/kernel_module.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/package.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/port.rb
+${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/process.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/routing_table.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/user.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/base/zfs.rb
+${GEM_LIBDIR}/lib/specinfra/command/freebsd/v11.rb
+${GEM_LIBDIR}/lib/specinfra/command/freebsd/v11/interface.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/v6.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/v6/package.rb
 ${GEM_LIBDIR}/lib/specinfra/command/freebsd/v6/user.rb
@@ -278,14 +289,18 @@ ${GEM_LIBDIR}/lib/specinfra/command/suse/base/package.rb
 ${GEM_LIBDIR}/lib/specinfra/command/suse/base/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu/base.rb
+${GEM_LIBDIR}/lib/specinfra/command/ubuntu/base/port.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu/base/ppa.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu/base/service.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu/v15.rb
 ${GEM_LIBDIR}/lib/specinfra/command/ubuntu/v15/service.rb
+${GEM_LIBDIR}/lib/specinfra/command/ubuntu/v18.rb
+${GEM_LIBDIR}/lib/specinfra/command/ubuntu/v18/port.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base/feature.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base/file.rb
+${GEM_LIBDIR}/lib/specinfra/command/windows/base/firewall.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base/group.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base/host.rb
 ${GEM_LIBDIR}/lib/specinfra/command/windows/base/hot_fix.rb
@@ -315,12 +330,14 @@ ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/arch.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/coreos.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/darwin.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/debian.rb
+${GEM_LIBDIR}/lib/specinfra/helper/detect_os/devuan.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/eos.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/esxi.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/freebsd.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/gentoo.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/nixos.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/openbsd.rb
+${GEM_LIBDIR}/lib/specinfra/helper/detect_os/photon.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/plamo.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/poky.rb
 ${GEM_LIBDIR}/lib/specinfra/helper/detect_os/redhat.rb
@@ -338,12 +355,14 @@ ${GEM_LIBDIR}/lib/specinfra/host_inventory/block_device.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/cpu.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/domain.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/ec2.rb
+${GEM_LIBDIR}/lib/specinfra/host_inventory/facter.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/filesystem.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/fqdn.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/group.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/hostname.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/kernel.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/memory.rb
+${GEM_LIBDIR}/lib/specinfra/host_inventory/ohai.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/platform.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/platform_version.rb
 ${GEM_LIBDIR}/lib/specinfra/host_inventory/user.rb
@@ -363,6 +382,8 @@ ${GEM_LIBDIR}/spec/command/alpine/service_spec.rb
 ${GEM_LIBDIR}/spec/command/amazon/interface_spec.rb
 ${GEM_LIBDIR}/spec/command/amazon/package_spec.rb
 ${GEM_LIBDIR}/spec/command/amazon/service_spec.rb
+${GEM_LIBDIR}/spec/command/amazon2/port_spec.rb
+${GEM_LIBDIR}/spec/command/amazon2/service_spec.rb
 ${GEM_LIBDIR}/spec/command/base/file_spec.rb
 ${GEM_LIBDIR}/spec/command/base/group_spec.rb
 ${GEM_LIBDIR}/spec/command/base/host_spec.rb
@@ -383,6 +404,8 @@ ${GEM_LIBDIR}/spec/command/debian/package_spec.rb
 ${GEM_LIBDIR}/spec/command/debian/port_spec.rb
 ${GEM_LIBDIR}/spec/command/debian/service_spec.rb
 ${GEM_LIBDIR}/spec/command/debian8/port_spec.rb
+${GEM_LIBDIR}/spec/command/debian9/port_spec.rb
+${GEM_LIBDIR}/spec/command/debian9/service_spec.rb
 ${GEM_LIBDIR}/spec/command/esxi/package_spec.rb
 ${GEM_LIBDIR}/spec/command/factory_spec.rb
 ${GEM_LIBDIR}/spec/command/freebsd/file_spec.rb

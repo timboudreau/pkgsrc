@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.90 2017/07/04 06:55:53 adam Exp $
+# $NetBSD: Makefile,v 1.96 2018/11/02 23:08:29 adam Exp $
 
-DISTNAME=	libgcrypt-1.7.8
+DISTNAME=	libgcrypt-1.8.4
 CATEGORIES=	security
 MASTER_SITES=	ftp://ftp.gnupg.org/gcrypt/libgcrypt/
-MASTER_SITES+=	http://gd.tuwien.ac.at/privacy/gnupg/libgcrypt/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -17,7 +16,7 @@ GNU_CONFIGURE=		yes
 TEST_TARGET=		check
 
 TEXINFO_REQD=		4.0
-INFO_FILES=		yes # PLIST
+INFO_FILES=		yes
 
 .include "../../mk/bsd.prefs.mk"
 .include "../../mk/compiler.mk"

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.59 2016/09/19 13:04:24 wiz Exp $
+# $NetBSD: Makefile,v 1.62 2018/04/17 22:29:43 wiz Exp $
 
 DISTNAME=	wmbiff-0.4.26
-PKGREVISION=	25
+PKGREVISION=	27
 CATEGORIES=	mail x11 windowmaker
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=wmbiff/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/wmbiff/
+HOMEPAGE=	https://sourceforge.net/projects/wmbiff/
 COMMENT=	WindowMaker xbuffy-like "mail-checker"
 
 USE_TOOLS+=	gmake

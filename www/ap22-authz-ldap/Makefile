@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.3 2016/03/05 11:29:35 jperkin Exp $
-#
+# $NetBSD: Makefile,v 1.5 2018/12/15 21:12:24 wiz Exp $
 
 DISTNAME=	mod_authz_ldap-0.30
 PKGNAME=	${APACHE_PKG_PREFIX}-${DISTNAME:C/^mod_//:C/_/-/}
@@ -7,12 +6,10 @@ PKGREVISION=	2
 CATEGORIES=	www
 MASTER_SITES=	http://authzldap.othello.ch/download/
 
-MAINTAINER=	filip@joyent.com
+MAINTAINER=	fhajny@NetBSD.org
 HOMEPAGE=	http://authzldap.othello.ch/
 COMMENT=	Apache LDAP Authorization module
 LICENSE=	apache-2.0
-
-PKG_APACHE_ACCEPTED=	apache24 apache22
 
 .include "../../mk/apache.mk"
 .include "options.mk"

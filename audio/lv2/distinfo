@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2015/11/03 01:12:40 agc Exp $
+$NetBSD: distinfo,v 1.4 2019/02/05 19:12:06 bsiegert Exp $
 
-SHA1 (lv2-1.12.0.tar.bz2) = fc914f00d3230354145748a2a4e55df0a03bcbe2
-RMD160 (lv2-1.12.0.tar.bz2) = 60e8f419e3d9813e76463433355b246a15e96ff6
-SHA512 (lv2-1.12.0.tar.bz2) = acc5e05eeeb5291fe5b64e30b5c00a6ef7136922fab7846efc05ccacdeff4d7714f705e632d5b3f6a5314cb3a7b847528fd717fc9ebb5d6f39653c53ac261f85
-Size (lv2-1.12.0.tar.bz2) = 399666 bytes
+SHA1 (lv2-1.16.0.tar.bz2) = 437f782946eb73698422455e3735d5b60bf28518
+RMD160 (lv2-1.16.0.tar.bz2) = 59cc787dfcef7e5a29f077657022440f3c44993e
+SHA512 (lv2-1.16.0.tar.bz2) = ead6d590cded5dd7a548d6ffe0f2f9f8efadfa7bb9e8b4fa0aea6664ccdfbb3ca697514bddebe695a9442fba5b62714b5cd45c1bf7d0aaef12ffe50972c2d88c
+Size (lv2-1.16.0.tar.bz2) = 502116 bytes

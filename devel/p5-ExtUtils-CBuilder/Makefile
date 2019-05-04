@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.34 2017/06/05 14:22:56 ryoon Exp $
+# $NetBSD: Makefile,v 1.37 2018/08/22 09:43:58 wiz Exp $
 
-DISTNAME=	ExtUtils-CBuilder-0.280224
+DISTNAME=	ExtUtils-CBuilder-0.280230
 PKGNAME=	p5-${DISTNAME:C/0.([0-9][0-9])([0-9][0-9])([0-9][0-9])/0.\1.\2.\3/}
-PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=ExtUtils/}
 

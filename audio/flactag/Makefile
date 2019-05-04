@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.20 2016/03/08 11:25:35 nros Exp $
+# $NetBSD: Makefile,v 1.22 2018/03/22 08:14:52 adam Exp $
 #
 
 DISTNAME=	flactag-2.0.4
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=flactag/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://software.gently.org.uk/flactag-1.1/
+HOMEPAGE=	https://software.gently.org.uk/flactag-1.1/
 COMMENT=	Tagger for flac album files
 LICENSE=	gnu-gpl-v2
 

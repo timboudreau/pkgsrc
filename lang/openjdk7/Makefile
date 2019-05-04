@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.115 2017/05/09 14:26:06 jperkin Exp $
+# $NetBSD: Makefile,v 1.133 2019/03/20 11:55:11 wiz Exp $
 
-JDK_MICRO=	80
-DISTNAME=	openjdk-1.7.${JDK_MICRO}-20150609
+JDK_MICRO=	141
+DISTNAME=	openjdk-1.7.${JDK_MICRO}-20170813
 PKGNAME=	openjdk7-1.7.${JDK_MICRO}
-PKGREVISION=	7
+PKGREVISION=	10
 CATEGORIES=	lang
 MASTER_SITES=	${MASTER_SITE_LOCAL:=openjdk7/}
 EXTRACT_SUFX=	.tar.xz
@@ -20,8 +20,28 @@ DIST_SUBDIR=	openjdk7
 
 JAVA_NAME=	openjdk7
 JAVA_HOME=	${PREFIX}/java/${JAVA_NAME}
-JAVA_WRAPPERS=	jar java javac javadoc javah javap jcmd jps jstack keytool \
-		orbd policytool rmid rmiregistry servertool tnameserv
+JAVA_WRAPPERS=	jar java javac javadoc javah javap jcmd jhat jps jstack \
+		keytool orbd policytool rmid rmiregistry servertool tnameserv
+
+NOT_PAX_MPROTECT_SAFE+=	java/openjdk7/bin/[a-ik-z]*
+NOT_PAX_MPROTECT_SAFE+=	java/openjdk7/bin/j[b-z]*
+NOT_PAX_MPROTECT_SAFE+=	java/openjdk7/bin/jar*
+NOT_PAX_MPROTECT_SAFE+=	java/openjdk7/bin/java
+NOT_PAX_MPROTECT_SAFE+=	java/openjdk7/bin/java[a-z]*
+
+.include "../../mk/bsd.prefs.mk"
+
+.if ${OPSYS} == "NetBSD" && defined(TOOLS_PLATFORM.paxctl)
+SUBST_CLASSES+=			set-paxctl
+SUBST_STAGE.set-paxctl=		pre-build
+SUBST_MESSAGE.set-paxctl=	Setting NetBSD paxctl
+SUBST_FILES.set-paxctl=		make/Defs-internal.gmk
+SUBST_FILES.set-paxctl+=	jdk/make/com/sun/jmx/Makefile
+SUBST_SED.set-paxctl+=		-e 's,/usr/sbin/paxmark.sh,${PAXCTL},'
+SUBST_SED.set-paxctl+=		-e 's,-vmsp,+m,'
+SUBST_SED.set-paxctl+=		-e 's,-vm,+m,'
+SUBST_SED.set-paxctl+=		-e 's,\^PaX,.,'
+.endif
 
 MAKE_ENV+=		PKGSRC_ZIPEXE=${TOOLS_PATH.zip}
 MAKE_ENV+=		PKGSRC_UNZIP=${TOOLS_PATH.unzip}
@@ -30,7 +50,7 @@ MAKE_ENV+=		PKGSRC_UNZIPSFX=${TOOLS_PATH.unzip}sfx
 BUILD_DEPENDS+=		mozilla-rootcerts>=1.0.20140820nb2:../../security/mozilla-rootcerts
 
 NO_CONFIGURE=		yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake pax unzip:run zip:run # patch
 UNLIMIT_RESOURCES=	datasize stacksize
 WRKSRC=			${WRKDIR}/openjdk
@@ -46,7 +66,7 @@ MAKE_ENV+=	ALT_BOOTDIR=${ALT_BOOTDIR}
 MAKE_ENV+=	ALT_DROPS_DIR=${DISTDIR}/${DIST_SUBDIR}
 MAKE_ENV+=	ALT_FREETYPE_LIB_PATH=${BUILDLINK_PREFIX.freetype2}/lib
 MAKE_ENV+=	ALT_FREETYPE_HEADERS_PATH=${BUILDLINK_PREFIX.freetype2}/include
-MAKE_ENV+=	ALT_CUPS_HEADERS_PATH=${BUILDLINK_PREFIX.cups}/include
+MAKE_ENV+=	ALT_CUPS_HEADERS_PATH=${BUILDLINK_PREFIX.cups-base}/include
 MAKE_ENV+=	ALT_COMPILER_PATH=${WRAPPER_DIR}/bin
 MAKE_ENV+=	ALT_PACKAGE_PATH=${PREFIX}
 MAKE_ENV+=	RHINO_JAR=${WRKDIR}/${RHINO}/js.jar
@@ -117,6 +137,16 @@ SUBST_SED.mapfix2=	-e '/environ/d'
 CFLAGS+=	-D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
 CXXFLAGS+=	-D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
 
+.if !empty(CC_VERSION:Mgcc-[67].*)
+CFLAGS+=	-fno-lifetime-dse
+CFLAGS+=	-fno-delete-null-pointer-checks
+.endif
+
+# no multilib support on aarch64 yet
+.if !empty(MACHINE_PLATFORM:MNetBSD-*-aarch64)
+BUILDLINK_TRANSFORM+=	rm:-m64
+.endif
+
 .if !empty(PKGSRC_COMPILER:Mclang)
 _WRAP_EXTRA_ARGS.CXX+=	-Wno-parentheses -Wno-sign-conversion \
 			-Wno-shorten-64-to-32 -Wno-conversion \
@@ -182,6 +212,7 @@ PLIST.alsa=	yes
 post-extract:
 	chmod +x ${ANT_BIN}/ant
 	${LN} -s mapfile-i586 ${WRKSRC}/jdk/make/java/main/java/mapfile-arm
+	${LN} -s mapfile-amd64 ${WRKSRC}/jdk/make/java/main/java/mapfile-aarch64
 # These libs are bundled w/ the netbsd-7 bootstrap to facilitate building with
 # MKLLVM=yes / MKGCC=no. Nuke them from bootstrap if they are present in base.
 .if exists(/lib/libgcc_s.so.1)
@@ -189,6 +220,14 @@ post-extract:
 .endif
 .if exists(/usr/lib/libstdc++.so.7)
 	${RM} -f ${ALT_BOOTDIR}/jre/lib/${LIBDIR_ARCH}/libstdc++.so*
+.endif
+.if defined(TOOLS_PLATFORM.paxctl)
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/[a-ik-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/j[b-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/jar*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/java
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/java[a-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/jre/bin/*
 .endif
 
 do-build: ${WRKDIR}/stage3-done
@@ -201,8 +240,20 @@ ${WRKDIR}/stage1-done:
 	mv ${BUILDDIR} ${BUILDDIR}-stage1
 	touch ${.TARGET}
 
+# stage 1.5 reconfigures, since the bootstrap JDK major version might have changed now
+${WRKDIR}/stage1_5-done: ${WRKDIR}/stage1-done
+.if defined(TOOLS_PLATFORM.paxctl)
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/[a-ik-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/j[b-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/jar*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/java
+	${PAXCTL} +m ${WRKDIR}/bootstrap/bin/java[a-z]*
+	${PAXCTL} +m ${WRKDIR}/bootstrap/jre/bin/*
+.endif
+	touch ${.TARGET}
+
 # stage 2 rebuilds the JDK using native tools
-${WRKDIR}/stage2-done: ${WRKDIR}/stage1-done
+${WRKDIR}/stage2-done: ${WRKDIR}/stage1_5-done
 	${_ULIMIT_CMD} cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${JDK_MAKE_TARGET}
 	touch ${BUILDDIR}/j2sdk-image/jre/lib/applet/.keep
 	touch ${.TARGET}
@@ -212,6 +263,9 @@ ${WRKDIR}/stage3-done: ${WRKDIR}/stage2-done ${WRKDIR}/cacerts.out
 	touch ${.TARGET}
 
 ${WRKDIR}/cacerts.out:
+.if defined(TOOLS_PLATFORM.paxctl)
+	${PAXCTL} +m ${WRKSRC}/build/*/bin/keytool
+.endif
 	mkdir ${WRKDIR}/cacerts && cd ${WRKDIR}/cacerts && 		\
 		${PREFIX}/sbin/mozilla-rootcerts extract
 	for cert in ${WRKDIR}/cacerts/*.pem; do				\
@@ -252,7 +306,9 @@ MAKE_ENV+=	STRIP=${PREFIX}/bin/gstrip
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
-BUILDLINK_DEPMETHOD.cups?=	build
-.include "../../print/cups/buildlink3.mk"
+# Headers from CUPS are required to build the native implementation of
+# sun.print.* which is used by java.awt.print.
+BUILDLINK_DEPMETHOD.cups-base?=	build
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../mk/java-env.mk"
 .include "../../mk/bsd.pkg.mk"

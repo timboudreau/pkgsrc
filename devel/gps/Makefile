@@ -1,27 +1,19 @@
-# $NetBSD: Makefile,v 1.49 2017/02/12 06:25:12 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.58 2019/04/25 07:32:46 maya Exp $
 
 DISTNAME=	gps-${GPS_VERSION}
-PKGREVISION=	15
+PKGREVISION=	22
 CATEGORIES=	devel
 MASTER_SITES=	http://downloads.dragonlace.net/src/
 DISTFILES=	gps-5.2.1-1-src.tgz
 
-MAINTAINER=	draco@marino.st
-HOMEPAGE=	http://www.adacore.com/home/products/gnatpro/toolsuite/gps/
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/AdaCore/gps
 COMMENT=	GNAT Programming Studio - IDE for Ada and many other languages
 LICENSE=	gnu-gpl-v2
 
-# GPS is several years behind and normally tied to the latest Ada compiler.
-# To update it would require several new and complicated dependencies.
-# The maintainer has no interest in doing this work.  Somebody else is free
-# to take over and use the FreeBSD Ports Collection as a reference point.
-#
-# The internal project support (GPR files) are illegally configured for
-# today's standards and gprbuild won't let the build progress far.
-# The only practical way forward to update to version 6.0.1 (which is at
-# least one year behind the current version of GPS)
-PKG_FAIL_REASON=	Unbuildable with gcc5-aux.  Scheduled for removal Jan 2017
+# GPS is no longer buildable and needs to be updated to work with
+# current Ada compilers. The former MAINTAINER abandoned it.
+PKG_FAIL_REASON=	Unbuildable with gcc5-aux.
 
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		gmake sed perl awk pkg-config
@@ -41,11 +33,11 @@ WRKSRC=			${WRKDIR}/gps-release-ide-${GPS_VERSION}-src
 CONFIGURE_ARGS+=	--disable-shared --with-gmp=${PREFIX}
 
 SUBST_CLASSES+= 	coll python
-SUBST_STAGE.coll=	post-patch
+SUBST_STAGE.coll=	pre-configure
 SUBST_FILES.coll=	gnatlib/src/gnatcoll_readline.gpr.in
 SUBST_SED.coll=		-e "s|@PREFIX@|${PREFIX}|g"
 SUBST_SED.coll+=	-e "s|-rpath|${LINKER_RPATH_FLAG}|g"
-SUBST_STAGE.python=	post-patch
+SUBST_STAGE.python=	pre-configure
 SUBST_FILES.python=	share/plug-ins/gps_utils/console_process.py
 SUBST_SED.python=	-e "s|/usr/bin/python|${PYTHONBIN}|"
 

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.1 2017/01/08 20:35:55 schmonz Exp $
+# $NetBSD: Makefile,v 1.3 2018/11/05 18:22:11 schmonz Exp $
 
-DISTNAME=		swaks-20170101.0
+DISTNAME=		swaks-20181104.0
 CATEGORIES=		mail
 MASTER_SITES=		${HOMEPAGE}files/
 

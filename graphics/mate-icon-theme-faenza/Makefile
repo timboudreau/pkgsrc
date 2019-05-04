@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.2 2017/06/23 17:19:33 youri Exp $
+# $NetBSD: Makefile,v 1.10 2019/04/25 07:32:58 maya Exp $
 
 .include "../../meta-pkgs/mate/Makefile.common"
 
-DISTNAME=	mate-icon-theme-faenza-${VERSION:R}.1
+PKGREVISION=	3
+DISTNAME=	mate-icon-theme-faenza-1.20.0
 CATEGORIES=	graphics
 
 COMMENT=	Faenza and Faience icon themes for MATE desktop

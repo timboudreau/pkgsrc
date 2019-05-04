@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.14 2017/03/20 15:05:43 taca Exp $
+$NetBSD: distinfo,v 1.16 2019/01/20 14:42:43 taca Exp $
 
-SHA1 (pdf-reader-2.0.0.gem) = fe39f58d486dfdad10e947bbca0ccfa1fc803768
-RMD160 (pdf-reader-2.0.0.gem) = e6c538bc58424e5162a21808f3547d74deae1dfa
-SHA512 (pdf-reader-2.0.0.gem) = b75e7343368da2e4eecdb3e9e816948d620a72c395d28a74ed39aa3289ba22a64e10d77f3d372eea0d9be9dd0bc6e42cd00428d05c88d649ba72f06c39fde14b
-Size (pdf-reader-2.0.0.gem) = 209408 bytes
+SHA1 (pdf-reader-2.2.0.gem) = 90b807441ed4c6c8082ec3201609b8d8e1d8fac3
+RMD160 (pdf-reader-2.2.0.gem) = fd504f4c87518c6bcbc3f393b61f4b875762a5e8
+SHA512 (pdf-reader-2.2.0.gem) = d3b3df72ab62b88e920e60fe3f3dc3b7199306d6e86da6f7bf106bab7f7927db247e60a6df088b1ea5910d5dddf7d7d5ae59e9b51763ba163318b44dbff58302
+Size (pdf-reader-2.2.0.gem) = 210432 bytes

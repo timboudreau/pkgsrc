@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.23 2017/04/30 01:22:03 ryoon Exp $
+# $NetBSD: Makefile,v 1.30 2019/01/24 16:46:21 perseant Exp $
 #
 
 DISTNAME=	shibboleth-sp-2.5.5
-PKGREVISION=	4
+PKGREVISION=	9
 CATEGORIES=	www
 MASTER_SITES=	http://www.shibboleth.net/downloads/service-provider/${PKGVERSION_NOREV}/
 
@@ -21,7 +21,7 @@ EGDIR=		${PREFIX}/share/examples/shibboleth
 SHIB_CONFDIR=	${PKG_SYSCONFDIR}/shibboleth
 
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 
 CFLAGS.SunOS+=	-fpermissive
 
@@ -34,7 +34,7 @@ PLIST_SUBST+=	PKG_APACHE_NUM=${PKG_APACHE:S/apache//}
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKSRC}/configs/Makefile.in
 SUBST_FILES.paths+=	${WRKSRC}/configs/keygen.sh
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_SED.paths=	-e 's,@EGDIR@,${EGDIR},'
 SUBST_SED.paths+=	-e 's,@SHIB_CONFDIR@,${SHIB_CONFDIR},'
 

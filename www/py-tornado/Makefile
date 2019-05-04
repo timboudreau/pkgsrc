@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.22 2017/05/04 09:50:21 adam Exp $
+# $NetBSD: Makefile,v 1.27 2018/09/17 10:15:39 adam Exp $
 
-DISTNAME=	tornado-4.5.1
+DISTNAME=	tornado-5.1.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	www
+CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=t/tornado/}
 
 MAINTAINER=	imil@NetBSD.org
@@ -28,7 +28,7 @@ DEPENDS+=	${PYPKGPREFIX}-backports.ssl_match_hostname-[0-9]*:../../security/py-b
 DEPENDS+=	${PYPKGPREFIX}-certifi-[0-9]*:../../security/py-certifi
 DEPENDS+=	${PYPKGPREFIX}-singledispatch>0:../../devel/py-singledispatch
 .endif
-.if "${PYPKGPREFIX}" != "py35" && "${PYPKGPREFIX}" != "py36"
+.if "${PYPKGPREFIX}" == "py27" || "${PYPKGPREFIX}" == "py34"
 DEPENDS+=	${PYPKGPREFIX}-backports_abc>=0.4:../../devel/py-backports_abc
 PLIST.requires=	yes
 .endif

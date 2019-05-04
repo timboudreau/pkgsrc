@@ -1,10 +1,13 @@
-# $NetBSD: Makefile,v 1.29 2017/01/10 18:54:15 fhajny Exp $
+# $NetBSD: Makefile,v 1.34 2019/03/15 10:04:00 bouyer Exp $
 
 .include "../../sysutils/syslog-ng/Makefile.common"
+
+PKGREVISION=		1
 
 CONFIGURE_ARGS+=	--enable-ssl
 CONFIGURE_ARGS+=	--enable-stomp
 CONFIGURE_ARGS+=	--enable-tcp-wrapper
+CONFIGURE_ARGS+=	--with-jsonc=system
 
 CONFIGURE_ARGS.SunOS+=	--enable-dynamic-linking
 CONFIGURE_ARGS.SunOS+=	--enable-sun-streams
@@ -40,12 +43,12 @@ PKGCONFIG_OVERRIDE=	libtest/syslog-ng-test.pc.in			\
 			syslog-ng.pc.in
 
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/INSTALL ${DESTDIR}${DOCDIR}
 	${INSTALL_DATA} ${WRKSRC}/contrib/syslog-ng.conf.doc ${DESTDIR}${DOCDIR}
-.for f in syslog-ng.conf.RedHat syslog-ng.conf.SunOS
+.for f in syslog-ng.conf.HP-UX syslog-ng.conf.RedHat syslog-ng.conf.SunOS
 		${INSTALL_DATA} ${WRKSRC}/contrib/${f} ${DESTDIR}${EGDIR}
 .endfor
 	${INSTALL_SCRIPT} ${WRKSRC}/contrib/syslog2ng ${DESTDIR}${PREFIX}/bin
 
 .include "../../security/tcp_wrappers/buildlink3.mk"
+.include "../../textproc/json-c/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

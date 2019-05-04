@@ -1,18 +1,20 @@
-# $NetBSD: Makefile,v 1.1 2017/06/21 19:09:07 adam Exp $
+# $NetBSD: Makefile,v 1.12 2019/04/26 13:14:20 maya Exp $
 
-DISTNAME=	asgiref-1.1.2
+DISTNAME=	asgiref-3.1.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=a/asgiref/}
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	https://github.com/django/asgiref/
+HOMEPAGE=	https://github.com/django/asgiref
 COMMENT=	Contains various reference ASGI implementations
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=		# empty
+DEPENDS+=	${PYPKGPREFIX}-async-timeout>=2.0.0:../../devel/py-async-timeout
 
-DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+USE_LANGUAGES=	# none
+
+PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

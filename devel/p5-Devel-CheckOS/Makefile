@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.20 2017/06/05 14:22:51 ryoon Exp $
+# $NetBSD: Makefile,v 1.22 2018/08/22 09:43:53 wiz Exp $
 
-DISTNAME=	Devel-CheckOS-1.80
+DISTNAME=	Devel-CheckOS-1.81
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

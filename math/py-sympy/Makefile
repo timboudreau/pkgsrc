@@ -1,11 +1,9 @@
-# $NetBSD: Makefile,v 1.18 2016/08/28 15:48:33 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2018/07/19 20:15:36 prlw1 Exp $
 
-DISTNAME=	sympy-1.0
+DISTNAME=	sympy-1.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	math
-MASTER_SITES=	${MASTER_SITE_GITHUB:=sympy/}
-GITHUB_RELEASE=	${DISTNAME}
-GITHUB_PROJECT=	sympy
+CATEGORIES=	math python
+MASTER_SITES=	${MASTER_SITE_PYPI:=s/sympy/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.sympy.org/

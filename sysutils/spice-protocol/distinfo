@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.8 2016/08/24 10:47:08 wiz Exp $
+$NetBSD: distinfo,v 1.11 2019/02/24 10:35:48 wiz Exp $
 
-SHA1 (spice-protocol-0.12.12.tar.bz2) = d21d87f404ae7b5880c280f601f5e1a02591dccf
-RMD160 (spice-protocol-0.12.12.tar.bz2) = 5a257598bba96fc670938371ac7bd8db3c823c14
-SHA512 (spice-protocol-0.12.12.tar.bz2) = 66e7a902b3c4a5a778cb91ffd9d324b12d414184146ac834dfb3bd81b4b6b1bb56258d3e1ce240b6f8747e1960fce8f0f6b0ada3617e9f9819be7118195fce6b
-Size (spice-protocol-0.12.12.tar.bz2) = 80628 bytes
+SHA1 (spice-protocol-0.12.15.tar.bz2) = 362f630ff5bccb6621e345c41f43a079d1fd4fd6
+RMD160 (spice-protocol-0.12.15.tar.bz2) = 3eaa0ea849ebede0497ee6ad4d11bbe0ee1d072c
+SHA512 (spice-protocol-0.12.15.tar.bz2) = 1a3c3c26239d092c6c24708f5bd070ae1cb146f92f2329b63bec2d21a7276cdf1b9567f434bfbeeb1f7cd7dd4ad47494c51dcdbbba5af8e271e66dfe5b11de9d
+Size (spice-protocol-0.12.15.tar.bz2) = 74598 bytes

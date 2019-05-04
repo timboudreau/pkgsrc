@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.11 2017/02/12 06:25:10 ryoon Exp $
+# $NetBSD: Makefile,v 1.17 2018/11/14 22:21:11 kleink Exp $
 
 PKGNAME=	bossa-20140109
 DISTNAME=	b-o-s-s-a-code-05bfcc39bc0453c3028b1161175b95a81af7a901
-PKGREVISION=	5
+PKGREVISION=	9
 CATEGORIES=	comms
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	reinoud@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/b-o-s-s-a/
+HOMEPAGE=	https://sourceforge.net/projects/b-o-s-s-a/
 COMMENT=	Open source SAM-BA compatible Atmel ARM programmer
 LICENSE=	gnu-gpl-v3
 
@@ -24,7 +24,7 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/bin/* ${DESTDIR}${PREFIX}/bin
 
 
-USE_LANGUAGES=	c++
+USE_LANGUAGES=	c++03
 USE_TOOLS=	gmake
 
 .include "../../mk/compiler.mk"

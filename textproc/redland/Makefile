@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.34 2017/04/30 01:21:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.42 2018/12/13 19:51:38 adam Exp $
 
 DISTNAME=	redland-1.0.17
-PKGREVISION=	7
+PKGREVISION=	14
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.librdf.org/source/
 
@@ -13,6 +13,12 @@ LICENSE=	gnu-lgpl-v2.1 OR apache-2.0
 USE_TOOLS+=	gmake perl pkg-config
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
+
+# XXX: Kludge to avoid uncoditionally pick up some gtkdoc-* tools if gtk-doc
+# XXX: package is installed and then fails in the installation phase.
+CONFIGURE_ENV+=		ac_cv_path_GTKDOC_CHECK= \
+			ac_cv_path_GTKDOC_REBASE= \
+			ac_cv_path_GTKDOC_MKPDF=
 
 .include "../../mk/bdb.buildlink3.mk"
 

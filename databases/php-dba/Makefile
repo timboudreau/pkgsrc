@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.16 2012/10/02 21:25:38 asau Exp $
+# $NetBSD: Makefile,v 1.18 2018/03/02 02:16:08 taca Exp $
 
 MODNAME=		dba
 CATEGORIES+=		databases

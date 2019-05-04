@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.65 2017/01/01 14:43:49 wiz Exp $
+# $NetBSD: Makefile.common,v 1.69 2019/04/26 13:14:06 maya Exp $
 #
 # used by multimedia/totem-browser-plugin/Makefile
 # used by multimedia/totem-nautilus/Makefile
@@ -8,7 +8,7 @@ CATEGORIES=	multimedia gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/totem/2.32/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/projects/totem/
+HOMEPAGE=	https://www.gnome.org/projects/totem/
 COMMENT=	Movie player for the GNOME Desktop
 LICENSE=	gnu-gpl-v2 # with an exception clause
 
@@ -20,7 +20,7 @@ GNU_CONFIGURE=		YES
 USE_TOOLS+=		gmake intltool msgfmt pkg-config gawk
 USE_LIBTOOL=		YES
 USE_PKGLOCALEDIR=	YES
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 
 GCONF_SCHEMAS=	totem.schemas
 GCONF_SCHEMAS+=	totem-handlers.schemas
@@ -28,7 +28,7 @@ GCONF_SCHEMAS+=	totem-video-thumbnail.schemas
 
 CONFIGURE_ARGS+=	--enable-vala=no
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2, py-gdata
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2, py-gdata
 
 .include "../../lang/python/application.mk"
 .include "../../x11/py-gtk2/buildlink3.mk"

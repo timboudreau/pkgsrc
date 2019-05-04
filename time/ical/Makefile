@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.33 2016/07/10 10:52:41 rillig Exp $
+# $NetBSD: Makefile,v 1.37 2018/11/08 05:32:23 markd Exp $
 
-DISTNAME=	ical-3.0.2
-PKGREVISION=	4
+DISTNAME=	ical-3.0.3
 CATEGORIES=	time
 MASTER_SITES=	https://launchpad.net/ical-tcl/3.x/${PKGVERSION_NOREV}/+download/
 

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.7 2017/03/16 21:08:35 maya Exp $
+# $NetBSD: Makefile,v 1.9 2019/04/25 07:33:15 maya Exp $
 #
 
 DISTNAME=	fail2ban-0.9.6
-#PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	-https://github.com/fail2ban/fail2ban/archive/${PKGVERSION_NOREV}${EXTRACT_SUFX}
 EXTRACT_SUFX=	.zip

@@ -1,5 +1,5 @@
 #! /bin/sh
-# $NetBSD: sh-test.sh,v 1.1 2006/11/09 12:39:55 rillig Exp $
+# $NetBSD: sh-test.sh,v 1.3 2018/12/05 19:01:40 rillig Exp $
 #
 
 set -e
@@ -37,5 +37,8 @@ sh_assert_equals() {
 nl="
 "
 
+# If this test fails because the result is "#define bindir \"", the
+# tested shell may be from NetBSD 7.0, which is known to have this bug.
+# Since NetBSD 8, this bug is fixed. See https://gnats.netbsd.org/43469.
 line="#define bindir \"/usr/bin\" /* bar */"
 sh_assert_equals "removing C comments" "#define bindir \"/usr/bin\" " "${line%%/\**}"

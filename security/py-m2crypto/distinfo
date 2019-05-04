@@ -1,8 +1,8 @@
-$NetBSD: distinfo,v 1.10 2017/05/10 17:03:42 adam Exp $
+$NetBSD: distinfo,v 1.18 2019/03/04 18:41:48 adam Exp $
 
-SHA1 (M2Crypto-0.26.0.tar.gz) = 1583782298a635c0634377e4037b1708c12ce426
-RMD160 (M2Crypto-0.26.0.tar.gz) = 8ffd4ccd0f040cc2d23d05397a883ab45fec45e7
-SHA512 (M2Crypto-0.26.0.tar.gz) = f6ba0173833d1b9a318402a3445fbb522f1848c7406face0cc08d384de6b6944395737f5871353ca1488c6655be7ffb0ad7b40b5e98d5954858da4540590d242
-Size (M2Crypto-0.26.0.tar.gz) = 305914 bytes
-SHA1 (patch-SWIG___m2crypto__wrap.c) = 14e62bf68bf5f1b0231c3f32e6030a3dad1e0eef
-SHA1 (patch-setup.py) = 6f47564c57d4136612db53cfec50667a626b5091
+SHA1 (M2Crypto-0.32.0.tar.gz) = b36c43373f952401b9cc190e4e5ddd09028e276b
+RMD160 (M2Crypto-0.32.0.tar.gz) = 4d8b714b105ba4e2616d203edd72733736b124c1
+SHA512 (M2Crypto-0.32.0.tar.gz) = 477cc30748b3ddc21b66872a88ba0e111a592928ce0d2edc9b72c9a8fa7aa2b422e1b785b830e8d8fcab9f1678928634627b0ea3d57632ec5769ba4ed64c16f8
+Size (M2Crypto-0.32.0.tar.gz) = 1292542 bytes
+SHA1 (patch-SWIG___m2crypto__wrap.c) = 2672787cd8fd70b5ac2cf634b6a913aefc27b26c
+SHA1 (patch-setup.py) = ec43146954a849a7e12003397df19e6567df888c

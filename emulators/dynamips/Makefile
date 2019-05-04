@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.11 2016/04/07 14:24:51 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2018/07/04 13:40:17 jperkin Exp $
 
-DISTNAME=	dynamips-0.2.16
+DISTNAME=	dynamips-0.2.17
 CATEGORIES=	emulators
 MASTER_SITES=	${MASTER_SITE_GITHUB:=GNS3/}
 GITHUB_PROJECT=	dynamips
@@ -15,7 +15,7 @@ USE_TOOLS+=	gmake
 USE_CMAKE=	yes
 
 SUBST_CLASSES+=		libelf
-SUBST_STAGE.libelf=	post-patch
+SUBST_STAGE.libelf=	pre-configure
 SUBST_FILES.libelf=	common/dynamips.h common/rom2c.c
 SUBST_SED.libelf=	-e 's,<libelf.h>,<libelf/libelf.h>,'
 SUBST_MESSAGE.libelf=	Fix libelf header file path

@@ -1,0 +1,32 @@
+# $NetBSD: Makefile.common,v 1.4 2018/10/08 15:50:39 jperkin Exp $
+# used by net/freeradius/Makefile.module
+
+DISTNAME=		freeradius-server-3.0.17
+CATEGORIES=		net
+MASTER_SITES=		ftp://ftp.freeradius.org/pub/freeradius/
+EXTRACT_SUFX=		.tar.bz2
+
+MAINTAINER=		pkgsrc-users@NetBSD.org
+HOMEPAGE=		http://www.freeradius.org/
+LICENSE=		gnu-gpl-v2
+
+GNU_CONFIGURE=		yes
+USE_TOOLS+=		gmake perl
+USE_LANGUAGES+=		c c++
+
+CONFIGURE_ARGS+=	--with-openssl-include-dir=${BUILDLINK_PREFIX.openssl}/include
+CONFIGURE_ARGS+=	--with-openssl-lib-dir=${BUILDLINK_PREFIX.openssl}/lib
+CONFIGURE_ARGS+=	--without-rlm_yubikey
+
+CFLAGS.SunOS+=		-D_XPG4_2 -D__EXTENSIONS__
+LIBS.SunOS+=		-lnsl -lresolv -lsocket
+
+MAKE_ENV+=		R=${DESTDIR}
+MAKE_ENV+=		PACKAGE=yes
+
+INSTALLATION_DIRS+=	lib
+
+.include "../../databases/gdbm/buildlink3.mk"
+.include "../../devel/talloc/buildlink3.mk"
+.include "../../net/libpcap/buildlink3.mk"
+.include "../../security/openssl/buildlink3.mk"

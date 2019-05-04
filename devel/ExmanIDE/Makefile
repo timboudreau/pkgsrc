@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.24 2017/01/01 14:43:29 wiz Exp $
+# $NetBSD: Makefile,v 1.28 2019/04/26 13:13:48 maya Exp $
 
 DISTNAME=	ExmanIDE-0.9.4
-PKGREVISION=	7
+PKGREVISION=	8
 CATEGORIES=	devel
 MASTER_SITES=	http://kldp.net/download.php/715/
 
@@ -17,24 +17,24 @@ WRKSRC=		${WRKDIR}/${PKGBASE}
 NO_CONFIGURE=	yes
 NO_BUILD=	yes
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-wxWidgets
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-wxWidgets
 
 SUBST_CLASSES+=		mod
 SUBST_MESSAGE.mod=	Fixing deprecated module names.
-SUBST_STAGE.mod=	post-patch
+SUBST_STAGE.mod=	pre-configure
 SUBST_FILES.mod=	Profile.py SourceEditor.py StcStyle.py
 SUBST_SED.mod=		-e 's,wxPython\.lib\.PyCrust,wxPython.py,g'
 SUBST_SED.mod+=		-e 's,wxPython\.py,wx.py,g'
 
 SUBST_CLASSES+=		py
 SUBST_MESSAGE.py=	Fixing paths in a wrapper script.
-SUBST_STAGE.py=		post-patch
+SUBST_STAGE.py=		pre-configure
 SUBST_FILES.py=		ExmanIDE
 SUBST_SED.py=		-e 's,python \$$0\.pyw,${PYTHONBIN} ${PREFIX}/share/${PKGBASE}/ExmanIDE.pyw,g'
 
 SUBST_CLASSES+=		py2
 SUBST_MESSAGE.py2=	Fixing path in Python module.
-SUBST_STAGE.py2=	post-patch
+SUBST_STAGE.py2=	pre-configure
 SUBST_FILES.py2=	ExmanIDE.pyw
 SUBST_SED.py2=		-e 's,/usr/bin/env python.*$$,${PYTHONBIN},'
 

@@ -1,12 +1,14 @@
-# $NetBSD: Makefile,v 1.54 2017/07/13 14:29:54 taca Exp $
+# $NetBSD: Makefile,v 1.70 2019/04/14 09:37:13 taca Exp $
 
-DISTNAME=	sequel-4.48.0
+DISTNAME=	sequel-5.19.0
 CATEGORIES=	databases
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://sequel.jeremyevans.net/
 COMMENT=	Model classes for the Sequel Database Toolkit
 LICENSE=	mit
+
+USE_LANGUAGES=	# none
 
 RUBYGEM_OPTIONS+=	--format-executable
 

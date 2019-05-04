@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.2 2017/07/12 10:05:58 tnn Exp $
+# $NetBSD: Makefile,v 1.10 2018/09/22 20:52:17 bsiegert Exp $
 
 GITHUB_PROJECT=	grafana
-DISTNAME=	grafana-4.4.1
+DISTNAME=	grafana-4.6.2
 GITHUB_TAG=	v${PKGVERSION_NOREV}
+PKGREVISION=	1
 CATEGORIES=	www
 MASTER_SITES=	${MASTER_SITE_GITHUB:=grafana/}
-EXTRACT_SUFX=	.tar.gz
+EXTRACT_SUFX=	.tar.gz # don't delete this, needed for variable expansion
 
 MAINTAINER=	tnn@NetBSD.org
 HOMEPAGE=	https://grafana.com/
@@ -26,9 +27,15 @@ DISTFILES+=			${FE_DISTNAME}
 EXTRACT_ONLY+=			${FE_DISTNAME}
 EXTRACT_DIR.${FE_DISTNAME}=	${WRKDIR}/frontend_assets
 
-BUILD_DEPENDS+=			go-[0-9]*:../../lang/go
+.include "../../lang/go/version.mk"
+
+BUILD_DEPENDS+=			${GO_PACKAGE_DEP}
 
 CHECK_PORTABILITY_SKIP=		packaging/rpm/control/postinst
+
+CHECK_RELRO_SKIP+=		bin/grafana-cli
+CHECK_RELRO_SKIP+=		bin/grafana-server
+
 PKGSRC_MAKE_ENV+=		GOPATH=${WRKDIR}
 USE_TOOLS+=			pax
 
@@ -49,6 +56,8 @@ SUBST_SED.fix-cfg+=	-e 's,^;\(static_root_path = \).*,\1${PUBLICDIR},g'
 BUILD_DEFS+=		GRAFANA_USER GRAFANA_GROUP VARBASE
 FILES_SUBST+=		GRAFANA_USER=${GRAFANA_USER:Q}
 FILES_SUBST+=		GRAFANA_GROUP=${GRAFANA_GROUP:Q}
+FILES_SUBST+=		DATADIR=${DATADIR:Q}
+
 GRAFANA_USER?=		grafana
 GRAFANA_GROUP?=		grafana
 OWN_DIRS_PERMS+=	${DATADIR} ${GRAFANA_USER} ${GRAFANA_GROUP} 0700
@@ -73,7 +82,7 @@ post-extract:
 do-build:
 .for b in grafana-server grafana-cli
 	cd ${WRKSRC} && ${SETENV} ${PKGSRC_MAKE_ENV}		\
-	  ${PREFIX}/bin/go build -ldflags "-w -X main.version=${PKGVERSION_NOREV} -X main.commit=${GITHUB_TAG} -X main.buildstamp=pkgsrc"	\
+	  ${GO} build -ldflags "-w -X main.version=${PKGVERSION_NOREV} -X main.commit=${GITHUB_TAG} -X main.buildstamp=pkgsrc"	\
 	  -o ./bin/${b} ./pkg/cmd/${b}
 .endfor
 

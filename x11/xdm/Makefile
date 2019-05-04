@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.30 2016/02/26 11:27:17 jperkin Exp $
+# $NetBSD: Makefile,v 1.33 2019/03/27 12:30:01 jperkin Exp $
 
-DISTNAME=	xdm-1.1.11
-PKGREVISION=	5
+DISTNAME=	xdm-1.1.12
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_XORG:=app/}
 EXTRACT_SUFX=	.tar.bz2
@@ -45,6 +44,8 @@ OWN_DIRS_PERMS+=	${VARBASE}/lib/xdm \
 
 TOOL_DEPENDS+=		tradcpp-[0-9]*:../../devel/tradcpp
 CONFIGURE_ENV+=		ac_cv_path_RAWCPP="${PREFIX}/bin/tradcpp -Uunix"
+
+CONFIGURE_ENV+=		ADMIN_MAN_SUFFIX=8
 
 CONFIGURE_ARGS.NetBSD+=	--with-random-device=/dev/urandom
 

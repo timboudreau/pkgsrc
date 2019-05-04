@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.37 2016/04/20 12:10:29 nros Exp $
+# $NetBSD: Makefile,v 1.40 2018/12/09 21:05:32 adam Exp $
 
-DISTNAME=	mp3blaster-3.2.5
-PKGREVISION=	6
+DISTNAME=	mp3blaster-3.2.6
 CATEGORIES=	audio
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=mp3blaster/}
 
@@ -13,7 +12,7 @@ LICENSE=	gnu-gpl-v2
 CONFLICTS=		splay-[0-9]*
 
 PTHREAD_OPTS+=	require
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 USE_TOOLS+=	gmake
 
 GNU_CONFIGURE=	yes

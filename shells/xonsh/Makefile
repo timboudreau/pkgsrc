@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.1 2016/08/21 11:34:57 kamil Exp $
+# $NetBSD: Makefile,v 1.4 2019/04/25 07:33:17 maya Exp $
 
-DISTNAME=	xonsh-0.4.5
+DISTNAME=	xonsh-0.8.8
+PKGREVISION=	1
 CATEGORIES=	shells python
 MASTER_SITES=	${MASTER_SITE_GITHUB:=xonsh/}
 
@@ -14,15 +15,15 @@ USE_LANGUAGES=	# none
 PYTHON_VERSIONS_INCOMPATIBLE=	27
 
 DEPENDS+=	${PYPKGPREFIX}-ply-[0-9]*:../../devel/py-ply
-DEPENDS+=	${PYPKGPREFIX}-prompt_toolkit-[0-9]*:../../devel/py-prompt_toolkit
+DEPENDS+=	${PYPKGPREFIX}-prompt_toolkit-[0-9]*:../../devel/py-prompt_toolkit2
 DEPENDS+=	${PYPKGPREFIX}-pygments-[0-9]*:../../textproc/py-pygments
 
 PKG_SHELL=	${PREFIX}/bin/xon.sh
 PKG_SHELL+=	${PREFIX}/bin/xonsh
 
 SUBST_CLASSES+=		xonsh
-SUBST_STAGE.xonsh=	post-patch
-SUBST_FILES.xonsh=	scripts/xon.sh
+SUBST_STAGE.xonsh=	pre-configure
+SUBST_FILES.xonsh=	scripts/xon.sh scripts/xonsh scripts/xonsh-cat
 SUBST_SED.xonsh=	-e 's,python3,${PYTHONBIN},'
 
 .include "../../lang/python/egg.mk"

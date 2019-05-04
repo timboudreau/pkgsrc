@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.40 2015/04/25 14:23:00 tnn Exp $
+# $NetBSD: Makefile,v 1.42 2018/02/18 04:57:05 rillig Exp $
 
 DISTNAME=	lbreakout2-2.6.4
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=lgames/}
 
@@ -11,9 +11,9 @@ COMMENT=	Breakout-style arcade game
 LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE:Q}/games
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}/games
 CONFIGURE_ARGS+=	--with-highscore-path=${PREFIX}/share/games/
-CONFIGURE_ARGS+=	--with-docdir=${PREFIX}/share/doc/html
+CONFIGURE_ARGS+=	--with-docdir=${PREFIX}/share/doc
 
 LDFLAGS.SunOS+=	-lsocket -lnsl
 

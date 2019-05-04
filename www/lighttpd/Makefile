@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.62 2017/06/22 12:49:56 schmonz Exp $
+# $NetBSD: Makefile,v 1.82 2019/04/03 00:33:12 ryoon Exp $
 
-DISTNAME=	lighttpd-1.4.45
+DISTNAME=	lighttpd-1.4.53
+PKGREVISION=	1
 CATEGORIES=	www
 MASTER_SITES=	http://download.lighttpd.net/lighttpd/releases-1.4.x/
 EXTRACT_SUFX=	.tar.xz
-PKGREVISION=	2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.lighttpd.net/
@@ -17,6 +17,7 @@ USE_TOOLS+=		pkg-config
 GNU_CONFIGURE=		yes
 GNU_CONFIGURE_LIBSUBDIR=${PKGBASE}
 CONFIGURE_ARGS+=	--with-pcre
+TEST_TARGET=		check
 
 DOCDIR=			${PREFIX}/share/doc/${PKGBASE}
 EGDIR=			${PREFIX}/share/examples/${PKGBASE}
@@ -32,10 +33,13 @@ CONF_FILES+=		${EGDIR}/${file:Q} ${PKG_SYSCONFDIR}/${file:Q}
 .endfor
 
 BUILD_DEFS+=		VARBASE LIGHTTPD_LOGDIR LIGHTTPD_STATEDIR
+BUILD_DEFS+=		LIGHTTPD_CACHEDIR LIGHTTPD_HOMEDIR
 BUILD_DEFS+=		LIGHTTPD_USER LIGHTTPD_GROUP
 
 .include "../../mk/bsd.prefs.mk"
 
+LIGHTTPD_CACHEDIR?=	${VARBASE}/cache/lighttpd
+LIGHTTPD_HOMEDIR?=	${VARBASE}/lib/lighttpd
 LIGHTTPD_LOGDIR?=	${VARBASE}/log/lighttpd
 LIGHTTPD_STATEDIR?=	${VARBASE}/run
 LIGHTTPD_USER?=		lighttpd
@@ -54,11 +58,10 @@ OWN_DIRS+=		${LIGHTTPD_STATEDIR}
 SUBST_CLASSES+=		path
 SUBST_MESSAGE.path=	Fixing config file paths
 SUBST_STAGE.path=	pre-configure
-SUBST_FILES.path=	doc/config/lighttpd.conf
+SUBST_FILES.path=	doc/config/lighttpd.conf doc/lighttpd.8
 SUBST_VARS.path=	LIGHTTPD_LOGDIR LIGHTTPD_STATEDIR LIGHTTPD_USER \
-			LIGHTTPD_GROUP PKG_SYSCONFDIR
-
-PLIST_VARS+=		gdbm geoip gssapi ldap lua mysql
+			LIGHTTPD_CACHEDIR LIGHTTPD_HOMEDIR              \
+			LIGHTTPD_GROUP PKG_SYSCONFDIR VARBASE
 
 post-install:
 	set -e; cd ${WRKSRC}/doc;				\

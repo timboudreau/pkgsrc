@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.1 2017/06/24 06:47:58 adam Exp $
+@comment $NetBSD: PLIST,v 1.4 2019/01/22 08:56:38 adam Exp $
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
@@ -17,10 +17,8 @@ ${PYSITELIB}/uvloop/_testbase.pyc
 ${PYSITELIB}/uvloop/_testbase.pyo
 ${PYSITELIB}/uvloop/cbhandles.pxd
 ${PYSITELIB}/uvloop/cbhandles.pyx
-${PYSITELIB}/uvloop/chain_futs.pyx
 ${PYSITELIB}/uvloop/dns.pyx
 ${PYSITELIB}/uvloop/errors.pyx
-${PYSITELIB}/uvloop/future.pyx
 ${PYSITELIB}/uvloop/handles/async_.pxd
 ${PYSITELIB}/uvloop/handles/async_.pyx
 ${PYSITELIB}/uvloop/handles/basetransport.pxd
@@ -54,6 +52,7 @@ ${PYSITELIB}/uvloop/includes/compat.h
 ${PYSITELIB}/uvloop/includes/consts.pxi
 ${PYSITELIB}/uvloop/includes/debug.h
 ${PYSITELIB}/uvloop/includes/debug.pxd
+${PYSITELIB}/uvloop/includes/flowcontrol.pxd
 ${PYSITELIB}/uvloop/includes/python.pxd
 ${PYSITELIB}/uvloop/includes/stdlib.pxi
 ${PYSITELIB}/uvloop/includes/system.pxd
@@ -62,7 +61,10 @@ ${PYSITELIB}/uvloop/loop.c
 ${PYSITELIB}/uvloop/loop.pxd
 ${PYSITELIB}/uvloop/loop.pyx
 ${PYSITELIB}/uvloop/loop.so
+${PYSITELIB}/uvloop/pseudosock.pyx
 ${PYSITELIB}/uvloop/request.pxd
 ${PYSITELIB}/uvloop/request.pyx
 ${PYSITELIB}/uvloop/server.pxd
 ${PYSITELIB}/uvloop/server.pyx
+${PYSITELIB}/uvloop/sslproto.pxd
+${PYSITELIB}/uvloop/sslproto.pyx

@@ -701,6 +701,12 @@ archive_read_format_lha_read_header(struct archive_read *a,
 	 * Prepare variables used to read a file content.
 	 */
 	lha->entry_bytes_remaining = lha->compsize;
+	if (lha->entry_bytes_remaining < 0) {
+		archive_set_error(&a->archive,
+		    ARCHIVE_ERRNO_FILE_FORMAT,
+		    "Invalid LHa entry size");
+		return (ARCHIVE_FATAL);
+	}
 	lha->entry_offset = 0;
 	lha->entry_crc_calculated = 0;
 
@@ -2477,7 +2483,7 @@ lzh_huffman_free(struct huffman *hf)
 	free(hf->tree);
 }
 
-static char bitlen_tbl[0x400] = {
+static const char bitlen_tbl[0x400] = {
 	 7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,
 	 7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,
 	 7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,

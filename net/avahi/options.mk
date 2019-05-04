@@ -1,10 +1,10 @@
-# $NetBSD: options.mk,v 1.9 2017/01/01 14:43:49 wiz Exp $
+# $NetBSD: options.mk,v 1.12 2019/04/26 13:14:07 maya Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.avahi
-PKG_SUPPORTED_OPTIONS=	avahi-howl gdbm introspection gtk2 gtk3 mono python qt3
+PKG_SUPPORTED_OPTIONS=	avahi-howl gdbm introspection gtk2 gtk3 mono python
 PKG_SUPPORTED_OPTIONS+=	qt tests
 PKG_SUGGESTED_OPTIONS+=	gtk2
-PLIST_VARS+=		introspection gtk2 gtk3 mono qt3 qt ui
+PLIST_VARS+=		introspection gtk2 gtk3 mono qt ui
 
 .include "../../mk/bsd.options.mk"
 
@@ -59,13 +59,6 @@ PLIST.mono=		yes
 CONFIGURE_ARGS+=	--disable-mono --disable-monodoc
 .endif
 
-.if !empty(PKG_OPTIONS:Mqt3)
-.include "../../x11/qt3-libs/buildlink3.mk"
-PLIST.qt3=		yes
-.else
-CONFIGURE_ARGS+=	--disable-qt3
-.endif
-
 .if !empty(PKG_OPTIONS:Mqt)
 .include "../../x11/qt4-libs/buildlink3.mk"
 PLIST.qt=		yes
@@ -78,7 +71,7 @@ CONFIGURE_ARGS+=	--disable-qt4
 ###
 .if !empty(PKG_OPTIONS:Mpython)
 PY_PATCHPLIST=		yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 .  include "../../lang/python/application.mk"
 REPLACE_PYTHON+=	avahi-python/avahi-discover/__init__.py
 .  include "../../lang/python/extension.mk"

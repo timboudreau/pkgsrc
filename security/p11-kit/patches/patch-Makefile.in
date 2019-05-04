@@ -1,9 +1,12 @@
-$NetBSD: patch-Makefile.in,v 1.1 2016/03/13 03:10:36 ryoon Exp $
+$NetBSD: patch-Makefile.in,v 1.4 2018/09/27 18:06:36 tnn Exp $
 
---- Makefile.in.orig	2015-12-07 13:51:02.000000000 +0000
+Install examples into pkgsrc example directory.
+Avoid non-portable use of readlink(1) in Makefile.
+
+--- Makefile.in.orig	2018-08-28 14:02:02.000000000 +0000
 +++ Makefile.in
-@@ -1355,7 +1355,7 @@ libp11_kit_testable_la_LIBADD = $(libp11
- 
+@@ -1730,7 +1730,7 @@ libp11_kit_pkcs11_gnu_la_CFLAGS = -DCRYP
+ @OS_WIN32_FALSE@p11_kit_client_la_LIBADD = $(libp11_kit_la_LIBADD)
  pkgconfigdir = $(libdir)/pkgconfig
  pkgconfig_DATA = p11-kit/p11-kit-1.pc
 -exampledir = $(p11_system_config)
@@ -11,3 +14,12 @@ $NetBSD: patch-Makefile.in,v 1.1 2016/03/13 03:10:36 ryoon Exp $
  example_DATA = p11-kit/pkcs11.conf.example
  p11_kit_p11_kit_SOURCES = \
  	p11-kit/lists.c \
+@@ -5494,7 +5494,7 @@ p11-kit/pin.gnu.c: p11-kit/pin.h
+ @OS_WIN32_FALSE@install-exec-hook:
+ @OS_WIN32_FALSE@	for i in so dylib; do \
+ @OS_WIN32_FALSE@		test -f $(DESTDIR)$(libdir)/libp11-kit.$$i && \
+-@OS_WIN32_FALSE@			$(LN_S) -f `readlink $(DESTDIR)$(libdir)/libp11-kit.$$i` $(DESTDIR)$(libdir)/p11-kit-proxy.$$i || true; \
++@OS_WIN32_FALSE@			$(LN_S) -f `ls -ld $(DESTDIR)$(libdir)/libp11-kit.$$i | sed 's@.* -> @@'` $(DESTDIR)$(libdir)/p11-kit-proxy.$$i || true; \
+ @OS_WIN32_FALSE@	done
+ @OS_WIN32_FALSE@	$(MKDIR_P) $(DESTDIR)$(p11_package_config_modules)
+ 

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2016/08/07 11:44:43 nros Exp $
+# $NetBSD: Makefile,v 1.7 2018/06/08 19:40:44 nros Exp $
 
-DISTNAME=	qore-xml-module-1.3
+DISTNAME=	qore-xml-module-1.4.1
 CATEGORIES=	textproc
 MASTER_SITES=   ${MASTER_SITE_GITHUB:=qorelanguage/}
 EXTRACT_SUFX=   .tar.bz2
@@ -15,11 +15,13 @@ LICENSE=	gnu-lgpl-v2.1 OR mit
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 USE_TOOLS+=	gmake pax
 PTHREAD_OPTS+=	native
 
 CONFIGURE_ARGS+=--with-libsuffix=""
+
+REPLACE_QORE=	bin/soaputil
 
 #This is needed in order to comply the with MIT license and binary distribution
 #Install docs
@@ -35,6 +37,7 @@ post-install:
 		${DESTDIR}${PREFIX}/share/doc/${PKGBASE}
 
 
+.include "../../lang/qore/application.mk"
 .include "../../lang/qore/module.mk"
 .include "options.mk"
 

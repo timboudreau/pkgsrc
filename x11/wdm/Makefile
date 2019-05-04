@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.63 2016/07/09 10:39:37 rillig Exp $
+# $NetBSD: Makefile,v 1.65 2018/03/12 11:17:58 wiz Exp $
 
 DISTNAME=		wdm-1.28
-PKGREVISION=		19
+PKGREVISION=		20
 CATEGORIES=		x11 windowmaker
-MASTER_SITES=		http://voins.program.ru/wdm/
+#MASTER_SITES=		http://voins.program.ru/wdm/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://voins.program.ru/wdm/
+#HOMEPAGE=		http://voins.program.ru/wdm/
 COMMENT=		WINGs display manager
 LICENSE=		gnu-gpl-v2
 

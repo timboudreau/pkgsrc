@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.17 2017/06/21 07:24:06 markd Exp $
+# $NetBSD: Makefile,v 1.22 2019/01/30 06:16:44 markd Exp $
 
 DISTNAME=	glossaries
-PKGNAME=	tex-${DISTNAME}-4.30
-TEXLIVE_REV=	44564
+PKGNAME=	tex-${DISTNAME}-4.42
+TEXLIVE_REV=	49618
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/glossaries
@@ -16,6 +16,7 @@ DEPENDS+=	tex-latex-bin-[0-9]*:../../print/tex-latex-bin
 DEPENDS+=	tex-oberdiek-[0-9]*:../../print/tex-oberdiek
 DEPENDS+=	tex-supertabular-[0-9]*:../../print/tex-supertabular
 DEPENDS+=	tex-tools-[0-9]*:../../print/tex-tools
+DEPENDS+=	tex-tracklang-[0-9]*:../../print/tex-tracklang
 DEPENDS+=	tex-xfor-[0-9]*:../../print/tex-xfor
 DEPENDS+=	tex-xkeyval-[0-9]*:../../print/tex-xkeyval
 

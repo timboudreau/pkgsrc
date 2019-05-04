@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.2 2017/04/27 08:27:14 leot Exp $
+# $NetBSD: Makefile,v 1.9 2018/12/31 14:24:45 leot Exp $
 #
 
-VERS=		3.6.1
+VERS=		3.6.8
 DISTNAME=	python-${VERS}-docs-html
 PKGNAME=	py36-html-docs-${VERS}
 CATEGORIES=	lang python
 MASTER_SITES=	https://www.python.org/ftp/python/doc/${VERS}/
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.python.org/doc/
+MAINTAINER=	leot@NetBSD.org
+HOMEPAGE=	https://www.python.org/doc/
 COMMENT=	HTML Documentation for Python 3.6
 LICENSE=	python-software-foundation
 

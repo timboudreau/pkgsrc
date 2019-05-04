@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.26 2017/07/13 11:53:15 jaapb Exp $
+# $NetBSD: Makefile,v 1.50 2019/04/03 00:33:16 ryoon Exp $
 
-DISTNAME=	lablgtk-2.18.5
+DISTNAME=	lablgtk-2.18.7
 PKGNAME=	ocaml-${DISTNAME}
-PKGREVISION=	7
+PKGREVISION=	1
 CATEGORIES=	x11
-MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/1627/
+MASTER_SITES=	https://forge.ocamlcore.org/frs/download.php/1773/
 
 MAINTAINER=	jaapb@NetBSD.org
 HOMEPAGE=	http://lablgtk.forge.ocamlcore.org/
@@ -43,5 +43,12 @@ PLIST.stubs=	yes
 
 .include "options.mk"
 
+.include "../../devel/atk/buildlink3.mk"
+.include "../../devel/glib2/buildlink3.mk"
+.include "../../devel/pango/buildlink3.mk"
+.include "../../graphics/cairo/buildlink3.mk"
+.include "../../graphics/gdk-pixbuf2/buildlink3.mk"
+.include "../../graphics/libart/buildlink3.mk"
+.include "../../textproc/libxml2/buildlink3.mk"
 .include "../../x11/gtk2/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,22 +1,20 @@
-# $NetBSD: Makefile,v 1.5 2017/04/30 01:21:57 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2019/01/11 19:40:58 leot Exp $
 
-DISTNAME=	megatools-1.9.95
-PKGREVISION=	4
-CATEGORIES=	filesystems security
-MASTER_SITES=	http://megatools.megous.com/builds/
+DISTNAME=	megatools-1.10.2
+PKGREVISION=	2
+CATEGORIES=	net
+MASTER_SITES=	https://megatools.megous.com/builds/
 
 MAINTAINER=	root@zta.lk
-HOMEPAGE=	http://megatools.megous.com/
+HOMEPAGE=	https://megatools.megous.com/
 COMMENT=	Command line client for Mega.co.nz
 LICENSE=	gnu-gpl-v2
 
-DEPENDS+=	glib-networking>=2.36.2:../../net/glib-networking
+TOOL_DEPENDS+=	asciidoc-[0-9]*:../../textproc/asciidoc
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config gmake
-
-PKGCONFIG_OVERRIDE+=	libmega.pc.in
 
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../www/curl/buildlink3.mk"

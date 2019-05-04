@@ -1,4 +1,4 @@
-# $NetBSD: create.mk,v 1.5 2013/02/27 12:09:39 obache Exp $
+# $NetBSD: create.mk,v 1.11 2019/03/24 11:29:19 rillig Exp $
 #
 # Copyright (c) 2005, 2006 The NetBSD Foundation, Inc.
 # All rights reserved.
@@ -14,13 +14,6 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#        This product includes software developed by the NetBSD
-#        Foundation, Inc. and its contributors.
-# 4. Neither the name of The NetBSD Foundation nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -147,21 +140,33 @@ TOOLS_SCRIPT_DFLT.${_t_}=	\
 
 override-tools: ${TOOLS_CMD.${_t_}}
 
+# Note: if you get a warning about a doubly-defined target here, you are
+# probably adding a program to USE_TOOLS that is not a valid tool name.
+# For instance, "split" is handled outside of the tools framework.
 ${TOOLS_CMD.${_t_}}:
 	${RUN} ${TEST} -d ${.TARGET:H:Q} || ${MKDIR} ${.TARGET:H:Q}
 	${RUN}								\
 	if ${TEST} -n ${TOOLS_SCRIPT.${_t_}:Q}""; then			\
 		create=wrapper;						\
 		script=${TOOLS_SCRIPT.${_t_}:Q};			\
+		logprefix='"set args$$shquoted_args; shift; "';		\
+		logmain=${TOOLS_SCRIPT.${_t_}:Q:Q};			\
+		logsuffix='';						\
 	elif ${TEST} -n ${TOOLS_PATH.${_t_}:Q}""; then			\
 		if ${TEST} -n ${TOOLS_ARGS.${_t_}:Q}""; then		\
 			create=wrapper;					\
 			script=${TOOLS_SCRIPT_DFLT.${_t_}:Q};		\
+			logprefix='';					\
+			logmain=${TOOLS_PATH.${_t_}:Q:Q}\"\ \"${TOOLS_ARGS.${_t_}:Q:Q}; \
+			logsuffix='$$shquoted_args';			\
 		else							\
 			case ${TOOLS_PATH.${_t_}:Q}"" in		\
 			/*)	create=symlink ;;			\
 			*)	create=wrapper;				\
 				script=${TOOLS_SCRIPT_DFLT.${_t_}:Q};	\
+				logprefix='';				\
+				logmain=${TOOLS_PATH.${_t_}:Q:Q}\"\ \"; \
+				logsuffix='$$shquoted_args';		\
 			esac;						\
 		fi;							\
 	else								\
@@ -170,9 +175,14 @@ ${TOOLS_CMD.${_t_}}:
 	case "$$create" in						\
 	wrapper)							\
 		{ ${ECHO} '#!'${TOOLS_SHELL:Q};				\
+		  ${ECHO} 'tools_wrapper_sed='${SED:Q:Q};		\
+		  ${SED} -e '/^$$/d' -e '/^\#/d' ${PKGSRCDIR}/mk/tools/shquote.sh; \
 		  ${ECHO} 'wrapperlog="$${TOOLS_WRAPPER_LOG-'${_TOOLS_WRAP_LOG:Q}'}"'; \
-		  ${ECHO} '${ECHO} "[*] "'${.TARGET:Q}'" $$@" >> $$wrapperlog'; \
-		  ${ECHO} "${ECHO} \"<.> $$script\" >> \$$wrapperlog";	\
+		  ${ECHO} 'shquote_args "$$@"';				\
+		  ${ECHO} '${ECHO} "[*] "'${.TARGET:Q}'"$$shquoted_args" >> $$wrapperlog'; \
+		  ${ECHO} 'logprefix='$$logprefix;			\
+		  ${ECHO} 'logmain='$$logmain;				\
+		  ${ECHO} "${ECHO} '<.>' \"\$$logprefix\$$logmain$$logsuffix\" >> \$$wrapperlog"; \
 		  ${ECHO} "$$script";					\
 		} > ${.TARGET:Q};					\
 		${CHMOD} +x ${.TARGET:Q};				\

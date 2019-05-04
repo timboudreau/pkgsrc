@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.50 2017/02/12 06:26:15 ryoon Exp $
+# $NetBSD: Makefile,v 1.58 2019/04/26 13:14:25 maya Exp $
 
 DISTNAME=	rox-session-0.28
-PKGREVISION=	31
+PKGREVISION=	36
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=rox/}
 EXTRACT_SUFX=	.tar.bz2
@@ -18,19 +18,19 @@ DIST_SUBDIR=	rox
 NO_BUILD=	yes
 
 REPLACE_PYTHON=	AppRun tests/testutils.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 INSTALLATION_DIRS=	share/rox/ROX-Session
 
 SUBST_CLASSES+=		path
 SUBST_MESSAGE.path=	Fixing hardcoded paths.
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_FILES.path=	Login
 SUBST_SED.path=		-e 's,/usr/local,${PREFIX},g'
 
 SUBST_CLASSES+=		lib
 SUBST_MESSAGE.lib=	Fixing hardcoded paths for ROX-Lib.
-SUBST_STAGE.lib=	post-patch
+SUBST_STAGE.lib=	pre-configure
 SUBST_FILES.lib=	findrox.py
 SUBST_SED.lib=		-e 's,/usr/local/lib,${PREFIX}/share/rox,g'
 

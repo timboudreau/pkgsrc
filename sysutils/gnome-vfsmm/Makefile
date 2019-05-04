@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.56 2017/05/03 08:38:45 jperkin Exp $
+# $NetBSD: Makefile,v 1.63 2018/11/14 22:22:25 kleink Exp $
 
 DISTNAME=	gnome-vfsmm-2.26.0
-PKGREVISION=	30
+PKGREVISION=	36
 CATEGORIES=	sysutils
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-vfsmm/2.26/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://gtkmm.sourceforge.net/
+#HOMEPAGE=	http://gtkmm.sourceforge.net/
 COMMENT=	C++ bindings for gnome-vfs
 
 #BUILD_DEPENDS+=		doxygen-[0-9]*:../../devel/doxygen

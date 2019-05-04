@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.45 2017/01/21 20:06:47 ryoon Exp $
+# $NetBSD: Makefile,v 1.51 2018/08/22 09:42:55 wiz Exp $
 #
 
 VERSION=		0.4.15
 DISTNAME=		lmms-${VERSION}
-PKGREVISION=		13
+PKGREVISION=		18
 CATEGORIES=		audio
 MASTER_SITES=		${MASTER_SITE_GITHUB:=LMMS/}
 GITHUB_TAG=		v${VERSION}
@@ -15,7 +15,7 @@ LICENSE=		gnu-gpl-v2
 
 USE_PKGLOCALEDIR=	yes
 USE_LIBTOOL=		yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake perl pkg-config
 USE_CMAKE=		yes
 

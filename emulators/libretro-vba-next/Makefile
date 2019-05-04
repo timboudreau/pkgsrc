@@ -1,22 +1,26 @@
-# $NetBSD: Makefile,v 1.1 2015/02/13 21:21:03 snj Exp $
+# $NetBSD: Makefile,v 1.4 2018/10/02 21:09:30 nia Exp $
 
-DISTNAME=	a0dd88872fc734cf4cc595df1cd1240fa213ac10
-PKGNAME=	libretro-vba-next-20150105
+DISTNAME=	libretro-vba-next-20180603
 CATEGORIES=	emulators games
-MASTER_SITES=	https://github.com/libretro/vba-next/archive/
-EXTRACT_SUFX=	.zip
+MASTER_SITES=	${MASTER_SITE_GITHUB:=libretro/}
+GITHUB_PROJECT=	vba-next
+GITHUB_TAG=	110ab08a8042cb215a04872e26244331aa90eed5
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://github.com/libretro/vbam-libretro
+HOMEPAGE=	https://docs.libretro.com/library/vba_next/
 COMMENT=	Libretro core based on the VBA Next Game Boy Advance emulator
-
 LICENSE=	gnu-gpl-v2
 
-USE_LANGUAGES+=	c c++
+EXTRACT_USING=	bsdtar
+USE_LANGUAGES+=	c c++03
 USE_TOOLS+=	gmake
 
-WRKSRC=		${WRKDIR}/vba-next-${DISTNAME}
 MAKE_FILE=	Makefile.libretro
+
+MAKE_FLAGS+=	GIT_VERSION="-pkgsrc"
+
+BUILDLINK_TRANSFORM.SunOS+=	rm:-Wl,-version-script=./libretro/link.T
+BUILDLINK_TRANSFORM.SunOS+=	rm:-Wl,-no-undefined
 
 INSTALLATION_DIRS=	lib/libretro
 

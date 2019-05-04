@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.111 2017/02/12 06:24:57 ryoon Exp $
+# $NetBSD: Makefile,v 1.121 2019/04/26 13:14:24 maya Exp $
 
 DISTNAME=	gnome-python-2.28.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/gnome-python/gnome2/}
-PKGREVISION=	33
+PKGREVISION=	40
 CATEGORIES=	x11 python
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-python/2.28/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Python binding for GNOME2
 
 PY_PATCHPLIST=	YES
@@ -18,7 +18,7 @@ GNU_CONFIGURE=	YES
 CONFIGURE_ENV+=	PYTHON=${PYTHONBIN:Q}
 USE_TOOLS+=		pkg-config gmake
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit, py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-ORBit, py-gtk2
 
 BUILDLINK_TRANSFORM.SunOS+=	rm:-std=c9x
 

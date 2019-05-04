@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.155 2017/02/12 06:25:20 ryoon Exp $
+# $NetBSD: Makefile,v 1.170 2019/04/26 14:12:39 maya Exp $
 
 DISTNAME=		gnome-games-2.32.1
-PKGREVISION=		33
+PKGREVISION=		41
 CATEGORIES=		games gnome
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gnome-games/2.32/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		GNOME2 games collection
 #LICENSE=		gnu-gpl-v2 AND gnu-fdl-v1.1
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit via py-gnome2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # py-ORBit via py-gnome2
 
 CONFLICTS=		xbill-[0-9]*
 SUPERSEDES=		glchess-[0-9]*
@@ -23,14 +23,14 @@ USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 
 GNU_CONFIGURE=		yes
-CONFIGURE_ENV+=		PKGLOCALEDIR=${PKGLOCALEDIR:Q}
+CONFIGURE_ENV+=		PKGLOCALEDIR=${PKGLOCALEDIR}
 CONFIGURE_ENV+=		ac_cv_path_MSGFMT=msgfmt
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE:Q}
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
 CONFIGURE_ARGS+=	--enable-omitgames=lightsoff
 
 FILES_SUBST+=		INSTALL=${INSTALL:Q}
 
-GCONF_SCHEMAS=		aisleriot.schemas
+GCONF_SCHEMAS=	aisleriot.schemas
 GCONF_SCHEMAS+=	glchess.schemas
 GCONF_SCHEMAS+=	glines.schemas
 GCONF_SCHEMAS+=	gnect.schemas
@@ -52,7 +52,7 @@ PY_PATCHPLIST=		yes
 
 #!/usr/bin/env sh is pretty dumb and REPLACE_SH doesn't support fixing it
 SUBST_CLASSES+=		swell
-SUBST_STAGE.swell=	post-patch
+SUBST_STAGE.swell=	pre-configure
 SUBST_FILES.swell=	swell-foop/swell-foop.in
 SUBST_SED.swell=	's:/usr/bin/env sh:${SH}:'
 

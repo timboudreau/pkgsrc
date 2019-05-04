@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2012/10/23 17:18:30 asau Exp $
+# $NetBSD: Makefile,v 1.15 2018/12/09 21:05:33 adam Exp $
 
 DISTNAME=	    jftpgw-0.13.5
-#PKGREVISION=	    1
 CATEGORIES=	    net
 MASTER_SITES=	    http://www.mcknight.de/jftpgw/
 
@@ -20,7 +19,7 @@ EGDIR=			${PREFIX}/share/examples/jftpgw
 CONF_FILES=		${EGDIR}/jftpgw.conf ${PKG_SYSCONFDIR}/jftpgw.conf
 
 SUBST_CLASSES+=		log
-SUBST_STAGE.log=	post-patch
+SUBST_STAGE.log=	pre-configure
 SUBST_FILES.log=	active.c bindport.c cache.c cmds.c config.c \
 			ftpread.c fw_auth_cmds.c jftpgw.c log.c log.h \
 			login.c openport.c passive.c states.c std_cmds.c \

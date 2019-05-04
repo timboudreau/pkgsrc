@@ -1,13 +1,14 @@
-# $NetBSD: Makefile,v 1.40 2017/04/22 21:03:37 adam Exp $
+# $NetBSD: Makefile,v 1.47 2019/04/03 00:32:45 ryoon Exp $
 
 DISTNAME=	ImageViewer-0.6.3
-PKGREVISION=	18
+PKGREVISION=	24
 CATEGORIES=	graphics gnustep
 MASTER_SITES=	http://www.nice.ch/~phip/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.nice.ch/~phip/softcorner.html
 COMMENT=	GNUstep image display application
+LICENSE=	gnu-gpl-v2
 
 USE_LANGUAGES=	objc
 

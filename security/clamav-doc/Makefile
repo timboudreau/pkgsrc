@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.2 2015/12/11 16:31:06 adam Exp $
+# $NetBSD: Makefile,v 1.4 2018/01/26 12:20:16 bouyer Exp $
 
 .include "../../security/clamav/Makefile.common"
 

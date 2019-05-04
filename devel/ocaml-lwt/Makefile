@@ -1,35 +1,31 @@
-# $NetBSD: Makefile,v 1.29 2017/07/11 11:06:54 jaapb Exp $
+# $NetBSD: Makefile,v 1.40 2019/03/05 16:56:16 jaapb Exp $
 #
 
-DISTNAME=	lwt-2.7.1
+.include "Makefile.common"
+
 PKGNAME=	ocaml-${DISTNAME}
+PKGREVISION= 3
 CATEGORIES=	devel
-#MASTER_SITES=	http://github.com/ocsigen/lwt/archive/
-MASTER_SITES=	${MASTER_SITE_GITHUB:=ocsigen/}
-GITHUB_PROJECT=	lwt
 
 MAINTAINER=	jaapb@NetBSD.org
 HOMEPAGE=	http://www.ocsigen.org/
 COMMENT=	Cooperative threading library for OCaml
-LICENSE=	gnu-lgpl-v2.1
 
-DEPENDS+=	ocaml-ppx_tools-[0-9]*:../../devel/ocaml-ppx_tools
-DEPENDS+=	ocaml-react-[0-9]*:../../devel/ocaml-react
+OCAML_FINDLIB_DIRS=	lwt stublibs
+DUNE_BUILD_PACKAGES=	lwt
 
-OCAML_USE_OASIS_DYNRUN=	yes
-CONFIGURE_ARGS+=	--destdir "${DESTDIR}" --prefix "${PREFIX}" \
-			--bindir "${DESTDIR}${PREFIX}/bin" \
-			--enable-react --disable-glib
+HAS_CONFIGURE=	yes
+CONFIGURE_ARGS=	-use-libev false
 
-SUBST_CLASSES+=		libev destdir
-SUBST_STAGE.libev=	post-configure
-SUBST_MESSAGE.libev=	Correcting compiler flags for libev
-SUBST_FILES.libev=	setup.data
-SUBST_SED.libev=	-e 's%"-lev"%"-lev -L${PREFIX}/lib/ev ${COMPILER_RPATH_FLAG}${PREFIX}/lib/ev"%'
+CFLAGS.SunOS+=	-D_POSIX_PTHREAD_SEMANTICS
 
-.include "options.mk"
+do-configure:
+	cd ${WRKSRC} && ocaml src/util/configure.ml ${CONFIGURE_ARGS}
+
 .include "../../mk/ocaml.mk"
-.include "../../devel/libev/buildlink3.mk"
 .include "../../devel/ocaml-cppo/buildlink3.mk"
 .include "../../devel/ocaml-findlib/buildlink3.mk"
+.include "../../devel/ocaml-migrate-parsetree/buildlink3.mk"
+.include "../../devel/ocaml-ppx_tools_versioned/buildlink3.mk"
+.include "../../devel/ocaml-result/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

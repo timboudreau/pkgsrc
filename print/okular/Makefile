@@ -1,12 +1,14 @@
-# $NetBSD: Makefile,v 1.62 2017/05/02 13:37:32 wiz Exp $
+# $NetBSD: Makefile,v 1.81 2019/03/18 16:17:51 gdt Exp $
 
 DISTNAME=	okular-16.08.0
-PKGREVISION=	4
+PKGREVISION=	22
 CATEGORIES=	print
 COMMENT=	KDE universal document viewer
 MASTER_SITES=	${MASTER_SITE_KDE:=applications/16.08.0/src/}
 
 CFLAGS.SunOS+=	-D__EXTENSIONS__
+
+BROKEN=		Needs poppler with qt4 support.
 
 .include "../../meta-pkgs/kde4/Makefile.kde4"
 
@@ -19,7 +21,7 @@ CFLAGS.SunOS+=	-D__EXTENSIONS__
 .include "../../graphics/qimageblitz/buildlink3.mk"
 .include "../../graphics/tiff/buildlink3.mk"
 .include "../../print/libspectre/buildlink3.mk"
-.include "../../print/poppler-qt4/buildlink3.mk"
+#.include "../../print/poppler-qt4/buildlink3.mk"
 .include "../../security/qca2/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../textproc/ebook-tools/buildlink3.mk"

@@ -1,10 +1,10 @@
-$NetBSD: patch-src_password-store.sh,v 1.1 2015/01/02 12:52:16 imil Exp $
+$NetBSD: patch-src_password-store.sh,v 1.3 2018/06/14 16:08:39 leot Exp $
 
-Remove non portable mkdir parameter
+Avoid non portable mkdir(1) `-v' parameter.
 
---- src/password-store.sh.orig	2014-07-01 08:42:26.000000000 +0000
+--- src/password-store.sh.orig	2018-06-14 14:58:28.000000000 +0000
 +++ src/password-store.sh
-@@ -291,7 +291,7 @@ cmd_init() {
+@@ -323,7 +323,7 @@ cmd_init() {
  		fi
  		rmdir -p "${gpg_id%/*}" 2>/dev/null
  	else
@@ -12,40 +12,40 @@ Remove non portable mkdir parameter
 +		mkdir -p "$PREFIX/$id_path"
  		printf "%s\n" "$@" > "$gpg_id"
  		local id_print="$(printf "%s, " "$@")"
- 		echo "Password store initialized for ${id_print%, }"
-@@ -382,7 +382,7 @@ cmd_insert() {
+ 		echo "Password store initialized for ${id_print%, }${id_path:+ ($id_path)}"
+@@ -432,7 +432,7 @@ cmd_insert() {
  
  	[[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
  
--	mkdir -p -v "$PREFIX/$(dirname "$path")"
-+	mkdir -p "$PREFIX/$(dirname "$path")"
- 	set_gpg_recipients "$(dirname "$path")"
+-	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
++	mkdir -p "$PREFIX/$(dirname -- "$path")"
+ 	set_gpg_recipients "$(dirname -- "$path")"
  
  	if [[ $multiline -eq 1 ]]; then
-@@ -416,7 +416,7 @@ cmd_edit() {
+@@ -466,7 +466,7 @@ cmd_edit() {
  
- 	local path="$1"
+ 	local path="${1%/}"
  	check_sneaky_paths "$path"
--	mkdir -p -v "$PREFIX/$(dirname "$path")"
-+	mkdir -p "$PREFIX/$(dirname "$path")"
- 	set_gpg_recipients "$(dirname "$path")"
+-	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
++	mkdir -p "$PREFIX/$(dirname -- "$path")"
+ 	set_gpg_recipients "$(dirname -- "$path")"
  	local passfile="$PREFIX/$path.gpg"
- 
-@@ -455,7 +455,7 @@ cmd_generate() {
- 	local length="$2"
+ 	set_git "$passfile"
+@@ -509,7 +509,7 @@ cmd_generate() {
  	check_sneaky_paths "$path"
- 	[[ ! $length =~ ^[0-9]+$ ]] && die "Error: pass-length \"$length\" must be a number."
--	mkdir -p -v "$PREFIX/$(dirname "$path")"
-+	mkdir -p "$PREFIX/$(dirname "$path")"
- 	set_gpg_recipients "$(dirname "$path")"
+ 	[[ $length =~ ^[0-9]+$ ]] || die "Error: pass-length \"$length\" must be a number."
+ 	[[ $length -gt 0 ]] || die "Error: pass-length must be greater than zero."
+-	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
++	mkdir -p "$PREFIX/$(dirname -- "$path")"
+ 	set_gpg_recipients "$(dirname -- "$path")"
  	local passfile="$PREFIX/$path.gpg"
- 
-@@ -538,7 +538,7 @@ cmd_copy_move() {
- 		[[ ! -f $old_path ]] && die "Error: $1 is not in the password store."
- 	fi
+ 	set_git "$passfile"
+@@ -598,7 +598,7 @@ cmd_copy_move() {
+ 	echo "$old_path"
+ 	[[ -e $old_path ]] || die "Error: $1 is not in the password store."
  
 -	mkdir -p -v "${new_path%/*}"
 +	mkdir -p "${new_path%/*}"
- 	[[ -d $old_path || -d $new_path || $new_path =~ /$ ]] || new_path="${new_path}.gpg"
+ 	[[ -d $old_path || -d $new_path || $new_path == */ ]] || new_path="${new_path}.gpg"
  
  	local interactive="-i"

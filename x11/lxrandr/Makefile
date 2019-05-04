@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2017/02/12 06:26:13 ryoon Exp $
+# $NetBSD: Makefile,v 1.10 2018/11/14 22:22:46 kleink Exp $
 
 DISTNAME=	lxrandr-0.3.1
-PKGREVISION=	3
+PKGREVISION=	7
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=lxde/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	youri@NetBSD.org
-HOMEPAGE=	http://lxde.org/
+HOMEPAGE=	https://lxde.org/
 COMMENT=	Simple graphical front end to the xrandr extension
 LICENSE=	gnu-gpl-v2
 

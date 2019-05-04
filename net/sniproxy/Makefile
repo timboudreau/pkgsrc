@@ -1,16 +1,14 @@
-# $NetBSD: Makefile,v 1.5 2017/05/09 14:17:07 wiedi Exp $
+# $NetBSD: Makefile,v 1.8 2019/01/11 23:09:53 schmonz Exp $
 
-DISTNAME=	0.5.0
-PKGNAME=	sniproxy-${DISTNAME}
+DISTNAME=	sniproxy-0.6.0
+PKGREVISION=	1
 CATEGORIES=	net
-MASTER_SITES=	https://github.com/dlundquist/sniproxy/archive/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=dlundquist/}
 
 MAINTAINER=	wiedi@frubar.net
 HOMEPAGE=	https://github.com/dlundquist/sniproxy/
 COMMENT=	Proxy that routes based on TLS server name extension
 LICENSE=	2-clause-bsd
-
-WRKSRC=		${WRKDIR}/sniproxy-${DISTNAME}
 
 USE_LANGUAGES=	c99
 USE_TOOLS+=	autoconf aclocal automake pkg-config
@@ -24,6 +22,21 @@ CONF_FILES=	${EGDIR}/sniproxy.conf ${PKG_SYSCONFDIR}/sniproxy.conf
 
 CPPFLAGS.SunOS+=	-D__EXTENSIONS__ -D_XOPEN_SOURCE=600
 LDFLAGS.SunOS+=		-lsocket -lnsl
+
+SUBST_CLASSES+=		pkgvars
+SUBST_STAGE.pkgvars=	do-configure
+SUBST_FILES.pkgvars=	src/sniproxy.c sniproxy.conf \
+			man/sniproxy.8 man/sniproxy.conf.5
+SUBST_VARS.pkgvars=	PKG_SYSCONFDIR VARBASE SNIPROXY_USER SNIPROXY_GROUP
+
+PKG_USERS_VARS+=	SNIPROXY_USER
+PKG_GROUPS_VARS+=	SNIPROXY_GROUP
+PKG_GROUPS+=		${SNIPROXY_GROUP}
+PKG_USERS+=		${SNIPROXY_USER}:${SNIPROXY_GROUP}
+
+RCD_SCRIPTS=		sniproxy
+
+BUILD_DEFS+=		VARBASE PKG_SYSCONFBASE
 
 pre-configure:
 	cd ${WRKSRC} && autoreconf --install && automake --add-missing --copy

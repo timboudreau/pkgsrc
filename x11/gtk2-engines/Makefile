@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.90 2017/02/12 06:24:53 ryoon Exp $
+# $NetBSD: Makefile,v 1.95 2018/11/14 22:22:42 kleink Exp $
 
 DISTNAME=		gtk-engines-2.20.2
 PKGNAME=		${DISTNAME:S/gtk/gtk2/}
-PKGREVISION=		21
+PKGREVISION=		25
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_GNOME:=sources/gtk-engines/2.20/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.gnome.org/
+HOMEPAGE=		https://www.gnome.org/
 COMMENT=		Theme engines for GTK+ version 2
 LICENSE=		gnu-lgpl-v2.1
 

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.17 2017/05/11 11:12:44 adam Exp $
+# $NetBSD: Makefile,v 1.22 2018/02/23 14:20:55 adam Exp $
 
-DISTNAME=	msgpack-python-0.4.8
-PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/-python-/-/}
-CATEGORIES=	devel
-MASTER_SITES=	${MASTER_SITE_PYPI:=m/msgpack-python/}
+DISTNAME=	msgpack-0.5.6
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	devel python
+MASTER_SITES=	${MASTER_SITE_PYPI:=m/msgpack/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://msgpack.org/
+HOMEPAGE=	https://msgpack.org/
 COMMENT=	MessagePack (de)serializer for Python
 LICENSE=	apache-2.0
 

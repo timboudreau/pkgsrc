@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.15 2016/09/19 13:04:24 wiz Exp $
+# $NetBSD: Makefile,v 1.18 2018/07/04 13:40:27 jperkin Exp $
 
 DISTNAME=		aiccu_20070115
 PKGNAME=		${DISTNAME:S/_/-/:S/.//g}
-PKGREVISION=		3
+PKGREVISION=		4
 CATEGORIES=		net
 MASTER_SITES=		http://www.sixxs.net/archive/sixxs/aiccu/unix/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.sixxs.net/tools/aiccu/
+HOMEPAGE=		https://www.sixxs.net/tools/aiccu/
 COMMENT=		Automatic IPv6 Connectivity Client Utility
 
 USE_TOOLS+=		gmake
@@ -15,7 +15,7 @@ USE_FEATURES+=		inet6
 CHECK_PORTABILITY_SKIP+=debian/*
 
 SUBST_CLASSES+=		sysconfdir
-SUBST_STAGE.sysconfdir=	post-patch
+SUBST_STAGE.sysconfdir=	pre-configure
 SUBST_FILES.sysconfdir=	common/aiccu.h
 SUBST_SED.sysconfdir=	-e 's,/etc/aiccu.conf,${PKG_SYSCONFDIR}/aiccu.conf,'
 

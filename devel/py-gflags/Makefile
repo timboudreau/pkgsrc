@@ -1,19 +1,25 @@
-# $NetBSD: Makefile,v 1.5 2017/01/01 14:43:33 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2018/05/31 20:07:00 bsiegert Exp $
 
-DISTNAME=	python-gflags-2.0
+DISTNAME=	python-gflags-3.1.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/python-//}
+PKGREVISION=	2
 CATEGORIES=	devel python
-MASTER_SITES=	http://python-gflags.googlecode.com/files/
+MASTER_SITES=	${MASTER_SITE_PYPI:=p/python-gflags/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/python-gflags/
+HOMEPAGE=	https://github.com/google/python-gflags
 COMMENT=	Python equivalent of gflags, a commandline flag implementation
 LICENSE=	modified-bsd
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 2.0
-
 REPLACE_PYTHON+=	*.py
+PYDISTUTILSPKG=	yes
+
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+
+post-install:
+	${MV} ${DESTDIR}${PREFIX}/bin/gflags2man.py ${DESTDIR}${PREFIX}/bin/gflags2man${PYVERSSUFFIX}.py 
+	${CHMOD} +x ${DESTDIR}${PREFIX}/bin/gflags2man${PYVERSSUFFIX}.py 
 
 .include "../../lang/python/application.mk"
-.include "../../lang/python/egg.mk"
+.include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

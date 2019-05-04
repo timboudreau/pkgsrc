@@ -1,9 +1,11 @@
-# $NetBSD: Makefile,v 1.70 2017/07/03 17:33:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.83 2019/03/24 12:03:48 tnn Exp $
 #
 
 COMMENT=	Cross-platform development utilities
 
 SUBDIR+=	GenFw
+SUBDIR+=	aarch64-none-elf-binutils
+SUBDIR+=	aarch64-none-elf-gcc
 SUBDIR+=	arm-none-eabi-binutils
 SUBDIR+=	arm-none-eabi-gcc
 SUBDIR+=	arm-none-eabi-gdb
@@ -41,6 +43,17 @@ SUBDIR+=	mingw-binutils
 SUBDIR+=	mingw-gcc
 SUBDIR+=	mingw-runtime-bin
 SUBDIR+=	mingw-w32api-bin
+SUBDIR+=	mingw-w64
+SUBDIR+=	mingw-w64-i686-binutils
+SUBDIR+=	mingw-w64-i686-crt
+SUBDIR+=	mingw-w64-i686-gcc
+SUBDIR+=	mingw-w64-i686-gcc-bootstrap
+SUBDIR+=	mingw-w64-i686-headers
+SUBDIR+=	mingw-w64-x86_64-binutils
+SUBDIR+=	mingw-w64-x86_64-crt
+SUBDIR+=	mingw-w64-x86_64-gcc
+SUBDIR+=	mingw-w64-x86_64-gcc-bootstrap
+SUBDIR+=	mingw-w64-x86_64-headers
 #SUBDIR+=	nios2			# just contains makefile fragments
 SUBDIR+=	nios2-binutils
 SUBDIR+=	nios2-gcc
@@ -51,5 +64,7 @@ SUBDIR+=	pdp11-aout-binutils
 SUBDIR+=	pdp11-aout-gcc
 SUBDIR+=	stlink
 SUBDIR+=	uisp
+SUBDIR+=	xtensa-esp32-elf-binutils
+SUBDIR+=	xtensa-esp32-elf-gcc
 
 .include "../mk/misc/category.mk"

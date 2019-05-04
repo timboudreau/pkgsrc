@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.35 2017/04/30 01:21:59 ryoon Exp $
+# $NetBSD: Makefile,v 1.42 2018/12/13 19:52:19 adam Exp $
 
 DISTNAME=	modsecurity-apache_2.7.7
 PKGNAME=	${APACHE_PKG_PREFIX}-${DISTNAME:S/apache_//}
-PKGREVISION=	7
+PKGREVISION=	13
 CATEGORIES=	www security
 MASTER_SITES=	https://www.modsecurity.org/tarball/${PKGVERSION_NOREV}/
 
@@ -12,7 +12,6 @@ COMMENT=	Intrusion detection and prevention engine for web applications
 LICENSE=	apache-2.0
 
 APACHE_MODULE=		yes
-PKG_APACHE_ACCEPTED=	apache22 apache24
 USE_APR=		yes
 USE_LANGUAGES=		c++ c
 

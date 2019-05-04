@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.94 2017/02/21 20:37:03 plunky Exp $
+# $NetBSD: Makefile,v 1.97 2018/12/16 09:39:22 ryoon Exp $
 #
 
 COMMENT=	CAD tools
@@ -53,6 +53,7 @@ SUBDIR+=	p5-gds2
 SUBDIR+=	pcb
 SUBDIR+=	py-MyHDL
 SUBDIR+=	py-gds
+SUBDIR+=	py-gdscad
 SUBDIR+=	py-simpy
 SUBDIR+=	qcad
 SUBDIR+=	qcad-partlibrary
@@ -64,9 +65,9 @@ SUBDIR+=	stdio-wcalc
 SUBDIR+=	tkgate
 SUBDIR+=	tnt-mmtl
 SUBDIR+=	transcalc
+SUBDIR+=	verilator
 SUBDIR+=	verilog-mode
 SUBDIR+=	veriwell
-SUBDIR+=	vipec
 SUBDIR+=	wcalc
 SUBDIR+=	wcalc-docs
 SUBDIR+=	xchiplogo

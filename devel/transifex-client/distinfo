@@ -1,6 +1,7 @@
-$NetBSD: distinfo,v 1.5 2016/08/11 14:49:01 taca Exp $
+$NetBSD: distinfo,v 1.10 2019/02/19 16:27:48 taca Exp $
 
-SHA1 (0.12.1.tar.gz) = bc4c625e0c0d3ed8526392531661e1b488fb837f
-RMD160 (0.12.1.tar.gz) = 2e4a01aa2a46ce021ad8fd2429849bb6d3cd7195
-SHA512 (0.12.1.tar.gz) = e1e86eefea1fb5e4acd25a859964c33da5c1eca9afb65c8fe901306c0e368bd6ee6af3aa0c86e3f0f861596144cec9eef00c50349dad9ca90c3bf44c354e143e
-Size (0.12.1.tar.gz) = 191156 bytes
+SHA1 (transifex-client-0.13.6.tar.gz) = a5956ffb7326266ba076f8126a8fd9f8b24ccdbc
+RMD160 (transifex-client-0.13.6.tar.gz) = a904b74225da8d31eb9a8f0afc843a6ab38b7c7e
+SHA512 (transifex-client-0.13.6.tar.gz) = 42e2a96acca6ab9c3604d054046b9fca4aa2bd111568c90484efe61b92880148b789e4fe26ea3a2c068580ca21fcb2fb0abe799fa8c78d0327580dfdbcc1cd6b
+Size (transifex-client-0.13.6.tar.gz) = 213268 bytes
+SHA1 (patch-requirements.txt) = 9ed1802a183efd30c3b37e7259ee3d8fdf4f4753

@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.35 2017/05/29 12:20:25 wiz Exp $
+# $NetBSD: Makefile,v 1.49 2019/04/26 13:14:23 maya Exp $
 
 DISTNAME=	avant-window-navigator-0.4.0
-PKGREVISION=	25
+PKGREVISION=	34
 CATEGORIES=	x11
 MASTER_SITES=	https://launchpad.net/awn/0.4/0.4.0/+download/
 
@@ -26,13 +26,13 @@ GCONF_SCHEMAS+=		avant-window-navigator.schemas
 GCONF_SCHEMAS+=		awn-applet-taskmanager.schemas
 
 SUBST_CLASSES+=		python
-SUBST_STAGE.python=	post-patch
+SUBST_STAGE.python=	pre-configure
 SUBST_MESSAGE.python=	Fixing python path
 SUBST_FILES.python=	applet-activation/main.c
 SUBST_SED.python=	-e "s,@PYTHONBIN@,${PYTHONBIN},"
 
 SUBST_CLASSES+=		pathfix
-SUBST_STAGE.pathfix=	post-patch
+SUBST_STAGE.pathfix=	pre-configure
 SUBST_MESSAGE.pathfix=	Fixing hardcoded paths
 SUBST_FILES.pathfix=	applets/taskmanager/awn-applet-taskmanager.schema-ini.in
 SUBST_FILES.pathfix+=	doc/reference/html/*.html
@@ -44,16 +44,15 @@ SUBST_SED.pathfix=	-e "s,/usr/share,${PREFIX}/share,"
 PY_PATCHPLIST=		yes
 REPLACE_PYTHON+=	awn-settings/awnSettings.py.in
 REPLACE_PYTHON+=	awn-settings/awnSettingsHelper.py
-PYTHON_VERSIONED_DEPENDENCIES=	cairo:link
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 .include "../../devel/GConf/schemas.mk"
 .include "../../lang/vala/buildlink3.mk"
 .include "../../devel/libwnck/buildlink3.mk"
 .include "../../sysutils/dbus-glib/buildlink3.mk"
 .include "../../sysutils/py-dbus/buildlink3.mk"
+.include "../../graphics/py-cairo/buildlink3.mk"
 .include "../../x11/py-gtk2/buildlink3.mk"
-.include "../../lang/python/versioned_dependencies.mk"
 .include "../../x11/libdesktop-agnostic/buildlink3.mk"
 .include "../../sysutils/libgtop/buildlink3.mk"
 .include "../../lang/python/application.mk"

@@ -1,19 +1,20 @@
-# $NetBSD: Makefile,v 1.10 2017/01/04 11:18:44 roy Exp $
-#
+# $NetBSD: Makefile,v 1.12 2019/01/01 20:05:02 wiz Exp $
 
 DISTNAME=	mg-20110905
-PKGREVISION=	3
+PKGREVISION=	4
 CATEGORIES=	editors
-MASTER_SITES=	http://homepage.boetes.org/software/mg/
+MASTER_SITES=	https://homepage.boetes.org/software/mg/
 
 MAINTAINER=	abs@NetBSD.org
-HOMEPAGE=	http://homepage.boetes.org/software/mg/
+HOMEPAGE=	https://homepage.boetes.org/software/mg/
 COMMENT=	Small, fast, public domain EMACS style editor
 
 HAS_CONFIGURE=	yes
 FAKE_NCURSES=	yes
 USE_TOOLS+=	install
 MAKE_ENV+=	prefix=${PREFIX}
+
+CFLAGS.NetBSD+=	-D_OPENBSD_SOURCE
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1
 

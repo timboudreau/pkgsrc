@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.52 2017/04/27 13:56:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.54 2018/12/09 21:05:35 adam Exp $
 
 PKGNAME=	${DISTNAME:S/sasl/saslauthd/}
-PKGREVISION=	7
 CONFLICTS+=	cyrus-sasl<2.1.15nb2
 
 .include "../../security/cyrus-sasl/Makefile.common"
@@ -10,7 +9,7 @@ COMMENT=		Cyrus SASL plaintext authentication daemon
 
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR:Q}
 
-BUILD_TARGET=		all saslcache
+BUILD_TARGET=		all
 
 SASLSOCKETDIR?=		${VARBASE}/run/saslauthd
 BUILD_DEFS+=		SASLSOCKETDIR

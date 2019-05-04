@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.10 2016/11/19 15:05:39 wen Exp $
+$NetBSD: distinfo,v 1.12 2018/05/08 00:09:47 wen Exp $
 
-SHA1 (podlators-4.09.tar.gz) = 82b9ef16999957156d4c062b1f6dad0e075307de
-RMD160 (podlators-4.09.tar.gz) = 0c0345e6d9c08b2d5d1ec5540b0cd756d9322bec
-SHA512 (podlators-4.09.tar.gz) = ba3526cfe59cf601767ea71e7f2dd03fad4add70113b4db4981a692280300076e92f5104c70e54f84f1df84203327d3f21e16042eb54165afc1ff49a3f03dea4
-Size (podlators-4.09.tar.gz) = 132218 bytes
+SHA1 (podlators-4.11.tar.gz) = 18f7e1ab059909cd0b90fa380da70f720a65ec6f
+RMD160 (podlators-4.11.tar.gz) = 06149207ff8bfc316ad910737b54a7d3dc0fa564
+SHA512 (podlators-4.11.tar.gz) = ec634f3abceb4f7da95a17f7e9d1d9cf49b109d796c996ad3d093ccc92131d055312be82ec8f1bbb3d8a6d01077e621dec6ba5d5e1f92f377d70ab0d4d170241
+Size (podlators-4.11.tar.gz) = 131907 bytes

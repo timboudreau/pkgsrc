@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.1 2017/05/18 13:32:10 fhajny Exp $
+# $NetBSD: Makefile,v 1.7 2019/04/25 07:33:20 maya Exp $
 #
 
 RSYSLOG_MOD=	kafka
 PKGNAME=	${DISTNAME:S/rsyslog/rsyslog-${RSYSLOG_MOD}/}
+PKGREVISION=	2
 
 DEPENDS+=	rsyslog>=${PKGVERSION_NOREV}:../../sysutils/rsyslog
 

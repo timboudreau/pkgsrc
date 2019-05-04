@@ -1,90 +1,509 @@
-package main
+package pkglint
 
 import (
-	check "gopkg.in/check.v1"
+	"fmt"
+	"gopkg.in/check.v1"
 )
 
 func (s *Suite) Test_SubstContext__incomplete(c *check.C) {
-	s.Init(c)
-	G.opts.WarnExtra = true
-	ctx := new(SubstContext)
+	t := s.Init(c)
 
-	ctx.Varassign(newSubstLine(10, "PKGNAME=pkgname-1.0"))
+	t.SetUpCommandLine("-Wextra")
+	ctx := NewSubstContext()
+
+	ctx.Varassign(newSubstLine(t, 10, "PKGNAME=pkgname-1.0"))
 
 	c.Check(ctx.id, equals, "")
 
-	ctx.Varassign(newSubstLine(11, "SUBST_CLASSES+=interp"))
+	ctx.Varassign(newSubstLine(t, 11, "SUBST_CLASSES+=interp"))
 
 	c.Check(ctx.id, equals, "interp")
 
-	ctx.Varassign(newSubstLine(12, "SUBST_FILES.interp=Makefile"))
+	ctx.Varassign(newSubstLine(t, 12, "SUBST_FILES.interp=Makefile"))
 
 	c.Check(ctx.IsComplete(), equals, false)
 
-	ctx.Varassign(newSubstLine(13, "SUBST_SED.interp=s,@PREFIX@,${PREFIX},g"))
+	ctx.Varassign(newSubstLine(t, 13, "SUBST_SED.interp=s,@PREFIX@,${PREFIX},g"))
 
 	c.Check(ctx.IsComplete(), equals, false)
 
-	ctx.Finish(newSubstLine(14, ""))
+	ctx.Finish(newSubstLine(t, 14, ""))
 
-	s.CheckOutputLines(
+	t.CheckOutputLines(
+		"NOTE: Makefile:13: The substitution command \"s,@PREFIX@,${PREFIX},g\" "+
+			"can be replaced with \"SUBST_VARS.interp= PREFIX\".",
 		"WARN: Makefile:14: Incomplete SUBST block: SUBST_STAGE.interp missing.")
 }
 
 func (s *Suite) Test_SubstContext__complete(c *check.C) {
-	s.Init(c)
-	G.opts.WarnExtra = true
-	ctx := new(SubstContext)
+	t := s.Init(c)
 
-	ctx.Varassign(newSubstLine(10, "PKGNAME=pkgname-1.0"))
-	ctx.Varassign(newSubstLine(11, "SUBST_CLASSES+=p"))
-	ctx.Varassign(newSubstLine(12, "SUBST_FILES.p=Makefile"))
-	ctx.Varassign(newSubstLine(13, "SUBST_SED.p=s,@PREFIX@,${PREFIX},g"))
+	t.SetUpCommandLine("-Wextra")
+	ctx := NewSubstContext()
+
+	ctx.Varassign(newSubstLine(t, 10, "PKGNAME=pkgname-1.0"))
+	ctx.Varassign(newSubstLine(t, 11, "SUBST_CLASSES+=p"))
+	ctx.Varassign(newSubstLine(t, 12, "SUBST_FILES.p=Makefile"))
+	ctx.Varassign(newSubstLine(t, 13, "SUBST_SED.p=s,@PREFIX@,${PREFIX},g"))
 
 	c.Check(ctx.IsComplete(), equals, false)
 
-	ctx.Varassign(newSubstLine(14, "SUBST_STAGE.p=post-configure"))
+	ctx.Varassign(newSubstLine(t, 14, "SUBST_STAGE.p=post-configure"))
 
 	c.Check(ctx.IsComplete(), equals, true)
 
-	ctx.Finish(newSubstLine(15, ""))
+	ctx.Finish(newSubstLine(t, 15, ""))
 
-	s.CheckOutputEmpty()
+	t.CheckOutputLines(
+		"NOTE: Makefile:13: The substitution command \"s,@PREFIX@,${PREFIX},g\" " +
+			"can be replaced with \"SUBST_VARS.p= PREFIX\".")
 }
 
 func (s *Suite) Test_SubstContext__OPSYSVARS(c *check.C) {
-	s.Init(c)
-	G.opts.WarnExtra = true
-	ctx := new(SubstContext)
+	t := s.Init(c)
 
-	ctx.Varassign(newSubstLine(11, "SUBST_CLASSES.SunOS+=prefix"))
-	ctx.Varassign(newSubstLine(12, "SUBST_CLASSES.NetBSD+=prefix"))
-	ctx.Varassign(newSubstLine(13, "SUBST_FILES.prefix=Makefile"))
-	ctx.Varassign(newSubstLine(14, "SUBST_SED.prefix=s,@PREFIX@,${PREFIX},g"))
-	ctx.Varassign(newSubstLine(15, "SUBST_STAGE.prefix=post-configure"))
+	G.Opts.WarnExtra = true
+	ctx := NewSubstContext()
+
+	// SUBST_CLASSES is added to OPSYSVARS in mk/bsd.pkg.mk.
+	ctx.Varassign(newSubstLine(t, 11, "SUBST_CLASSES.SunOS+=prefix"))
+	ctx.Varassign(newSubstLine(t, 12, "SUBST_CLASSES.NetBSD+=prefix"))
+	ctx.Varassign(newSubstLine(t, 13, "SUBST_FILES.prefix=Makefile"))
+	ctx.Varassign(newSubstLine(t, 14, "SUBST_SED.prefix=s,@PREFIX@,${PREFIX},g"))
+	ctx.Varassign(newSubstLine(t, 15, "SUBST_STAGE.prefix=post-configure"))
 
 	c.Check(ctx.IsComplete(), equals, true)
 
-	ctx.Finish(newSubstLine(15, ""))
+	ctx.Finish(newSubstLine(t, 15, ""))
 
-	s.CheckOutputEmpty()
+	t.CheckOutputLines(
+		"NOTE: Makefile:14: The substitution command \"s,@PREFIX@,${PREFIX},g\" " +
+			"can be replaced with \"SUBST_VARS.prefix= PREFIX\".")
 }
 
 func (s *Suite) Test_SubstContext__no_class(c *check.C) {
-	s.Init(c)
-	s.UseCommandLine("-Wextra")
-	ctx := new(SubstContext)
+	t := s.Init(c)
 
-	ctx.Varassign(newSubstLine(10, "UNRELATED=anything"))
-	ctx.Varassign(newSubstLine(11, "SUBST_FILES.repl+=Makefile.in"))
-	ctx.Varassign(newSubstLine(12, "SUBST_SED.repl+=-e s,from,to,g"))
-	ctx.Finish(newSubstLine(13, ""))
+	t.SetUpCommandLine("-Wextra")
+	ctx := NewSubstContext()
 
-	s.CheckOutputLines(
+	ctx.Varassign(newSubstLine(t, 10, "UNRELATED=anything"))
+	ctx.Varassign(newSubstLine(t, 11, "SUBST_FILES.repl+=Makefile.in"))
+	ctx.Varassign(newSubstLine(t, 12, "SUBST_SED.repl+=-e s,from,to,g"))
+	ctx.Finish(newSubstLine(t, 13, ""))
+
+	t.CheckOutputLines(
 		"WARN: Makefile:11: SUBST_CLASSES should come before the definition of \"SUBST_FILES.repl\".",
 		"WARN: Makefile:13: Incomplete SUBST block: SUBST_STAGE.repl missing.")
 }
 
-func newSubstLine(lineno int, text string) MkLine {
-	return NewMkLine(NewLine("Makefile", lineno, text, nil))
+func (s *Suite) Test_SubstContext__multiple_classes_in_one_line(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+
+	simulateSubstLines(t,
+		"10: SUBST_CLASSES+=         one two",
+		"11: SUBST_STAGE.one=        post-configure",
+		"12: SUBST_FILES.one=        one.txt",
+		"13: SUBST_SED.one=          s,one,1,g",
+		"14: SUBST_STAGE.two=        post-configure",
+		"15: SUBST_FILES.two=        two.txt",
+		"17: ")
+
+	t.CheckOutputLines(
+		"WARN: Makefile:10: Please add only one class at a time to SUBST_CLASSES.",
+		"WARN: Makefile:17: Incomplete SUBST block: SUBST_SED.two, SUBST_VARS.two or SUBST_FILTER_CMD.two missing.")
+}
+
+func (s *Suite) Test_SubstContext__multiple_classes_in_one_block(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+
+	simulateSubstLines(t,
+		"10: SUBST_CLASSES+=         one",
+		"11: SUBST_STAGE.one=        post-configure",
+		"12: SUBST_STAGE.one=        post-configure",
+		"13: SUBST_FILES.one=        one.txt",
+		"14: SUBST_CLASSES+=         two", // The block "one" is not finished yet.
+		"15: SUBST_SED.one=          s,one,1,g",
+		"16: SUBST_STAGE.two=        post-configure",
+		"17: SUBST_FILES.two=        two.txt",
+		"18: SUBST_SED.two=          s,two,2,g",
+		"19: ")
+
+	t.CheckOutputLines(
+		"WARN: Makefile:12: Duplicate definition of \"SUBST_STAGE.one\".",
+		"WARN: Makefile:14: Incomplete SUBST block: SUBST_SED.one, SUBST_VARS.one or SUBST_FILTER_CMD.one missing.",
+		"WARN: Makefile:14: Subst block \"one\" should be finished before adding the next class to SUBST_CLASSES.",
+		"WARN: Makefile:15: Variable \"SUBST_SED.one\" does not match SUBST class \"two\".")
+}
+
+func (s *Suite) Test_SubstContext__directives(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+
+	simulateSubstLines(t,
+		"10: SUBST_CLASSES+=         os",
+		"11: SUBST_STAGE.os=         post-configure",
+		"12: SUBST_MESSAGE.os=       Guessing operating system",
+		"13: SUBST_FILES.os=         guess-os.h",
+		"14: .if ${OPSYS} == NetBSD",
+		"15: SUBST_FILTER_CMD.os=    ${SED} -e s,@OPSYS@,NetBSD,",
+		"16: .elif ${OPSYS} == Darwin",
+		"17: SUBST_SED.os=           -e s,@OPSYS@,Darwin1,",
+		"18: SUBST_SED.os=           -e s,@OPSYS@,Darwin2,",
+		"19: .elif ${OPSYS} == Linux",
+		"18: SUBST_SED.os=           -e s,@OPSYS@,Linux,",
+		"19: .else",
+		"20: SUBST_VARS.os=           OPSYS",
+		"21: .endif",
+		"22: ")
+
+	// All the other lines are correctly determined as being alternatives
+	// to each other. And since every branch contains some transformation
+	// (SED, VARS, FILTER_CMD), everything is fine.
+	t.CheckOutputLines(
+		"WARN: Makefile:18: All but the first \"SUBST_SED.os\" lines should use the \"+=\" operator.")
+}
+
+func (s *Suite) Test_SubstContext__missing_transformation_in_one_branch(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+
+	simulateSubstLines(t,
+		"10: SUBST_CLASSES+=         os",
+		"11: SUBST_STAGE.os=         post-configure",
+		"12: SUBST_MESSAGE.os=       Guessing operating system",
+		"13: SUBST_FILES.os=         guess-os.h",
+		"14: .if ${OPSYS} == NetBSD",
+		"15: SUBST_FILES.os=         -e s,@OpSYS@,NetBSD,", // A simple typo, this should be SUBST_SED.
+		"16: .elif ${OPSYS} == Darwin",
+		"17: SUBST_SED.os=           -e s,@OPSYS@,Darwin1,",
+		"18: SUBST_SED.os=           -e s,@OPSYS@,Darwin2,",
+		"19: .else",
+		"20: SUBST_VARS.os=           OPSYS",
+		"21: .endif",
+		"22: ")
+
+	t.CheckOutputLines(
+		"WARN: Makefile:15: All but the first \"SUBST_FILES.os\" lines should use the \"+=\" operator.",
+		"WARN: Makefile:18: All but the first \"SUBST_SED.os\" lines should use the \"+=\" operator.",
+		"WARN: Makefile:22: Incomplete SUBST block: SUBST_SED.os, SUBST_VARS.os or SUBST_FILTER_CMD.os missing.")
+}
+
+func (s *Suite) Test_SubstContext__nested_conditionals(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+
+	simulateSubstLines(t,
+		"10: SUBST_CLASSES+=         os",
+		"11: SUBST_STAGE.os=         post-configure",
+		"12: SUBST_MESSAGE.os=       Guessing operating system",
+		"14: .if ${OPSYS} == NetBSD",
+		"13: SUBST_FILES.os=         guess-netbsd.h",
+		"15: .  if ${ARCH} == i386",
+		"16: SUBST_FILTER_CMD.os=    ${SED} -e s,@OPSYS,NetBSD-i386,",
+		"17: .  elif ${ARCH} == x86_64",
+		"18: SUBST_VARS.os=          OPSYS",
+		"19: .  else",
+		"20: SUBST_SED.os=           -e s,@OPSYS,NetBSD-unknown",
+		"21: .  endif",
+		"22: .else",
+		"23: SUBST_SED.os=           -e s,@OPSYS@,unknown,",
+		"24: .endif",
+		"25: ")
+
+	// The branch in line 23 omits SUBST_FILES.
+	t.CheckOutputLines(
+		"WARN: Makefile:25: Incomplete SUBST block: SUBST_FILES.os missing.")
+}
+
+func (s *Suite) Test_SubstContext__post_patch(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra,no-space", "--show-autofix")
+	t.SetUpVartypes()
+
+	mklines := t.NewMkLines("os.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=         os",
+		"SUBST_STAGE.os=         post-patch",
+		"SUBST_FILES.os=         guess-os.h",
+		"SUBST_SED.os=           -e s,@OPSYS@,Darwin,")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"WARN: os.mk:4: Substitutions should not happen in the patch phase.",
+		"AUTOFIX: os.mk:4: Replacing \"post-patch\" with \"pre-configure\".")
+}
+
+func (s *Suite) Test_SubstContext__pre_configure_with_NO_CONFIGURE(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wall,no-space")
+	pkg := t.SetUpPackage("category/package",
+		"SUBST_CLASSES+=         os",
+		"SUBST_STAGE.os=         pre-configure",
+		"SUBST_FILES.os=         guess-os.h",
+		"SUBST_SED.os=           -e s,@OPSYS@,Darwin,",
+		"",
+		"NO_CONFIGURE=           yes")
+	t.FinishSetUp()
+
+	G.Check(pkg)
+
+	t.CheckOutputLines(
+		"WARN: ~/category/package/Makefile:21: SUBST_STAGE pre-configure has no effect when NO_CONFIGURE is set (in line 25).")
+}
+
+func (s *Suite) Test_SubstContext__adjacent(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra")
+	t.SetUpVartypes()
+
+	mklines := t.NewMkLines("os.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=         1",
+		"SUBST_STAGE.1=          pre-configure",
+		"SUBST_FILES.1=          file1",
+		"SUBST_SED.1=            -e s,subst1,repl1,",
+		"SUBST_CLASSES+=         2",
+		"SUBST_SED.1+=           -e s,subst1b,repl1b,", // Misplaced
+		"SUBST_STAGE.2=          pre-configure",
+		"SUBST_FILES.2=          file2",
+		"SUBST_SED.2=            -e s,subst2,repl2,")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"WARN: os.mk:8: Variable \"SUBST_SED.1\" does not match SUBST class \"2\".")
+}
+
+func (s *Suite) Test_SubstContext__do_patch(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra,no-space")
+	t.SetUpVartypes()
+
+	mklines := t.NewMkLines("os.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=         os",
+		"SUBST_STAGE.os=         do-patch",
+		"SUBST_FILES.os=         guess-os.h",
+		"SUBST_SED.os=           -e s,@OPSYS@,Darwin,")
+
+	mklines.Check()
+
+	// No warning, since there is nothing to fix automatically.
+	// This case also doesn't occur in practice.
+	t.CheckOutputEmpty()
+}
+
+// Variables mentioned in SUBST_VARS are not considered "foreign"
+// in the block and may be mixed with the other SUBST variables.
+func (s *Suite) Test_SubstContext__SUBST_VARS_defined_in_block(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra,no-space")
+	t.SetUpVartypes()
+
+	mklines := t.NewMkLines("os.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=         os",
+		"SUBST_STAGE.os=         pre-configure",
+		"SUBST_FILES.os=         guess-os.h",
+		"SUBST_VARS.os=          TODAY1",
+		"TODAY1!=                date",
+		"TODAY2!=                date")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"WARN: os.mk:8: TODAY2 is defined but not used.",
+		"WARN: os.mk:8: Foreign variable \"TODAY2\" in SUBST block.")
+}
+
+// Variables mentioned in SUBST_VARS may appear in the same paragraph,
+// or alternatively anywhere else in the file.
+func (s *Suite) Test_SubstContext__SUBST_VARS_in_next_paragraph(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpCommandLine("-Wextra,no-space")
+	t.SetUpVartypes()
+
+	mklines := t.NewMkLines("os.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=         os",
+		"SUBST_STAGE.os=         pre-configure",
+		"SUBST_FILES.os=         guess-os.h",
+		"SUBST_VARS.os=          TODAY1",
+		"",
+		"TODAY1!=                date",
+		"TODAY2!=                date")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"WARN: os.mk:9: TODAY2 is defined but not used.")
+}
+
+func (s *Suite) Test_SubstContext_suggestSubstVars(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpVartypes()
+	t.SetUpTool("sh", "SH", AtRunTime)
+
+	mklines := t.NewMkLines("subst.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=\t\ttest",
+		"SUBST_STAGE.test=\tpre-configure",
+		"SUBST_FILES.test=\tfilename",
+		"SUBST_SED.test+=\t-e s,@SH@,${SH},g",            // Can be replaced.
+		"SUBST_SED.test+=\t-e s,@SH@,${SH:Q},g",          // Can be replaced, with or without the :Q modifier.
+		"SUBST_SED.test+=\t-e s,@SH@,${SH:T},g",          // Cannot be replaced because of the :T modifier.
+		"SUBST_SED.test+=\t-e s,@SH@,${SH},",             // Can be replaced, even without the g option.
+		"SUBST_SED.test+=\t-e 's,@SH@,${SH},'",           // Can be replaced, whether in single quotes or not.
+		"SUBST_SED.test+=\t-e \"s,@SH@,${SH},\"",         // Can be replaced, whether in double quotes or not.
+		"SUBST_SED.test+=\t-e s,'@SH@','${SH}',",         // Can be replaced, even when the quoting changes midways.
+		"SUBST_SED.test+=\ts,'@SH@','${SH}',",            // Can be replaced manually, even when the -e is missing.
+		"SUBST_SED.test+=\t-e s,@SH@,${PKGNAME},",        // Cannot be replaced since the variable name differs.
+		"SUBST_SED.test+=\t-e s,@SH@,'\"'${SH:Q}'\"',g",  // Cannot be replaced since the double quotes are added.
+		"SUBST_SED.test+=\t-e s",                         // Just to get 100% code coverage.
+		"SUBST_SED.test+=\t-e s,@SH@,${SH:Q}",            // Just to get 100% code coverage.
+		"SUBST_SED.test+=\t-e s,@SH@,${SH:Q}, # comment", // This is not fixed automatically.
+		"# end")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"WARN: subst.mk:6: Please use ${SH:Q} instead of ${SH}.",
+		"NOTE: subst.mk:6: The substitution command \"s,@SH@,${SH},g\" "+
+			"can be replaced with \"SUBST_VARS.test= SH\".",
+		"NOTE: subst.mk:7: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"WARN: subst.mk:8: Please use ${SH:T:Q} instead of ${SH:T}.",
+		"WARN: subst.mk:9: Please use ${SH:Q} instead of ${SH}.",
+		"NOTE: subst.mk:9: The substitution command \"s,@SH@,${SH},\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"NOTE: subst.mk:10: The substitution command \"'s,@SH@,${SH},'\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"NOTE: subst.mk:11: The substitution command \"\\\"s,@SH@,${SH},\\\"\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"NOTE: subst.mk:12: The substitution command \"s,'@SH@','${SH}',\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"NOTE: subst.mk:13: Please always use \"-e\" in sed commands, "+
+			"even if there is only one substitution.",
+		"NOTE: subst.mk:13: The substitution command \"s,'@SH@','${SH}',\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"NOTE: subst.mk:18: The substitution command \"s,@SH@,${SH:Q},\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".")
+
+	t.SetUpCommandLine("--show-autofix")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"NOTE: subst.mk:6: The substitution command \"s,@SH@,${SH},g\" "+
+			"can be replaced with \"SUBST_VARS.test= SH\".",
+		"AUTOFIX: subst.mk:6: Replacing \"SUBST_SED.test+=\\t-e s,@SH@,${SH},g\" "+
+			"with \"SUBST_VARS.test=\\tSH\".",
+		"NOTE: subst.mk:7: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"AUTOFIX: subst.mk:7: Replacing \"SUBST_SED.test+=\\t-e s,@SH@,${SH:Q},g\" "+
+			"with \"SUBST_VARS.test+=\\tSH\".",
+		"NOTE: subst.mk:9: The substitution command \"s,@SH@,${SH},\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"AUTOFIX: subst.mk:9: Replacing \"SUBST_SED.test+=\\t-e s,@SH@,${SH},\" "+
+			"with \"SUBST_VARS.test+=\\tSH\".",
+		"NOTE: subst.mk:10: The substitution command \"'s,@SH@,${SH},'\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"AUTOFIX: subst.mk:10: Replacing \"SUBST_SED.test+=\\t-e 's,@SH@,${SH},'\" "+
+			"with \"SUBST_VARS.test+=\\tSH\".",
+		"NOTE: subst.mk:11: The substitution command \"\\\"s,@SH@,${SH},\\\"\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"AUTOFIX: subst.mk:11: Replacing \"SUBST_SED.test+=\\t-e \\\"s,@SH@,${SH},\\\"\" "+
+			"with \"SUBST_VARS.test+=\\tSH\".",
+		"NOTE: subst.mk:12: The substitution command \"s,'@SH@','${SH}',\" "+
+			"can be replaced with \"SUBST_VARS.test+= SH\".",
+		"AUTOFIX: subst.mk:12: Replacing \"SUBST_SED.test+=\\t-e s,'@SH@','${SH}',\" "+
+			"with \"SUBST_VARS.test+=\\tSH\".")
+}
+
+// If the SUBST_CLASS identifier ends with a plus, the generated code must
+// use the correct assignment operator and be nicely formatted.
+func (s *Suite) Test_SubstContext_suggestSubstVars__plus(c *check.C) {
+	t := s.Init(c)
+
+	t.SetUpVartypes()
+	t.SetUpTool("sh", "SH", AtRunTime)
+
+	mklines := t.NewMkLines("subst.mk",
+		MkRcsID,
+		"",
+		"SUBST_CLASSES+=\t\tgtk+",
+		"SUBST_STAGE.gtk+ =\tpre-configure",
+		"SUBST_FILES.gtk+ =\tfilename",
+		"SUBST_SED.gtk+ +=\t-e s,@SH@,${SH:Q},g",
+		"SUBST_SED.gtk+ +=\t-e s,@SH@,${SH:Q},g")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"NOTE: subst.mk:6: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.gtk+ = SH\".",
+		"NOTE: subst.mk:7: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.gtk+ += SH\".")
+
+	t.SetUpCommandLine("--show-autofix")
+
+	mklines.Check()
+
+	t.CheckOutputLines(
+		"NOTE: subst.mk:6: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.gtk+ = SH\".",
+		"AUTOFIX: subst.mk:6: Replacing \"SUBST_SED.gtk+ +=\\t-e s,@SH@,${SH:Q},g\" "+
+			"with \"SUBST_VARS.gtk+ =\\tSH\".",
+		"NOTE: subst.mk:7: The substitution command \"s,@SH@,${SH:Q},g\" "+
+			"can be replaced with \"SUBST_VARS.gtk+ += SH\".",
+		"AUTOFIX: subst.mk:7: Replacing \"SUBST_SED.gtk+ +=\\t-e s,@SH@,${SH:Q},g\" "+
+			"with \"SUBST_VARS.gtk+ +=\\tSH\".")
+}
+
+// simulateSubstLines only tests some of the inner workings of SubstContext.
+// It is not realistic for all cases. If in doubt, use MkLines.Check.
+func simulateSubstLines(t *Tester, texts ...string) {
+	ctx := NewSubstContext()
+	for _, lineText := range texts {
+		var lineno int
+		_, err := fmt.Sscanf(lineText[0:4], "%d: ", &lineno)
+		G.AssertNil(err, "")
+		text := lineText[4:]
+		line := newSubstLine(t, lineno, text)
+
+		switch {
+		case text == "":
+			ctx.Finish(line)
+		case hasPrefix(text, "."):
+			ctx.Directive(line)
+		default:
+			ctx.Varassign(line)
+		}
+	}
+}
+
+func newSubstLine(t *Tester, lineno int, text string) MkLine {
+	return t.NewMkLine("Makefile", lineno, text)
 }

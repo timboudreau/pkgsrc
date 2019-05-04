@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.13 2014/10/09 14:06:02 wiz Exp $
+# $NetBSD: Makefile,v 1.15 2018/07/04 13:40:11 jperkin Exp $
 #
 
 DISTNAME=	roxirc-1.8
 PKGREVISION=	1
 CATEGORIES=	chat
-MASTER_SITES=	http://roxirc.lighter.net/download/
+#MASTER_SITES=	http://roxirc.lighter.net/download/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://roxirc.lighter.net/
+#HOMEPAGE=	http://roxirc.lighter.net/
 COMMENT=	Graphical IRC client written in tcl/tk
 
 DEPENDS+=	tk-[0-9]*:../../x11/tk
@@ -19,7 +19,7 @@ EXAMPLESDIR=	${PREFIX}/share/examples/roxirc
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Fixing hardcoded command names.
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	roxirc
 SUBST_SED.paths=	-e 's,wish8.3,wish,g'
 

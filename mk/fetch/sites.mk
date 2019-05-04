@@ -1,4 +1,4 @@
-# $NetBSD: sites.mk,v 1.151 2017/06/12 07:13:35 maya Exp $
+# $NetBSD: sites.mk,v 1.162 2019/02/04 09:36:41 wiz Exp $
 #
 # This Makefile fragment defines read-only MASTER_SITE_* variables
 # representing some well-known master distribution sites for software.
@@ -9,17 +9,15 @@
 MASTER_SITE_XCONTRIB+=  \
 	ftp://ftp.gwdg.de/pub/x11/x.org/contrib/ \
 	ftp://sunsite.icm.edu.pl/pub/X11/contrib/ \
-	ftp://mirror.switch.ch/mirror/X11/contrib/ \
 	ftp://ftp.x.org/contrib/
 
 MASTER_SITE_GNU+=       \
-	http://ftp.gnu.org/pub/gnu/ \
-	ftp://ftp.gnu.org/pub/gnu/ \
-	ftp://ftp.funet.fi/pub/gnu/prep/ \
-	ftp://ftp.kddlabs.co.jp/pub/gnu/gnu/ \
-	http://mirrors.kernel.org/gnu/ \
+	https://mirrors.dotsrc.org/gnu/ \
+	https://ftp.nluug.nl/pub/gnu/ \
 	ftp://ftp.lip6.fr/pub/gnu/ \
-	http://gd.tuwien.ac.at/gnu/gnusrc/
+	http://mirrors.kernel.org/gnu/ \
+	ftp://ftp.funet.fi/pub/gnu/prep/ \
+	http://ftp.gnu.org/pub/gnu/
 
 MASTER_SITE_GITHUB+=    \
 	https://github.com/
@@ -40,8 +38,7 @@ MASTER_SITE_OSDN+=	\
 	http://osdn.dl.osdn.jp/
 
 MASTER_SITE_PERL_CPAN+= \
-	http://ftp.tuwien.ac.at/pub/CPAN/modules/by-module/ \
-	http://cpan.perl.org/CPAN/modules/by-module/ \
+	https://cpan.perl.org/CPAN/modules/by-module/ \
 	ftp://cpan.pair.com/modules/by-module/ \
 	ftp://ftp.funet.fi/pub/languages/perl/CPAN/modules/by-module/ \
 	ftp://ftp.fi.muni.cz/pub/CPAN/modules/by-module/
@@ -73,19 +70,15 @@ MASTER_SITE_SUNSITE+=   \
 MASTER_SITE_GNOME+=     \
 	http://ftp.gnome.org/pub/GNOME/ \
 	ftp://ftp.gnome.org/pub/GNOME/ \
-	http://ftp.tuwien.ac.at/hci/gnome.org/ \
 	ftp://ftp.cse.buffalo.edu/pub/Gnome/ \
-	ftp://ftp.kddlabs.co.jp/pub/GNOME/ \
 	https://download.gnome.org/
 
 MASTER_SITE_KDE+=	\
 	http://download.kde.org/stable/ \
 	ftp://www.dnsbalance.ring.gr.jp/pub/X/kde/stable/ \
 	http://www.dnsbalance.ring.gr.jp/archives/X/kde/stable/ \
-	ftp://ftp.kddlabs.co.jp/pub/X/kde/stable/ \
 	ftp://ftp.gtlib.gatech.edu/pub/kde/stable/ \
 	ftp://kde.mirrors.tds.net/pub/kde/stable/ \
-	http://gd.tuwien.ac.at/kde/stable/ \
 	ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.kde.org/pub/kde/stable/ \
 	ftp://mirrors.dotsrc.org/kde/stable/ \
 	ftp://ftp.fi.muni.cz/pub/kde/stable/
@@ -105,22 +98,19 @@ MASTER_SITE_MOZILLA_ALL+=   \
 # see http://www.mozilla.org/mirrors.html
 MASTER_SITE_MOZILLA+=	\
 	http://releases.mozilla.org/pub/mozilla.org/ \
-	http://mirror.atlanticmetro.net/mozilla/ \
-	http://ftp.cvut.cz/mozilla/ \
-	http://mirror.waia.asn.au/pub/mozilla/ \
 	http://download-origin.cdn.mozilla.net/pub/mozilla.org/
 
-# for Extended Support Release version
-MASTER_SITE_MOZILLA_ESR+=	\
-	http://download-origin.cdn.mozilla.net/pub/mozilla.org/ \
-	http://dm-download02.mozilla.org/pub/mozilla.org/ \
-	http://ftp.mozilla.org/pub/mozilla.org/
-
 MASTER_SITE_XEMACS+=    \
+	ftp://ftp.xemacs.org/pub/xemacs/ \
+	http://ftp.xemacs.org/ \
+	http://ftp.de.xemacs.org/pub/ftp.xemacs.org/tux/xemacs/ \
+	ftp://ftp.heanet.ie/mirrors/ftp.xemacs.org/ \
+	http://ftp.heanet.ie/mirrors/ftp.xemacs.org/ \
+	http://ftp.pt.xemacs.org/ \
+	ftp://ftp.uk.xemacs.org/sites/ftp.xemacs.org/pub/xemacs/ \
+	http://ftp.uk.xemacs.org/sites/ftp.xemacs.org/pub/xemacs/ \
 	ftp://ftp.isr.tecnico.ulisboa.pt/pub/xemacs/ \
 	http://ftp.isr.tecnico.ulisboa.pt/pub/xemacs/ \
-	ftp://ftp.heanet.ie/mirrors/ftp.xemacs.org/pub/xemacs/ \
-	http://ftp.heanet.ie/mirrors/ftp.xemacs.org/pub/xemacs/ \
 	ftp://ftp.dnsbalance.ring.gr.jp/pub/text/xemacs/
 
 # http://www.ibiblio.org/pub/mirrors/apache/ returns 200 for missing
@@ -138,7 +128,6 @@ MASTER_SITE_APACHE+=    \
 	ftp://ftp.oregonstate.edu/pub/apache/ \
 	ftp://apache.mirrors.tds.net/pub/apache.org/ \
 	ftp://ftp.mirrorservice.org/sites/ftp.apache.org/ \
-	http://gd.tuwien.ac.at/pub/infosys/servers/http/apache/dist/ \
 	ftp://ftp.meisei-u.ac.jp/pub/www/apache/dist/ \
 	ftp://ftp.twaren.net/Unix/Web/apache/
 
@@ -163,8 +152,6 @@ MASTER_SITE_MYSQL+=	\
 	ftp://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/ \
 	http://na.mirror.garr.it/mirrors/MySQL/Downloads/ \
 	http://mirrors.xservers.ro/mysql/Downloads/ \
-	http://mirror.switch.ch/ftp/mirror/mysql/Downloads/ \
-	ftp://mirror.switch.ch/mirror/mysql/Downloads/ \
 	http://mysql.infocom.ua/Downloads/ \
 	http://mirrors.dedipower.com/www.mysql.com/Downloads/ \
 	http://www.mirrorservice.org/sites/ftp.mysql.com/Downloads/ \
@@ -214,13 +201,11 @@ MASTER_SITE_DEBIAN+= \
 
 MASTER_SITE_OPENOFFICE+=	\
 	ftp://ftp.ussg.iu.edu/pub/openoffice/ \
-	http://gd.tuwien.ac.at/office/openoffice/ \
 	ftp://sunsite.informatik.rwth-aachen.de/pub/mirror/OpenOffice/ \
 	ftp://ftp-stud.fht-esslingen.de/pub/Mirrors/ftp.openoffice.org/ \
 	http://ftp.ntua.gr/pub/OpenOffice/ \
 	http://na.mirror.garr.it/mirrors/openoffice/ \
 	http://vlaai.snt.utwente.nl/pub/software/openoffice/ \
-	ftp://ftp.kddlabs.co.jp/office/openoffice/ \
 	ftp://ftp.dnsbalance.ring.gr.jp/pub/misc/openoffice/ \
 	ftp://ftp.kr.freebsd.org/pub/openoffice/
 
@@ -242,7 +227,6 @@ MASTER_SITE_GENTOO+= \
 	http://ftp-stud.fht-esslingen.de/pub/Mirrors/gentoo/ \
 	http://ftp.heanet.ie/pub/gentoo/ \
 	http://mirror.bytemark.co.uk/gentoo/ \
-	http://mirror.switch.ch/ftp/mirror/gentoo/ \
 	http://gentoo.mirror.dkm.cz/pub/gentoo/ \
 	http://ftp.ds.karen.hj.se/gentoo/ \
 	ftp://ftp.free.fr/mirrors/ftp.gentoo.org/ \
@@ -258,8 +242,7 @@ MASTER_SITE_GENTOO+= \
 
 MASTER_SITE_XORG+= \
 	http://xorg.freedesktop.org/releases/individual/ \
-	ftp://ftp.x.org/pub/individual/ \
-	ftp://mirror.switch.ch/mirror/X11/pub/individual/
+	ftp://ftp.x.org/pub/individual/
 
 MASTER_SITE_FREEBSD+= \
 	http://distcache.FreeBSD.org/ports-distfiles/
@@ -286,11 +269,12 @@ MASTER_SITE_PYPI+= \
 MASTER_SITE_HASKELL_HACKAGE+=	\
 	http://hackage.haskell.org/package/
 
+MASTER_SITE_CRATESIO+=	\
+	https://crates.io/api/v1/crates/
+
 # The primary backup site.
 MASTER_SITE_BACKUP?=	\
 	http://cdn.NetBSD.org/pub/pkgsrc/distfiles/ \
 	http://ftp6.NetBSD.org/pub/pkgsrc/distfiles/ \
-	ftp://ftp.fr.NetBSD.org/pub/pkgsrc/distfiles/ \
 	http://ftp.fr.NetBSD.org/pub/pkgsrc/distfiles/ \
-	ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/ \
 	http://ftp.NetBSD.org/pub/pkgsrc/distfiles/

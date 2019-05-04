@@ -1,12 +1,13 @@
-$NetBSD: patch-src_RouteMapOverlay.cpp,v 1.1 2017/04/18 16:54:35 bouyer Exp $
---- src/RouteMapOverlay.cpp.orig	2017-04-14 13:36:07.000000000 +0200
-+++ src/RouteMapOverlay.cpp	2017-04-14 13:36:23.000000000 +0200
-@@ -1186,7 +1186,7 @@
+$NetBSD: patch-src_RouteMapOverlay.cpp,v 1.3 2018/08/27 16:19:22 bouyer Exp $
+
+--- src/RouteMapOverlay.cpp.orig	2018-08-27 16:21:31.958800595 +0200
++++ src/RouteMapOverlay.cpp	2018-08-27 16:21:42.479225410 +0200
+@@ -1448,7 +1448,7 @@
          }
          Unlock();
  
--        if(isinf(mindt))
-+        if(std::isinf(mindt))
+-        if(isinf(mindt)) {
++        if(std::isinf(mindt)) {
              goto not_able_to_propagate;
- 
+         }
          destination_position = new Position(configuration.EndLat, configuration.EndLon,

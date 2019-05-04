@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.9 2016/06/01 11:47:39 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2018/07/04 13:40:24 jperkin Exp $
 
 VERSION=	5.7.3p2
 DISTNAME=	opensmtpd-${VERSION}
 CATEGORIES=	mail net
-MASTER_SITES=	http://www.opensmtpd.org/archives/
+MASTER_SITES=	https://www.opensmtpd.org/archives/
 
 MAINTAINER=	ftigeot@wolfpond.org
-HOMEPAGE=	http://www.opensmtpd.org/
+HOMEPAGE=	https://www.opensmtpd.org/
 COMMENT=	The OpenSMTPD mail transfer agent, a replacement for sendmail
 LICENSE=	isc AND modified-bsd AND 2-clause-bsd
 
@@ -48,7 +48,7 @@ RCD_SCRIPTS=	opensmtpd
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKDIR}/mailer.conf
 SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 SUBST_CLASSES+=			exampledir
 SUBST_STAGE.exampledir=		pre-configure

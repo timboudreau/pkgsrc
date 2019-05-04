@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.12 2017/04/22 21:03:18 adam Exp $
+# $NetBSD: Makefile,v 1.26 2019/04/03 00:33:13 ryoon Exp $
 
-PKGREVISION= 8
+PKGREVISION= 22
 .include "../../www/webkit24-gtk/Makefile.common"
 
 PKGNAME=	${DISTNAME:S/webkitgtk/webkit24-gtk3/}

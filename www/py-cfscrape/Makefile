@@ -1,17 +1,19 @@
-# $NetBSD: Makefile,v 1.1 2017/02/07 23:52:16 joerg Exp $
+# $NetBSD: Makefile,v 1.11 2019/03/21 10:23:45 adam Exp $
 
-DISTNAME=	cfscrape-1.6.8
+DISTNAME=	cfscrape-1.9.7
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	python www net
+CATEGORIES=	www net python
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/cfscrape/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://pypi.python.org/pypi/cfscrape/
+HOMEPAGE=	https://github.com/Anorov/cloudflare-scrape
 COMMENT=	Python module for dealing with Cloudfare protection
 LICENSE=	mit
 
-DEPENDS+=	${PYPKGPREFIX}-requests-[0-9]*:../../devel/py-requests
-DEPENDS+=	${PYPKGPREFIX}-js2py-[0-9]*:../../lang/py-js2py
+DEPENDS+=	nodejs-[0-9]*:../../lang/nodejs
+DEPENDS+=	${PYPKGPREFIX}-requests>=2.0.0:../../devel/py-requests
+
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

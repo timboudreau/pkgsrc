@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/06/17 19:36:46 joerg Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:43:10 wiz Exp $
 .include		"../../cross/nios2/Makefile.common"
 PKGNAME=		nios2-gcc-${PKG_VERSION}
 PKG_VERSION=		4.7.3
-PKGREVISION=		4
+PKGREVISION=		6
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
 COMMENT=		GNU gcc for Altera FPGA Nios2 processor
@@ -38,7 +38,7 @@ SUBST_CLASSES+=			host-subdir
 # Work around for the problem
 # gmake[2]: *** No rule to make target `../.././gcc/libgcc.mvars'.  Stop.
 SUBST_MESSAGE.host-subdir= 	Purely work-around, replacing @host-subdir@ in advance
-SUBST_STAGE.host-subdir=	post-patch
+SUBST_STAGE.host-subdir=	pre-configure
 SUBST_FILES.host-subdir=	libgcc/Makefile.in
 SUBST_SED.host-subdir=		'-e /host_subdir = @host_subdir@/s,@host_subdir@,host-${MACHINE_ARCH}--${OPSYS:tl},'
 

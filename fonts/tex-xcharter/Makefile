@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.4 2017/06/21 13:25:35 markd Exp $
+# $NetBSD: Makefile,v 1.8 2019/01/26 02:15:06 markd Exp $
 
 DISTNAME=	xcharter
-PKGNAME=	tex-${DISTNAME}-1.08
-TEXLIVE_REV=	43465
+PKGNAME=	tex-${DISTNAME}-1.116
+TEXLIVE_REV=	48498
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://ctan.org/pkg/xcharter

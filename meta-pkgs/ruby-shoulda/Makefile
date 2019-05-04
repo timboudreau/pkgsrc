@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.7 2015/06/11 17:23:37 taca Exp $
+# $NetBSD: Makefile,v 1.9 2018/09/23 15:18:53 taca Exp $
 
-DISTNAME=	shoulda-3.5.0
+DISTNAME=	shoulda-3.6.0
 PKGNAME=	${RUBY_PKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel meta-pkgs ruby
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/thoughtbot/shoulda
 COMMENT=	Making tests easy on the fingers and eyes
 LICENSE=	mit
 
-DEPENDS+=	${RUBY_PKGPREFIX}-shoulda-context>=1.0.1<2.0:../../devel/ruby-shoulda-context
-DEPENDS+=	${RUBY_PKGPREFIX}-shoulda-matchers>=1.4.1<3.0:../../devel/ruby-shoulda-matchers
+DEPENDS+=	${RUBY_PKGPREFIX}-shoulda-context>=1.0.1:../../devel/ruby-shoulda-context
+DEPENDS+=	${RUBY_PKGPREFIX}-shoulda-matchers>=3.0<4:../../devel/ruby-shoulda-matchers
 
 USE_LANGUAGES=	# none
 

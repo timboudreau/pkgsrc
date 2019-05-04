@@ -1,22 +1,18 @@
-$NetBSD: distinfo,v 1.12 2017/04/18 13:31:55 bouyer Exp $
+$NetBSD: distinfo,v 1.24 2019/03/25 11:34:05 bouyer Exp $
 
-SHA1 (OpenCPN-4.6.1-89f78e06c52683faac51c30baa1f25fee7ed6c97.zip) = e977ab8292c2ec5836eea2dce7257f60d0d4ad52
-RMD160 (OpenCPN-4.6.1-89f78e06c52683faac51c30baa1f25fee7ed6c97.zip) = eb840b5d694f17ae12caa7d08134986d6d143acf
-SHA512 (OpenCPN-4.6.1-89f78e06c52683faac51c30baa1f25fee7ed6c97.zip) = 8ef95ee173084d91d54651c13e155112df88ce87c32d5124695da0a4507a2650f3e0094cea3287a750c8f90fd9f6240d8ab4faf665d9b15cbbcebcc131ea8efa
-Size (OpenCPN-4.6.1-89f78e06c52683faac51c30baa1f25fee7ed6c97.zip) = 55864452 bytes
-SHA1 (patch-CMakeLists.txt) = c20b25c64790f5a595a5ef2940f430e588ffdf14
-SHA1 (patch-FindPortaudio.cmake) = e1bebe2203c6f3dc76f92ee5bdcb01eca66b6b9a
-SHA1 (patch-plugins_chartdldr_pi_CMakeLists.txt) = 52962f6feac45a766fc2dff08d2802e946ccfc85
-SHA1 (patch-plugins_chartdldr_pi_cmake_PluginConfigure.cmake) = 29fbfaee37e2a932b923df6ff7541dad37e14d65
-SHA1 (patch-plugins_dashboard_pi_CMakeLists.txt) = 76a6198e58f81c129f15fa6671da180c263c231e
-SHA1 (patch-plugins_demo_pi_sample_CMakeLists.txt) = 6fde2dae588e0d8250bd1e0d60a465fb20d9a599
-SHA1 (patch-plugins_grib_pi_CMakeLists.txt) = 49f997c27aa4710721d36945a681854579112a49
+SHA1 (OpenCPN-5.0.0.zip) = e4f2c77001fafed835c2329a1f2a74afdd4858ca
+RMD160 (OpenCPN-5.0.0.zip) = e8ee55b1b00017f2fc885c147e8f69ec13c627aa
+SHA512 (OpenCPN-5.0.0.zip) = 146fe0bf29424f72138168cd20617aabc2f130d2ffd47b8da4aa1e0aa6d7176093b36d96d8f0d456af1f7805db13ed87be67f4f3af7a7a2d6abf0d5734834f7a
+Size (OpenCPN-5.0.0.zip) = 70056870 bytes
+SHA1 (patch-CMakeLists.txt) = 2a615ec6c11621e7b119f75d5db2b06f7f2a7221
+SHA1 (patch-FindPortaudio.cmake) = d13b7e6cf42ea5b837ea6230c16b4558e87aa16c
+SHA1 (patch-plugins_chartdldr_pi_CMakeLists.txt) = e193798a04082c3a20264214e2a3aa951f0ee514
+SHA1 (patch-plugins_dashboard_pi_CMakeLists.txt) = 5523e8bb960306a15367a7c9a8385f3787a2baf4
+SHA1 (patch-plugins_grib_pi_CMakeLists.txt) = 75338d3a85666eed26157e17d693f937b0356689
 SHA1 (patch-plugins_wmm_pi_CMakeLists.txt) = 88339a61dd4b78b823bbd34bd1b02863d150f046
-SHA1 (patch-plugins_wmm_pi_cmake_PluginConfigure.cmake) = f1c91cfa744ed76d938bfb5bdb4116df9f45604a
-SHA1 (patch-src_chart1.cpp) = ae7c1d8a59c9a275914a613205de71e2dca89dc6
-SHA1 (patch-src_crashprint.cpp) = a96e8aa980eb3b19c3dce3343582511d608e6625
 SHA1 (patch-src_glu_CMakeLists.txt) = d63494a41071097252ac9e2cb95db75041f30b62
 SHA1 (patch-src_mipmap_mipmap.c) = 3bdb2c37e7a6d89fc6a531af6e0396a1ff385aeb
-SHA1 (patch-src_printtable.cpp) = 940e7f42dd7e6a9776db2009027989ca79429cb1
-SHA1 (patch-src_routeprintout.cpp) = bbf135bd71e3fc87100b0c6d4e200f68754937c3
-SHA1 (patch-src_tcmgr.cpp) = 3fb4edf3368f3f3907f231ebcabd8e5061699040
+SHA1 (patch-src_ocpndc.cpp) = 4a72093a49f29d66a42e3f64b99a1a40bf08a658
+SHA1 (patch-src_printtable.cpp) = 52ed0f09610d56e9acc5ec9b8e4cbdc7ad55d043
+SHA1 (patch-src_routeprintout.cpp) = c0f960b76b1b7a8acb7e5faca5f656a5c259f02c
+SHA1 (patch-src_wxcurl_base.cpp) = 25c6d03dd1215885f15221d888327f0535080284

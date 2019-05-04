@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.53 2016/02/25 13:19:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.55 2018/01/14 15:26:49 rillig Exp $
 
 DISTNAME=	linuxdoom-1.10
 PKGNAME=	xdoom-1.10
@@ -9,7 +9,7 @@ MASTER_SITES+=	ftp://ftp.idsoftware.com/idstuff/doom/
 DISTFILES=	doomsrc.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-# HOMEPAGE=	http://www.idsoftware.com/archives/doomarc.html
+# HOMEPAGE=	https://www.idsoftware.com/archives/doomarc.html
 # AWOL
 COMMENT=	3D shoot-em-up for 8-bit X11 displays
 LICENSE=	xdoom-license
@@ -18,7 +18,7 @@ DEPENDS+=	doom1-[0-9]*:../../games/doom1
 
 WRKSRC=		${WRKDIR}
 USE_TOOLS+=	gmake gunzip tar unzip
-MAKE_ENV+=	X11BASE=${X11BASE:Q} INSTALL_PREFIX=${PREFIX:Q}
+MAKE_ENV+=	X11BASE=${X11BASE} INSTALL_PREFIX=${PREFIX}
 
 BROKEN_ON_PLATFORM=	${LP64PLATFORMS}
 

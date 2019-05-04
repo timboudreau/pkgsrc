@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.33 2016/03/05 11:28:02 jperkin Exp $
+# $NetBSD: Makefile,v 1.35 2018/03/12 11:15:57 wiz Exp $
 
 DISTNAME=	qwt-5.2.3
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=qwt/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://sourceforge.net/projects/qwt/
+HOMEPAGE=	https://sourceforge.net/projects/qwt/
 COMMENT=	Qt widget library for technical purposes
 LICENSE=	gnu-lgpl-v2
 

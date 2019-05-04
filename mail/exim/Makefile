@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.154 2017/04/22 21:03:42 adam Exp $
+# $NetBSD: Makefile,v 1.166 2019/04/03 00:32:52 ryoon Exp $
 
-DISTNAME=	exim-4.89
+DISTNAME=	exim-4.92
 PKGREVISION=	1
 CATEGORIES=	mail net
 MASTER_SITES=	ftp://ftp.exim.org/pub/exim/exim4/
-MASTER_SITES+=	http://dl.ambiweb.de/mirrors/ftp.exim.org/exim/exim4/
-EXTRACT_SUFX=	.tar.bz2
+MASTER_SITES+=	https://ftp.exim.org/pub/exim/exim4/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	abs@NetBSD.org
 HOMEPAGE=	http://www.exim.org/
@@ -63,7 +63,7 @@ SUBST_FILES.exim=	scripts/exim_install
 SUBST_VARS.exim=	PKGSRC_EXIM_VERSION
 
 SUBST_CLASSES+=		cflags
-SUBST_STAGE.cflags=	post-patch
+SUBST_STAGE.cflags=	pre-configure
 SUBST_MESSAGE.cflags=	Removing hard-coded CFLAGS
 SUBST_FILES.cflags=	OS/Makefile-*
 SUBST_SED.cflags=	-e 's,^CFLAGS=.*,,'
@@ -74,11 +74,10 @@ INSTALL_ENV+=		${INSTALL_ARG:Q}
 .include "options.mk"
 
 post-extract:
+	mv ${WRKSRC}/OS/unsupported/*-* ${WRKSRC}/OS/
 	mkdir ${WRKSRC}/Local
 	cp ${WRKSRC}/src/EDITME ${WRKSRC}/Local/Makefile.pkgsrc
 	cp ${WRKSRC}/exim_monitor/EDITME ${WRKSRC}/Local/eximon.conf.pkgsrc
-	cp ${FILESDIR}/Makefile-DragonFly ${FILESDIR}/os.h-DragonFly \
-		${WRKSRC}/OS/
 
 pre-configure:
 	sed	-e 's:@PREFIX@:${PREFIX}:' \
@@ -105,7 +104,7 @@ pre-configure:
 .if !empty(EXIM_MAX_INCLUDE_SIZE)
 	${ECHO} MAX_INCLUDE_SIZE=${EXIM_MAX_INCLUDE_SIZE} >> ${WRKSRC}/Local/Makefile
 .endif
-	sed -e 's:@PREFIX@:${PREFIX}:' \
+	sed	-e 's:@PREFIX@:${PREFIX}:' \
 		-e 's:@PKG_SYSCONFDIR@:${PKG_SYSCONFDIR}:' \
 	    < ${WRKSRC}/Local/eximon.conf.pkgsrc \
 	    > ${WRKSRC}/Local/eximon.conf

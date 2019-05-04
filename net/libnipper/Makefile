@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.4 2012/10/23 17:18:34 asau Exp $
+# $NetBSD: Makefile,v 1.6 2018/07/04 13:40:28 jperkin Exp $
 #
 
 DISTNAME=	libnipper-0.12.1
@@ -7,7 +7,7 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=nipper/}
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://nipper.sourceforge.net/
+#HOMEPAGE=	http://nipper.sourceforge.net/
 COMMENT=	Performs security audits of network device configuration
 
 USE_LANGUAGES=	c++
@@ -17,7 +17,7 @@ CONF_FILES+=	${PREFIX}/share/examples/nipper.conf \
 		${PKG_SYSCONFDIR}/nipper.conf
 
 SUBST_CLASSES+=		config
-SUBST_STAGE.config=	post-patch
+SUBST_STAGE.config=	pre-configure
 SUBST_FILES.config=	CMakeLists.txt libnipper.cpp nipper.cpp
 SUBST_SED.config=	-e "s|@@PREFIX@@|${PREFIX}|g"
 SUBST_SED.config+=	-e "s|@@PKGMANDIR@@|${PKGMANDIR}|g"

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.44 2017/07/10 11:44:56 wen Exp $
+$NetBSD: distinfo,v 1.56 2019/03/11 07:52:06 wen Exp $
 
-SHA1 (moodle-3.3.1.tgz) = c0e78550d29d552ca00f8e5b8080fe05d18d8775
-RMD160 (moodle-3.3.1.tgz) = fdc5375303d0dbb434742a67b0dc517e6f35f2f5
-SHA512 (moodle-3.3.1.tgz) = e338e33886b1d76c045d34428be97baedf47e65e4baba8003e334bfca019611bfdcf3f6c68ff3235463bdef6b90734be2725c48202fca259e604456f4c1c0bf1
-Size (moodle-3.3.1.tgz) = 43790252 bytes
+SHA1 (moodle-3.6.3.tgz) = f5d8229063cd9f2456ac5aba98a6ca505de548a4
+RMD160 (moodle-3.6.3.tgz) = c8b9b555b49535860f0703ff31f86d6d697b7365
+SHA512 (moodle-3.6.3.tgz) = 9a583064321ee0929e3df2b194c783dd5322b6d6e7642fdbf9d18cc511b82f73e8007e234998ea2553cb8147dc22fa4d178f2104c6eb2ebc322a9850afba19c5
+Size (moodle-3.6.3.tgz) = 47707084 bytes

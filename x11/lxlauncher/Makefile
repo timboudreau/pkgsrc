@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.6 2017/02/12 06:26:13 ryoon Exp $
+# $NetBSD: Makefile,v 1.11 2018/11/14 22:22:46 kleink Exp $
 
 DISTNAME=	lxlauncher-0.2.5
-PKGREVISION=	3
+PKGREVISION=	7
 CATEGORIES=	x11
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=lxde/}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	youri@NetBSD.org
-HOMEPAGE=	http://wiki.lxde.org/en/LXLauncher
+HOMEPAGE=	https://wiki.lxde.org/en/LXLauncher
 COMMENT=	Program launcher for small screens
 LICENSE=	gnu-gpl-v2
 

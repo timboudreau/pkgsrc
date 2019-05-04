@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.29 2017/07/09 11:52:21 ryoon Exp $
+# $NetBSD: Makefile,v 1.50 2019/04/03 00:32:57 ryoon Exp $
 
-DISTNAME=	corebird-1.5.1
+DISTNAME=	corebird-1.7.3
+PKGREVISION=	14
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_GITHUB:=baedert/}
 GITHUB_PROJECT=	corebird
@@ -8,7 +9,7 @@ GITHUB_RELEASE=	${PKGVERSION_NOREV}
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://corebird.baedert.org/
+HOMEPAGE=	https://corebird.baedert.org/
 COMMENT=	Native Gtk+ Twitter Client
 LICENSE=	gnu-gpl-v3
 
@@ -24,9 +25,9 @@ TEST_TARGET=	check
 .include "../../graphics/adwaita-icon-theme/buildlink3.mk"
 .include "../../x11/gtk3/buildlink3.mk"
 .include "../../devel/glib2/buildlink3.mk"
-.include "../../www/librest07/buildlink3.mk"
 BUILDLINK_API_DEPENDS.gspell+=	gspell>=1.2.2
 .include "../../textproc/gspell/buildlink3.mk"
+BUILDLINK_API_DEPENDS.json-glib+=	json-glib>=1.2.8
 .include "../../textproc/json-glib/buildlink3.mk"
 .include "../../databases/sqlite3/buildlink3.mk"
 .include "../../net/libsoup/buildlink3.mk"

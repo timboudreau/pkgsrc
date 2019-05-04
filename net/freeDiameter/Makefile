@@ -1,17 +1,16 @@
-# $NetBSD: Makefile,v 1.15 2016/10/09 21:42:01 wiz Exp $
+# $NetBSD: Makefile,v 1.17 2018/09/25 12:59:25 wiz Exp $
 
 DISTNAME=	1.2.0
 PKGNAME=	freeDiameter-${DISTNAME}
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	net
 MASTER_SITES=	http://www.freediameter.net/hg/freeDiameter/archive/
+DIST_SUBDIR=	freeDiameter
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.freediameter.net/trac/
 COMMENT=	Open source Diameter protocol implementation
 LICENSE=	modified-bsd
-
-DIST_SUBDIR=	freeDiameter
 
 WRKSRC=		${WRKDIR}/${PKGNAME_NOREV}
 USE_CMAKE=	yes

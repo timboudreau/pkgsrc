@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.27 2016/09/10 23:23:20 szptvlfn Exp $
+# $NetBSD: Makefile,v 1.32 2019/01/10 18:11:56 maya Exp $
 # -----------------------------------------------------------------------------
 # Package metadata
 #
 DISTNAME=	ghc-7.6.3-src
 PKGNAME=	${DISTNAME:S/-src$//}
-PKGREVISION=	11
+PKGREVISION=	13
 CATEGORIES=	lang
-MASTER_SITES=	http://www.haskell.org/ghc/dist/${PKGVERSION_NOREV}/
+MASTER_SITES=	https://www.haskell.org/ghc/dist/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pho@cielonegro.org
@@ -79,6 +79,8 @@ CONFIGURE_ENV+= \
 
 NOT_PAX_MPROTECT_SAFE+=	lib/${PKGNAME_NOREV}/ghc
 NOT_PAX_MPROTECT_SAFE+=	lib/${PKGNAME_NOREV}/ghc-pkg
+NOT_PAX_ASLR_SAFE+=	lib/${PKGNAME_NOREV}/ghc
+NOT_PAX_ASLR_SAFE+=	lib/${PKGNAME_NOREV}/ghc-pkg
 
 # -----------------------------------------------------------------------------
 # Build hooks
@@ -173,6 +175,11 @@ CHECK_PORTABILITY_SKIP+=	distrib/prep-bin-dist-mingw
 CHECK_SHLIBS_SKIP+=		*/libHS*-ghc${PKGVERSION_NOREV}.*
 .endif
 
+# ghc57207_0.s: failed to add inputs for merge: Resource temporarily unavailable
+CTF_FILES_SKIP+=		*/libHSghc-7.6.3-ghc7.6.3.so
+
+# ld: fatal: relocation error ... relocation requires reference symbol
+STRIP_FILES_SKIP+=		lib/${PKGNAME_NOREV}/libHSrts.a
 
 # -----------------------------------------------------------------------------
 # Dependencies

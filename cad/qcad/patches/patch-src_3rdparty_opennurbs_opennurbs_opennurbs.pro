@@ -1,12 +1,16 @@
-$NetBSD: patch-src_3rdparty_opennurbs_opennurbs_opennurbs.pro,v 1.1 2016/08/30 10:56:04 plunky Exp $
+$NetBSD: patch-src_3rdparty_opennurbs_opennurbs_opennurbs.pro,v 1.3 2018/01/07 21:23:39 plunky Exp $
 
 fix build for pkgsrc, by allowing qmake to link binaries in situ
 and create an install target
 
---- src/3rdparty/opennurbs/opennurbs/opennurbs.pro.orig	2016-07-01 07:13:14.000000000 +0000
+don't provide own zlib
+
+force use of builtin alloca(3)
+
+--- src/3rdparty/opennurbs/opennurbs/opennurbs.pro.orig	2017-12-19 14:26:30.000000000 +0000
 +++ src/3rdparty/opennurbs/opennurbs/opennurbs.pro
 @@ -218,14 +218,9 @@ HEADERS += \
-
+ 
  TARGET = opennurbs
  TEMPLATE = lib
 -CONFIG += staticlib
@@ -18,8 +22,8 @@ and create an install target
 -}
 -LIBS += -lzlib
 +CONFIG += plugin
-+LIBS += -L../zlib -lzlib
 +INSTALLS += target
++DEFINES += \"alloca(size)=__builtin_alloca(size)\"
  win32 {
      #DEFINES += ON_DLL_EXPORTS ON_COMPILING_OPENNURBS NDEBUG
      DEFINES += ON_COMPILING_OPENNURBS NDEBUG

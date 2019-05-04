@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.58 2017/07/13 12:37:03 wiz Exp $
+# $NetBSD: Makefile,v 1.60 2018/10/17 18:03:48 jperkin Exp $
 
 DISTNAME=	MesaGLUT-7.9.2
 # we have the autoconf patches from git, so call it 8.0.1.
@@ -9,7 +9,7 @@ MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/glut/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://cgit.freedesktop.org/mesa/glut/
+HOMEPAGE=	https://cgit.freedesktop.org/mesa/glut/
 COMMENT=	GLUT Graphics library similar to SGI's OpenGL
 #LICENSE=	# TODO: (see mk/license.mk)
 
@@ -26,6 +26,7 @@ CONFIGURE_ENV+=	"EXTRA_LIB_PATH=${LDFLAGS} ${COMPILER_RPATH_FLAG}${X11BASE}/lib 
 pre-configure:
 	cd ${WRKSRC} && autoreconf -vif
 
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../graphics/MesaLib/buildlink3.mk"
 .include "../../graphics/glu/buildlink3.mk"
 .include "../../x11/libXmu/buildlink3.mk"

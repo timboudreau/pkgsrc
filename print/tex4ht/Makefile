@@ -1,17 +1,16 @@
-# $NetBSD: Makefile,v 1.6 2017/06/20 20:50:50 markd Exp $
+# $NetBSD: Makefile,v 1.9 2018/08/22 09:46:16 wiz Exp $
 
-DISTNAME=	texlive-20170524-source
+DISTNAME=	texlive-20180414-source
 PKGNAME=	tex4ht-0.0.20170523
+PKGREVISION=	2
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.tug.org/texlive/
 COMMENT=	Converter from *TeX to HTML, XML, and similar formats
 LICENSE=	lppl-1.3c
-
-CONFLICTS+=	teTeX-bin<=3.0nb32
 
 EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 			${DISTNAME}/texk/tex4htk

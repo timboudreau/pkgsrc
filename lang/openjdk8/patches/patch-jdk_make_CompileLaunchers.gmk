@@ -1,6 +1,6 @@
-$NetBSD: patch-jdk_make_CompileLaunchers.gmk,v 1.4 2016/07/19 12:32:15 jperkin Exp $
+$NetBSD: patch-jdk_make_CompileLaunchers.gmk,v 1.6 2018/09/14 15:53:46 tnn Exp $
 
---- jdk/make/CompileLaunchers.gmk.orig	2016-05-06 12:11:21.000000000 +0000
+--- jdk/make/CompileLaunchers.gmk.orig	2018-05-26 23:58:30.000000000 +0000
 +++ jdk/make/CompileLaunchers.gmk
 @@ -121,7 +121,7 @@ define SetupLauncher
    endif
@@ -18,7 +18,7 @@ $NetBSD: patch-jdk_make_CompileLaunchers.gmk,v 1.4 2016/07/19 12:32:15 jperkin E
 -  UNPACKEXE_ZIPOBJS := -lz
 +  UNPACKEXE_ZIPOBJS := @COMPILER_RPATH_FLAG@@BUILDLINK_PREFIX.zlib@/lib -L@BUILDLINK_PREFIX.zlib@/lib -lz
  else
-   UNPACKEXE_CFLAGS := -I$(JDK_TOPDIR)/src/share/native/java/util/zip/zlib-1.2.8
+   UNPACKEXE_CFLAGS := -I$(JDK_TOPDIR)/src/share/native/java/util/zip/zlib
    UNPACKEXE_ZIPOBJS := $(JDK_OUTPUTDIR)/objs/libzip/zcrc32$(OBJ_SUFFIX) \
 @@ -548,9 +548,7 @@ BUILD_JEXEC_DST_DIR := $(JDK_OUTPUTDIR)/
  # jdk/make/java/Makefile
@@ -30,3 +30,13 @@ $NetBSD: patch-jdk_make_CompileLaunchers.gmk,v 1.4 2016/07/19 12:32:15 jperkin E
  endif
  
  ifneq ($(findstring $(OPENJDK_TARGET_OS), linux bsd), )
+@@ -643,7 +641,9 @@ ifeq ($(OPENJDK_TARGET_OS), macosx)
+ endif
+ 
+ ifeq ($(OPENJDK_TARGET_CPU_BITS), 64)
++ ifeq ($(COMPILER_SUPPORTS_TARGET_BITS_FLAG), true)
+   LINK_JSPAWNHELPER_FLAGS += $(COMPILER_TARGET_BITS_FLAG)64
++ endif
+ endif
+ 
+ ifeq ($(BUILD_JSPAWNHELPER), 1)

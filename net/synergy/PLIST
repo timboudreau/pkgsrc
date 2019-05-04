@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.6 2011/06/23 03:16:50 taca Exp $
+@comment $NetBSD: PLIST,v 1.8 2019/01/03 21:53:09 tnn Exp $
 bin/synergyc
 bin/synergys
 man/man1/synergyc.1

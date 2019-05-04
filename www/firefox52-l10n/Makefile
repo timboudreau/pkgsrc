@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.3 2017/07/03 16:28:24 ryoon Exp $
+# $NetBSD: Makefile,v 1.14 2018/11/22 12:42:26 ryoon Exp $
 #
 
-FIREFOX_VER=	52.2.1esr
+FIREFOX_VER=	52.9.0esr
 PKGNAME=	firefox52-l10n-${FIREFOX_VER:S/esr//}
 DISTNAME=	# empty
 CATEGORIES=	www
@@ -28,5 +28,5 @@ FIREFOX_LOCALES=ach af an ar as ast az bg bn-BD bn-IN br bs ca cs	\
 EXTENSIONS_DIR=		${PREFIX}/lib/firefox52/browser/extensions
 XPI_FILES=		${FIREFOX_LOCALES:=.xpi}
 
-.include "../../www/firefox/xpi.mk"
+.include "../../www/firefox52/xpi.mk"
 .include "../../mk/bsd.pkg.mk"

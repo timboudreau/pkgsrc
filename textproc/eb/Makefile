@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.54 2017/01/19 18:52:27 agc Exp $
+# $NetBSD: Makefile,v 1.56 2018/08/22 09:46:45 wiz Exp $
 
 DISTNAME=	eb-4.3
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	textproc japanese
 MASTER_SITES=	ftp://ftp.sra.co.jp/pub/misc/eb/appendix/
 MASTER_SITES+=	ftp://ftp.sra.co.jp/pub/misc/eb/
@@ -65,7 +65,7 @@ EGDIR=		${PREFIX}/share/examples/eb
 # -    ZLIBLIBS="-L$z_libdir -lz"
 # +    ZLIBLIBS="-Wl,-R$z_libdir -L$z_libdir -lz"
 SUBST_CLASSES+=		runpath
-SUBST_STAGE.runpath=	post-patch
+SUBST_STAGE.runpath=	pre-configure
 SUBST_FILES.runpath=	configure configure.ac
 SUBST_SED.runpath=	-e 's|^\(.*LIBS=['\''"]\)-L\(\$$[^[:blank:]][^[:blank:]]*\)\(.*\)$$|\1${COMPILER_RPATH_FLAG}\2 -L\2\3|'
 

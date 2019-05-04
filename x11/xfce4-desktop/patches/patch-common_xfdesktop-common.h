@@ -1,8 +1,8 @@
-$NetBSD: patch-common_xfdesktop-common.h,v 1.2 2017/06/18 22:48:17 youri Exp $
+$NetBSD: patch-common_xfdesktop-common.h,v 1.4 2019/01/18 14:34:48 youri Exp $
 
 Use the blue background by default.
 
---- common/xfdesktop-common.h.orig	2017-04-20 15:38:05.000000000 +0000
+--- common/xfdesktop-common.h.orig	2018-06-07 19:37:55.000000000 +0000
 +++ common/xfdesktop-common.h
 @@ -35,7 +35,7 @@
  #include <stdarg.h>

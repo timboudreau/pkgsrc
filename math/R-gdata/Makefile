@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.10 2016/07/09 06:38:32 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2018/08/22 09:45:35 wiz Exp $
 
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	math
-MASTER_SITES=	${MASTER_SITE_R_CRAN:=contrib/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	${R_HOMEPAGE_BASE}/gdata/

@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.13 2015/04/25 14:23:12 tnn Exp $
+# $NetBSD: Makefile,v 1.15 2019/01/04 01:18:14 tnn Exp $
 
-DISTNAME=	mesa-demos-8.2.0
+DISTNAME=	mesa-demos-8.4.0
 PKGNAME=	${DISTNAME:S/mesa-demos/glx-utils/}
-PKGREVISION=	1
 CATEGORIES=	x11 graphics
-MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/demos/8.2.0/
+MASTER_SITES=	ftp://ftp.freedesktop.org/pub/mesa/demos/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://cgit.freedesktop.org/mesa/demos/
+HOMEPAGE=	https://cgit.freedesktop.org/mesa/demos/
 COMMENT=	OpenGL glxgears and glxinfo
 #LICENSE=	# Similar to mit but with SGI advertising clause.
 
@@ -17,7 +16,6 @@ USE_LANGUAGES=	c
 
 INSTALLATION_DIRS=	bin
 LDFLAGS+=		-lX11	# ld 2.22 wants each library explicitly
-
 
 do-build:
 	cd ${WRKSRC}/src/xdemos && \

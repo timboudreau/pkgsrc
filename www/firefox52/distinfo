@@ -1,12 +1,12 @@
-$NetBSD: distinfo,v 1.4 2017/07/16 10:48:17 jmcneill Exp $
+$NetBSD: distinfo,v 1.18 2018/08/08 08:49:58 martin Exp $
 
-SHA1 (firefox-52.2.1esr.source.tar.xz) = 38396fbc760669533f0a4facaa6ec489ae99f320
-RMD160 (firefox-52.2.1esr.source.tar.xz) = 1904238678469340f519416e87b0de6971996f85
-SHA512 (firefox-52.2.1esr.source.tar.xz) = 1d79e6e4625cf7994f6d6bbdf227e483fc407bcdb20e0296ea604969e701f551b5df32f578d4669cf654b65927328c8eb0f717c7a12399bf1b02a6ac7a0cd1d3
-Size (firefox-52.2.1esr.source.tar.xz) = 212033732 bytes
+SHA1 (firefox-52.9.0esr.source.tar.xz) = df3d47518b380fe934e32a288515c25435fd82a7
+RMD160 (firefox-52.9.0esr.source.tar.xz) = 8940269f0a515c0066b6ab2eea1da8963d27617b
+SHA512 (firefox-52.9.0esr.source.tar.xz) = bfca42668ca78a12a9fb56368f4aae5334b1f7a71966fbba4c32b9c5e6597aac79a6e340ac3966779d2d5563eb47c054ab33cc40bfb7306172138ccbd3adb2b9
+Size (firefox-52.9.0esr.source.tar.xz) = 214087304 bytes
 SHA1 (patch-aa) = c1084caa275e57b716c3499301f7fc3f99ef5026
 SHA1 (patch-ao) = 8b7125ef3b193fca4d03386142887b2f8d5015c5
-SHA1 (patch-as) = 632ebd35287f8f97d18721d39a0514d4cdbb12cc
+SHA1 (patch-as) = b596132c7b6902c4f7ddb901e28e1437b99bb428
 SHA1 (patch-build_gyp.mozbuild) = 481270e6703e556fb87a3440cb3cfb3d4fcc4c86
 SHA1 (patch-build_moz.configure_init.configure) = f2df0c6b92aa825a61f6a4ee1f70f5443c61858e
 SHA1 (patch-build_moz.configure_keyfiles.configure) = dd46c7c29464f374eed3f0762f4653d42032c261
@@ -28,7 +28,8 @@ SHA1 (patch-dom_media_platforms_ffmpeg_ffvpx_FFVPXRuntimeLinker.cpp) = 34c89f93b
 SHA1 (patch-dom_plugins_ipc_PluginModuleChild.cpp) = 9961e956016f274a1b9b52b489bd749e8e2bbcb6
 SHA1 (patch-dom_plugins_ipc_PluginModuleChild.h) = 15c01df2fa7f989b533ef769ce77438b5e9bfdb9
 SHA1 (patch-dom_system_OSFileConstants.cpp) = e932ca46cbc78eb8486b9ff704434a962645c6b2
-SHA1 (patch-extensions_spellcheck_hunspell_glue_mozHunspell.cpp) = 2aaf5f82a57dbb375558442718c239e2e7da1406
+SHA1 (patch-gfx_2d_DataSurfaceHelpers.cpp) = e18b002f51fc0a191d579fa49025aac2c5000d81
+SHA1 (patch-gfx_2d_HelpersCairo.h) = f910d634624fdf288a042c2a0c636598103ef289
 SHA1 (patch-gfx_cairo_libpixman_src_pixman-arm-neon-asm.S) = 6e91ca436b73affe42ed4e683b3400beb28c4bc6
 SHA1 (patch-gfx_gl_GLContextProviderGLX.cpp) = 2cc997cab71a84c1f50a791693519a0626564426
 SHA1 (patch-gfx_graphite2_moz-gr-update.sh) = 09eb2fa66109d38a3aedc940fcaaee5f91e216ae
@@ -58,6 +59,7 @@ SHA1 (patch-ipc_glue_GeckoChildProcessHost.cpp) = b9c202645a4b6f691a6eb81ef0daf4
 SHA1 (patch-js_src_jit_arm_Architecture-arm.cpp) = f0b554c169643b8447b4f29168d61ea257b18782
 SHA1 (patch-js_src_jit_none_AtomicOperations-sparc.h) = b44992a869d6d08809a9edc28f1ad6f40632d392
 SHA1 (patch-js_src_moz.build) = ce9110506086d15a011d0985b58dd4e7d1b6ec5f
+SHA1 (patch-js_src_vm_StructuredClone.cpp) = 7e992825e996c43419318893b704a2aa380b0d2a
 SHA1 (patch-js_xpconnect_src_XPCConvert.cpp) = 915777e9bb5366be41866cdb6ea0ad2b1c006dde
 SHA1 (patch-js_xpconnect_src_xpcprivate.h) = e09e37819961bae40a9f276ae1ee510d2956c23e
 SHA1 (patch-media_libcubeb_src_cubeb.c) = 3be0bf511cbd3b1c691fadb081acaf38838c36f4

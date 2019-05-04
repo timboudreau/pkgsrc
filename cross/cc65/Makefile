@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.11 2016/07/09 06:37:58 wiz Exp $
+# $NetBSD: Makefile,v 1.13 2018/08/22 09:43:10 wiz Exp $
 #
 
 DISTNAME=	cc65-sources-2.13.3
 PKGNAME=	${DISTNAME:S/-sources//}
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	cross lang
 MASTER_SITES=	ftp://ftp.musoftware.de/pub/uz/cc65/
 EXTRACT_SUFX=	.tar.bz2
@@ -23,7 +23,7 @@ INSTALL_MAKE_FLAGS+=	PREFIX=${DESTDIR}${PREFIX}
 
 SUBST_CLASSES+=		perl
 SUBST_MESSAGE.perl=	Fixing the path of perl.
-SUBST_STAGE.perl=	post-patch
+SUBST_STAGE.perl=	pre-configure
 SUBST_FILES.perl=	src/ca65/macpack/cvt-mac.pl src/ld65/cfg/cvt-cfg.pl
 SUBST_SED.perl=		-e "s,/usr/bin/perl,${PREFIX}/bin/perl,g"
 

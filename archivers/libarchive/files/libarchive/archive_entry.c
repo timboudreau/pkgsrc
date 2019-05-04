@@ -1491,7 +1491,7 @@ archive_entry_acl_next(struct archive_entry *entry, int want_type, int *type,
  * the style of the generated ACL.
  */
 wchar_t *
-archive_entry_acl_to_text_w(struct archive_entry *entry, ssize_t *len,
+archive_entry_acl_to_text_w(struct archive_entry *entry, la_ssize_t *len,
     int flags)
 {
 	return (archive_acl_to_text_w(&entry->acl, len, flags,
@@ -1499,7 +1499,7 @@ archive_entry_acl_to_text_w(struct archive_entry *entry, ssize_t *len,
 }
 
 char *
-archive_entry_acl_to_text(struct archive_entry *entry, ssize_t *len,
+archive_entry_acl_to_text(struct archive_entry *entry, la_ssize_t *len,
     int flags)
 {
 	return (archive_acl_to_text_l(&entry->acl, len, flags, NULL));
@@ -1638,7 +1638,7 @@ _archive_entry_acl_text_l(struct archive_entry *entry, int flags,
  * SUCH DAMAGE.
  */
 
-static struct flag {
+static const struct flag {
 	const char	*name;
 	const wchar_t	*wname;
 	unsigned long	 set;
@@ -1707,6 +1707,9 @@ static struct flag {
 #endif
 #ifdef UF_COMPRESSED
 	{ "nocompressed",L"nocompressed",	UF_COMPRESSED,	0 },
+#endif
+#ifdef UF_HIDDEN
+	{ "nohidden",	L"nohidden",		UF_HIDDEN,	0 },
 #endif
 #if defined(FS_UNRM_FL)
         { "nouunlink",	L"nouunlink",		FS_UNRM_FL,	0},
@@ -1840,7 +1843,7 @@ ae_fflagstostr(unsigned long bitset, unsigned long bitclear)
 	char *string, *dp;
 	const char *sp;
 	unsigned long bits;
-	struct flag *flag;
+	const struct flag *flag;
 	size_t	length;
 
 	bits = bitset | bitclear;
@@ -1892,7 +1895,7 @@ static const char *
 ae_strtofflags(const char *s, unsigned long *setp, unsigned long *clrp)
 {
 	const char *start, *end;
-	struct flag *flag;
+	const struct flag *flag;
 	unsigned long set, clear;
 	const char *failed;
 
@@ -1960,7 +1963,7 @@ static const wchar_t *
 ae_wcstofflags(const wchar_t *s, unsigned long *setp, unsigned long *clrp)
 {
 	const wchar_t *start, *end;
-	struct flag *flag;
+	const struct flag *flag;
 	unsigned long set, clear;
 	const wchar_t *failed;
 

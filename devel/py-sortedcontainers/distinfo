@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/02/08 04:47:04 minskim Exp $
+$NetBSD: distinfo,v 1.5 2018/11/28 14:40:49 adam Exp $
 
-SHA1 (sortedcontainers-1.5.7.tar.gz) = 66081cc6b5e63d006abed3f243ab215f4aeb27e2
-RMD160 (sortedcontainers-1.5.7.tar.gz) = 1ac4ff093fb771e5e7be5a811181a76c396825db
-SHA512 (sortedcontainers-1.5.7.tar.gz) = a9f2ba152c47eddfda6ad8ef7ecfbfa5d51b17afb4042b0b1e6d8b3dbc6caf6f8281af415dfcf1e356aaf80aa3212865ba926fe0d6e08961c8fbbc68adb34108
-Size (sortedcontainers-1.5.7.tar.gz) = 11970881 bytes
+SHA1 (sortedcontainers-2.1.0.tar.gz) = b6f04bb63db9376d8fed9a60ac3f9e329f2fff0b
+RMD160 (sortedcontainers-2.1.0.tar.gz) = a2aa7ff8604a0a81ea71e5decb479bcc1e370b22
+SHA512 (sortedcontainers-2.1.0.tar.gz) = 6fe2b6e7d030b67aa990d62160079852feaee7828164eae03a6477dc1704863f6ed0daadb44dc919653c66996d51f833b5858351a8fd5ad28998f8010a8ca1a4
+Size (sortedcontainers-2.1.0.tar.gz) = 29810 bytes

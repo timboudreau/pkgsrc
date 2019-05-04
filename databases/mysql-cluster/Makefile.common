@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.13 2017/06/01 13:30:24 jlam Exp $
+# $NetBSD: Makefile.common,v 1.15 2018/02/05 18:09:35 jperkin Exp $
 #
 # used by databases/mysql-cluster/Makefile
 
@@ -7,11 +7,11 @@ CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_MYSQL:=MySQL-Cluster-7.4/}
 
 MAINTAINER?=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.mysql.com/products/cluster/
+HOMEPAGE=	https://www.mysql.com/products/cluster/
 LICENSE=	gnu-gpl-v2
 
 USE_CMAKE=		yes
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		bash gmake perl:run python:run
 
 .include "../../mk/bsd.prefs.mk"

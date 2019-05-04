@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.49 2017/05/03 05:29:41 spz Exp $
+# $NetBSD: Makefile,v 1.56 2018/11/14 22:22:15 kleink Exp $
 #
 
-DISTNAME=		xymon-4.3.27
-PKGREVISION=		2
+DISTNAME=		xymon-4.3.28
+PKGREVISION=		4
 CATEGORIES=		net
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=xymon/}
 
 MAINTAINER=		spz@NetBSD.org
-HOMEPAGE=		http://sourceforge.net/projects/xymon/
+HOMEPAGE=		https://sourceforge.net/projects/xymon/
 COMMENT=		Network services monitor a la Big Brother
 LICENSE=		gnu-gpl-v2
 
@@ -125,7 +125,7 @@ CONFIGURE_ENV+=		MANROOT=${PREFIX}/${PKGMANDIR}/
 SUBST_CLASSES+=		bashpath
 SUBST_FILES.bashpath=	xymond/xymonreports.sh.DIST
 SUBST_SED.bashpath=	-e 's,/bin/bash,'${BASH:Q}','
-SUBST_STAGE.bashpath=	post-patch
+SUBST_STAGE.bashpath=	pre-configure
 
 USE_TOOLS+=	awk:run		cat:run		cp:run
 USE_TOOLS+=	cut:run		date:run	egrep:run

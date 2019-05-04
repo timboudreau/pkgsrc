@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.67 2017/02/12 06:24:57 ryoon Exp $
+# $NetBSD: Makefile,v 1.75 2019/04/26 14:12:50 maya Exp $
 
 VERSION=	2.8.12.0
 DISTNAME=	wxPython-src-${VERSION}
 PKGNAME=	${PYPKGPREFIX}-wxWidgets-${VERSION}
-PKGREVISION=	6
+PKGREVISION=	11
 CATEGORIES=	x11 python
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=wxpython/}
 EXTRACT_SUFX=	.tar.bz2
@@ -19,7 +19,7 @@ USE_TOOLS+=	gmake pkg-config
 # previous name of the package
 CONFLICTS+=		${PYPKGPREFIX}-wxWindows-[0-9]*
 PYTHON_SELF_CONFLICT=	yes
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.8.10.1
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.8.10.1
 
 # no scripts to avoid conflicts
 #PYSETUPBUILDARGS+=	NO_SCRIPTS=1

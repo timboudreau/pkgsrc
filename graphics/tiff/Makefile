@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.137 2017/06/21 01:08:33 tez Exp $
+# $NetBSD: Makefile,v 1.144 2018/11/10 21:14:53 maya Exp $
 
-DISTNAME=	tiff-4.0.8
-PKGREVISION=	1
+DISTNAME=	tiff-4.0.10
 CATEGORIES=	graphics
-MASTER_SITES=	ftp://download.osgeo.org/libtiff/
+MASTER_SITES=	https://download.osgeo.org/libtiff/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://simplesystems.org/libtiff/

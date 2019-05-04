@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.17 2016/07/09 06:38:31 wiz Exp $
+# $NetBSD: Makefile,v 1.19 2018/08/22 09:45:33 wiz Exp $
 #
 
 DISTNAME=	poppy-4.01
 #KGREVISION=	1
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	mail
 MASTER_SITES=	http://www.cnpbagwell.com/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.cnpbagwell.com/projects.html
+#HOMEPAGE=	http://www.cnpbagwell.com/projects.html
 COMMENT=	Client to perform simple tasks with a POP3/IMAP server
 
 NO_BUILD=	YES

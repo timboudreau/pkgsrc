@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.13 2019/02/27 12:07:14 adam Exp $
+
+SHA1 (pytest-django-3.4.8.tar.gz) = b2e8ce6a5434c73967617f6a660617216408e593
+RMD160 (pytest-django-3.4.8.tar.gz) = 663c857e967c037b81b0bd24ed13ca554fc58970
+SHA512 (pytest-django-3.4.8.tar.gz) = 526cc93e725cba618593e9bd01fb31319f9d7054b69067b34780e2be458ab47119e0969089c99d0497ce41d5d93b34a0099812147b0d38e1aab6be4b5778ccd1
+Size (pytest-django-3.4.8.tar.gz) = 67335 bytes

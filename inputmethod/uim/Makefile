@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.127 2017/05/21 09:12:34 ryoon Exp $
+# $NetBSD: Makefile,v 1.147 2019/04/03 00:32:49 ryoon Exp $
 #
 
 .include "../../inputmethod/uim/Makefile.common"
 
-PKGREVISION=		40
+PKGREVISION=		59
 COMMENT=		Multilingual input method library
 #LICENSE=		See ${WRKSRC}/COPYING
 
@@ -12,7 +12,7 @@ CONFLICTS+=		uim-qt4-immodule-[0-9]*
 USE_LIBTOOL=		YES
 USE_PKGLOCALEDIR=	YES
 USE_TOOLS+=		gmake intltool pkg-config msgfmt
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c99 c++03
 PKGCONFIG_OVERRIDE+=	${WRKSRC}/uim.pc.in
 GNU_CONFIGURE=		YES
 CONFIGURE_ARGS+=	--disable-emacs
@@ -22,7 +22,7 @@ CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASE}
 BUILDLINK_TRANSFORM+=	rm:-O2
 
 LDFLAGS.SunOS+=	-mimpure-text
-CFLAGS.SunOS+=	-std=c99 -D__EXTENSIONS__
+CFLAGS.SunOS+=	-D__EXTENSIONS__
 
 .include "options.mk"
 

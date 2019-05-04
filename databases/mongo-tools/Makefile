@@ -1,17 +1,18 @@
-# $NetBSD: Makefile,v 1.11 2017/05/03 16:49:54 fhajny Exp $
+# $NetBSD: Makefile,v 1.16 2018/12/15 21:12:19 wiz Exp $
 
 DISTNAME=	mongo-tools-3.4.4
+PKGREVISION=	1
 CATEGORIES=	databases
 MASTER_SITES=	${MASTER_SITE_GITHUB:=mongodb/}
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://github.com/mongodb/mongo-tools/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://github.com/mongodb/mongo-tools/
 COMMENT=	MongoDB CLI tools
 LICENSE=	apache-2.0
 
 GITHUB_TAG=	r${PKGVERSION_NOREV}
 
-BUILD_DEPENDS+=	go-${GO_VERSION}*:../../lang/go
+BUILD_DEPENDS+=	${GO_PACKAGE_DEP}
 
 EXTRACT_USING=	bsdtar
 USE_TOOLS+=	pkg-config
@@ -36,7 +37,7 @@ do-build:
 .for tool in ${MONGO_TOOLS}
 	cd ${WRKSRC} && \
 	  ${SETENV} GOPATH=${WRKSRC}:${WRKSRC}/vendor:${PREFIX}/gopkg \
-	  go build -tags "${MONGO_TAGS}" -o bin/${tool} ${tool}/main/${tool}.go
+	  ${GO} build -tags "${MONGO_TAGS}" -o bin/${tool} ${tool}/main/${tool}.go
 .endfor
 
 do-install:
@@ -44,6 +45,6 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/bin/${tool} ${DESTDIR}${PREFIX}/bin/${tool}
 .endfor
 
-.include "../../devel/go-sys/buildlink3.mk"
 .include "../../lang/go/version.mk"
+.include "../../devel/go-sys/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

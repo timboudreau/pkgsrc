@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.9 2017/06/20 16:11:05 youri Exp $
+# $NetBSD: Makefile,v 1.20 2019/02/06 11:31:33 martin Exp $
 
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-VERSION=	4.12.1
+VERSION=	4.13.6
 DISTNAME=	xfconf-${VERSION}
 PKGNAME=	xfce4-conf-${VERSION}
 CATEGORIES=	devel
-MASTER_SITES=	http://archive.xfce.org/src/xfce/xfconf/4.12/
+MASTER_SITES=	http://archive.xfce.org/src/xfce/xfconf/4.13/
+PKGREVISION=	1
 
 HOMEPAGE=	http://docs.xfce.org/xfce/xfconf/start
 COMMENT=	Xfce client-server configuration storage and query system
@@ -20,7 +21,7 @@ MAKE_DIRS+=	${PREFIX}/include/xfce4
 BUILDLINK_API_DEPENDS.dbus+=		dbus>=1.0.0
 BUILDLINK_API_DEPENDS.dbus-glib+=	dbus-glib>=0.72
 
-DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
+TOOL_DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
 
 .include "../../sysutils/dbus/buildlink3.mk"
 .include "../../sysutils/dbus-glib/buildlink3.mk"

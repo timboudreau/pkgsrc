@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.122 2017/02/28 15:20:09 ryoon Exp $
+# $NetBSD: Makefile,v 1.127 2019/04/14 21:50:36 jnemeth Exp $
 
-DISTNAME=	mrtg-2.17.4
-PKGREVISION=	10
+DISTNAME=	mrtg-2.17.7
+#PKGREVISION=	12
 CATEGORIES=	net
-MASTER_SITES=	http://oss.oetiker.ch/mrtg/pub/
-MASTER_SITES+=	http://oss.oetiker.ch/mrtg/pub/old/
+MASTER_SITES=	https://oss.oetiker.ch/mrtg/pub/
+MASTER_SITES+=	https://oss.oetiker.ch/mrtg/pub/old/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://oss.oetiker.ch/mrtg/
+HOMEPAGE=	https://oss.oetiker.ch/mrtg/
 COMMENT=	The Multi-Router Traffic Grapher
 LICENSE=	gnu-gpl-v2
 
@@ -27,7 +27,7 @@ CONF_FILES=	${EGDIR}/mrtg.conf ${PKG_SYSCONFDIR}/mrtg.conf
 .include "options.mk"
 
 SUBST_CLASSES+=		files
-SUBST_STAGE.files=	post-patch
+SUBST_STAGE.files=	pre-configure
 SUBST_FILES.files=	../mrtg.conf.example ../netstat2mrtg	\
 			../sys2mrtg ../envstat2mrtg
 SUBST_SED.files=	-e "s|@PREFIX@|${PREFIX}|g"

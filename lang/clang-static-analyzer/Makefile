@@ -1,4 +1,7 @@
-# $NetBSD: Makefile,v 1.7 2017/01/01 14:43:45 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2019/04/25 07:33:01 maya Exp $
+
+PKGREVISION= 2
+.include "../../lang/clang/Makefile.common"
 
 PKGNAME=	${DISTNAME:S/cfe/clang-static-analyzer/:S/.src//}
 
@@ -6,14 +9,15 @@ DEPENDS+=	clang-${PKGVERSION_NOREV}{,nb*}:../../lang/clang
 
 USE_TOOLS+=	perl:run
 
-BUILD_TARGET=	clang-check scan-build scan-view
+DISTINFO_FILE?=	${.CURDIR}/../../lang/clang/distinfo
+PATCHDIR?=	${.CURDIR}/../../lang/clang/patches
 
+BUILD_TARGET=	clang-check scan-build scan-view
 INSTALL_DIRS=	../build/tools/clang-check ../build/tools/scan-build ../build/tools/scan-view
 
 CMAKE_ARGS+=	-DCLANG_ENABLE_STATIC_ANALYZER=ON
 
-REPLACE_PYTHON=	# empty
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 3.5
+PYTHON_VERSIONS_ACCEPTED=	27 # not yet ported as of 5.0.1
 
-.include "../../lang/python/application.mk"
-.include "../../lang/clang/Makefile.common"
+.include "../../lang/python/pyversion.mk"
+.include "../../mk/bsd.pkg.mk"

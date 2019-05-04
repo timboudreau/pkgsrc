@@ -1,29 +1,38 @@
-# $NetBSD: Makefile,v 1.10 2015/03/13 17:42:58 tnn Exp $
-#
+# $NetBSD: Makefile,v 1.19 2019/01/19 21:21:04 gutteridge Exp $
 
-DISTNAME=	blackbox-0.70.1
-PKGNAME=	blackbox70-0.70.1
-PKGREVISION=	1
+VERSION=	0.74
+DISTNAME=	blackbox-${VERSION}
+PKGNAME=	blackbox70-${VERSION}
 CATEGORIES=	wm x11
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=blackboxwm/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=bbidulock/}
+GITHUB_PROJECT=	blackboxwm
+GITHUB_TAG=	${VERSION}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://blackboxwm.sourceforge.net/
-COMMENT=	Small and fast X11R6 window manager
+HOMEPAGE=	https://github.com/bbidulock/blackboxwm
+COMMENT=	Small and fast X11 window manager
+LICENSE=	mit
 
 CONFLICTS=	bsetroot-[0-9]*
 CONFLICTS+=	blackbox-[0-9]*
 
-USE_LANGUAGES=	c c++
-GNU_CONFIGURE=	YES
+USE_LANGUAGES=	c c++03
 USE_LIBTOOL=	yes
-USE_TOOLS+=	pkg-config
+USE_TOOLS+=	autoconf automake autopoint gettext-m4 gsed pkg-config
+GNU_CONFIGURE=	YES
 
-LIBS+=		${BUILDLINK_LDADD.iconv}
+CXXFLAGS.Linux+=	-fpermissive
+
+CONFIGURE_ARGS+=	--enable-nls
+
+BROKEN_GETTEXT_DETECTION=yes
 
 BUILDLINK_DEPMETHOD.libXt?=	build
 
-.include "../../converters/libiconv/buildlink3.mk"
+pre-configure:
+	cd ${WRKSRC}; ${SH} ./autogen.sh
+
+.include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
 .include "../../x11/libXt/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.34 2017/06/02 08:37:49 adam Exp $
+# $NetBSD: Makefile,v 1.38 2018/10/27 07:57:10 maya Exp $
 
-DISTNAME=	dnsmasq-2.77
+DISTNAME=	dnsmasq-2.80
 CATEGORIES=	net
 MASTER_SITES=	http://www.thekelleys.org.uk/dnsmasq/
 EXTRACT_SUFX=	.tar.xz
@@ -32,9 +32,10 @@ PKG_GECOS.${DNSMASQ_USER}=DNS\ forwarder\ user
 CFLAGS.SunOS+=	-DNO_IPSET
 
 # Override the defaults
-AUTO_MKDIRS=yes
+AUTO_MKDIRS=		yes
 CFLAGS+=		-DCONFFILE='"${PKG_SYSCONFDIR}/dnsmasq.conf"'
 MAKE_FLAGS+=		COPTS=${CFLAGS:Q}
+MAKE_FLAGS+=		LDFLAGS=${LDFLAGS:Q}
 INSTALL_MAKE_FLAGS+=	PREFIX="${PREFIX}"
 INSTALL_MAKE_FLAGS+=	MANDIR="${PREFIX}/${PKGMANDIR}"
 INSTALL_MAKE_FLAGS+=	LOCALEDIR="${PREFIX}/${PKGLOCALEDIR}"
@@ -44,8 +45,7 @@ BUILD_MAKE_FLAGS+=	AWK="${AWK}"
 INSTALL_MAKE_FLAGS+=	AWK="${AWK}"
 
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/dnsmasq.conf.example \
-		${DESTDIR}${EGDIR}
+	${INSTALL_DATA} ${WRKSRC}/dnsmasq.conf.example ${DESTDIR}${EGDIR}
 .if !empty(PKG_OPTIONS:Mdbus)
 	${INSTALL_DATA} ${WRKSRC}/dbus/dnsmasq.conf \
 		${DESTDIR}${EGDIR}/dnsmasq-dbus.conf

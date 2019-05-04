@@ -1,13 +1,11 @@
-# $NetBSD: Makefile,v 1.61 2017/04/30 01:21:26 ryoon Exp $
+# $NetBSD: Makefile,v 1.73 2019/04/25 07:33:30 maya Exp $
 
 DISTNAME=	kde-workspace-4.11.22
 PKGNAME=	${DISTNAME:S/-4/4-4/}
-PKGREVISION=	9
+PKGREVISION=	18
 CATEGORIES=	x11
 COMMENT=	Base workspace for the KDE 4 integrated X11 desktop
 MASTER_SITES=	${MASTER_SITE_KDE:=applications/15.08.0/src/}
-
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 4.11.3
 
 .include "../../meta-pkgs/kde4/Makefile.kde4"
 
@@ -89,17 +87,17 @@ CONF_FILES+=		${PREFIX}/share/examples/kde4-dbus/org.kde.powerdevil.backlighthel
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	kdm/kcm/main.cpp
 SUBST_SED.paths=	-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 SUBST_CLASSES+=		qtpath
 SUBST_FILES.qtpath=	startkde.cmake
 SUBST_VARS.qtpath=	QTDIR
-SUBST_STAGE.qtpath=	post-patch
+SUBST_STAGE.qtpath=	pre-configure
 
 SUBST_CLASSES+=		isocodes
 SUBST_FILES.isocodes=	kcontrol/keyboard/iso_codes.h
 SUBST_SED.isocodes=	-e 's,/usr/share/xml/iso-codes,${BUILDLINK_PREFIX.iso-codes}/share/xml/iso-codes,g'
-SUBST_STAGE.isocodes=	post-patch
+SUBST_STAGE.isocodes=	pre-configure
 
 ICONDIR=		share/icons
 
@@ -142,7 +140,7 @@ BUILDLINK_DEPMETHOD.qt4-tools=	full
 
 .include "../../lang/python/application.mk"
 .include "../../lang/python/extension.mk"
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../devel/qjson/buildlink3.mk"
 .include "../../graphics/MesaLib/buildlink3.mk"
 .if ${X11_TYPE} == "modular" && !empty(MESALIB_SUPPORTS_EGL:M[yY][eE][sS])
@@ -163,7 +161,7 @@ PLIST.gles=	yes
 .include "../../misc/kdepimlibs4/buildlink3.mk"
 #.include "../../misc/nepomuk-core/buildlink3.mk"
 .include "../../multimedia/phonon/buildlink3.mk"
-.include "../../x11/py-kde4/buildlink3.mk"
+#.include "../../x11/py-kde4/buildlink3.mk"
 .include "../../x11/libkactivities4/buildlink3.mk"
 .include "../../x11/kdelibs4/buildlink3.mk"
 .include "../../x11/libxklavier/buildlink3.mk"

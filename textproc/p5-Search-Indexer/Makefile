@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.12 2017/06/05 14:24:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.14 2018/08/22 09:46:55 wiz Exp $
 
-DISTNAME=	Search-Indexer-0.78
+DISTNAME=	Search-Indexer-0.79
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

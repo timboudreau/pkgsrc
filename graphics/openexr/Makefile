@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.36 2016/12/04 23:40:33 rodent Exp $
+# $NetBSD: Makefile,v 1.39 2018/11/20 08:59:29 maya Exp $
 
-DISTNAME=	openexr-2.2.0
-PKGREVISION=	3
+DISTNAME=	openexr-2.3.0
 CATEGORIES=	graphics
-MASTER_SITES=	http://download.savannah.nongnu.org/releases/openexr/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=openexr/}
+GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	adam@NetBSD.org
 HOMEPAGE=	http://www.openexr.com/
@@ -14,10 +14,10 @@ USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 USE_TOOLS+=		gmake pkg-config
 GNU_CONFIGURE=		yes
+GCC_REQD+=		6
 PKGCONFIG_OVERRIDE=	OpenEXR.pc.in
 TEST_TARGET=		check
 
-GCC_REQD+=	4.3
 
 .include "../../mk/bsd.prefs.mk"
 

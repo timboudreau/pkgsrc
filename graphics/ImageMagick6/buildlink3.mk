@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.2 2017/02/28 15:19:59 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.11 2019/03/18 16:17:47 gdt Exp $
 
 BUILDLINK_TREE+=	ImageMagick6
 
@@ -6,7 +6,7 @@ BUILDLINK_TREE+=	ImageMagick6
 IMAGEMAGICK6_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.ImageMagick6+=	ImageMagick6>=5.5.7.11nb1
-BUILDLINK_ABI_DEPENDS.ImageMagick6+=	ImageMagick6>=6.9.7.9nb1
+BUILDLINK_ABI_DEPENDS.ImageMagick6+=	ImageMagick6>=6.9.9.38nb8
 BUILDLINK_PKGSRCDIR.ImageMagick6?=	../../graphics/ImageMagick6
 
 pkgbase := ImageMagick6
@@ -15,8 +15,8 @@ pkgbase := ImageMagick6
 .if !empty(PKG_BUILD_OPTIONS.ImageMagick6:Mdjvu)
 .include "../../graphics/djvulibre-lib/buildlink3.mk"
 .endif
-.if !empty(PKG_BUILD_OPTIONS.ImageMagick6:Mjasper)
-.include "../../graphics/jasper/buildlink3.mk"
+.if !empty(PKG_BUILD_OPTIONS.ImageMagick6:Mjp2)
+.include "../../graphics/openjpeg/buildlink3.mk"
 .endif
 .if !empty(PKG_BUILD_OPTIONS.ImageMagick6:Mopenexr)
 .include "../../graphics/openexr/buildlink3.mk"

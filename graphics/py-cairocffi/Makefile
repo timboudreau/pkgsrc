@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.10 2017/07/16 09:29:58 adam Exp $
+# $NetBSD: Makefile,v 1.15 2018/11/14 22:21:45 kleink Exp $
 
-DISTNAME=	cairocffi-0.8.0
+DISTNAME=	cairocffi-0.9.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+PKGREVISION=	1
 CATEGORIES=	graphics python
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/cairocffi/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/SimonSapin/cairocffi
 COMMENT=	CFFI-based Cairo bindings for Python
 LICENSE=	modified-bsd

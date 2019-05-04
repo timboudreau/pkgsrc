@@ -1,14 +1,16 @@
-# $NetBSD: Makefile,v 1.39 2017/04/15 15:11:23 taca Exp $
+# $NetBSD: Makefile,v 1.44 2019/02/03 15:27:53 taca Exp $
 
-DISTNAME=	tzinfo-1.2.3
+DISTNAME=	tzinfo-2.0.0
 CATEGORIES=	time
 
 MAINTAINER=	taca@NetBSD.org
-HOMEPAGE=	http://tzinfo.github.io/
+HOMEPAGE=	https://tzinfo.github.io/
 COMMENT=	Daylight savings aware timezone library
 LICENSE=	mit
 
 DEPENDS+=	${RUBY_PKGPREFIX}-thread_safe>=0.1<1:../../misc/ruby-thread_safe
+
+USE_LANGUAGES=	# none
 
 .include "../../lang/ruby/gem.mk"
 .include "../../mk/bsd.pkg.mk"

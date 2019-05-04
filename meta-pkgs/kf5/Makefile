@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.2 2016/08/21 21:11:57 markd Exp $
+# $NetBSD: Makefile,v 1.10 2019/04/28 11:09:06 markd Exp $
 
 DISTNAME=	kf5-${KF5VER}
 CATEGORIES=	meta-pkgs x11 kde
@@ -9,7 +9,7 @@ MAINTAINER=	markd@NetBSD.org
 HOMEPAGE=	http://www.kde.org/
 COMMENT=	"meta-package" for the KDE Frameworks 5
 
-KF5VER=		5.25.0
+KF5VER=		5.57.0
 
 DEPENDS+=	attica-qt5-${KF5VER}{,nb[0-9]*}:../../misc/attica-qt5
 DEPENDS+=	baloo5-${KF5VER}{,nb[0-9]*}:../../sysutils/baloo5
@@ -41,12 +41,14 @@ DEPENDS+=	kemoticons-${KF5VER}{,nb[0-9]*}:../../misc/kemoticons
 DEPENDS+=	kfilemetadata5-${KF5VER}{,nb[0-9]*}:../../sysutils/kfilemetadata5
 DEPENDS+=	kglobalaccel-${KF5VER}{,nb[0-9]*}:../../x11/kglobalaccel
 DEPENDS+=	kguiaddons-${KF5VER}{,nb[0-9]*}:../../x11/kguiaddons
+DEPENDS+=	kholidays-${KF5VER}{,nb[0-9]*}:../../time/kholidays
 DEPENDS+=	ki18n-${KF5VER}{,nb[0-9]*}:../../devel/ki18n
 DEPENDS+=	kiconthemes-${KF5VER}{,nb[0-9]*}:../../graphics/kiconthemes
 DEPENDS+=	kidletime-${KF5VER}{,nb[0-9]*}:../../devel/kidletime
 DEPENDS+=	kimageformats-${KF5VER}{,nb[0-9]*}:../../graphics/kimageformats
 DEPENDS+=	kinit-${KF5VER}{,nb[0-9]*}:../../x11/kinit
 DEPENDS+=	kio-${KF5VER}{,nb[0-9]*}:../../devel/kio
+DEPENDS+=	kirigami2-${KF5VER}{,nb[0-9]*}:../../x11/kirigami2
 DEPENDS+=	kitemmodels-${KF5VER}{,nb[0-9]*}:../../devel/kitemmodels
 DEPENDS+=	kitemviews-${KF5VER}{,nb[0-9]*}:../../x11/kitemviews
 DEPENDS+=	kjobwidgets-${KF5VER}{,nb[0-9]*}:../../x11/kjobwidgets
@@ -64,14 +66,17 @@ DEPENDS+=	ktexteditor-${KF5VER}{,nb[0-9]*}:../../devel/ktexteditor
 DEPENDS+=	ktextwidgets-${KF5VER}{,nb[0-9]*}:../../x11/ktextwidgets
 DEPENDS+=	kunitconversion-${KF5VER}{,nb[0-9]*}:../../misc/kunitconversion
 DEPENDS+=	kwallet-${KF5VER}{,nb[0-9]*}:../../security/kwallet
+# kwayland
 DEPENDS+=	kwidgetsaddons-${KF5VER}{,nb[0-9]*}:../../x11/kwidgetsaddons
 DEPENDS+=	kwindowsystem-${KF5VER}{,nb[0-9]*}:../../x11/kwindowsystem
 DEPENDS+=	kxmlgui-${KF5VER}{,nb[0-9]*}:../../x11/kxmlgui
 DEPENDS+=	kxmlrpcclient-${KF5VER}{,nb[0-9]*}:../../net/kxmlrpcclient
 # modemmanager-qt
 # networkmanager-qt
-DEPENDS+=	oxygen-icons-${KF5VER}{,nb[0-9]*}:../../graphics/oxygen-icons
+DEPENDS+=	oxygen-icons>=${KF5VER}{,nb[0-9]*}:../../graphics/oxygen-icons
 DEPENDS+=	plasma-framework-${KF5VER}{,nb[0-9]*}:../../x11/plasma-framework
+DEPENDS+=	prison-${KF5VER}{,nb[0-9]*}:../../graphics/prison
+DEPENDS+=	qqc2-desktop-style-${KF5VER}{,nb[0-9]*}:../../x11/qqc2-desktop-style
 DEPENDS+=	solid-${KF5VER}{,nb[0-9]*}:../../sysutils/solid
 DEPENDS+=	sonnet-${KF5VER}{,nb[0-9]*}:../../textproc/sonnet
 DEPENDS+=	threadweaver-${KF5VER}{,nb[0-9]*}:../../devel/threadweaver

@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.89 2017/05/14 15:22:46 mef Exp $
+# $NetBSD: Makefile,v 1.108 2019/02/23 11:30:03 mef Exp $
 
-DISTNAME=	fldigi-4.0.4
+DISTNAME=	fldigi-4.1.01
 CATEGORIES=	ham
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=fldigi/}
 
@@ -18,12 +18,6 @@ CONFIGURE_ENV+=		STRIP=${STRIP}
 
 BUILD_DEPENDS+=	asciidoc-[0-9]*:../../textproc/asciidoc
 
-SUBST_CLASSES+=		perl
-SUBST_STAGE.perl=	post-configure
-SUBST_FILES.perl=	scripts/fldigi-shell
-SUBST_MESSAGE.perl=	Replacing Perl PATH
-SUBST_SED.perl=		-e s\|/usr/bin/perl\|${PERL5:Q}\|g
-
 SUBST_CLASSES+=		asciidoc
 SUBST_STAGE.asciidoc=	post-configure
 SUBST_FILES.asciidoc=	doc/Makefile.am doc/Makefile.in doc/Makefile
@@ -31,7 +25,7 @@ SUBST_MESSAGE.asciidoc=	Replacing asciidoc PATH
 SUBST_SED.asciidoc=	-e s\|/usr/share\|${PREFIX}/share\|g
 
 SUBST_CLASSES+=		brag-os
-SUBST_STAGE.brag-os=	post-patch
+SUBST_STAGE.brag-os=	pre-configure
 SUBST_FILES.brag-os=	src/misc/newinstall.cxx
 SUBST_MESSAGE.brag-os=	Show OS name correctly with Brag button
 SUBST_SED.brag-os=	-e s/@@OS@@/${OPSYS}/

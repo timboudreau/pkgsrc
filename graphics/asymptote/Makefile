@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.25 2017/06/08 08:47:26 wiz Exp $
+# $NetBSD: Makefile,v 1.29 2019/04/25 07:32:57 maya Exp $
 
 DISTNAME=	asymptote-2.41
+PKGREVISION=	3
 CATEGORIES=	graphics
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=asymptote/}
 EXTRACT_SUFX=	.tgz
@@ -38,7 +39,7 @@ CFLAGS+=		-DGC_NO_THREAD_REDIRECTS
 REPLACE_PYTHON+=	GUI/*.py
 
 SUBST_CLASSES+=		python
-SUBST_STAGE.python=	post-patch
+SUBST_STAGE.python=	pre-configure
 SUBST_FILES.python=	Makefile.in
 SUBST_MESSAGE.python=	Fixing path to python interpreter.
 SUBST_SED.python+=	-e "s|/usr/bin/env python|${PYTHONBIN:Q}|g"

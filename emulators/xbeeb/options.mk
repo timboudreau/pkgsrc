@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.2 2016/12/14 08:51:53 wiz Exp $
+# $NetBSD: options.mk,v 1.4 2018/07/04 13:40:18 jperkin Exp $
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -10,7 +10,7 @@ PKG_SUGGESTED_OPTIONS=
 # Unfortunately it doesn't support both at once.
 .if empty(PKG_OPTIONS:Mmitshm)
 SUBST_CLASSES+=		nomitshm
-SUBST_STAGE.nomitshm=	post-patch
+SUBST_STAGE.nomitshm=	pre-configure
 SUBST_MESSAGE.nomitshm=	Disabling MIT-SHM
 SUBST_FILES.nomitshm=	src/Config.h
 SUBST_SED.nomitshm=	-e "s|\#define	*MITSHM|\#undef MITSHM|"
@@ -21,9 +21,7 @@ SUBST_SED.nomitshm=	-e "s|\#define	*MITSHM|\#undef MITSHM|"
 PLIST_VARS+=		xbeeb-roms
 
 .if !empty(PKG_OPTIONS:Mmitshm)
-
-.include "../../x11/xextproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .endif
 
 .if !empty(PKG_OPTIONS:Mxbeeb-roms)

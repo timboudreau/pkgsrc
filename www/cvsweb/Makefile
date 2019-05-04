@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.45 2016/07/09 06:39:11 wiz Exp $
+# $NetBSD: Makefile,v 1.48 2018/08/22 09:47:24 wiz Exp $
 #
 
 DISTNAME=		cvsweb-3.0.6
-PKGREVISION=		8
+PKGREVISION=		9
 CATEGORIES=		www
 MASTER_SITES=		ftp://ftp.freebsd.org/pub/FreeBSD/ports/local-distfiles/scop/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.freebsd.org/projects/cvsweb.html
+HOMEPAGE=		https://www.freebsd.org/projects/cvsweb.html
 COMMENT=		Web interface for browsing a CVS repository
 
 #DEPENDS+=		{perl>=5.6.1,p5-File-Temp>=0.12}:../../devel/p5-File-Temp
@@ -62,7 +62,7 @@ do-install:
 .endfor
 
 SUBST_CLASSES+=		prefix
-SUBST_STAGE.prefix=	post-patch
+SUBST_STAGE.prefix=	pre-configure
 SUBST_FILES.prefix=	cvsweb.conf cvsweb.cgi INSTALL
 SUBST_SED.prefix=	-e "s,/usr/local/etc/apache,${PKG_SYSCONFBASE}/httpd,g"
 SUBST_SED.prefix+=	-e "s,/usr/local/etc/cvsweb,${PKG_SYSCONFDIR},g"

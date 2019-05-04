@@ -1,16 +1,15 @@
-$NetBSD: patch-src_unix_thread.c,v 1.2 2017/03/28 18:44:49 maya Exp $
+$NetBSD: patch-src_unix_thread.c,v 1.6 2019/04/18 07:47:33 adam Exp $
 
 Use feature test for pthread_condattr_setclock, absent in netbsd-6-0
 
---- src/unix/thread.c.orig	2017-02-01 00:38:56.000000000 +0000
+--- src/unix/thread.c.orig	2019-02-10 16:44:47.000000000 +0000
 +++ src/unix/thread.c
-@@ -424,7 +424,8 @@ int uv_cond_init(uv_cond_t* cond) {
+@@ -687,7 +689,7 @@ int uv_cond_init(uv_cond_t* cond) {
    if (err)
-     return -err;
+     return UV__ERR(err);
  
--#if !(defined(__ANDROID__) && defined(HAVE_PTHREAD_COND_TIMEDWAIT_MONOTONIC))
-+#if defined(HAVE_PTHREAD_CONDATTR_SETCLOCK) && \
-+   (!defined(HAVE_PTHREAD_COND_TIMEDWAIT_MONOTONIC))
+-#if !(defined(__ANDROID_API__) && __ANDROID_API__ < 21)
++#if defined(HAVE_PTHREAD_CONDATTR_SETCLOCK)
    err = pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
    if (err)
      goto error2;

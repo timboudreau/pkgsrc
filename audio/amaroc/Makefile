@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.12 2016/04/20 12:10:25 nros Exp $
+# $NetBSD: Makefile,v 1.14 2019/04/25 07:32:34 maya Exp $
 #
 
 DISTNAME=		amaroc-0.3
-PKGREVISION=		5
+PKGREVISION=		6
 CATEGORIES=		audio
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=amaroc/}
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://sourceforge.net/projects/amaroc/
+HOMEPAGE=		https://sourceforge.net/projects/amaroc/
 COMMENT=		Command line interface to Amarok
 LICENSE=		gnu-gpl-v2
 

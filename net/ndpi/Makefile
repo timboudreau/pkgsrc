@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.3 2017/06/15 10:06:39 fhajny Exp $
+# $NetBSD: Makefile,v 1.5 2018/10/18 16:24:29 adam Exp $
 
-DISTNAME=	ntopng-2.4-stable
-PKGNAME=	ndpi-1.8.0
+DISTNAME=	nDPI-2.4
+PKGNAME=	${DISTNAME:tl}
 CATEGORIES=	net
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=ntop/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=ntop/}
+GITHUB_PROJECT=	nDPI
 
 MAINTAINER=	adam@NetBSD.org
-HOMEPAGE=	http://www.ntop.org/
+HOMEPAGE=	https://www.ntop.org/
 COMMENT=	Library for deep-packet inspection
 LICENSE=	gnu-lgpl-v3
 
@@ -15,9 +16,7 @@ USE_LIBTOOL=		yes
 USE_TOOLS+=		autoconf automake gmake pkg-config
 GNU_CONFIGURE=		yes
 PKGCONFIG_OVERRIDE=	libndpi.pc.in
-
-EXTRACT_ELEMENTS=	${DISTNAME}/nDPI
-WRKSRC=			${WRKDIR}/${DISTNAME}/nDPI
+MAKE_ENV+=		OS=${OPSYS}
 
 # Portable types
 CFLAGS.SunOS+=		-Du_int8_t=uint8_t
@@ -26,7 +25,7 @@ CFLAGS.SunOS+=		-Du_int32_t=uint32_t
 CFLAGS.SunOS+=		-Du_int64_t=uint64_t
 
 pre-configure:
-	cd ${WRKSRC} && autoreconf -fiv
+	cd ${WRKSRC} && ./autogen.sh
 
 .include "../../net/libpcap/buildlink3.mk"
 .include "../../textproc/json-c/buildlink3.mk"

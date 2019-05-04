@@ -1,10 +1,12 @@
-@comment $NetBSD: PLIST,v 1.9 2016/12/01 11:08:56 martin Exp $
+@comment $NetBSD: PLIST,v 1.13 2018/04/17 22:10:05 wiz Exp $
 bin/gst-inspect-1.0
 bin/gst-launch-1.0
 bin/gst-stats-1.0
 bin/gst-typefind-1.0
+include/gstreamer-1.0/gst/base/base-prelude.h
 include/gstreamer-1.0/gst/base/base.h
 include/gstreamer-1.0/gst/base/gstadapter.h
+include/gstreamer-1.0/gst/base/gstaggregator.h
 include/gstreamer-1.0/gst/base/gstbaseparse.h
 include/gstreamer-1.0/gst/base/gstbasesink.h
 include/gstreamer-1.0/gst/base/gstbasesrc.h
@@ -18,12 +20,6 @@ include/gstreamer-1.0/gst/base/gstflowcombiner.h
 include/gstreamer-1.0/gst/base/gstpushsrc.h
 include/gstreamer-1.0/gst/base/gstqueuearray.h
 include/gstreamer-1.0/gst/base/gsttypefindhelper.h
-include/gstreamer-1.0/gst/gstconfig.h
-include/gstreamer-1.0/gst/gststreamcollection.h
-include/gstreamer-1.0/gst/gststreams.h
-include/gstreamer-1.0/gst/gsttracer.h
-include/gstreamer-1.0/gst/gsttracerfactory.h
-include/gstreamer-1.0/gst/gsttracerrecord.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/check.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/gstbufferstraw.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/gstcheck.h
@@ -31,11 +27,14 @@ ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/gstconsistencychecker.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/gstharness.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/gsttestclock.h
 ${PLIST.gstcheck}include/gstreamer-1.0/gst/check/internal-check.h
+include/gstreamer-1.0/gst/controller/controller-enumtypes.h
+include/gstreamer-1.0/gst/controller/controller-prelude.h
 include/gstreamer-1.0/gst/controller/controller.h
 include/gstreamer-1.0/gst/controller/gstargbcontrolbinding.h
 include/gstreamer-1.0/gst/controller/gstdirectcontrolbinding.h
 include/gstreamer-1.0/gst/controller/gstinterpolationcontrolsource.h
 include/gstreamer-1.0/gst/controller/gstlfocontrolsource.h
+include/gstreamer-1.0/gst/controller/gstproxycontrolbinding.h
 include/gstreamer-1.0/gst/controller/gsttimedvaluecontrolsource.h
 include/gstreamer-1.0/gst/controller/gsttriggercontrolsource.h
 include/gstreamer-1.0/gst/glib-compat.h
@@ -52,6 +51,7 @@ include/gstreamer-1.0/gst/gstcapsfeatures.h
 include/gstreamer-1.0/gst/gstchildproxy.h
 include/gstreamer-1.0/gst/gstclock.h
 include/gstreamer-1.0/gst/gstcompat.h
+include/gstreamer-1.0/gst/gstconfig.h
 include/gstreamer-1.0/gst/gstcontext.h
 include/gstreamer-1.0/gst/gstcontrolbinding.h
 include/gstreamer-1.0/gst/gstcontrolsource.h
@@ -61,6 +61,7 @@ include/gstreamer-1.0/gst/gstdevice.h
 include/gstreamer-1.0/gst/gstdevicemonitor.h
 include/gstreamer-1.0/gst/gstdeviceprovider.h
 include/gstreamer-1.0/gst/gstdeviceproviderfactory.h
+include/gstreamer-1.0/gst/gstdynamictypefactory.h
 include/gstreamer-1.0/gst/gstelement.h
 include/gstreamer-1.0/gst/gstelementfactory.h
 include/gstreamer-1.0/gst/gstelementmetadata.h
@@ -86,11 +87,14 @@ include/gstreamer-1.0/gst/gstplugin.h
 include/gstreamer-1.0/gst/gstpluginfeature.h
 include/gstreamer-1.0/gst/gstpoll.h
 include/gstreamer-1.0/gst/gstpreset.h
+include/gstreamer-1.0/gst/gstpromise.h
 include/gstreamer-1.0/gst/gstprotection.h
 include/gstreamer-1.0/gst/gstquery.h
 include/gstreamer-1.0/gst/gstregistry.h
 include/gstreamer-1.0/gst/gstsample.h
 include/gstreamer-1.0/gst/gstsegment.h
+include/gstreamer-1.0/gst/gststreamcollection.h
+include/gstreamer-1.0/gst/gststreams.h
 include/gstreamer-1.0/gst/gststructure.h
 include/gstreamer-1.0/gst/gstsystemclock.h
 include/gstreamer-1.0/gst/gsttaglist.h
@@ -99,6 +103,9 @@ include/gstreamer-1.0/gst/gsttask.h
 include/gstreamer-1.0/gst/gsttaskpool.h
 include/gstreamer-1.0/gst/gsttoc.h
 include/gstreamer-1.0/gst/gsttocsetter.h
+include/gstreamer-1.0/gst/gsttracer.h
+include/gstreamer-1.0/gst/gsttracerfactory.h
+include/gstreamer-1.0/gst/gsttracerrecord.h
 include/gstreamer-1.0/gst/gsttypefind.h
 include/gstreamer-1.0/gst/gsttypefindfactory.h
 include/gstreamer-1.0/gst/gsturi.h
@@ -113,6 +120,7 @@ include/gstreamer-1.0/gst/net/gstnetcontrolmessagemeta.h
 include/gstreamer-1.0/gst/net/gstnettimepacket.h
 include/gstreamer-1.0/gst/net/gstnettimeprovider.h
 include/gstreamer-1.0/gst/net/gstptpclock.h
+include/gstreamer-1.0/gst/net/net-prelude.h
 include/gstreamer-1.0/gst/net/net.h
 ${PLIST.introspection}lib/girepository-1.0/Gst-1.0.typelib
 ${PLIST.introspection}lib/girepository-1.0/GstBase-1.0.typelib
@@ -131,16 +139,17 @@ lib/pkgconfig/gstreamer-base-1.0.pc
 ${PLIST.gstcheck}lib/pkgconfig/gstreamer-check-1.0.pc
 lib/pkgconfig/gstreamer-controller-1.0.pc
 lib/pkgconfig/gstreamer-net-1.0.pc
+libexec/gstreamer-1.0/gst-completion-helper
 libexec/gstreamer-1.0/gst-plugin-scanner
 libexec/gstreamer-1.0/gst-ptp-helper
 man/man1/gst-inspect-1.0.1
 man/man1/gst-launch-1.0.1
+man/man1/gst-stats-1.0.1
 man/man1/gst-typefind-1.0.1
 share/aclocal/gst-element-check-1.0.m4
 share/bash-completion/completions/gst-inspect-1.0
 share/bash-completion/completions/gst-launch-1.0
 share/bash-completion/helpers/gst
-share/bash-completion/helpers/gst-completion-helper-1.0
 ${PLIST.introspection}share/gir-1.0/Gst-1.0.gir
 ${PLIST.introspection}share/gir-1.0/GstBase-1.0.gir
 ${PLIST.gstcheck}share/gir-1.0/GstCheck-1.0.gir
@@ -161,6 +170,7 @@ share/gtk-doc/html/gstreamer-1.0/GstControlBinding.html
 share/gtk-doc/html/gstreamer-1.0/GstControlSource.html
 share/gtk-doc/html/gstreamer-1.0/GstDateTime.html
 share/gtk-doc/html/gstreamer-1.0/GstDeviceProviderFactory.html
+share/gtk-doc/html/gstreamer-1.0/GstDynamicTypeFactory.html
 share/gtk-doc/html/gstreamer-1.0/GstElement.html
 share/gtk-doc/html/gstreamer-1.0/GstElementFactory.html
 share/gtk-doc/html/gstreamer-1.0/GstEvent.html
@@ -174,6 +184,7 @@ share/gtk-doc/html/gstreamer-1.0/GstPipeline.html
 share/gtk-doc/html/gstreamer-1.0/GstPlugin.html
 share/gtk-doc/html/gstreamer-1.0/GstPluginFeature.html
 share/gtk-doc/html/gstreamer-1.0/GstPreset.html
+share/gtk-doc/html/gstreamer-1.0/GstPromise.html
 share/gtk-doc/html/gstreamer-1.0/GstQuery.html
 share/gtk-doc/html/gstreamer-1.0/GstRegistry.html
 share/gtk-doc/html/gstreamer-1.0/GstSample.html
@@ -234,6 +245,8 @@ share/gtk-doc/html/gstreamer-1.0/ix07.html
 share/gtk-doc/html/gstreamer-1.0/ix08.html
 share/gtk-doc/html/gstreamer-1.0/ix09.html
 share/gtk-doc/html/gstreamer-1.0/ix10.html
+share/gtk-doc/html/gstreamer-1.0/ix11.html
+share/gtk-doc/html/gstreamer-1.0/ix12.html
 share/gtk-doc/html/gstreamer-1.0/left-insensitive.png
 share/gtk-doc/html/gstreamer-1.0/left.png
 share/gtk-doc/html/gstreamer-1.0/libgstreamer.html
@@ -244,6 +257,8 @@ share/gtk-doc/html/gstreamer-1.0/up-insensitive.png
 share/gtk-doc/html/gstreamer-1.0/up.png
 share/gtk-doc/html/gstreamer-libs-1.0/GstARGBControlBinding.html
 share/gtk-doc/html/gstreamer-libs-1.0/GstAdapter.html
+share/gtk-doc/html/gstreamer-libs-1.0/GstAggregator.html
+share/gtk-doc/html/gstreamer-libs-1.0/GstAggregatorPad.html
 share/gtk-doc/html/gstreamer-libs-1.0/GstBaseParse.html
 share/gtk-doc/html/gstreamer-libs-1.0/GstBaseSink.html
 share/gtk-doc/html/gstreamer-libs-1.0/GstBaseSrc.html
@@ -277,6 +292,7 @@ share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstHarness.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstNetAddressMeta.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstNetControlMessageMeta.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstNetTimePacket.html
+share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstProxyControlBinding.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstQueueArray.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstStreamConsistency.html
 share/gtk-doc/html/gstreamer-libs-1.0/gstreamer-libs-GstTypeFindHelper.html
@@ -292,6 +308,9 @@ share/gtk-doc/html/gstreamer-libs-1.0/ix05.html
 share/gtk-doc/html/gstreamer-libs-1.0/ix06.html
 share/gtk-doc/html/gstreamer-libs-1.0/ix07.html
 share/gtk-doc/html/gstreamer-libs-1.0/ix08.html
+share/gtk-doc/html/gstreamer-libs-1.0/ix09.html
+share/gtk-doc/html/gstreamer-libs-1.0/ix10.html
+share/gtk-doc/html/gstreamer-libs-1.0/ix11.html
 share/gtk-doc/html/gstreamer-libs-1.0/left-insensitive.png
 share/gtk-doc/html/gstreamer-libs-1.0/left.png
 share/gtk-doc/html/gstreamer-libs-1.0/right-insensitive.png
@@ -301,9 +320,11 @@ share/gtk-doc/html/gstreamer-libs-1.0/up-insensitive.png
 share/gtk-doc/html/gstreamer-libs-1.0/up.png
 share/gtk-doc/html/gstreamer-plugins-1.0/ch01.html
 share/gtk-doc/html/gstreamer-plugins-1.0/ch02.html
+share/gtk-doc/html/gstreamer-plugins-1.0/ch03.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-1.0.devhelp2
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-capsfilter.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-concat.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-dataurisrc.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-downloadbuffer.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-fakesink.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-fakesrc.html
@@ -314,11 +335,17 @@ share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-filesrc.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-funnel.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-identity.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-input-selector.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-latencytracer.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-leakstracer.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-logtracer.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-multiqueue.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-output-selector.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-plugin-coreelements.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-plugin-coretracers.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-queue.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-queue2.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-rusagetracer.html
+share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-statstracer.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-streamiddemux.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-tee.html
 share/gtk-doc/html/gstreamer-plugins-1.0/gstreamer-plugins-typefind.html
@@ -333,6 +360,7 @@ share/gtk-doc/html/gstreamer-plugins-1.0/style.css
 share/gtk-doc/html/gstreamer-plugins-1.0/up-insensitive.png
 share/gtk-doc/html/gstreamer-plugins-1.0/up.png
 share/locale/af/LC_MESSAGES/gstreamer-1.0.mo
+share/locale/ast/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/az/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/be/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/bg/LC_MESSAGES/gstreamer-1.0.mo
@@ -347,6 +375,7 @@ share/locale/es/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/eu/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/fi/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/fr/LC_MESSAGES/gstreamer-1.0.mo
+share/locale/fur/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/gl/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/hr/LC_MESSAGES/gstreamer-1.0.mo
 share/locale/hu/LC_MESSAGES/gstreamer-1.0.mo

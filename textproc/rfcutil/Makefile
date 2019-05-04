@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.28 2016/07/09 06:39:07 wiz Exp $
+# $NetBSD: Makefile,v 1.31 2018/08/22 09:47:12 wiz Exp $
 #
 
 DISTNAME=	rfc-3.2
 PKGNAME=	rfcutil-3.2
-PKGREVISION=	12
+PKGREVISION=	13
 CATEGORIES=	textproc
-MASTER_SITES=	http://www.dewn.com/rfc/
+#MASTER_SITES=	http://www.dewn.com/rfc/
 EXTRACT_SUFX=	#
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.dewn.com/rfc/
+#HOMEPAGE=	http://www.dewn.com/rfc/
 COMMENT=	Search for RFCs and do ports, services & protocol lookups
 
 WRKSRC=		${WRKDIR}
@@ -24,7 +24,7 @@ RFCINDEXURL=	http://www.ietf.org/download/
 INSTALLATION_DIRS=	bin
 
 SUBST_CLASSES+=		rfcutil
-SUBST_STAGE.rfcutil=	post-patch
+SUBST_STAGE.rfcutil=	pre-configure
 SUBST_FILES.rfcutil=	rfc
 SUBST_SED.rfcutil+=	-e 's,/usr/local,${PREFIX},'
 SUBST_SED.rfcutil+=	-e '/VIEWER=/s,w3m lynx,${RFCVIEWER},'

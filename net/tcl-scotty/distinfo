@@ -1,4 +1,4 @@
-$NetBSD: distinfo,v 1.20 2017/02/01 09:35:05 he Exp $
+$NetBSD: distinfo,v 1.30 2018/05/30 09:39:12 he Exp $
 
 SHA1 (scotty-2.1.11.tar.gz) = 819011f908c57e4591d6f50e51677c01eb55dc13
 RMD160 (scotty-2.1.11.tar.gz) = 3b4d45f3db73f05b49a46017bf2ffed6d6464b00
@@ -26,7 +26,7 @@ SHA1 (patch-tnm_generic_tnmSyslog.c) = 3963f952ea8ce9907a7db4584e4f27280e4bb33d
 SHA1 (patch-tnm_generic_tnmUdp.c) = ceaa4f32a379b3c697405ae1bc22d7c5a4775982
 SHA1 (patch-tnm_generic_tnmUtil.c) = 0c9216365ab2059e7e064439bfb8df8341afe1b9
 SHA1 (patch-tnm_snmp_straps.c) = 3ec9baf566ab4cabd09de98ca1c3a689d9335b8c
-SHA1 (patch-tnm_snmp_tnmAsn1.c) = 4eefe643ff0ffc4003e446a91189bf07ae37474b
+SHA1 (patch-tnm_snmp_tnmAsn1.c) = 971bc2048e44747d1ffa66e79341c6a84c3ccda7
 SHA1 (patch-tnm_snmp_tnmAsn1.h) = 09b036aea74fdc187fedb72db520a701f217ca57
 SHA1 (patch-tnm_snmp_tnmMib.h) = f98655ed6f69479d91b91524397897c355cf7453
 SHA1 (patch-tnm_snmp_tnmMibParser.c) = ef22293224b42f90dc900d63f54ae78c34e74e6b
@@ -36,13 +36,14 @@ SHA1 (patch-tnm_snmp_tnmMibTree.c) = fee6c4c681c3930ec4df624166d3a32091b2159b
 SHA1 (patch-tnm_snmp_tnmSnmp.h) = 79d12cbbef65e7a2c230b52a47a7c4b059fe6d32
 SHA1 (patch-tnm_snmp_tnmSnmpAgent.c) = 04a87727d6644861fdd41e9e10bf3085ff943109
 SHA1 (patch-tnm_snmp_tnmSnmpInst.c) = 5d5fc656b59215c5436fc1a6633ba7b626bca442
-SHA1 (patch-tnm_snmp_tnmSnmpNet.c) = 3aa7e1ee5b6b32229804ddf6132e00801be5f55b
+SHA1 (patch-tnm_snmp_tnmSnmpNet.c) = 69060921854aac058453a7e0c9d7d962736210a5
 SHA1 (patch-tnm_snmp_tnmSnmpRecv.c) = f55abae9975a7832e38e2754fe6e38e025eb6276
 SHA1 (patch-tnm_snmp_tnmSnmpSend.c) = 46c2b0f7c3d5f6392df96cba55b831ef763deeb7
 SHA1 (patch-tnm_snmp_tnmSnmpTcl.c) = 565d982a4e24e8033c4a16895ff503a3159a1a33
 SHA1 (patch-tnm_snmp_tnmSnmpUtil.c) = 9441f16f0be0f15689e9e628c3e96fc0c10bc942
-SHA1 (patch-unix-Makefile.in) = f5aad7fb5537855e36fe2ea444e410a7f04334d8
-SHA1 (patch-unix_configure) = 6d2b4b522ba802d07c0bc8346330070ae7e0edea
+SHA1 (patch-unix-Makefile.in) = 9a00bc8affad69035d7bc78955d30e4f2f8fc991
+SHA1 (patch-unix_configure) = c08f813d32f099adb4f484ecf7e274b7f4f9d7da
+SHA1 (patch-unix_configure.in) = b2a31df2b525c315d883e1e4629275dc708027d6
 SHA1 (patch-unix_scotty.c) = fdb6a9bb414566ddb5317a3ebc60d2c305f611a7
 SHA1 (patch-unix_tnmUnixIcmp.c) = 86be48d8da9d77098662e7d2515193515a028e96
 SHA1 (patch-unix_tnmUnixLog.c) = 9191e4683d691a04c5397180f61ebb4365a2c344

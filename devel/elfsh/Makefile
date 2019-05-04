@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.24 2016/03/09 21:40:05 tnn Exp $
+# $NetBSD: Makefile,v 1.26 2018/07/04 13:40:13 jperkin Exp $
 #
 
 VERS=		0.51b3
@@ -10,7 +10,7 @@ MASTER_SITES=	http://elfsh.asgardlabs.org/files/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://elfsh.segfault.net/
+#HOMEPAGE=	http://elfsh.segfault.net/
 COMMENT=	ELF format exploration shell
 
 MAKE_JOBS_SAFE=		no
@@ -19,7 +19,7 @@ LDFLAGS+=	${BUILDLINK_LDADD.dl:Q}
 WRKSRC=		${WRKDIR}/${PKGNAME_NOREV}
 
 SUBST_CLASSES+=		elfsh
-SUBST_STAGE.elfsh=	post-patch
+SUBST_STAGE.elfsh=	pre-configure
 SUBST_MESSAGE.elfsh=	Fixing hardcoded paths.
 SUBST_FILES.elfsh=	vm/include/elfsh.h
 SUBST_SED.elfsh=	-e '/ELFSH_SHELL/s,/bin/bash,${SH},'

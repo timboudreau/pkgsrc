@@ -1,4 +1,4 @@
-# $NetBSD: build.mk,v 1.22 2017/06/01 02:15:10 jlam Exp $
+# $NetBSD: build.mk,v 1.25 2019/03/17 03:59:11 dholland Exp $
 #
 # This file defines what happens in the build phase, excluding the
 # self-test, which is defined in test.mk.
@@ -41,6 +41,8 @@ _VARGROUPS+=		build
 _USER_VARS.build=	MAKE_JOBS BUILD_ENV_SHELL
 _PKG_VARS.build=	MAKE_ENV MAKE_FLAGS BUILD_MAKE_FLAGS BUILD_TARGET MAKE_JOBS_SAFE
 _SYS_VARS.build=	BUILD_MAKE_CMD
+_SORTED_VARS.build=	*_ENV
+_LISTED_VARS.build=	*_FLAGS *_CMD
 
 BUILD_MAKE_FLAGS?=	# none
 BUILD_TARGET?=		all
@@ -53,6 +55,8 @@ BUILD_MAKE_CMD= \
 
 .if defined(MAKE_JOBS_SAFE) && !empty(MAKE_JOBS_SAFE:M[nN][oO])
 _MAKE_JOBS=	# nothing
+.elif defined(MAKE_JOBS.${PKGPATH})
+_MAKE_JOBS=	-j${MAKE_JOBS.${PKGPATH}}
 .elif defined(MAKE_JOBS)
 _MAKE_JOBS=	-j${MAKE_JOBS}
 .endif
@@ -179,6 +183,21 @@ pre-build:
 post-build:
 	@${DO_NADA}
 .endif
+
+# build-env:
+#	Starts an interactive shell in WRKSRC.
+#
+#	This is only used during development and testing of a package
+#	to work in the same environment as the actual build.
+#
+# User-settable variables:
+#
+# BUILD_ENV_SHELL
+#	The shell to start.
+#
+#	Default: ${SH}
+#
+# Keywords: debug build
 
 BUILD_ENV_SHELL?=	${SH}
 .if defined(_PKGSRC_BARRIER)

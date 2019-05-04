@@ -1,10 +1,12 @@
-# $NetBSD: Makefile,v 1.27 2017/04/30 01:21:31 ryoon Exp $
+# $NetBSD: Makefile,v 1.58 2019/03/18 16:17:46 gdt Exp $
 
-DISTNAME=	postgis-2.3.1
+MAJOR=		2.5
+DISTNAME=	postgis-${MAJOR}.2
 PKGNAME=	postgresql${PGSQL_VERSION}-${DISTNAME}
-PKGREVISION=	3
+PKGREVISION=	1
+#PKGREVISION=	0
 CATEGORIES=	databases geography
-MASTER_SITES=	http://download.osgeo.org/postgis/source/
+MASTER_SITES=	https://download.osgeo.org/postgis/source/
 
 MAINTAINER=	gdt@NetBSD.org
 HOMEPAGE=	http://postgis.net/
@@ -12,23 +14,25 @@ COMMENT=	Spatial database capabilities for PostgreSQL
 
 LICENSE=	gnu-gpl-v2
 
-DEPENDS+=		postgresql${PGSQL_VERSION}-server>=0:../../databases/postgresql${PGSQL_VERSION}-server
+# Needs 9.4 or higher
+PGSQL_VERSIONS_ACCEPTED=	10 96 95 94
+
+DEPENDS+=		postgresql${PGSQL_VERSION}-server-[0-9]*:../../databases/postgresql${PGSQL_VERSION}-server
 BUILD_DEPENDS+=		docbook-xsl-[0-9]*:../../textproc/docbook-xsl
 
 CONFLICTS=		postgis-[0-9]*
 
 # TODO section
-# 1. File ticket upstream about make->$(MAKE) in doc/html/image_src/Makefile.
-# 2. Update to upstream with fixes for:
-#      http://trac.osgeo.org/postgis/ticket/2909
-# 3. Fix installation use of "install -o root" from pgxs.mk, when postgresql
+# 1. Fix installation use of "install -o root" from pgxs.mk, when postgresql
 #    was built as root and postgis is built/installed as a non-root user.
 #    https://lists.osgeo.org/pipermail/postgis-devel/2015-July/025045.html
+# 2. Recheck and fix or file upstream about MAKE_JOBS_SAFE.
+# 3. Check 2nd make, and file bug about anything that happens.  Check xsltproc
+#    in particular.
 
 # gmake complains about adding + to parent rule
 MAKE_JOBS_SAFE=		no
 
-PGSQL_VERSIONS_ACCEPTED=	96 95 94 93 92
 
 USE_GCC_RUNTIME=	yes
 USE_LANGUAGES=		c c++ c99
@@ -48,6 +52,10 @@ BUILD_TARGET=		all docs
 INSTALL_TARGET=		install docs-install
 
 DOCDIR=			${PREFIX}/share/doc/postgis
+
+PLIST_SUBST+=		MAJOR=${MAJOR}
+PRINT_PLIST_AWK+=	{ gsub(/postgis-${MAJOR:S|/|\\/|g}/, "postgis-$${MAJOR}") }
+PRINT_PLIST_AWK+=	{ gsub(/topology-${MAJOR:S|/|\\/|g}/, "topology-$${MAJOR}") }
 
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	extras/template_gis/profile \

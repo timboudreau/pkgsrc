@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.2 2017/03/20 13:21:08 wiz Exp $
+# $NetBSD: Makefile,v 1.7 2018/10/14 12:09:56 adam Exp $
 
-DISTNAME=	mistune-0.7.4
+DISTNAME=	mistune-0.8.4
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	textproc python
 MASTER_SITES=	${MASTER_SITE_PYPI:=m/mistune/}
@@ -10,10 +10,9 @@ HOMEPAGE=	https://github.com/lepture/mistune
 COMMENT=	The fastest markdown parser in pure Python
 LICENSE=	modified-bsd
 
-USE_LANGUAGES=	# none
+TEST_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
 
-# TEST_DEPENDS
-BUILD_DEPENDS+=	${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

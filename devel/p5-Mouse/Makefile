@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.58 2017/06/05 14:23:22 ryoon Exp $
+# $NetBSD: Makefile,v 1.65 2018/08/22 09:44:25 wiz Exp $
 
-DISTNAME=	Mouse-v2.4.9
+DISTNAME=	Mouse-v2.5.6
 PKGNAME=	p5-${DISTNAME:S/v//1}
 PKGREVISION=	1
 CATEGORIES=	devel perl5
-MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=../../authors/id/S/SY/SYOHEX/}
+MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=../../authors/id/S/SK/SKAJI/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://search.cpan.org/dist/Mouse/

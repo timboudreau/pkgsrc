@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.8 2016/08/24 07:18:54 tnn Exp $
+# $NetBSD: Makefile,v 1.12 2019/01/04 12:49:34 tnn Exp $
 
-DISTNAME=	libxshmfence-1.2
-PKGREVISION=	5
+DISTNAME=	libxshmfence-1.3
+PKGREVISION=	1
 CATEGORIES=	x11
-MASTER_SITES=	http://xorg.freedesktop.org/archive/individual/lib/
+MASTER_SITES=	${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -33,6 +33,7 @@ post-extract:
 pre-configure:
 	cd ${WRKSRC} && autoreconf -vif
 
+.include "../../mk/pthread.buildlink3.mk"
 .include "../../devel/xorg-util-macros/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

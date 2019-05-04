@@ -1,34 +1,45 @@
-# $NetBSD: options.mk,v 1.9 2015/03/24 08:36:56 wiz Exp $
+# $NetBSD: options.mk,v 1.14 2019/03/20 06:39:52 adam Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.gnupg2
-PKG_SUPPORTED_OPTIONS=	gnupg2-gpgsm libusb
-PKG_SUGGESTED_OPTIONS=	gnupg2-gpgsm
+PKG_SUPPORTED_OPTIONS=	bzip2 gnutls ldap libusb-1 zlib
+PKG_SUGGESTED_OPTIONS=	bzip2 gnutls libusb-1 zlib
 
-# remove after 2014Q3
-PKG_OPTIONS_LEGACY_OPTS+=     gpgsm:gnupg2-gpgsm
-
-.include "../../mk/bsd.prefs.mk"
 .include "../../mk/bsd.options.mk"
 
-## If no options are specified, only gpg-agent is built. This
-## is sufficient for OpenPGP/MIME support in Kmail
-## SMIME support is provided by gpgsm. This support is
-## in the alpha stage of development.
-PLIST_SRC=	${.CURDIR}/PLIST
-
-# XXX It looks like that gpgsm support could be split into its own package,
-# according to the configure script.  If that's true, this use of the options
-# framework is incorrect and should be fixed.
-.if empty(PKG_OPTIONS:Mgnupg2-gpgsm)
-CONFIGURE_ARGS+=	--enable-agent-only
+.if !empty(PKG_OPTIONS:Mbzip2)
+CONFIGURE_ARGS+=       --with-bzip2=${BUILDLINK_PREFIX.bzip2}
+.include "../../archivers/bzip2/buildlink3.mk"
 .else
-CONFIGURE_ARGS+=	--enable-gpgsm
-CONFIGURE_ARGS+=	--with-dirmngr-pgm=${BUILDLINK_PREFIX.dirmngr}/bin/dirmngr
-PLIST_SRC+=	${.CURDIR}/PLIST.gpgsm
-.  include "../../security/dirmngr/buildlink3.mk"
+CONFIGURE_ARGS+=       --disable-bzip2
 .endif
 
-.if !empty(PKG_OPTIONS:Mlibusb)
-USE_TOOLS+=	pkg-config
-.  include "../../devel/libusb/buildlink3.mk"
+.if !empty(PKG_OPTIONS:Mgnutls)
+.include "../../security/gnutls/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=       --disable-gnutls
+.endif
+
+PLIST_VARS+=		ldap
+.if !empty(PKG_OPTIONS:Mldap)
+CONFIGURE_ARGS+=	--with-ldap=${BUILDLINK_PREFIX.openldap-client}
+PLIST.ldap=		yes
+.include "../../databases/openldap-client/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-ldap
+.endif
+
+.if !empty(PKG_OPTIONS:Mlibusb-1)
+# gnupg unfortunately doesn't use pkg-config
+CONFIGURE_ARGS+=	CPPFLAGS="${CPPFLAGS} -I${BUILDLINK_PREFIX.libusb1}/include/libusb-1.0"
+CONFIGURE_ARGS+=	LDFLAGS="${LDFLAGS} ${COMPILER_RPATH_FLAG}${BUILDLINK_PREFIX.libusb1}/lib -L${BUILDLINK_PREFIX.libusb1}/lib"
+.include "../../devel/libusb1/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-ccid-driver
+.endif
+
+.if !empty(PKG_OPTIONS:Mzlib)
+CONFIGURE_ARGS+=       --with-zlib=${BUILDLINK_PREFIX.zlib}
+.include "../../devel/zlib/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=       --disable-zip
 .endif

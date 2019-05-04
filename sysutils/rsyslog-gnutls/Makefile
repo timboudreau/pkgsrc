@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.5 2016/10/20 10:05:11 fhajny Exp $
+# $NetBSD: Makefile,v 1.12 2019/04/25 07:33:20 maya Exp $
 #
 
 RSYSLOG_MOD=	gnutls
 PKGNAME=	${DISTNAME:S/rsyslog/rsyslog-${RSYSLOG_MOD}/}
+PKGREVISION=	2
 
 DEPENDS+=	rsyslog>=${PKGVERSION_NOREV}:../../sysutils/rsyslog
 

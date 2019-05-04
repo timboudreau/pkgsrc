@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.9 2016/03/05 11:28:23 jperkin Exp $
+# $NetBSD: Makefile,v 1.12 2018/07/18 00:06:13 joerg Exp $
 
 DISTNAME=	apache-log4cxx-0.10.0
 PKGNAME=	${DISTNAME:S/apache-//}
@@ -7,14 +7,14 @@ CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_APACHE:=logging/log4cxx/0.10.0/}
 
 MAINTAINER=	reed@reedmedia.net
-HOMEPAGE=	http://logging.apache.org/log4cxx/
+HOMEPAGE=	https://logging.apache.org/log4cxx/latest_stable/index.html
 COMMENT=	Logging framework for C++
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 USE_TOOLS+=	gmake pkg-config
 # c for configure
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 CONFIGURE_ARGS+=	--disable-doxygen --disable-html-docs
 

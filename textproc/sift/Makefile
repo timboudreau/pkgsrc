@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.8 2017/04/13 15:12:06 bsiegert Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/16 18:41:10 bsiegert Exp $
 
 DISTNAME=	sift-0.6.0
-PKGREVISION=	6
+PKGREVISION=	16
 CATEGORIES=	textproc
 MASTER_SITES=	${MASTER_SITE_GITHUB:=svent/}
 GITHUB_TAG=	v${PKGVERSION_NOREV}
@@ -13,6 +13,9 @@ LICENSE=	gnu-gpl-v3
 
 GO_DIST_BASE=	${DISTNAME}
 GO_SRCPATH=	github.com/svent/sift
+
+post-install:
+	find ${DESTDIR}${PREFIX}/gopkg/src/${GO_SRCPATH} -name "*.orig" -exec ${RM} \{\} \;
 
 .include "../../security/go-crypto/buildlink3.mk"
 .include "../../devel/go-nbreader/buildlink3.mk"

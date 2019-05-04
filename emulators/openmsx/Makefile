@@ -1,17 +1,19 @@
-# $NetBSD: Makefile,v 1.45 2017/01/01 14:43:38 wiz Exp $
+# $NetBSD: Makefile,v 1.52 2019/04/26 14:12:38 maya Exp $
 
-DISTNAME=		openmsx-0.9.0
-PKGREVISION=		5
+DISTNAME=		openmsx-0.14.0
+PKGREVISION=		1
 CATEGORIES=		emulators
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=openmsx/}
+MASTER_SITES=		${MASTER_SITE_GITHUB:=openMSX/}
+GITHUB_PROJECT=		openMSX
+GITHUB_RELEASE=		RELEASE_0_14_0
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://openmsx.sourceforge.net/
+HOMEPAGE=		http://openmsx.org/
 COMMENT=		MSX emulator that aims for perfection
 LICENSE=		gnu-gpl-v2
 
 USE_TOOLS+=		gmake
-USE_LANGUAGES+=		c++
+USE_LANGUAGES+=		c++03
 HAS_CONFIGURE=		yes
 
 MAKE_FILE=		GNUmakefile
@@ -23,7 +25,15 @@ INSTALL_MAKE_FLAGS+=	SYMLINK_FOR_BINARY=false
 INSTALL_MAKE_FLAGS+=	INSTALL_BASE=${PREFIX}/openmsx
 MAKE_ENV+=		OPENMSX_INSTALL=${PREFIX}/openmsx
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.9.0
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.9.0
+
+SUBST_CLASSES+=			bswap
+SUBST_STAGE.bswap=		pre-configure
+SUBST_MESSAGE.bswap=		Do not conflict bswap functions.
+SUBST_FILES.bswap=		src/utils/endian.hh
+SUBST_FILES.bswap+=		src/utils/tiger.cc
+SUBST_SED.bswap=		-e 's, bswap, openmsx_bswap,g'
+SUBST_SED.bswap+=		-e 's,::bswap,::openmsx_bswap,g'
 
 .include "../../mk/bsd.prefs.mk"
 
@@ -38,9 +48,6 @@ CXX=g++
 post-extract:
 	${CP} ${WRKSRC}/build/platform-freebsd.mk \
 	      ${WRKSRC}/build/platform-dragonfly.mk
-	# Fix permission problem specific to release 0.9.0 and below
-	${CHMOD} 644 ${WRKSRC}/share/extensions/debugdevice/hardwareconfig.xml
-	${CHMOD} 644 ${WRKSRC}/share/extensions/gfx9000/hardwareconfig.xml
 
 post-build:
 	(							\

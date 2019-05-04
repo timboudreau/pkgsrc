@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.16 2017/01/01 14:44:03 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2019/04/26 13:14:19 maya Exp $
 
 DISTNAME=	ies4linux-2.99.0.1
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	www
 MASTER_SITES=	http://www.tatanka.com.br/ies4linux/downloads/
 
 MAINTAINER=	abs@NetBSD.org
-HOMEPAGE=	http://www.tatanka.com.br/ies4linux/page/Main_Page
+#HOMEPAGE=	http://www.tatanka.com.br/ies4linux/page/Main_Page
 COMMENT=	Microsoft Internet Explorer installer
 
 DEPENDS+=  wget-[0-9]*:../../net/wget
@@ -17,7 +17,7 @@ BUILD_DEPENDS+= cabextract-[0-9]*:../../archivers/cabextract
 NO_BUILD= 	yes
 USE_LANGUAGES=	# none
 USE_TOOLS+=	bash:run pax unzip:run
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
 SHAREDIR=		share/ies4linux
 

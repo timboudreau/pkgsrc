@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.5 2017/07/14 10:19:36 adam Exp $
+$NetBSD: distinfo,v 1.9 2019/02/19 12:26:13 adam Exp $
 
-SHA1 (gevent-1.2.2.tar.gz) = 3a2ab5f982db6d2ebe8f3763f1563b40343c782e
-RMD160 (gevent-1.2.2.tar.gz) = 7221750d65f0a185b6a3348467b739987de6e194
-SHA512 (gevent-1.2.2.tar.gz) = 1e2dd544cffea62ee32de2e4066b3f4c121058a1211b89da281ec3882f3763217fe2d346ce38b66e27df9f59cfe05bb137d1608a681dd10eaf06a33dc22f531c
-Size (gevent-1.2.2.tar.gz) = 3108671 bytes
+SHA1 (gevent-1.4.0.tar.gz) = f4dc2263bb66963437765efe8c5ca03086b91590
+RMD160 (gevent-1.4.0.tar.gz) = 37d748a02b6b9c4f59efc4f86b7d56ae8a9f35ec
+SHA512 (gevent-1.4.0.tar.gz) = 6771f4f2932055270e4f5a79ae815e93fd0f471defa7f437dc84907ea8b44672e05ae5eb6958f8d90580b2471785dce4044d9d1bbea0dd0c34c1381d88af0344
+Size (gevent-1.4.0.tar.gz) = 5169595 bytes

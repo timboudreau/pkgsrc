@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.6 2017/06/10 16:19:25 taca Exp $
+# $NetBSD: Makefile,v 1.11 2018/12/17 19:46:06 jperkin Exp $
 
-DISTNAME=	xpath-2.1.0
+DISTNAME=	xpath-3.2.0
 PKGNAME=	${RUBY_PKGPREFIX}-${DISTNAME}
 CATEGORIES=	ruby textproc
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://github.com/jnicklas/xpath
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/jnicklas/xpath
 COMMENT=	Ruby DSL for generating XPath expressions
 LICENSE=	mit
 
-DEPENDS+=	${RUBY_PKGPREFIX}-nokogiri>=1.3:../../textproc/ruby-nokogiri
+DEPENDS+=	${RUBY_PKGPREFIX}-nokogiri>=1.8:../../textproc/ruby-nokogiri
 
 USE_LANGUAGES=	# none
 

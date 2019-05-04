@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:24:27 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:46:20 wiz Exp $
 #
 
 DISTNAME=	Authen-PAM-0.16
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	9
+PKGREVISION=	10
 CATEGORIES=	security
 MASTER_SITES=	http://search.cpan.org/CPAN/authors/id/N/NI/NIKIP/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://nik.pelov.name/Authen-PAM/
+#HOMEPAGE=	http://nik.pelov.name/Authen-PAM/
 COMMENT=	Authentication via PAM
 
 GNU_CONFIGURE=	yes

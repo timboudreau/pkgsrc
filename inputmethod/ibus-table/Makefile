@@ -1,11 +1,12 @@
-# $NetBSD: Makefile,v 1.21 2015/04/13 23:12:42 rodent Exp $
+# $NetBSD: Makefile,v 1.23 2019/04/25 07:33:01 maya Exp $
 
 DISTNAME=	ibus-table-1.9.2
+PKGREVISION=	1
 CATEGORIES=	inputmethod
 MASTER_SITES=	https://github.com/kaio/ibus-table/releases/download/${PKGVERSION_NOREV}/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/ibus/
+HOMEPAGE=	https://github.com/ibus/ibus/wiki
 COMMENT=	Table engine for IBus platform
 LICENSE=	gnu-lgpl-v2.1
 

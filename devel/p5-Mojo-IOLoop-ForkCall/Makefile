@@ -1,18 +1,16 @@
-# $NetBSD: Makefile,v 1.7 2017/06/05 14:23:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.12 2018/10/11 20:26:12 wiedi Exp $
 
-VERSION=	0.17
-DISTNAME=	${VERSION}
-PKGNAME=	p5-Mojo-IOLoop-ForkCall-${VERSION}
-PKGREVISION=	3
+GITHUB_PROJECT=	Mojo-IOLoop-ForkCall
+DISTNAME=	Mojo-IOLoop-ForkCall-0.20
+PKGNAME=	p5-${DISTNAME}
 CATEGORIES=	devel
-MASTER_SITES=	https://github.com/jberger/Mojo-IOLoop-ForkCall/archive/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=jberger/}
 
 MAINTAINER=	wiedi@frubar.net
 HOMEPAGE=	https://github.com/jberger/Mojo-IOLoop-ForkCall/
 COMMENT=	Execute a code block asynchronously by forking
 LICENSE=	${PERL5_LICENSE}
 
-WRKSRC=			${WRKDIR}/Mojo-IOLoop-ForkCall-${VERSION}
 PERL5_MODULE_TYPE=	Module::Build
 PERL5_PACKLIST=		auto/Mojo/IOLoop/ForkCall/.packlist
 USE_LANGUAGES=		# none

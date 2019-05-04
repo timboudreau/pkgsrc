@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.5 2017/07/01 23:57:46 schmonz Exp $
+# $NetBSD: Makefile,v 1.8 2018/08/22 09:43:11 wiz Exp $
 
 PKGNAME=	${DISTNAME:S/-/-server-/}
 PKGREVISION=	1
@@ -37,7 +37,7 @@ BUILDLINK_DEPMETHOD.readline=	build
 
 PLIST_VARS+=		embedded ndb auth_socket
 
-.if ${OPSYS} == "Linux" || ${OPSYS} == "FreeBSD"
+.if ${OPSYS} == "Linux" || ${OPSYS} == "FreeBSD" || ${OPSYS} == "DragonFly"
 PLIST.auth_socket=	yes
 .endif
 

@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.18 2017/05/15 13:53:42 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2018/11/20 08:59:29 maya Exp $
 
-DISTNAME=	ilmbase-2.2.0
-PKGREVISION=	2
+DISTNAME=	ilmbase-2.3.0
 CATEGORIES=	graphics
-MASTER_SITES=	http://download.savannah.nongnu.org/releases/openexr/
+MASTER_SITES=	${MASTER_SITE_GITHUB:=openexr/}
+GITHUB_PROJECT=	openexr
+GITHUB_RELEASE=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	adam@NetBSD.org
 HOMEPAGE=	http://www.openexr.com/
@@ -14,6 +15,7 @@ USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 USE_TOOLS+=		bash gmake
 GNU_CONFIGURE=		yes
+GCC_REQD+=		6
 TEST_TARGET=		check
 LIBS.SunOS=		-lm
 CONFIG_SHELL=		bash

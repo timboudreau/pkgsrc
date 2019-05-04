@@ -1,5 +1,6 @@
-# $NetBSD: Makefile,v 1.6 2017/05/17 13:23:03 he Exp $
+# $NetBSD: Makefile,v 1.23 2019/03/18 16:17:47 gdt Exp $
 
+PKGREVISION=	8
 .include "Makefile.common"
 
 PKGNAME=	ImageMagick6-${DISTVERSION}
@@ -16,13 +17,14 @@ CONFIGURE_ARGS+=	--with-fontconfig
 CONFIGURE_ARGS+=	--with-ltdl-include=${BUILDLINK_PREFIX.libltdl}/include
 CONFIGURE_ARGS+=	--with-ltdl-lib=${BUILDLINK_PREFIX.libltdl}/lib
 CONFIGURE_ARGS+=	--with-xml=yes
-CONFIGURE_ARGS+=	--disable-openmp
 CONFIGURE_ARGS+=	--without-perl
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFBASEDIR}
 CONFIGURE_ARGS+=	--program-suffix=6
 # This one used to be optional, but it depends on ghostscript even if it's
 # disabled so having a way to disable it seems pointless.
 CONFIGURE_ARGS+=	--with-gslib
+# http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=25475
+CONFIGURE_ARGS.NetBSD+=	--disable-openmp
 PKGCONFIG_OVERRIDE=	Magick++/lib/ImageMagick++.pc.in
 PKGCONFIG_OVERRIDE+=	Magick++/lib/Magick++.pc.in
 PKGCONFIG_OVERRIDE+=	magick/ImageMagick.pc.in
@@ -44,6 +46,7 @@ SUBST_SED.pkgcfg+=	-e 's|s: MagickCore|s: MagickCore-6.Q16|g'
 SUBST_SED.pkgcfg+=	-e 's|Magick++-config|Magick++-config6|g'
 SUBST_SED.pkgcfg+=	-e 's|Magick-config |Magick-config6 |g'
 SUBST_SED.pkgcfg+=	-e 's|s Magick++|s Magick++-6.Q16|g'
+SUBST_SED.pkgcfg+=	-e 's|@PKG_CONFIG@|${PREFIX}/bin/pkg-config|g'
 SUBST_STAGE.pkgcfg=	pre-configure
 
 GCC_REQD+=		2.95.3
@@ -93,6 +96,10 @@ SUBST_STAGE.fix-tools=	pre-install
 SUBST_MESSAGE.fix-tools=Unwrapping tools path in delegate paths.
 SUBST_FILES.fix-tools=	config/delegates.xml
 SUBST_SED.fix-tools=	-e 's,${TOOLS_DIR},,g'
+
+# failed to convert strong functions and variables: Invalid type identifier
+CTF_FILES_SKIP+=	lib/libMagickCore-6.Q16.so.5.0.0
+CTF_FILES_SKIP+=	lib/libMagickWand-6.Q16.so.5.0.0
 
 .include "../../archivers/bzip2/buildlink3.mk"
 .include "../../archivers/xz/buildlink3.mk"

@@ -1,5 +1,6 @@
-# $NetBSD: Makefile,v 1.35 2017/07/10 00:22:15 gdt Exp $
+# $NetBSD: Makefile,v 1.47 2018/12/13 19:52:19 adam Exp $
 
+PKGREVISION= 3
 .include "Makefile.common"
 
 COMMENT=	Anti-virus toolkit
@@ -19,32 +20,26 @@ CONFIGURE_ARGS+=	--with-libcurl=${BUILDLINK_PREFIX.curl}
 CONFIGURE_ARGS+=	--with-ltdl-include=${BUILDLINK_PREFIX.libltdl}/include
 CONFIGURE_ARGS+=	--with-ltdl-lib=${BUILDLINK_PREFIX.libltdl}/lib
 CONFIGURE_ARGS+=	--with-openssl=${BUILDLINK_PREFIX.openssl}
-CONFIGURE_ARGS+=	--with-pcre=${BUILDLINK_PREFIX.pcre}
+CONFIGURE_ARGS+=	--with-pcre=${BUILDLINK_PREFIX.pcre2}
 CONFIGURE_ARGS+=	--with-xml=${BUILDLINK_PREFIX.libxml2}
 CONFIGURE_ARGS+=	--with-zlib=${BUILDLINK_PREFIX.zlib}
+CONFIGURE_ARGS+=	--enable-readdir_r
 # pkgsrc enforces a "secure" version of zlib, so don't let this check
 # bomb the build
 CONFIGURE_ARGS+=	--disable-zlib-vcheck
 
-# clamav shadows gets with a macro, which confuses FORTIFY.  Disable
-# until resolved.
-PKGSRC_USE_FORTIFY=no
-
 CHECK_PORTABILITY_SKIP=	contrib/* unit_tests/* win32/*
 
-.include "../../mk/bsd.prefs.mk"
-
-.if ${OPSYS} == "NetBSD" && !empty(OS_VERSION:M1.*)
-CONFIGURE_ARGS+=	--disable-readdir-r
-.else
-CONFIGURE_ARGS+=	--enable-readdir_r
-.endif
+.include "../../mk/compiler.mk"
 
 NOT_PAX_MPROTECT_SAFE+=	sbin/clamd
 NOT_PAX_MPROTECT_SAFE+=	bin/clamscan
 NOT_PAX_MPROTECT_SAFE+=	bin/freshclam
 
 CFLAGS.SunOS+=		-D__EXTENSIONS__
+.if !empty(PKGSRC_COMPILER:Mclang) || !empty(CC_VERSION:Mgcc-[6-9]*)
+CFLAGS.SunOS+=		-D_XOPEN_SOURCE=600
+.endif
 
 BUILD_DEFS+=	CLAMAV_USER CLAMAV_GROUP CLAMAV_DBDIR
 FILES_SUBST+=	CLAMAV_USER=${CLAMAV_USER}
@@ -87,7 +82,7 @@ post-install:
 
 .include "../../archivers/bzip2/buildlink3.mk"
 .include "../../devel/libltdl/buildlink3.mk"
-.include "../../devel/pcre/buildlink3.mk"
+.include "../../devel/pcre2/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../devel/gmp/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.94 2017/07/11 14:19:20 jaapb Exp $
+# $NetBSD: Makefile,v 1.116 2019/04/03 00:32:45 ryoon Exp $
 
 VERSION=		4.0.1
 PKGNAME=		camlimages-${VERSION}
-PKGREVISION=		57
+PKGREVISION=		78
 CATEGORIES=		graphics
 MASTER_SITES=		https://bitbucket.org/camlspotter/camlimages/get/
 DISTNAME=		v${VERSION}
@@ -21,7 +21,7 @@ MAKE_JOBS_SAFE=		no
 WRKSRC=			${WRKDIR}/camlspotter-camlimages-v${VERSION}
 
 SUBST_CLASSES+=		omf
-SUBST_STAGE.omf=	post-patch
+SUBST_STAGE.omf=	pre-configure
 SUBST_FILES.omf=	OMakefile
 SUBST_SED.omf=		-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.omf+=		-e 's,@X11BASE@,${X11BASE},g'

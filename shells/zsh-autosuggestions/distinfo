@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2019/04/17 10:02:01 wiz Exp $
+
+SHA1 (zsh-autosuggestions-0.5.2.tar.gz) = 08ae2b09b41a02c658721bed764d20616b8b8450
+RMD160 (zsh-autosuggestions-0.5.2.tar.gz) = 91919dff3e27eced1f3610ad454b5282459c5213
+SHA512 (zsh-autosuggestions-0.5.2.tar.gz) = a435f41c535abb5a4a1b3d6339f1555981060fffc465a610605d034e7946978eff15df1f25f901dfaec31ce5a33628589fa7e7274726c8ecf94712f270f2ca53
+Size (zsh-autosuggestions-0.5.2.tar.gz) = 21702 bytes

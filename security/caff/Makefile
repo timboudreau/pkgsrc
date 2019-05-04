@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.44 2017/06/06 20:37:15 wiz Exp $
+# $NetBSD: Makefile,v 1.50 2019/03/20 15:44:51 wiz Exp $
 
-VERSION=	2.5
+VERSION=	2.9
 DISTNAME=	signing-party_${VERSION}.orig
 PKGNAME=	caff-${VERSION}
-PKGREVISION=	1
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_DEBIAN:=pool/main/s/signing-party/}
 
@@ -12,10 +11,9 @@ HOMEPAGE=	http://pgp-tools.alioth.debian.org/
 COMMENT=	Various GnuPG related tools
 LICENSE=	gnu-gpl-v2 AND modified-bsd
 
-#WRKSRC=		${WRKDIR}/${DISTNAME:S/_/-/:S/.orig//}
-WRKSRC=		${WRKDIR}
+WRKSRC=		${WRKDIR}/${DISTNAME:S/_/-/:S/.orig//}
 
-USE_TOOLS+=	gmake pod2man
+USE_TOOLS+=	autoconf automake gmake pod2man gsed
 USE_TOOLS+=	perl:run
 
 DEPENDS+=	p5-Text-Template-[0-9]*:../../textproc/p5-Text-Template

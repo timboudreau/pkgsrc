@@ -155,6 +155,7 @@ struct tar {
 	int			 compat_2x;
 	int			 process_mac_extensions;
 	int			 read_concatenated_archives;
+	int			 realsize_override;
 };
 
 static int	archive_block_is_null(const char *p);
@@ -250,15 +251,15 @@ archive_read_support_format_tar(struct archive *_a)
 	    ARCHIVE_STATE_NEW, "archive_read_support_format_tar");
 
 	tar = (struct tar *)calloc(1, sizeof(*tar));
-#ifdef HAVE_COPYFILE_H
-	/* Set this by default on Mac OS. */
-	tar->process_mac_extensions = 1;
-#endif
 	if (tar == NULL) {
 		archive_set_error(&a->archive, ENOMEM,
 		    "Can't allocate tar data");
 		return (ARCHIVE_FATAL);
 	}
+#ifdef HAVE_COPYFILE_H
+	/* Set this by default on Mac OS. */
+	tar->process_mac_extensions = 1;
+#endif
 
 	r = __archive_read_register_format(a, tar, "tar",
 	    archive_read_format_tar_bid,
@@ -527,6 +528,7 @@ archive_read_format_tar_read_header(struct archive_read *a,
 	tar->entry_offset = 0;
 	gnu_clear_sparse_list(tar);
 	tar->realsize = -1; /* Mark this as "unset" */
+	tar->realsize_override = 0;
 
 	/* Setup default string conversion. */
 	tar->sconv = tar->opt_sconv;
@@ -1894,6 +1896,7 @@ pax_attribute(struct archive_read *a, struct tar *tar,
 		if (strcmp(key, "GNU.sparse.size") == 0) {
 			tar->realsize = tar_atol10(value, strlen(value));
 			archive_entry_set_size(entry, tar->realsize);
+			tar->realsize_override = 1;
 		}
 
 		/* GNU "0.1" sparse pax format. */
@@ -1925,6 +1928,7 @@ pax_attribute(struct archive_read *a, struct tar *tar,
 		if (strcmp(key, "GNU.sparse.realsize") == 0) {
 			tar->realsize = tar_atol10(value, strlen(value));
 			archive_entry_set_size(entry, tar->realsize);
+			tar->realsize_override = 1;
 		}
 		break;
 	case 'L':
@@ -1977,6 +1981,7 @@ pax_attribute(struct archive_read *a, struct tar *tar,
 			    tar_atol10(value, strlen(value)));
 		} else if (strcmp(key, "SCHILY.realsize") == 0) {
 			tar->realsize = tar_atol10(value, strlen(value));
+			tar->realsize_override = 1;
 			archive_entry_set_size(entry, tar->realsize);
 		} else if (strncmp(key, "SCHILY.xattr.", 13) == 0) {
 			pax_attribute_schily_xattr(entry, key, value,
@@ -2055,14 +2060,12 @@ pax_attribute(struct archive_read *a, struct tar *tar,
 			tar->entry_bytes_remaining
 			    = tar_atol10(value, strlen(value));
 			/*
-			 * But, "size" is not necessarily the size of
-			 * the file on disk; if this is a sparse file,
-			 * the disk size may have already been set from
-			 * GNU.sparse.realsize or GNU.sparse.size or
-			 * an old GNU header field or SCHILY.realsize
-			 * or ....
+			 * The "size" pax header keyword always overrides the
+			 * "size" field in the tar header.
+			 * GNU.sparse.realsize, GNU.sparse.size and
+			 * SCHILY.realsize override this value.
 			 */
-			if (tar->realsize < 0) {
+			if (!tar->realsize_override) {
 				archive_entry_set_size(entry,
 				    tar->entry_bytes_remaining);
 				tar->realsize
@@ -2206,6 +2209,7 @@ header_gnutar(struct archive_read *a, struct tar *tar,
 		tar->realsize
 		    = tar_atol(header->realsize, sizeof(header->realsize));
 		archive_entry_set_size(entry, tar->realsize);
+		tar->realsize_override = 1;
 	}
 
 	if (header->sparse[0].offset[0] != 0) {
@@ -2237,7 +2241,7 @@ gnu_add_sparse_entry(struct archive_read *a, struct tar *tar,
 	else
 		tar->sparse_list = p;
 	tar->sparse_last = p;
-	if (remaining < 0 || offset < 0) {
+	if (remaining < 0 || offset < 0 || offset > INT64_MAX - remaining) {
 		archive_set_error(&a->archive, ARCHIVE_ERRNO_MISC, "Malformed sparse map data");
 		return (ARCHIVE_FATAL);
 	}

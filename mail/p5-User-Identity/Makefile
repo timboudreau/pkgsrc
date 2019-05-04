@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.23 2017/06/05 14:24:08 ryoon Exp $
+# $NetBSD: Makefile,v 1.27 2018/08/22 09:45:33 wiz Exp $
 
-DISTNAME=	User-Identity-0.94
+DISTNAME=	User-Identity-0.99
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	mail perl5

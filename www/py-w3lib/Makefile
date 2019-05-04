@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.1 2017/02/13 21:19:51 adam Exp $
+# $NetBSD: Makefile,v 1.5 2019/01/15 23:05:37 adam Exp $
 
-DISTNAME=	w3lib-1.17.0
+DISTNAME=	w3lib-1.20.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	www python
 MASTER_SITES=	${MASTER_SITE_PYPI:=w/w3lib/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/scrapy/w3lib
+HOMEPAGE=	https://github.com/scrapy/w3lib
 COMMENT=	Python library of web-related functions
 LICENSE=	modified-bsd
 

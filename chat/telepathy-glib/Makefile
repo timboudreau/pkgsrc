@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.46 2017/05/29 12:20:23 wiz Exp $
+# $NetBSD: Makefile,v 1.59 2019/04/26 14:12:33 maya Exp $
 
 DISTNAME=	telepathy-glib-0.24.1
-PKGREVISION=	5
+PKGREVISION=	11
 CATEGORIES=	chat
 MASTER_SITES=	http://telepathy.freedesktop.org/releases/telepathy-glib/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://telepathy.freedesktop.org/wiki/Telepathy%20GLib
+HOMEPAGE=	https://telepathy.freedesktop.org/components/telepathy-glib/
 COMMENT=	GObject-based C binding for the Telepathy D-Bus API
 LICENSE=	gnu-gpl-v2 AND modified-bsd
 
@@ -22,7 +22,7 @@ PKGCONFIG_OVERRIDE+=	telepathy-glib/telepathy-glib.pc.in
 PYTHON_FOR_BUILD_ONLY=	yes
 CONFIGURE_ENV+=		ac_cv_prog_PYTHON=${PYTHONBIN}
 REPLACE_PYTHON+=	tests/all-errors-documented.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.24.1
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 0.24.1
 TEST_TARGET=		check
 
 BUILDLINK_API_DEPENDS.glib2+=		glib2>=2.36

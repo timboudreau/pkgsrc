@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.8 2015/06/29 11:06:48 ryoon Exp $
+# $NetBSD: Makefile,v 1.10 2019/04/25 07:33:12 maya Exp $
 #
 
-DISTNAME=	nicovideo-dl-0.0.20120212
+DISTNAME=	nicovideo-dl-0.0.20190126
 PKGREVISION=	1
 CATEGORIES=	net
-MASTER_SITES=	${MASTER_SITE_OSDN:=nicovideo-dl/56304/}
+MASTER_SITES=	${MASTER_SITE_OSDN:=nicovideo-dl/70568/}
 
 MAINTAINER=	ryoon@NetBSD.org
 HOMEPAGE=	http://osdn.jp/projects/nicovideo-dl/
@@ -13,6 +13,10 @@ LICENSE=	mit
 
 USE_LANGUAGES=	# none
 NO_BUILD=	yes
+
+PYTHON_VERSIONS_INCOMPATIBLE=	27
+
+DEPENDS+=		${PYPKGPREFIX}-expat-[0-9]*:../../textproc/py-expat
 
 INSTALLATION_DIRS=	bin
 

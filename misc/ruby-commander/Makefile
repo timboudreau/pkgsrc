@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.16 2017/04/19 11:24:38 jperkin Exp $
+# $NetBSD: Makefile,v 1.20 2018/09/23 15:46:43 taca Exp $
 
-DISTNAME=	commander-4.4.3
+DISTNAME=	commander-4.4.6
 CATEGORIES=	misc
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -8,7 +8,7 @@ HOMEPAGE=	http://ramaze.net/
 COMMENT=	The complete solution for Ruby command-line executables
 LICENSE=	ruby-license
 
-DEPENDS+=	${RUBY_PKGPREFIX}-highline>=1.7.2<1.8:../../devel/ruby-highline
+DEPENDS+=	${RUBY_PKGPREFIX}-highline17>=1.7.2<1.8:../../devel/ruby-highline17
 
 RUBYGEM_OPTIONS+=	--format-executable
 

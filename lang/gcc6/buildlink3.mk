@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.1 2016/09/12 22:13:54 maya Exp $
+# $NetBSD: buildlink3.mk,v 1.3 2018/07/23 01:07:08 maya Exp $
 
 BUILDLINK_TREE+=	gcc6
 
@@ -9,6 +9,8 @@ BUILDLINK_API_DEPENDS.gcc6+=	gcc6>=${_GCC_REQD}
 BUILDLINK_ABI_DEPENDS.gcc6+=	gcc6>=6.1
 BUILDLINK_PKGSRCDIR.gcc6=	../../lang/gcc6
 BUILDLINK_DEPMETHOD.gcc6?=	build
+
+BUILDLINK_PASSTHRU_DIRS+=	${BUILDLINK_PREFIX.gcc6}/gcc6
 
 BUILDLINK_FILES.gcc6=		#empty
 BUILDLINK_AUTO_VARS.gcc6=	no
@@ -28,4 +30,5 @@ pkgbase := gcc6
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .endif # GCC6_BUILDLINK3_MK
+
 BUILDLINK_TREE+=	-gcc6

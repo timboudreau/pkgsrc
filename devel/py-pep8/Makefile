@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.7 2017/06/01 06:36:02 adam Exp $
+# $NetBSD: Makefile,v 1.9 2017/10/25 03:55:44 adam Exp $
 
-DISTNAME=	pep8-1.7.0
+DISTNAME=	pep8-1.7.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pep8/}
 
 MAINTAINER=	wenheping@gmail.com
-HOMEPAGE=	http://github.com/jcrocholl/pep8
+HOMEPAGE=	https://github.com/jcrocholl/pep8
 COMMENT=	Python style guide checker (obsolete, use py-codestyle)
 LICENSE=	mit
 

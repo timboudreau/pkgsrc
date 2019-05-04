@@ -1,8 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2013/06/06 12:55:23 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.15 2019/03/04 10:56:01 wiz Exp $
 
-DISTNAME=		xlogo-1.0.4
-PKGREVISION=		3
+DISTNAME=		xlogo-1.0.5
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_XORG:=app/}
 EXTRACT_SUFX=		.tar.bz2

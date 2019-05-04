@@ -1,8 +1,8 @@
-# $NetBSD: options.mk,v 1.5 2015/02/11 20:32:20 snj Exp $
+# $NetBSD: options.mk,v 1.10 2018/12/24 16:25:30 nia Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.SDL2
 PKG_OPTIONS_REQUIRED_GROUPS=	gl
-PKG_SUPPORTED_OPTIONS=	alsa arts dbus esound nas oss pulseaudio x11
+PKG_SUPPORTED_OPTIONS=	alsa dbus esound nas oss pulseaudio x11
 PKG_OPTIONS_GROUP.gl=	opengl
 PKG_SUGGESTED_OPTIONS+=	oss
 
@@ -13,7 +13,7 @@ PKG_SUGGESTED_OPTIONS+=	x11
 .include "../../mk/bsd.fast.prefs.mk"
 
 .if !empty(MACHINE_ARCH:M*arm*)
-PKG_OPTIONS_GROUP.gl+=	rpi
+PKG_OPTIONS_GROUP.gl+= rpi
 PKG_SUGGESTED_OPTIONS+=	rpi
 .else
 PKG_SUGGESTED_OPTIONS+=	opengl
@@ -23,22 +23,26 @@ PKG_SUGGESTED_OPTIONS+=	opengl
 
 .if !empty(PKG_OPTIONS:Malsa)
 .include "../../audio/alsa-lib/buildlink3.mk"
-.endif
-
-.if !empty(PKG_OPTIONS:Marts)
-.include "../../audio/arts/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-alsa
 .endif
 
 .if !empty(PKG_OPTIONS:Mdbus)
 .include "../../sysutils/dbus/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-dbus
 .endif
 
 .if !empty(PKG_OPTIONS:Mesound)
 .include "../../audio/esound/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-esd
 .endif
 
 .if !empty(PKG_OPTIONS:Mnas)
 .include "../../audio/nas/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-nas
 .endif
 
 .if !empty(PKG_OPTIONS:Mopengl)
@@ -57,19 +61,27 @@ CONFIGURE_ARGS+=	--disable-oss
 
 .if !empty(PKG_OPTIONS:Mpulseaudio)
 .include "../../audio/pulseaudio/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-pulseaudio
 .endif
 
 .if !empty(PKG_OPTIONS:Mx11)
+.include "../../x11/libXScrnSaver/buildlink3.mk"
 .include "../../x11/libXcursor/buildlink3.mk"
 .include "../../x11/libXi/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXrandr/buildlink3.mk"
-.include "../../x11/libXScrnSaver/buildlink3.mk"
 .else
-CONFIGURE_ARGS+=	--disable-video-x11 --disable-x11-shared
+CONFIGURE_ARGS+=	--disable-video-x11
+CONFIGURE_ARGS+=	--disable-x11-shared
 .endif
 
 .if !empty(PKG_OPTIONS:Mrpi)
-LOWER_VENDOR=	raspberry
+LOWER_VENDOR=		raspberry
+SUBST_CLASSES+=		vc                                             
+SUBST_STAGE.vc=		pre-configure                                  
+SUBST_MESSAGE.vc=	Fixing path to VideoCore libraries.                    
+SUBST_FILES.vc=		configure                                      
+SUBST_SED.vc+=		-e "s;/opt/vc;${PREFIX};g"
 .include "../../misc/raspberrypi-userland/buildlink3.mk"
 .endif

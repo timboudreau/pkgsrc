@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.20 2016/01/25 15:09:01 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.23 2019/01/16 18:28:03 dholland Exp $
 
-DISTNAME=	posh_0.12.5
+DISTNAME=	posh_0.12.6
 PKGNAME=	${DISTNAME:S/_/-/}
 CATEGORIES=	shells
 MASTER_SITES=	${MASTER_SITE_DEBIAN:=pool/main/p/posh/}
@@ -14,7 +13,11 @@ LICENSE=	gnu-gpl-v2
 
 GNU_CONFIGURE=		YES
 PKG_SHELL=		bin/posh
-WRKSRC=			${WRKDIR}/${PKGNAME_NOREV}
+WRKSRC=			${WRKDIR}/${PKGBASE}
+
+# Requires GNU getopt to work properly; otherwise, will build but not run
+# correctly.
+BROKEN_ON_PLATFORM=	NetBSD-*-* SunOS-*-*
 
 INSTALLATION_DIRS=	share/doc/posh
 

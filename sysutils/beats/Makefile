@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.13 2017/07/04 14:22:48 fhajny Exp $
-#
+# $NetBSD: Makefile,v 1.41 2019/04/16 18:41:19 bsiegert Exp $
 
-DISTNAME=		beats-5.4.3
+DISTNAME=		beats-6.6.2
+PKGREVISION=		2
 CATEGORIES=		sysutils
 MASTER_SITES=		${MASTER_SITE_GITHUB:=elastic/}
 GITHUB_PROJECT=		beats
 GITHUB_TAG=		v${PKGVERSION_NOREV}
 
-MAINTAINER=		filip@joyent.com
+MAINTAINER=		fhajny@NetBSD.org
 HOMEPAGE=		https://www.elastic.co/products/beats
 COMMENT=		Data Shippers for Elasticsearch
 LICENSE=		apache-2.0
@@ -15,19 +15,29 @@ LICENSE=		apache-2.0
 EXTRACT_USING=		bsdtar
 USE_TOOLS+=		gmake
 
-GO_DIST_BASE=		${DISTNAME}
+GO_DIST_BASE=		${PKGBASE}-${GITHUB_TAG:S/v//}
 GO_SRCPATH=		github.com/elastic/beats
+
+TOOLS_CREATE+=		go
+TOOLS_PATH.go=		${GO}
+
+.include "../../mk/bsd.prefs.mk"
+
+PLIST_VARS+=		audit
 
 # Components to build/install
 BEATS=			filebeat heartbeat metricbeat packetbeat
 
+# No SunOS compatible event reading supported
+.if ${OPSYS} != "SunOS"
+BEATS+=			auditbeat
+PLIST.audit=		yes
+.endif
+
 .for beat in ${BEATS}
+CHECK_RELRO_SKIP+=	bin/${beat}
 CONF_FILES+=		share/examples/beats/${beat}.yml			\
 				${PKG_SYSCONFDIR}/${beat}.yml
-CONF_FILES+=		share/examples/beats/${beat}.template.json		\
-				${PKG_SYSCONFDIR}/${beat}.template.json
-CONF_FILES+=		share/examples/beats/${beat}.template-es2x.json		\
-				${PKG_SYSCONFDIR}/${beat}.template-es2x.json
 .endfor
 
 BEATS_DIR?=		${VARBASE}/db/beats
@@ -43,6 +53,11 @@ SMF_INSTANCES+=		${BEATS}
 OWN_DIRS+=		${BEATS_DIR} ${BEATS_LOGDIR}
 
 MAKE_ENV+=		GOPATH=${WRKDIR}:${PREFIX}/gopkg
+MAKE_ENV+=		CGO_LDFLAGS="-L${BUILDLINK_PREFIX.libpcap}/lib ${COMPILER_RPATH_FLAG}${BUILDLINK_PREFIX.libpcap}/lib"
+
+# The build system defaults to -i which modifies system files!
+MAKE_ENV+=		GOBUILD_FLAGS=
+
 BUILD_TARGET=		#
 
 INSTALLATION_DIRS+=	bin share/examples/beats
@@ -55,11 +70,7 @@ do-build:
 do-install:
 .for beat in ${BEATS}
 	${INSTALL_PROGRAM} ${WRKSRC}/${beat}/${beat} ${DESTDIR}${PREFIX}/bin
-	${INSTALL_DATA} ${WRKSRC}/${beat}/${beat}.full.yml			\
-		${DESTDIR}${PREFIX}/share/examples/beats
-	${INSTALL_DATA} ${WRKSRC}/${beat}/${beat}.template-es2x.json		\
-		${DESTDIR}${PREFIX}/share/examples/beats
-	${INSTALL_DATA} ${WRKSRC}/${beat}/${beat}.template.json			\
+	${INSTALL_DATA} ${WRKSRC}/${beat}/${beat}.reference.yml			\
 		${DESTDIR}${PREFIX}/share/examples/beats
 	${INSTALL_DATA} ${WRKSRC}/${beat}/${beat}.yml				\
 		${DESTDIR}${PREFIX}/share/examples/beats

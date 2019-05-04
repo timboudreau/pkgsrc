@@ -1,15 +1,12 @@
-# $NetBSD: Makefile,v 1.33 2017/06/05 14:25:21 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.36 2019/01/13 03:10:11 wen Exp $
 
-DISTNAME=	HTTP-DAV-0.48
+DISTNAME=	HTTP-DAV-0.49
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
 CATEGORIES=	www perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=HTTP/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://webdav.org/perldav/
-#HOMEPAGE=	http://search.cpan.org/dist/HTTP-DAV/
+HOMEPAGE=	http://search.cpan.org/dist/HTTP-DAV/
 COMMENT=	HTTP::DAV interface and 'dave'
 LICENSE=	${PERL5_LICENSE}
 

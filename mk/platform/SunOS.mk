@@ -1,4 +1,4 @@
-# $NetBSD: SunOS.mk,v 1.76 2017/06/21 08:20:10 jperkin Exp $
+# $NetBSD: SunOS.mk,v 1.79 2018/11/12 14:22:58 jperkin Exp $
 #
 # Variable definitions for the SunOS/Solaris operating system.
 
@@ -85,6 +85,8 @@ BUILDLINK_TRANSFORM+=	rm:-Wl,--gc-sections
 BUILDLINK_TRANSFORM+=	rm:-Wl,--no-as-needed
 BUILDLINK_TRANSFORM+=	rm:-Wl,--warn-common
 BUILDLINK_TRANSFORM+=	rm:-Wl,--warn-shared-textrel
+BUILDLINK_TRANSFORM+=	rm:-Wl,-O1
+BUILDLINK_TRANSFORM+=	rm:-Wl,-O2
 BUILDLINK_TRANSFORM+=	rm:-Wl,-export-dynamic
 BUILDLINK_TRANSFORM+=	rm:-export-dynamic
 
@@ -125,13 +127,10 @@ _OPSYS_INCLUDE_DIRS?=	/usr/include
 _OPSYS_SUPPORTS_CWRAPPERS=	yes
 .endif
 
-# support FORTIFY (with GCC)
-_OPSYS_SUPPORTS_FORTIFY=yes
-
-# support stack protection (with GCC)
-_OPSYS_SUPPORTS_SSP=	yes
-
-_OPSYS_CAN_CHECK_SHLIBS=	yes # requires readelf
+_OPSYS_SUPPORTS_CTF=		yes # Compact Type Format conversion.
+_OPSYS_SUPPORTS_FORTIFY=	yes # Requires GCC
+_OPSYS_SUPPORTS_SSP?=		yes # Requires GCC
+_OPSYS_CAN_CHECK_SHLIBS=	yes # Requires readelf
 
 # check for maximum command line length and set it in configure's environment,
 # to avoid a test required by the libtool script that takes forever.

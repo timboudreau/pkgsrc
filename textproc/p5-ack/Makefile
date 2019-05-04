@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.26 2017/06/05 14:25:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.30 2018/08/22 09:47:11 wiz Exp $
 
-DISTNAME=	ack-2.16
+DISTNAME=	ack-2.24
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	textproc perl5
@@ -11,6 +11,9 @@ HOMEPAGE=	http://search.cpan.org/dist/ack/
 COMMENT=	Grep-like text finder
 LICENSE=	${PERL5_LICENSE}
 
+DEPENDS+=	p5-File-Next>=0.4:../../devel/p5-File-Next
+#DEPENDS+=	p5-Term-ANSIColor-[0-9]*:../../devel/p5-Term-ANSIColor
+
 USE_TOOLS+=		perl
 USE_LANGUAGES=		# empty
 PERL5_PACKLIST=		auto/ack/.packlist
@@ -19,10 +22,6 @@ REPLACE_PERL+=		ack
 # Avoid ack regenerating itself and frustrating REPLACE_PERL setting
 post-configure:
 	    ${TOUCH} ${WRKSRC}/ack
-
-DEPENDS+=	p5-File-Next>=0.4:../../devel/p5-File-Next
-#DEPENDS+=	p5-Term-ANSIColor-[0-9]*:../../devel/p5-Term-ANSIColor
-#BUILD_DEPENDS+=	{perl>=5.8.8,p5-Test-Harness>=2.5}:../../devel/p5-Test-Harness
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/bsd.pkg.mk"

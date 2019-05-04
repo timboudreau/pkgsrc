@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.1 2017/03/08 15:05:02 wiz Exp $
+$NetBSD: distinfo,v 1.3 2018/10/17 07:01:39 maya Exp $
 
-SHA1 (lowdown-0.1.9.tar.gz) = 4c001e7c6b093d0420e8d8cceed9c71aff4c606a
-RMD160 (lowdown-0.1.9.tar.gz) = 4c565eaea2835669db0508a2d2026f323fa5ee90
-SHA512 (lowdown-0.1.9.tar.gz) = f379c40c2e694a6793ae0d0e1575340c8644383d40eef6cccd5bf9042d13bff247729ac42ecce107a43f97041478cf2bb24104c2204459f98691afd074b6e212
-Size (lowdown-0.1.9.tar.gz) = 62622 bytes
+SHA1 (lowdown-0.4.1.tar.gz) = 127f85e340e70657544b3564ba2361ff059abe2d
+RMD160 (lowdown-0.4.1.tar.gz) = 7cba95e2e8ffbd77b0195418560c5e1800866b10
+SHA512 (lowdown-0.4.1.tar.gz) = 9d2c026fa319f7b9f5b2c11b67ec5ec97a70a5cf3560c55545e571c929c3a8253014fa219dc9a78e59472a0c94472d218630f214cf03276a3cb7065c5aa54ef6
+Size (lowdown-0.4.1.tar.gz) = 94595 bytes

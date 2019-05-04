@@ -1,4 +1,4 @@
-# $NetBSD: clang.mk,v 1.18 2017/07/11 19:41:20 joerg Exp $
+# $NetBSD: clang.mk,v 1.20 2019/01/09 13:19:03 wiz Exp $
 #
 # This is the compiler definition for the clang compiler.
 #
@@ -53,12 +53,28 @@ _COMPILER_LD_FLAG=	-Wl,
 _LINKER_RPATH_FLAG=	-R
 _COMPILER_RPATH_FLAG=	${_COMPILER_LD_FLAG}${_LINKER_RPATH_FLAG}
 
+_CTF_CFLAGS=		-gdwarf-2
+
+# The user can choose the level of RELRO.
+.if ${PKGSRC_USE_RELRO} == "partial"
+_RELRO_LDFLAGS=		-Wl,-z,relro
+.else
+_RELRO_LDFLAGS=		-Wl,-z,relro -Wl,-z,now
+.endif
+
 # The user can choose the level of stack smashing protection.
 .if ${PKGSRC_USE_SSP} == "all"
 _SSP_CFLAGS=		-fstack-protector-all
 .else
 _SSP_CFLAGS=		-fstack-protector
 .endif
+
+.if ${_PKGSRC_USE_RELRO} == "yes"
+_CLANG_LDFLAGS+=	${_RELRO_LDFLAGS}
+CWRAPPERS_APPEND.ld+=	${_RELRO_LDFLAGS}
+.endif
+
+LDFLAGS+=	${_CLANG_LDFLAGS}
 
 # _LANGUAGES.<compiler> is ${LANGUAGES.<compiler>} restricted to the
 # ones requested by the package in USE_LANGUAGES.

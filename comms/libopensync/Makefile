@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.27 2017/04/22 21:03:08 adam Exp $
+# $NetBSD: Makefile,v 1.34 2019/04/03 00:32:28 ryoon Exp $
 #
 
 DISTNAME=	libopensync-0.22
-PKGREVISION=	18
+PKGREVISION=	24
 CATEGORIES=	comms
-MASTER_SITES=	http://www.opensync.org/download/releases/0.22/
+##MASTER_SITES=	http://www.opensync.org/download/releases/0.22/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.opensync.org/
+#HOMEPAGE=	http://www.opensync.org/
 COMMENT=	Platform independent synchronization framework
 
 USE_TOOLS+=	pkg-config

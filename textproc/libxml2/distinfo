@@ -1,23 +1,16 @@
-$NetBSD: distinfo,v 1.116 2017/06/21 00:23:23 tez Exp $
+$NetBSD: distinfo,v 1.130 2019/01/09 19:09:02 adam Exp $
 
-SHA1 (libxml2-2.9.4.tar.gz) = 958ae70baf186263a4bd801a81dd5d682aedd1db
-RMD160 (libxml2-2.9.4.tar.gz) = bb59656e0683d64a38a2f1a45ca9d918837e1e56
-SHA512 (libxml2-2.9.4.tar.gz) = f5174ab1a3a0ec0037a47f47aa47def36674e02bfb42b57f609563f84c6247c585dbbb133c056953a5adb968d328f18cbc102eb0d00d48eb7c95478389e5daf9
-Size (libxml2-2.9.4.tar.gz) = 5374830 bytes
-SHA1 (patch-aa) = e687eaa9805b855b0c8a944ec5c597bd34954472
-SHA1 (patch-ab) = d6d6e9a91307da0c7f334b5b9ad432878babd1ac
-SHA1 (patch-ac) = 34afe787f6012b460a85be993048e133907a1621
-SHA1 (patch-ad) = d65b7e3be9694147e96ce4bb70a1739e2279ba81
-SHA1 (patch-ae) = 4eede9719724f94402e850ee6d6043a74aaf62b2
+SHA1 (libxml2-2.9.9.tar.gz) = 96686d1dd9fddf3b35a28b1e2e4bbacac889add3
+RMD160 (libxml2-2.9.9.tar.gz) = a7d5f9ca4a24db329108f4bfb6bd4eed0f61ab21
+SHA512 (libxml2-2.9.9.tar.gz) = cb7784ba4e72e942614e12e4f83f4ceb275f3d738b30e3b5c1f25edf8e9fa6789e854685974eed95b362049dbf6c8e7357e0327d64c681ed390534ac154e6810
+Size (libxml2-2.9.9.tar.gz) = 5476717 bytes
+SHA1 (patch-Makefile.in) = e687eaa9805b855b0c8a944ec5c597bd34954472
+SHA1 (patch-catalog.c) = 34afe787f6012b460a85be993048e133907a1621
+SHA1 (patch-configure) = a0df60b1a8609c185ed7d45a015eafdbfb6d6b41
+SHA1 (patch-doc_examples_Makefile.in) = 4eede9719724f94402e850ee6d6043a74aaf62b2
 SHA1 (patch-encoding.c) = 6cf0a7d421828b9f40a4079ee85adb791c54d096
-SHA1 (patch-parseInternals.c) = dc58145943a4fb6368d848c0155d144b1f9b676c
-SHA1 (patch-parser.c) = 23e39127bf65e721dd76d80b389c1ccacf8e5746
-SHA1 (patch-result_XPath_xptr_vidbase) = f0ef1ac593cb25f96b7ffef93e0f214aa8fc6103
-SHA1 (patch-runtest.c) = 759fcee959833b33d72e85108f7973859dcba1f6
-SHA1 (patch-test_XPath_xptr_vidbase) = a9b497505f914924388145c6266aa517152f9da3
-SHA1 (patch-testlimits.c) = 8cba18464b619469abbb8488fd950a32a567be7b
-SHA1 (patch-timsort.h) = e09118e7c99d53f71c28fe4d54269c4801244959
-SHA1 (patch-valid.c) = 9eda3633b3ea5269e0ef33fa0508de18e7a76def
-SHA1 (patch-xmlIO.c) = 5efcc5e43a8b3139832ab69af6b5ab94e5a6ad59
-SHA1 (patch-xpath.c) = ec94ab2116f99a08f51630dee6b9e7e25d2b5c00
-SHA1 (patch-xpointer.c) = 8ca75f64b89369106c0d088ff7fd36b38005e032
+SHA1 (patch-python_libxml.c) = cfa07b4f3dfddb501c2ba210bb32b8ee14e3df9d
+SHA1 (patch-python_libxml.py) = 869a72ae5ba2e27e6d46552878890acb22337675
+SHA1 (patch-python_libxml2.py) = 209d105b0f3aedb834091390a7c6819705108e34
+SHA1 (patch-python_setup.py) = 7771fd02ee6779463f1d3321f099d7e6d19cd1b1
+SHA1 (patch-xmlcatalog.c) = d65b7e3be9694147e96ce4bb70a1739e2279ba81

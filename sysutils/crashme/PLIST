@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2007/08/31 21:48:37 agc Exp $
+@comment $NetBSD: PLIST,v 1.4 2018/01/01 22:29:56 rillig Exp $
+man/man1/crashme.1
 sbin/crashme
 sbin/pddet
-${PKGMANDIR}/man1/crashme.1

@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.9 2017/01/03 13:23:03 jperkin Exp $
+# $NetBSD: Makefile,v 1.13 2019/04/26 14:12:41 maya Exp $
 
 DISTNAME=	pythonz-1.2.2
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	lang python
 MASTER_SITES=	https://github.com/saghul/pythonz/archive/
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/saghul/pythonz/
 COMMENT=	Installation manager supporting CPython, Stackless, PyPy and Jython
 LICENSE=	mit
@@ -13,7 +13,7 @@ LICENSE=	mit
 WRKSRC=		${WRKDIR}/pythonz-${DISTNAME}
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 1.2.1
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 1.2.1
 
 post-install:
 	${MV} ${DESTDIR}${PREFIX}/bin/pythonz \

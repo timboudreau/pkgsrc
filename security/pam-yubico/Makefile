@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.16 2017/04/30 01:21:59 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2018/12/13 19:52:20 adam Exp $
 
 DISTNAME=	pam_yubico-2.17
 PKGNAME=	${DISTNAME:S/_/-/}
-PKGREVISION=	5
+PKGREVISION=	10
 CATEGORIES=	security
 MASTER_SITES=	http://opensource.yubico.com/yubico-pam/releases/
 

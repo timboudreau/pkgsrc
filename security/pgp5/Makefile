@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.46 2017/01/19 18:52:24 agc Exp $
+# $NetBSD: Makefile,v 1.48 2018/08/22 09:46:28 wiz Exp $
 
 DISTNAME=	pgp50i-unix-src
 PKGNAME=	pgp5-5.0i
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	security
 MASTER_SITES=	ftp://ftp.pgpi.com/pub/pgp/5.0/unix/
 MASTER_SITES+=	ftp://ftp.au.pgpi.com/pub/pgp/5.0/unix/
@@ -19,7 +19,6 @@ USE_TOOLS+=	perl
 CONFLICTS=	pgraf-[0-9]*  	# Both have a `pgps' executable
 
 WRKSRC=		${WRKDIR}/pgp50i/src
-CRYPTO=		YES
 GNU_CONFIGURE=	YES
 
 PGPLIB=	${PREFIX}/share/pgp5

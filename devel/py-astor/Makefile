@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.5 2016/06/08 17:43:28 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2018/07/06 08:09:50 adam Exp $
 
-DISTNAME=	astor-0.5
+DISTNAME=	astor-0.7.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=a/astor/}
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	https://github.com/pmaupin/astor
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/berkerpeksag/astor
 COMMENT=	Read/rewrite/write Python ASTs
 LICENSE=	2-clause-bsd
 

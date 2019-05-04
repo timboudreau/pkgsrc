@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2017/06/21 01:12:56 maya Exp $
+# $NetBSD: Makefile,v 1.31 2018/08/22 09:45:19 wiz Exp $
 
 DISTNAME=	g95_source
 PKGNAME=	g95-0.93
-PKGREVISION=	9
+PKGREVISION=	11
 CATEGORIES=	lang
 MASTER_SITES=	http://ftp.g95.org/v${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tgz
@@ -34,6 +34,15 @@ GCC_CONFIGURE_ARGS+=	--disable-libssp # to build on NetBSD 6.99.43
 LDFLAGS.Darwin+=	-Wl,-read_only_relocs,suppress
 
 .include "../../mk/bsd.prefs.mk"
+
+.if ${OPSYS} == "Linux"
+.  if exists(/usr/lib/${MACHINE_ARCH}-linux-gnu)
+MAKE_ENV+=             LIBRARY_PATH=/usr/lib/${MACHINE_ARCH}-linux-gnu
+.  endif
+MAKE_ENV+=             ac_cv_have_decl_asprintf=yes
+USE_TOOLS+=            perl:build
+.endif
+
 .if ${OPSYS} == "SunOS"
 GCC_CONFIGURE_ENV+=	OBJDUMP=/usr/sfw/bin/gobjdump
 GCC_CONFIGURE_ARGS+=	--without-gnu-ld --with-ld=/usr/ccs/bin/ld
@@ -42,15 +51,17 @@ GCC_CONFIGURE_ARGS+=	--without-gnu-as --with-as=/usr/ccs/bin/as
 .  else
 GCC_CONFIGURE_ARGS+=	--with-gnu-as --with-as=/usr/sfw/bin/gas
 .  endif
-.elif ${OPSYS} == "Linux"
-USE_TOOLS+=	perl:build
 .endif
+
+LIBGCC_SPEC=	${CC} -dumpspecs 2> /dev/null | grep -A 1 '^\*libgcc:$$' | tail -1
 
 post-extract:
 	${MKDIR} ${GCC_G95_DIR}
 	cd ${WRKSRC} && ${GTAR} -xzf libf95.a-${PKGVERSION_NOREV}.tar.gz
 
 pre-configure:
+	mv ${GCC_DIR}/gcc/gcc.c ${GCC_DIR}/gcc/gcc.c.patched
+	sed "s|%LIBGCC_SPEC%|\"${LIBGCC_SPEC:sh:Q}\"|" ${GCC_DIR}/gcc/gcc.c.patched > ${GCC_DIR}/gcc/gcc.c
 	cd ${WRKSRC}/libf95.a-${PKGVERSION_NOREV} && autoreconf -i
 	rm -f ${GCC_DIR}/config.sub ${GCC_DIR}/config.guess
 	ln -fs ${PKGSRCDIR}/mk/gnu-config/config.sub ${GCC_DIR}/config.sub

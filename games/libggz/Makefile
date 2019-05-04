@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2016/10/01 13:01:11 joerg Exp $
+# $NetBSD: Makefile,v 1.13 2018/04/17 22:29:32 wiz Exp $
 #
 
 DISTNAME=	libggz-0.0.14.1
-PKGREVISION=	7
+PKGREVISION=	8
 CATEGORIES=	games
 MASTER_SITES=	http://mirrors.ibiblio.org/pub/mirrors/ggzgamingzone/ggz/0.0.14.1/
 
@@ -13,9 +13,9 @@ COMMENT=	GGZ Gaming Zone libraries
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 
-CONFIGURE_ARGS+= --enable-debug-gdb
-CONFIGURE_ARGS+= --with-tls
-CONFIGURE_ARGS+= --with-gcrypt
+CONFIGURE_ARGS+=	--enable-debug-gdb
+CONFIGURE_ARGS+=	--with-tls
+CONFIGURE_ARGS+=	--with-gcrypt
 
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../security/gnutls/buildlink3.mk"

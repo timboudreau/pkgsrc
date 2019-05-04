@@ -1,15 +1,20 @@
-# $NetBSD: Makefile,v 1.47 2017/02/12 06:25:33 ryoon Exp $
+# $NetBSD: Makefile,v 1.63 2019/04/25 07:33:00 maya Exp $
 
-PKGREVISION= 3
+PKGREVISION= 2
 .include "Makefile.common"
 
 COMMENT=	Intelligent Input Bus
 
 DEPENDS+=	${PYPKGPREFIX}-gobject3-[0-9]*:../../devel/py-gobject3
+BUILD_DEPENDS+=	cldr-emoji-annotation>=34.0.0.0:../../textproc/cldr-emoji-annotation
+BUILD_DEPENDS+=	unicode-character-database-[0-9]*:../../textproc/unicode-character-database
+BUILD_DEPENDS+=	unicode-emoji-[0-9]*:../../textproc/unicode-emoji
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_TOOLS+=	pkg-config intltool msgfmt gmake
+# XXX fails without GNU msgfmt
+_TOOLS_USE_PKGSRC.msgfmt=	yes
+USE_TOOLS+=	pkg-config intltool gmsgfmt gmake msgmerge
 USE_LANGUAGES=	c c++
 USE_PKGLOCALEDIR=	yes
 
@@ -25,6 +30,9 @@ CONFIGURE_ARGS+=	--enable-gtk3
 CONFIGURE_ARGS+=	--enable-surrounding-text
 CONFIGURE_ARGS+=	--enable-introspection=yes
 CONFIGURE_ARGS+=	--with-python=${PYTHONBIN}
+CONFIGURE_ARGS+=	--with-unicode-emoji-dir=${PREFIX}/share/unicode/emoji
+CONFIGURE_ARGS+=	--with-emoji-annotation-dir=${PREFIX}/share/unicode/cldr/common/annotations
+CONFIGURE_ARGS+=	--with-ucd-dir=${PREFIX}/share/unicode/ucd
 
 SUBST_CLASSES+=		dbus
 SUBST_STAGE.dbus=	post-configure
@@ -47,8 +55,6 @@ CONF_FILES+=		${PREFIX}/share/examples/ibus/dconf/profile/ibus \
 BUILDLINK_TRANSFORM+=	rm:-Wno-unused-but-set-variable
 .endif
 
-BUILDLINK_API_DEPENDS.GConf+=		GConf>=2.12
-.include "../../devel/GConf/schemas.mk"
 .include "../../devel/glib2/schemas.mk"
 .include "../../devel/dconf/database.mk"
 .include "../../devel/dconf/buildlink3.mk"
@@ -59,6 +65,8 @@ BUILDLINK_DEPMETHOD.gobject-introspection+=	build
 BUILDLINK_API_DEPENDS.glib2+=		glib2>=2.26.0
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
+BUILDLINK_DEPMETHOD.vala+=	build
+.include "../../lang/vala/buildlink3.mk"
 PY_PATCHPLIST=	yes
 .include "../../sysutils/libnotify/buildlink3.mk"
 .include "../../textproc/iso-codes/buildlink3.mk"

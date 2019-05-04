@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.35 2015/10/23 10:58:28 tnn Exp $
+# $NetBSD: Makefile,v 1.38 2019/03/20 16:35:26 tnn Exp $
 
 DISTNAME=	# empty
-PKGNAME=	modular-xorg-apps-1.14.1.7
+PKGNAME=	modular-xorg-apps-1.14.1.10
 CATEGORIES=	meta-pkgs x11
 MASTER_SITES=	${MASTER_SITE_XORG:=app/}
 DISTFILES=	# empty
@@ -32,8 +32,6 @@ DEPENDS+=	mkcomposecache-[0-9]*:../../x11/mkcomposecache
 DEPENDS+=	modular-xorg-xephyr-[0-9]*:../../x11/modular-xorg-xephyr
 .endif
 DEPENDS+=	oclock-[0-9]*:../../time/oclock
-DEPENDS+=	lbxproxy-[0-9]*:../../x11/lbxproxy
-DEPENDS+=	proxymngr-[0-9]*:../../x11/proxymngr
 DEPENDS+=	rstart-[0-9]*:../../x11/rstart
 DEPENDS+=	setxkbmap-[0-9]*:../../x11/setxkbmap
 DEPENDS+=	transset-[0-9]*:../../x11/transset
@@ -47,6 +45,7 @@ DEPENDS+=	xclock-[0-9]*:../../time/xclock
 DEPENDS+=	xcmsdb-[0-9]*:../../x11/xcmsdb
 DEPENDS+=	xconsole-[0-9]*:../../x11/xconsole
 DEPENDS+=	xcursorgen-[0-9]*:../../x11/xcursorgen
+DEPENDS+=	xcursor-themes-[0-9]*:../../x11/xcursor-themes
 DEPENDS+=	xdbedizzy-[0-9]*:../../x11/xdbedizzy
 DEPENDS+=	xditview-[0-9]*:../../x11/xditview
 DEPENDS+=	xdm-[0-9]*:../../x11/xdm
@@ -79,8 +78,6 @@ DEPENDS+=	xmessage-[0-9]*:../../x11/xmessage
 DEPENDS+=	xmh-[0-9]*:../../x11/xmh
 DEPENDS+=	xmodmap-[0-9]*:../../x11/xmodmap
 DEPENDS+=	xmore-[0-9]*:../../x11/xmore
-DEPENDS+=	xplsprinters-[0-9]*:../../x11/xplsprinters
-DEPENDS+=	xprehashprinterlist-[0-9]*:../../x11/xprehashprinterlist
 DEPENDS+=	xpr-[0-9]*:../../x11/xpr
 DEPENDS+=	xprop-[0-9]*:../../x11/xprop
 DEPENDS+=	xrandr-[0-9]*:../../x11/xrandr

@@ -1,7 +1,8 @@
-# $NetBSD: Makefile,v 1.86 2017/05/24 19:41:03 adam Exp $
+# $NetBSD: Makefile,v 1.99 2019/04/18 10:10:03 adam Exp $
 
 .include "../../databases/sqlite3/Makefile.common"
 
+DISTNAME=	sqlite-autoconf-${SQLITE3_DISTVERSION}
 PKGNAME=	sqlite3-tcl-${SQLITE3_VERSION}
 CATEGORIES=	databases
 

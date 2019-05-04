@@ -347,7 +347,7 @@ fake_crc32(unsigned long crc, const void *buff, size_t len)
 	return 0;
 }
 
-static struct {
+static const struct {
 	int id;
 	const char * name;
 } compression_methods[] = {
@@ -511,7 +511,13 @@ process_extra(struct archive_read *a, const char *p, size_t extra_length, struct
 		case 0x5455:
 		{
 			/* Extended time field "UT". */
-			int flags = p[offset];
+			int flags;
+			if (datasize == 0) {
+				archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+				    "Incomplete extended time field");
+				return ARCHIVE_FAILED;
+			}
+			flags = p[offset];
 			offset++;
 			datasize--;
 			/* Flag bits indicate which dates are present. */
@@ -723,6 +729,11 @@ process_extra(struct archive_read *a, const char *p, size_t extra_length, struct
 		}
 		case 0x9901:
 			/* WinZip AES extra data field. */
+			if (datasize < 6) {
+				archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+				    "Incomplete AES field");
+				return ARCHIVE_FAILED;
+			}
 			if (p[offset + 2] == 'A' && p[offset + 3] == 'E') {
 				/* Vendor version. */
 				zip_entry->aes_extra.vendor =
@@ -879,6 +890,24 @@ zip_read_local_file_header(struct archive_read *a, struct archive_entry *entry,
 	/* If the mode is totally empty, set some sane default. */
 	if (zip_entry->mode == 0) {
 		zip_entry->mode |= 0664;
+	}
+
+	/* Windows archivers sometimes use backslash as the directory separator.
+	   Normalize to slash. */
+	if (zip_entry->system == 0 &&
+	    (wp = archive_entry_pathname_w(entry)) != NULL) {
+		if (wcschr(wp, L'/') == NULL && wcschr(wp, L'\\') != NULL) {
+			size_t i;
+			struct archive_wstring s;
+			archive_string_init(&s);
+			archive_wstrcpy(&s, wp);
+			for (i = 0; i < archive_strlen(&s); i++) {
+				if (s.s[i] == '\\')
+					s.s[i] = '/';
+			}
+			archive_entry_copy_pathname_w(entry, s.s);
+			archive_wstring_free(&s);
+		}
 	}
 
 	/* Make sure that entries with a trailing '/' are marked as directories
@@ -1056,6 +1085,7 @@ zip_read_local_file_header(struct archive_read *a, struct archive_entry *entry,
 		zip->end_of_entry = 1;
 
 	/* Set up a more descriptive format name. */
+        archive_string_empty(&zip->format_name);
 	archive_string_sprintf(&zip->format_name, "ZIP %d.%d (%s)",
 	    version / 10, version % 10,
 	    compression_name(zip->entry->compression));
@@ -2407,7 +2437,7 @@ read_eocd(struct zip *zip, const char *p, int64_t current_offset)
  * Examine Zip64 EOCD locator:  If it's valid, store the information
  * from it.
  */
-static void
+static int
 read_zip64_eocd(struct archive_read *a, struct zip *zip, const char *p)
 {
 	int64_t eocd64_offset;
@@ -2417,35 +2447,37 @@ read_zip64_eocd(struct archive_read *a, struct zip *zip, const char *p)
 
 	/* Central dir must be on first volume. */
 	if (archive_le32dec(p + 4) != 0)
-		return;
+		return 0;
 	/* Must be only a single volume. */
 	if (archive_le32dec(p + 16) != 1)
-		return;
+		return 0;
 
 	/* Find the Zip64 EOCD record. */
 	eocd64_offset = archive_le64dec(p + 8);
 	if (__archive_read_seek(a, eocd64_offset, SEEK_SET) < 0)
-		return;
+		return 0;
 	if ((p = __archive_read_ahead(a, 56, NULL)) == NULL)
-		return;
+		return 0;
 	/* Make sure we can read all of it. */
 	eocd64_size = archive_le64dec(p + 4) + 12;
 	if (eocd64_size < 56 || eocd64_size > 16384)
-		return;
+		return 0;
 	if ((p = __archive_read_ahead(a, (size_t)eocd64_size, NULL)) == NULL)
-		return;
+		return 0;
 
 	/* Sanity-check the EOCD64 */
 	if (archive_le32dec(p + 16) != 0) /* Must be disk #0 */
-		return;
+		return 0;
 	if (archive_le32dec(p + 20) != 0) /* CD must be on disk #0 */
-		return;
+		return 0;
 	/* CD can't be split. */
 	if (archive_le64dec(p + 24) != archive_le64dec(p + 32))
-		return;
+		return 0;
 
 	/* Save the central directory offset for later use. */
 	zip->central_directory_offset = archive_le64dec(p + 48);
+
+	return 32;
 }
 
 static int
@@ -2483,15 +2515,14 @@ archive_read_format_zip_seekable_bid(struct archive_read *a, int best_bid)
 			if (memcmp(p + i, "PK\005\006", 4) == 0) {
 				int ret = read_eocd(zip, p + i,
 				    current_offset + i);
-				if (ret > 0) {
-					/* Zip64 EOCD locator precedes
-					 * regular EOCD if present. */
-					if (i >= 20
-					    && memcmp(p + i - 20, "PK\006\007", 4) == 0) {
-						read_zip64_eocd(a, zip, p + i - 20);
-					}
-					return (ret);
+				/* Zip64 EOCD locator precedes
+				 * regular EOCD if present. */
+				if (i >= 20 && memcmp(p + i - 20, "PK\006\007", 4) == 0) {
+					int ret_zip64 = read_zip64_eocd(a, zip, p + i - 20);
+					if (ret_zip64 > ret)
+						ret = ret_zip64;
 				}
+				return (ret);
 			}
 			i -= 4;
 			break;

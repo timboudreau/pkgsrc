@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.4 2017/06/19 12:23:16 fhajny Exp $
+# $NetBSD: Makefile,v 1.8 2018/12/15 21:12:24 wiz Exp $
 
-DISTNAME=	libfastjson-0.99.6
+DISTNAME=	libfastjson-0.99.8
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.rsyslog.com/libfastjson/
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://github.com/rsyslog/libfastjson/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://github.com/rsyslog/libfastjson/
 COMMENT=	Fast json library for C
 LICENSE=	mit
 

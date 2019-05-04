@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.6 2017/03/20 15:56:11 taca Exp $
+$NetBSD: distinfo,v 1.8 2018/09/23 17:03:33 taca Exp $
 
-SHA1 (rack-cache-1.7.0.gem) = 218ceab60d56f85b5952526311071e24b69f303d
-RMD160 (rack-cache-1.7.0.gem) = 08434baff6503701b5701d231ed8cbdd5ba03e75
-SHA512 (rack-cache-1.7.0.gem) = d1ee71904a59abd8ec667d2b0f6f5b3aed0604acfa766c5a270be89fa9db5242879d5ff49effcad15563e22aa278a4dffccab4030bca5dca90cdb2b19e979975
-Size (rack-cache-1.7.0.gem) = 28160 bytes
+SHA1 (rack-cache-1.8.0.gem) = 994aa8e49daa965931a3d38709dd89c573b65961
+RMD160 (rack-cache-1.8.0.gem) = c3e723af330908b17fa5990151065bcb98413a85
+SHA512 (rack-cache-1.8.0.gem) = 897f6d482d2b5bbc981609184afa6db769a584e3732810861c2583d84338759fdd2d463a6183e3f8d9aa8b7133119ea1bd0d681f8aed4c7cea49ea8468f27902
+Size (rack-cache-1.8.0.gem) = 28160 bytes

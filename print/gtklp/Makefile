@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.42 2017/05/19 13:29:04 prlw1 Exp $
+# $NetBSD: Makefile,v 1.52 2018/11/14 22:22:17 kleink Exp $
 #
 
-DISTNAME=	gtklp-1.2.7
-PKGREVISION=	32
+DISTNAME=	gtklp-1.3.3
+PKGREVISION=	2
 CATEGORIES=	print
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gtklp/}
 EXTRACT_SUFX=	.src.tar.gz
@@ -19,5 +19,5 @@ MAKE_FLAGS+=		install_sh=${WRKSRC}/install-sh
 
 .include "../../devel/glib2/buildlink3.mk"
 .include "../../x11/gtk2/buildlink3.mk"
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

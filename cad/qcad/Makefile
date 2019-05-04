@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.67 2017/04/09 00:23:26 mef Exp $
+# $NetBSD: Makefile,v 1.72 2018/07/27 14:12:41 plunky Exp $
 #
 
-DISTNAME=		qcad-3.16.7.0
+DISTNAME=		qcad-3.21.2.3
 CATEGORIES=		cad
 MASTER_SITES=		${MASTER_SITE_GITHUB:=qcad/}
 EXTRACT_SUFX=		.zip
@@ -17,14 +17,12 @@ DEPENDS+=		bash-[0-9]*:../../shells/bash
 DEPENDS+=		qt4-tiff-[0-9]*:../../x11/qt4-tiff
 DEPENDS+=		qt4-sqlite3-[0-9]*:../../x11/qt4-sqlite3
 
-MAKE_JOBS_SAFE=		no
-
 USE_TOOLS+=		chmod find make pax
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_MESSAGE.paths=	Attending to hard-coded paths.
 SUBST_FILES.paths+=	shared.pri src/core/RS.cpp src/core/RSettings.cpp
 SUBST_FILES.paths+=	scripts/Help/ShowReadme/ShowReadme.js
@@ -69,6 +67,7 @@ do-install:
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../devel/libexecinfo/buildlink3.mk"
+.include "../../devel/zlib/buildlink3.mk"
 .include "../../x11/qt4-libs/buildlink3.mk"
 BUILDLINK_API_DEPENDS.qt4-libs+=	qt4-libs>=4.7
 .include "../../x11/qt4-tools/buildlink3.mk"

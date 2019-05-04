@@ -1,10 +1,10 @@
-$NetBSD: patch-src_machines_machine__pmax.cc,v 1.1 2017/06/29 17:51:46 christos Exp $
+$NetBSD: patch-src_machines_machine__pmax.cc,v 1.3 2019/01/04 13:35:17 ryoon Exp $
 
 sd0 -> rz0 so we can find our boot device.
 
---- src/machines/machine_pmax.cc.orig	2017-06-29 13:46:24.964078725 -0400
-+++ src/machines/machine_pmax.cc	2017-06-29 13:46:39.643612752 -0400
-@@ -789,7 +789,7 @@
+--- src/machines/machine_pmax.cc.orig	2018-12-07 06:29:22.000000000 +0000
++++ src/machines/machine_pmax.cc
+@@ -804,7 +804,7 @@ abort();
  			strlcpy(bootpath, "rz(0,0,0)", sizeof(bootpath));
  		else
  #endif

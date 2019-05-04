@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.19 2015/11/10 17:45:22 adam Exp $
+# $NetBSD: Makefile,v 1.21 2019/04/16 19:30:55 gdt Exp $
 
 .include "../../filesystems/libntfs/Makefile.common"
 
@@ -10,23 +10,21 @@ COMMENT=	NTFS driver with read and write support
 CONFIGURE_ARGS+=	--disable-ntfsprogs
 CONFIGURE_ARGS+=	--enable-mount-helper
 
-BUILD_DIRS=		src
+BUILD_DIRS=	src
 
 USE_TOOLS+=	pkg-config
 
-PLIST_VARS+=	lowntfs
 .include "../../mk/bsd.prefs.mk"
-SUBST_CLASSES+=		lowntfs
-SUBST_MESSAGE.lowntfs=	Dealing with lowntfs.
-SUBST_STAGE.lowntfs=	pre-configure
-SUBST_FILES.lowntfs=	src/Makefile.in
-.if ${OPSYS} == "NetBSD"
-SUBST_SED.lowntfs=	-e 's,@ENABLE_LOWNTFS@,\#,'
-.else
-SUBST_SED.lowntfs=	-e 's,@ENABLE_LOWNTFS@,,'
-PLIST.lowntfs=		yes
-.endif
 
 .include "../../filesystems/libntfs/buildlink3.mk"
+.if ${OPSYS} == "NetBSD"
+.include "../../filesystems/perfuse/buildlink3.mk"
+# fuse-ntfs-3g does not build with librefuse from netbsd-8.
+# \todo Add a mechanism in mk/fuse.buildlink3.mk to declare this, rather
+# than open-coding the changing of which bl3 line is used.
+.include "../../filesystems/fuse/buildlink3.mk"
+.else
+# Find this platform's preferred FUSE implementation (normal approach). 
 .include "../../mk/fuse.buildlink3.mk"
+.endif
 .include "../../mk/bsd.pkg.mk"

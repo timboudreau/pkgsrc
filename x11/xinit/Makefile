@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.24 2017/05/31 05:29:34 maya Exp $
+# $NetBSD: Makefile,v 1.27 2019/03/04 10:53:56 wiz Exp $
 
-DISTNAME=		xinit-1.3.4
-PKGREVISION=		2
+DISTNAME=		xinit-1.4.1
 CATEGORIES=		x11
 MASTER_SITES=		${MASTER_SITE_XORG:=app/}
 EXTRACT_SUFX=		.tar.bz2
@@ -14,8 +13,8 @@ LICENSE=		mit
 DEPENDS+=		mcookie-[0-9]*:../../x11/mcookie
 
 GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--with-xinit=${PREFIX}/bin/xinit
-USE_TOOLS+=		pkg-config xauth:run gmake # nb: gmake is needed on Darwin
+CONFIGURE_ARGS+=	--with-xinit=${PREFIX}/bin/xinit --without-launchd
+USE_TOOLS+=		pkg-config xauth:run
 
 TOOL_DEPENDS+=		tradcpp-[0-9]*:../../devel/tradcpp
 CONFIGURE_ENV+=		ac_cv_path_RAWCPP="${PREFIX}/bin/tradcpp -Uunix"

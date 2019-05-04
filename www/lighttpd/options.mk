@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.17 2017/06/22 03:06:26 schmonz Exp $
+# $NetBSD: options.mk,v 1.20 2019/01/29 12:31:46 wiz Exp $
 
 PKG_OPTIONS_VAR=	PKG_OPTIONS.lighttpd
 PKG_SUPPORTED_OPTIONS=	bzip2 fam gdbm inet6 ldap lua mysql ssl memcached geoip gssapi webdav
@@ -6,6 +6,8 @@ PKG_OPTIONS_LEGACY_OPTS+=	memcache:memcached
 PKG_SUGGESTED_OPTIONS=	inet6 ssl
 
 .include "../../mk/bsd.options.mk"
+
+PLIST_VARS+=		gdbm geoip gssapi ldap lua memcached mysql ssl
 
 ###
 ### Allow using bzip2 as a compression method in the "compress" module.
@@ -67,8 +69,9 @@ CONFIGURE_ARGS+=	--with-lua
 ### "trigger before download" and CML modules.
 ###
 .if !empty(PKG_OPTIONS:Mmemcached)
-.  include "../../devel/libmemcache/buildlink3.mk"
-CONFIGURE_ARGS+=	--with-memcache
+.  include "../../devel/libmemcached/buildlink3.mk"
+CONFIGURE_ARGS+=	--with-memcached
+PLIST.memcached=	yes
 .endif
 
 ###
@@ -87,6 +90,7 @@ PLIST.mysql=		yes
 .if !empty(PKG_OPTIONS:Mssl)
 .  include "../../security/openssl/buildlink3.mk"
 CONFIGURE_ARGS+=	--with-openssl=${SSLBASE:Q}
+PLIST.ssl=		yes
 .endif
 
 ###

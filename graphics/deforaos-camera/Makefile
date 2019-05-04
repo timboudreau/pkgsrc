@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.15 2017/02/12 06:25:25 ryoon Exp $
+# $NetBSD: Makefile,v 1.20 2018/11/14 22:21:36 kleink Exp $
 #
 
 DISTNAME=	Camera-0.2.0
 PKGNAME=	deforaos-camera-0.2.0
-PKGREVISION=	4
+PKGREVISION=	8
 CATEGORIES=	graphics
-MASTER_SITES=	http://www.defora.org/os/download/download/4419/
+MASTER_SITES=	https://www.defora.org/os/download/download/4419/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS desktop camera
 LICENSE=	gnu-gpl-v3
 

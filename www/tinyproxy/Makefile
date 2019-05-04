@@ -1,42 +1,39 @@
-# $NetBSD: Makefile,v 1.37 2017/02/18 05:59:23 nonaka Exp $
-#
+# $NetBSD: Makefile,v 1.39 2018/10/12 13:57:46 adam Exp $
 
-DISTNAME=	tinyproxy-1.8.3
-PKGREVISION=	6
+DISTNAME=	tinyproxy-1.10.0
 CATEGORIES=	www
-MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tinyproxy/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=tinyproxy/}
+GITHUB_RELEASE=	${PKGVERSION_NOREV}
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://tinyproxy.sourceforge.net/
+HOMEPAGE=	https://tinyproxy.github.io/
 COMMENT=	Lightweight HTTP/SSL proxy
 LICENSE=	gnu-gpl-v2
 
-GNU_CONFIGURE=	YES
-
-RCD_SCRIPTS=		tinyproxy
-PKG_SYSCONFSUBDIR=	tinyproxy
-
-.include "../../mk/bsd.prefs.mk"
-
 BUILD_DEPENDS+=		asciidoc-[0-9]*:../../textproc/asciidoc
 BUILD_DEFS+=		VARBASE
+
+GNU_CONFIGURE=		yes
+CONFIGURE_ARGS+=	--with-config=${PKG_SYSCONFDIR}/tinyproxy.conf
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
+CONFIGURE_ARGS+=	--enable-transparent-proxy
+
+RCD_SCRIPTS=		tinyproxy
+
+.include "../../mk/bsd.prefs.mk"
 
 TINYPROXY_USER?=	tinyproxy
 TINYPROXY_GROUP?=	tinyproxy
 PKG_GROUPS=		${TINYPROXY_GROUP}
 PKG_USERS=		${TINYPROXY_USER}:${TINYPROXY_GROUP}
 PKG_GROUPS_VARS+=	TINYPROXY_GROUP
-PKG_USERS_VARS+=	TINYPROXY_USER
+PKG_USERS_VARS=		TINYPROXY_USER
 FILES_SUBST+=		TINYPROXY_USER=${TINYPROXY_USER:Q}
 FILES_SUBST+=		TINYPROXY_GROUP=${TINYPROXY_GROUP:Q}
 
-CONFIGURE_ARGS+=	--with-config=${PKG_SYSCONFDIR}/tinyproxy.conf
-CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
-CONFIGURE_ARGS+=	--enable-transparent-proxy
-
 EGDIR=		${PREFIX}/share/examples/tinyproxy
-
 CONF_FILES=	${EGDIR}/tinyproxy.conf.default ${PKG_SYSCONFDIR}/tinyproxy.conf
 
 SUBST_CLASSES+=		docs
@@ -49,7 +46,7 @@ SUBST_SED.docs+=	-e 's,@VARBASE@,${VARBASE},g'
 
 INSTALLATION_DIRS=	${EGDIR} share/doc/tinyproxy
 
-PLIST_SUBST+=		VARBASE=${VARBASE:Q}
+PLIST_SUBST+=		VARBASE=${VARBASE}
 PLIST_SUBST+=		TINYPROXY_USER=${TINYPROXY_USER:Q}
 PLIST_SUBST+=		TINYPROXY_GROUP=${TINYPROXY_GROUP:Q}
 PLIST_SUBST+=		MKDIR=${MKDIR:Q} RMDIR=${RMDIR:Q} TRUE=${TRUE:Q}

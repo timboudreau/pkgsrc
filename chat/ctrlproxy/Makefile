@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.10 2016/09/19 13:04:19 wiz Exp $
+# $NetBSD: Makefile,v 1.12 2018/04/17 22:29:35 wiz Exp $
 #
 
 DISTNAME=		ctrlproxy-3.0.8
-PKGREVISION=		6
+PKGREVISION=		7
 CATEGORIES=		chat
 MASTER_SITES=		http://www.ctrlproxy.org/releases/
 
@@ -26,7 +26,7 @@ INSTALLATION_DIRS+=	share/examples/ctrlproxy
 .include "options.mk"
 
 post-install:
-	cd ${WRKSRC}/doc && ${SETENV} ${MAKE_ENV} DESTDIR=${DESTDIR:Q} ${MAKE} install
+	cd ${WRKSRC}/doc && ${SETENV} ${MAKE_ENV} DESTDIR=${DESTDIR} ${MAKE} install
 	${INSTALL_DATA} ${WRKSRC}/README ${DESTDIR}${PREFIX}/share/doc/ctrlproxy/README
 	${INSTALL_DATA} ${WRKSRC}/motd \
 		${DESTDIR}${PREFIX}/share/examples/ctrlproxy/motd

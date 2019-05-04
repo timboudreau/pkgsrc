@@ -1,11 +1,9 @@
-# $NetBSD: Makefile,v 1.19 2017/04/22 21:03:23 adam Exp $
+# $NetBSD: Makefile,v 1.33 2019/04/25 19:43:17 adam Exp $
 
-DISTNAME=	qtxmlpatterns-opensource-src-${QTVERSION}
+DISTNAME=	qtxmlpatterns-everywhere-src-${QTVERSION}
 PKGNAME=	qt5-qtxmlpatterns-${QTVERSION}
-PKGREVISION=	7
 COMMENT=	Qt5 module for XML Patterns
 
-#NO_CONFIGURE=		yes
 BUILD_TARGET=		sub-tools
 
 INSTALL_ENV+=		INSTALL_ROOT=${DESTDIR}

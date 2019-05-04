@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.2 2016/02/01 09:53:08 prlw1 Exp $
+# $NetBSD: Makefile,v 1.4 2018/04/08 10:11:52 alnsn Exp $
 
-DISTNAME=	ljsyscall-0.11
+DISTNAME=	ljsyscall-0.12
 PKGNAME=	${DISTNAME:S/ljsyscall/${LUA_PKGPREFIX}-ljsyscall/}
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=justincormack/}

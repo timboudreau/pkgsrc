@@ -1,4 +1,4 @@
-# $NetBSD: bin-install.mk,v 1.25 2016/06/16 18:28:45 mspo Exp $
+# $NetBSD: bin-install.mk,v 1.28 2018/11/15 01:40:52 sevan Exp $
 #
 
 # This file provides the following targets:
@@ -27,15 +27,16 @@
 # XXX: This file contains implementation details from the "pkg" format,
 # for example the All/ directory and the @cwd.
 
-# List of sites carrying binary pkgs. Variables "rel" and "arch" are
-# replaced with OS release ("1.5", ...) and architecture ("mipsel", ...)
+# List of sites carrying binary packages. Shell Variables "rel" and
+# "arch" are replaced with OS release ("1.5", ...) and architecture
+# ("mipsel", ...).
 .if ${OPSYS} == "NetBSD"
 BINPKG_SITES?= \
 	http://cdn.NetBSD.org/pub/pkgsrc/packages/NetBSD/$${arch}/$${rel} \
 	http://ftp6.NetBSD.org/pub/pkgsrc/packages/NetBSD/$${arch}/$${rel}
 .elif ${OPSYS} == "Minix"
 BINPKG_SITES?= \
-	ftp://ftp.minix3.org/pub/minix/packages/$$(${UNAME} -r)/$${arch}
+	http://www.minix3.org/pkgsrc/packages/$$(${UNAME} -r)/$${arch}
 .elif ${OPSYS} == "DragonFly"
 BINPKG_SITES?= \
 	http://mirror-master.dragonflybsd.org/packages/$${arch}/DragonFly-$${rel}/stable
@@ -93,7 +94,7 @@ locked-su-do-bin-install:
 .if !empty(USE_CROSS_COMPILE:M[yY][eE][sS])
 	${RUN} ${_BIN_INSTALL_PREPARE_CMD}				\
 	${STEP_MSG} "Installing ${PKGNAME} from $$pkg_path";		\
-	if ${PKGSRC_SETENV} PKG_PATH="$$pkg_path" ${PKG_ADD} -m ${MACHINE_ARCH} -I -p ${_CROSS_DESTDIR}${PREFIX} ${_BIN_INSTALL_FLAGS} ${PKGNAME_REQD:Q}${PKG_SUFX}; then \
+	if ${PKGSRC_SETENV} PKG_PATH="$$pkg_path" ${PKGTOOLS_ENV} ${PKG_ADD} -m ${MACHINE_ARCH} -I -p ${_CROSS_DESTDIR}${PREFIX} ${_BIN_INSTALL_FLAGS} ${PKGNAME_REQD:Q}${PKG_SUFX}; then \
 		${ECHO} "Fixing recorded cwd...";			\
 		${SED} -e 's|@cwd ${_CROSS_DESTDIR}|@cwd |' ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS > ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS.tmp; \
 		${MV} ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS.tmp ${_PKG_DBDIR}/${PKGNAME:Q}/+CONTENTS; \
@@ -103,7 +104,7 @@ locked-su-do-bin-install:
 	${RUN} ${_BIN_INSTALL_PREPARE_CMD}				\
 	pkgpattern=${PKGNAME_REQD:Q};					\
 	${STEP_MSG} "Installing $$pkgpattern from $$pkg_path";		\
-	if ${PKGSRC_SETENV} PKG_PATH="$$pkg_path" ${PKG_ADD} ${_BIN_INSTALL_FLAGS} "$$pkgpattern"; then \
+	if ${PKGSRC_SETENV} PKG_PATH="$$pkg_path" ${PKGTOOLS_ENV} ${PKG_ADD} ${_BIN_INSTALL_FLAGS} "$$pkgpattern"; then \
 		installed=`${PKG_INFO} -e "$$pkgpattern"`;		\
 		${ECHO} "$$installed successfully installed.";		\
 	fi

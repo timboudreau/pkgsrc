@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.69 2017/06/18 18:01:42 morr Exp $
+# $NetBSD: Makefile,v 1.85 2019/03/16 17:55:04 jklos Exp $
 
 DISTNAME=		wordpress-${VERSION}
-VERSION=		4.8
+VERSION=		5.1.1
 CATEGORIES=		www
-MASTER_SITES=		http://wordpress.org/
+MASTER_SITES=		https://wordpress.org/
 
 MAINTAINER=		morr@NetBSD.org
-HOMEPAGE=		http://wordpress.org/
+HOMEPAGE=		https://wordpress.org/
 COMMENT=		Blogging tool written in php
 LICENSE=		gnu-gpl-v2
 
@@ -45,7 +45,7 @@ DEPENDS+=		${PHP_PKG_PREFIX}-zlib>=5.6.0:../../archivers/php-zlib
 
 SUBST_CLASSES+=		conf
 SUBST_MESSAGE.conf=	Fixing pathnames in configuration file.
-SUBST_STAGE.conf=	post-patch
+SUBST_STAGE.conf=	pre-configure
 SUBST_FILES.conf=	../wordpress.conf
 SUBST_SED.conf=		-e "s,@WPHOME@,${WPHOME},g"
 .if !empty(PKG_OPTIONS:Map-php) && ${PKG_APACHE} == "apache24"

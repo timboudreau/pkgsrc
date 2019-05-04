@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.6 2017/04/30 01:22:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.13 2018/12/13 19:52:22 adam Exp $
 
 DISTNAME=	baloo-${_KDE_VERSION}
 PKGNAME=	libbaloo4-${_KDE_VERSION}
-PKGREVISION=	5
+PKGREVISION=	12
 CATEGORIES=	sysutils
 COMMENT=	KDE framework for searching and managing user metadata
 LICENSE=	gnu-gpl-v3
@@ -23,6 +23,7 @@ post-install:
 	rm -rf ${DESTDIR}${PREFIX}/share/akonadi
 	rm -rf ${DESTDIR}${PREFIX}/share/dbus-1
 	rm -rf ${DESTDIR}${PREFIX}/share/icons
+	rm -rf ${DESTDIR}${PREFIX}/share/polkit-1
 
 .include "../../devel/qjson/buildlink3.mk"
 .include "../../mail/akonadi/buildlink3.mk"

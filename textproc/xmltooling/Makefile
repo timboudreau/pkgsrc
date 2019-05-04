@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.25 2017/04/30 01:22:01 ryoon Exp $
+# $NetBSD: Makefile,v 1.32 2019/01/24 16:46:21 perseant Exp $
 
 DISTNAME=	xmltooling-1.5.6
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	textproc
 MASTER_SITES=	http://www.shibboleth.net/downloads/c++-opensaml/2.5.5/
 
@@ -10,7 +10,7 @@ HOMEPAGE=	http://shibboleth.net/
 COMMENT=	High level interface for XML processing library
 LICENSE=	apache-2.0
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++11
 USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--disable-doxygen-doc

@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.2 2018/11/25 13:12:30 wen Exp $
+
+SHA1 (Test-HTTP-LocalServer-0.64.tar.gz) = 8f5c26786c975562c7b0698545126a5517d00997
+RMD160 (Test-HTTP-LocalServer-0.64.tar.gz) = bb413f07e9739ae9c19307f0390c51a929bd975d
+SHA512 (Test-HTTP-LocalServer-0.64.tar.gz) = 4e9a8f0f2eb131d214f20ac00ebaafba4ac0d7d4e18abef7e615ca7a613a5f6572218af83ece1524376eb9097a4302675c57519ecb90cd4506493ea662405dbb
+Size (Test-HTTP-LocalServer-0.64.tar.gz) = 24118 bytes

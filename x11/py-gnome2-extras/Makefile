@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.81 2017/02/12 06:24:57 ryoon Exp $
+# $NetBSD: Makefile,v 1.92 2019/04/26 14:12:50 maya Exp $
 
 DISTNAME=	gnome-python-extras-2.25.3
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/gnome-python/gnome2/}
-PKGREVISION=	31
+PKGREVISION=	38
 CATEGORIES=	x11 python
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-python-extras/2.25/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	Python binding for GNOME2
 
 # need xsltproc to build docs
@@ -16,7 +16,7 @@ BUILD_DEPENDS+=	libxslt-[0-9]*:../../textproc/libxslt
 BUILD_DEPENDS+=	docbook-xsl-[0-9]*:../../textproc/docbook-xsl
 
 PY_PATCHPLIST=	YES
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-ORBit via py-gnome2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # py-ORBit via py-gnome2
 USE_LIBTOOL=	YES
 PKGCONFIG_OVERRIDE+=	gnome-python-extras-2.0.pc.in
 GNU_CONFIGURE=	YES

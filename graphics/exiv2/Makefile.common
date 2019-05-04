@@ -1,19 +1,25 @@
-# $NetBSD: Makefile.common,v 1.6 2015/10/08 12:20:45 fhajny Exp $
+# $NetBSD: Makefile.common,v 1.9 2018/02/02 17:43:51 jperkin Exp $
 #
 # used by graphics/exiv2/Makefile
 # used by graphics/exiv2-organize/Makefile
 
-DISTNAME=	exiv2-0.25
+VER=		0.26
+DISTNAME=	exiv2-${VER}-trunk
+PKGNAME=	${DISTNAME:S/-trunk//}
 CATEGORIES=	graphics
-MASTER_SITES=	http://www.exiv2.org/
+MASTER_SITES=	http://www.exiv2.org/builds/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://www.exiv2.org/
 COMMENT=	Image metadata manipulation
 LICENSE=	gnu-gpl-v2
 
+WRKSRC=		${WRKDIR}/${DISTNAME:S/${VER}-//}
 DISTINFO_FILE=	${.CURDIR}/../../graphics/exiv2/distinfo
 PATCHDIR=	${.CURDIR}/../../graphics/exiv2/patches
+
+# for msgfilter
+BUILD_DEPENDS+=	gettext-tools-[0-9]*:../../devel/gettext-tools
 
 GCC_REQD+=		3.3
 USE_LANGUAGES=		c c++

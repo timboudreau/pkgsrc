@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.13 2017/06/05 14:23:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.15 2018/08/22 09:44:02 wiz Exp $
 
-DISTNAME=	File-Save-Home-0.10
+DISTNAME=	File-Save-Home-0.11
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5
@@ -11,7 +11,8 @@ HOMEPAGE=	http://search.cpan.org/dist/File-Save-Home/
 COMMENT=	Place file safely under user home directory
 LICENSE=	${PERL5_LICENSE}
 
-DEPENDS+=	p5-String-PerlIdentifier-[0-9]*:../../devel/p5-String-PerlIdentifier
+# TEST_DEPENDS
+BUILD_DEPENDS+=	p5-String-Random-[0-9]*:../../security/p5-String-Random
 
 PERL5_PACKLIST=		auto/File/Save/Home/.packlist
 

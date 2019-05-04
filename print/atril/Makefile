@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.13 2017/07/07 12:45:54 jperkin Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/25 07:33:14 maya Exp $
 
+PKGREVISION= 4
 .include "../../meta-pkgs/mate/Makefile.common"
 
 DISTNAME=	atril-${VERSION}
-PKGREVISION=	1
 CATEGORIES=	print
 
 COMMENT=	Simple multi-page document viewer for the MATE environment
 
 USE_LANGUAGES=	c c++
 
+TOOL_DEPENDS+=	gdbus-codegen-[0-9]*:../../devel/gdbus-codegen
+
 PKGCONFIG_OVERRIDE+=	atril-document.pc.in
 PKGCONFIG_OVERRIDE+=	atril-view.pc.in
-
-CONFIGURE_ARGS+=	--disable-introspection
 
 .include "options.mk"
 
@@ -23,9 +23,7 @@ CONFIGURE_ARGS+=	--disable-introspection
 .include "../../x11/mate-desktop/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
-.include "../../print/poppler-glib/buildlink3.mk"
 .include "../../textproc/libxml2/buildlink3.mk"
-.include "../../security/libsecret/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../mk/bsd.pkg.mk"

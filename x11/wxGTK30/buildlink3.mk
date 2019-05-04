@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.9 2017/02/12 06:25:00 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.18 2018/12/13 21:21:55 adam Exp $
 
 BUILDLINK_TREE+=	wxGTK30
 
@@ -6,13 +6,16 @@ BUILDLINK_TREE+=	wxGTK30
 WXGTK30_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.wxGTK30+=	wxGTK30>=3.0.1
-BUILDLINK_ABI_DEPENDS.wxGTK30+=	wxGTK30>=3.0.2nb10
+BUILDLINK_ABI_DEPENDS.wxGTK30+=	wxGTK30>=3.0.4nb2
 BUILDLINK_PKGSRCDIR.wxGTK30?=	../../x11/wxGTK30
 
 BUILDLINK_INCDIRS.wxGTK30+=	include/wx-3.0
-PREPEND_PATH+=      		${PREFIX}/libexec/wx-3.0
+PREPEND_PATH+=			${PREFIX}/libexec/wx-3.0
 CONFIGURE_ARGS+=		--with-wx-version=3.0
 CONFIGURE_ARGS+=		--with-wx-config=${PREFIX}/libexec/wx-3.0/wx-config
+
+pkgbase := wxGTK30
+.include "../../mk/pkg-build-options.mk"
 
 .include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
@@ -22,7 +25,11 @@ CONFIGURE_ARGS+=		--with-wx-config=${PREFIX}/libexec/wx-3.0/wx-config
 .if ${OPSYS} != "Darwin"
 .include "../../graphics/MesaLib/buildlink3.mk"
 .include "../../graphics/glu/buildlink3.mk"
+.  if !empty(PKG_BUILD_OPTIONS.wxGTK30:Mgtk2)
 .include "../../x11/gtk2/buildlink3.mk"
+.  else
+.include "../../x11/gtk3/buildlink3.mk"
+.  endif
 .include "../../x11/libSM/buildlink3.mk"
 .include "../../x11/libXxf86vm/buildlink3.mk"
 .endif

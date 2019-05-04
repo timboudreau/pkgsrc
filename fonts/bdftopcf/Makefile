@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.12 2014/12/31 14:12:49 wiz Exp $
+# $NetBSD: Makefile,v 1.14 2018/03/07 11:57:29 wiz Exp $
 
-DISTNAME=		bdftopcf-1.0.5
+DISTNAME=		bdftopcf-1.1
+PKGREVISION=		1
 CATEGORIES=		fonts
 MASTER_SITES=		${MASTER_SITE_XORG:=app/}
 EXTRACT_SUFX=		.tar.bz2
@@ -14,5 +15,5 @@ GNU_CONFIGURE=		yes
 
 CONFIGURE_ENV+=		APP_MAN_SUFFIX=1
 
-.include "../../x11/libXfont/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

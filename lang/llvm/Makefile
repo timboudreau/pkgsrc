@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.24 2017/07/11 19:47:37 adam Exp $
+# $NetBSD: Makefile,v 1.38 2019/04/25 07:33:02 maya Exp $
 #
 # when updating this, please also update:
 # devel/include-what-you-use
@@ -6,14 +6,22 @@
 # devel/polly
 # lang/clang
 # lang/clang-static-analyzer
-# lang/libLLVM
+# lang/compiler-rt
+# lang/libcxx
+# lang/libcxxabi
 # lang/libunwind
+#
+# Do not update:
+#   lang/libLLVM
+# because pkgsrc provides multiple versions and lang/libLLVM is
+# logically libLLVM4.
 #
 # Always update all */buildlink3.mk to require the latest stable release
 # version in BUILDLINK_API_DEPENDS, as there is no backwards compatibility
 
-DISTNAME=	llvm-4.0.1.src
+DISTNAME=	llvm-7.0.1.src
 PKGNAME=	${DISTNAME:S/.src//}
+PKGREVISION=	2
 CATEGORIES=	lang devel
 MASTER_SITES=	http://llvm.org/releases/${PKGVERSION_NOREV}/
 EXTRACT_SUFX=	.tar.xz
@@ -48,11 +56,9 @@ REPLACE_PERL+=		utils/*.pl
 REPLACE_PERL+=		utils/codegen-diff
 REPLACE_PERL+=		utils/llvm-native-gxx
 
-REPLACE_PYTHON+=	*.py
-REPLACE_PYTHON+=	*/*.py
-REPLACE_PYTHON+=	*/*/*.py
-REPLACE_PYTHON+=	*/*/*/*.py
-REPLACE_PYTHON+=	*/*/*/*/*.py
+REPLACE_PYTHON+=	tools/opt-viewer/*.py
+REPLACE_PYTHON+=	tools/sancov/*.py
+REPLACE_PYTHON+=	utils/*.py
 REPLACE_PYTHON+=	utils/Misc/zkill
 REPLACE_PYTHON+=	utils/bisect
 REPLACE_PYTHON+=	utils/clang-parse-diagnostics-file
@@ -93,11 +99,13 @@ CXXFLAGS+=	-march=i586
 # replacing config.guess is required even for cmake.
 # It is used to detect correct LLVM_HOST_TRIPLE, e.g. for NetBSD/evbarm.
 post-extract:
-	${RUN} mkdir -p ${WRKDIR}/build
+	${MKDIR} ${WRKDIR}/build
 .for f in config.guess config.sub
 	cp ../../mk/gnu-config/${f} ${WRKSRC}/cmake/${f}
 .endfor
 
 .include "../../devel/zlib/buildlink3.mk"
+.include "../../lang/python/application.mk"
 .include "../../lang/python/tool.mk"
+.include "../../textproc/libxml2/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

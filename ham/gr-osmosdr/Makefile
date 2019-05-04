@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.8 2017/04/30 01:21:46 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/25 07:33:00 maya Exp $
 
 DISTNAME=		gr-osmosdr-0.1.4
-PKGREVISION=		5
+PKGREVISION=		12
 CATEGORIES=		ham
 MASTER_SITES+=		http://git.osmocom.org/gr-osmosdr/snapshot/
 
@@ -29,6 +29,8 @@ REPLACE_PYTHON+=	apps/osmocom_siggen_base.py
 .include	"../../devel/libusb1/buildlink3.mk"
 .include	"../../devel/orc/buildlink3.mk"
 
+# \todo Clearly threre is some ordering scheme.  Explain it.
+
 .include	"../../ham/uhd/buildlink3.mk"
 .include	"../../lang/python/application.mk"
 .include	"../../lang/python/extension.mk"
@@ -36,7 +38,9 @@ REPLACE_PYTHON+=	apps/osmocom_siggen_base.py
 .include	"../../ham/rtl-sdr/buildlink3.mk"
 .include	"../../ham/libmirisdr/buildlink3.mk"
 .include	"../../ham/osmo-sdr/buildlink3.mk"
-.include	"../../ham/gr-fcdproplus/buildlink3.mk"
+# \todo Re-enable gr-fcdproplus when it works, or optionize it.
+# gr-fcdproplus does not build at the moment
+#.include	"../../ham/gr-fcdproplus/buildlink3.mk"
 .include	"../../ham/hackrf/buildlink3.mk"
 
 .include	"../../ham/gnuradio-core/buildlink3.mk"

@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.1 2013/05/26 22:57:53 rodent Exp $
+# $NetBSD: buildlink3.mk,v 1.3 2018/02/10 13:53:46 khorben Exp $
 
 BUILDLINK_TREE+=	libticables2
 
@@ -13,9 +13,9 @@ pkgbase := libticables2
 
 
 .if !empty(PKG_BUILD_OPTIONS.libticables2:Mlibusb)
-.if empty(PKG_BUILD_OPTIONS.libticables2:Mlibusb1)
-.include "../../devel/libusb/buildlink3.mk"
-.endif
+.  if empty(PKG_BUILD_OPTIONS.libticables2:Mlibusb1)
+.include "../../mk/libusb.buildlink3.mk"
+.  endif
 .endif
 
 .if !empty(PKG_BUILD_OPTIONS.libticables2:Mlibusb1)

@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.4 2014/10/09 14:07:15 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.6 2018/03/07 11:57:38 wiz Exp $
 
 DISTNAME=		libXrandr-1.0.2
 PKGNAME=		Xrandr-1.0.2
-PKGREVISION=		3
+PKGREVISION=		4
 CATEGORIES=		x11 devel
-MASTER_SITES=		http://xlibs.freedesktop.org/release/
+MASTER_SITES=		https://xlibs.freedesktop.org/release/
 EXTRACT_SUFX=		.tar.bz2
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://xlibs.freedesktop.org/
+HOMEPAGE=		https://xlibs.freedesktop.org/
 COMMENT=		X RandR extension (Library)
 
 CONFLICTS+=		libXrandr-[0-9]*
@@ -24,6 +23,5 @@ BUILDLINK_API_DEPENDS.Xrender+=	Xrender>=0.8
 
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../x11/libXrender/buildlink3.mk"
-.include "../../x11/randrproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.68 2017/05/19 13:29:04 prlw1 Exp $
+# $NetBSD: Makefile,v 1.85 2018/11/14 22:22:17 kleink Exp $
 
-VERSION=	5.2.12
+VERSION=	5.2.14
 DISTNAME=	gutenprint-${VERSION}
 PKGNAME=	gutenprint-lib-${VERSION}
-PKGREVISION=	1
+PKGREVISION=	4
 CATEGORIES=	print
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=gimp-print/}
 EXTRACT_SUFX=	.tar.bz2
@@ -87,6 +87,8 @@ CONFIGURE_ARGS+=	--without-readline
 
 # XXX Make command.types be a CONF_FILE
 
+# XXX Replace patch-aa with SUBST_SED to use PREFIX rather than hard-coded /usr/pkg.
+
 TEST_TARGET=		check
 
 # A libintl is optional in gutenprint.
@@ -97,6 +99,6 @@ TEST_TARGET=		check
 .include "../../x11/gtk2/buildlink3.mk"
 
 # gutenprint-cups: cups support
-.include "../../print/cups/buildlink3.mk"
+.include "../../print/cups-base/buildlink3.mk"
 
 .include "../../mk/bsd.pkg.mk"

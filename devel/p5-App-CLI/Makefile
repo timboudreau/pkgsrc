@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.18 2017/06/12 12:21:52 maya Exp $
+# $NetBSD: Makefile,v 1.22 2018/08/22 09:43:36 wiz Exp $
 
-DISTNAME=	App-CLI-0.313
+DISTNAME=	App-CLI-0.50
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	6
+PKGREVISION=	1
 CATEGORIES=	devel perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=App/}
 
@@ -11,13 +11,12 @@ HOMEPAGE=	http://search.cpan.org/dist/App-CLI/
 COMMENT=	Dispatcher module for command line interface programs
 LICENSE=	${PERL5_LICENSE}
 
+DEPENDS+=	p5-Capture-Tiny-[0-9]*:../../devel/p5-Capture-Tiny
+DEPENDS+=	p5-Class-Load-[0-9]*:../../devel/p5-Class-Load
+
 USE_LANGUAGES=	# empty
 
-MAKE_ENV+=	PERL_USE_UNSAFE_INC=1
 PERL5_PACKLIST=	auto/App/CLI/.packlist
-
-#IC5.8.8DEPENDS+=       p5-Getopt-Long>=2.35:../../devel/p5-Getopt-Long
-#DEPENDS+=	{perl>=5.10.0,p5-Locale-Maketext-Simple>=0.16}:../../misc/p5-Locale-Maketext-Simple
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,23 +1,30 @@
-# $NetBSD: Makefile,v 1.20 2016/06/08 17:43:24 wiz Exp $
+# $NetBSD: Makefile,v 1.24 2019/02/21 10:28:54 adam Exp $
 
-DISTNAME=		Pyro4-4.22
-PKGNAME=		${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=		devel
-MASTER_SITES=		${MASTER_SITE_PYPI:=P/Pyro4/}
+DISTNAME=	Pyro4-4.75
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	devel python
+MASTER_SITES=	${MASTER_SITE_PYPI:=P/Pyro4/}
 
-MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://pyro.sourceforge.net/
-COMMENT=		Distributed Object Technology system in Python
-LICENSE=		mit
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://github.com/irmen/Pyro4
+COMMENT=	Distributed Object Technology system in Python
+LICENSE=	mit
 
-DEPENDS+= ${PYPKGPREFIX}-serpent-[0-9]*:../../devel/py-serpent
+DEPENDS+=	${PYPKGPREFIX}-serpent>=1.27:../../devel/py-serpent
 
-# only needed for test
-#DEPENDS+= ${PYPKGPREFIX}-nose-[0-9]*:../../devel/py-nose
-#DEPENDS+= ${PYPKGPREFIX}-unittest2-[0-9]*:../../devel/py-unittest2
-#DEPENDS+= ${PYPKGPREFIX}-coverage-[0-9]*:../../devel/py-coverage
+USE_LANGUAGES=	# none
+
+post-install:
+	cd ${DESTDIR}${PREFIX}/bin && \
+	${MV} pyro4-check-config pyro4-check-config-${PYVERSSUFFIX} && \
+	${MV} pyro4-flameserver pyro4-flameserver-${PYVERSSUFFIX} && \
+	${MV} pyro4-httpgateway pyro4-httpgateway-${PYVERSSUFFIX} && \
+	${MV} pyro4-ns pyro4-ns-${PYVERSSUFFIX} && \
+	${MV} pyro4-nsc pyro4-nsc-${PYVERSSUFFIX} && \
+	${MV} pyro4-test-echoserver pyro4-test-echoserver-${PYVERSSUFFIX} || ${TRUE}
+
 do-test:
-	cd ${WRKSRC}/tests; ${PYTHONBIN} run_suite.py
+	cd ${WRKSRC}/tests && ${PYTHONBIN} run_testsuite.py
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.16 2016/07/09 06:38:42 wiz Exp $
+# $NetBSD: Makefile,v 1.18 2018/08/22 09:45:53 wiz Exp $
 
 DISTNAME=	gnapfetch-0.3
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	net
-MASTER_SITES=	http://entropy.atlantic.net/gnapfetch/
+#MASTER_SITES=	http://entropy.atlantic.net/gnapfetch/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://entropy.atlantic.net/gnapfetch/
+#HOMEPAGE=	http://entropy.atlantic.net/gnapfetch/
 COMMENT=	Update/maintain opennap servers for gnapster/TekNap
 
 USE_TOOLS+=		perl:run

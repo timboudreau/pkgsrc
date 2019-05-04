@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.11 2017/02/12 06:25:09 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2018/11/14 22:21:11 kleink Exp $
 #
 
 DISTNAME=	tilp2-1.16
-PKGREVISION=	10
+PKGREVISION=	14
 CATEGORIES=	comms
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=tilp/}
 EXTRACT_SUFX=	.tar.bz2
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://lpg.ticalc.org/prj_tilp/
 COMMENT=	Multi-platform linking program for TI graphing calculators
 LICENSE=	gnu-gpl-v2

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.172 2017/04/30 01:21:26 ryoon Exp $
+# $NetBSD: Makefile,v 1.186 2018/12/13 19:51:39 adam Exp $
 
 DISTNAME=	amarok-${VERS}
 VERS=		2.8.0
-PKGREVISION=	31
+PKGREVISION=	43
 CATEGORIES=	audio multimedia
 MASTER_SITES=	${MASTER_SITE_KDE:=amarok/${VERS}/src/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://amarok.kde.org/
+HOMEPAGE=	https://amarok.kde.org/
 COMMENT=	KDE4 audio player
 LICENSE=	gnu-gpl-v2 AND gnu-fdl-v1.2 AND gnu-lgpl-v2.1
 
@@ -30,7 +30,7 @@ CMAKE_ARGS+=	-DKDE4_BUILD_TESTS:BOOL=OFF
 REPLACE_PERL+=	src/kconf_update/amarok-2.4.1-tokens_syntax_update.pl
 
 SUBST_CLASSES+=		mysql
-SUBST_STAGE.mysql=	post-patch
+SUBST_STAGE.mysql=	pre-configure
 SUBST_MESSAGE.mysql=	Fixup paths for MySQL embedded
 SUBST_FILES.mysql=	cmake/modules/FindMySQLAmarok.cmake
 SUBST_FILES.mysql+=	src/core-impl/collections/db/sql/mysqlecollection/CMakeLists.txt

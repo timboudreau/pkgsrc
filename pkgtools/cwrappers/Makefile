@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.20 2017/06/11 19:34:43 joerg Exp $
+# $NetBSD: Makefile,v 1.24 2018/03/25 20:45:25 joerg Exp $
 
-PKGNAME=		cwrappers-20170611
+PKGNAME=		cwrappers-20180325
 CATEGORIES=		pkgtools sysutils
 
 MAINTAINER=		joerg@NetBSD.org

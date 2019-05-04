@@ -1,5 +1,4 @@
-# $NetBSD: Makefile,v 1.23 2013/04/06 20:27:22 rodent Exp $
-#
+# $NetBSD: Makefile,v 1.26 2018/02/06 16:36:44 jperkin Exp $
 
 DISTNAME=	eieio-0.17
 PKGNAME=	${EMACS_PKGNAME_PREFIX}${DISTNAME}
@@ -10,10 +9,6 @@ MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=cedet/}
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://cedet.sourceforge.net/eieio.shtml
 COMMENT=	Enhanced Integration of Emacs Interpreted Objects
-
-EMACS_VERSIONS_ACCEPTED= \
-	emacs20 emacs21 emacs21nox emacs22 emacs22nox \
-	xemacs214 xemacs214nox xemacs215 xemacs215nox
 
 EMACS_MODULES+=	base
 MAKEFLAGS+=	EMACS=${EMACS_BIN:Q}

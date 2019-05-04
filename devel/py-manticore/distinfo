@@ -1,0 +1,6 @@
+$NetBSD: distinfo,v 1.4 2018/05/06 22:20:22 khorben Exp $
+
+SHA1 (manticore-0.1.9.tar.gz) = ae205157778b941b4431d2f6835fcc8fa42896e9
+RMD160 (manticore-0.1.9.tar.gz) = 7ac41f81a16961428b59a47cd860696a2298bcfc
+SHA512 (manticore-0.1.9.tar.gz) = eb9150a595ac5d38029cf22258cf9a21fcc839a36d0147257f1a478f0494d2773d80bb598044d69988eb5e2ca0546ca5b905d526a8889dc5033437cee98a1e9f
+Size (manticore-0.1.9.tar.gz) = 2750644 bytes

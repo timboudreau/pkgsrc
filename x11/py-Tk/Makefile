@@ -1,11 +1,11 @@
-# $NetBSD: Makefile,v 1.62 2016/02/02 07:38:29 dbj Exp $
+# $NetBSD: Makefile,v 1.66 2018/04/03 18:22:47 adam Exp $
 
 PKGNAME=	${PYPKGPREFIX}-Tk-${PY_DISTVERSION}
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	x11 python
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://wiki.python.org/moin/TkInter
+HOMEPAGE=	https://wiki.python.org/moin/TkInter
 COMMENT=	Tkinter -- Python interface to Tcl/Tk
 LICENSE=	python-software-foundation
 
@@ -26,6 +26,7 @@ PYSETUPINSTALLARGS+=	--install-lib ${PREFIX}/${PYLIB}/lib-dynload
 .if ${OPSYS} == "Darwin"
 PY_SETUP_SUBST+=	X11LIB=
 .else
+.include "../../x11/libX11/buildlink3.mk"
 PY_SETUP_SUBST+=	X11LIB=\'X11\'
 .endif
 
@@ -44,5 +45,4 @@ do-patch:
 .include "../../lang/python/srcdist.mk"
 .include "../../lang/tcl/buildlink3.mk"
 .include "../../x11/tk/buildlink3.mk"
-.include "../../x11/libX11/builtin.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,16 +1,31 @@
-# $NetBSD: Makefile,v 1.6 2016/06/08 17:43:20 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2018/12/16 14:45:02 adam Exp $
 
-DISTNAME=	pylast-0.5.11
+DISTNAME=	pylast-2.4.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
 CATEGORIES=	audio python
 MASTER_SITES=	${MASTER_SITE_PYPI:=p/pylast/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/pylast/
-COMMENT=	Python interface to Last.fm
+HOMEPAGE=	https://github.com/pylast/pylast
+COMMENT=	Python interface to Last.fm and Libre.fm
 LICENSE=	apache-2.0
 
-USE_LANGUAGES=			# none
+DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+TEST_DEPENDS+=	${PYPKGPREFIX}-codestyle-[0-9]*:../../devel/py-codestyle
+TEST_DEPENDS+=	${PYPKGPREFIX}-coverage-[0-9]*:../../devel/py-coverage
+TEST_DEPENDS+=	${PYPKGPREFIX}-flakes-[0-9]*:../../devel/py-flakes
+TEST_DEPENDS+=	${PYPKGPREFIX}-flaky-[0-9]*:../../devel/py-flaky
+TEST_DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-yaml-[0-9]*:../../textproc/py-yaml
 
-.include "../../lang/python/distutils.mk"
+USE_LANGUAGES=	# none
+
+post-extract:
+	${RM} ${WRKSRC}/pylast.egg-info/.DS_Store
+
+do-test:
+	cd ${WRKSRC}/tests && py.test-${PYVERSSUFFIX}
+
+.include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

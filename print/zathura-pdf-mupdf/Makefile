@@ -1,25 +1,25 @@
-# $NetBSD: Makefile,v 1.16 2017/04/30 01:21:58 ryoon Exp $
+# $NetBSD: Makefile,v 1.31 2018/12/13 19:52:19 adam Exp $
 #
 
-DISTNAME=	zathura-pdf-mupdf-0.3.1
-PKGREVISION=	5
+DISTNAME=	zathura-pdf-mupdf-0.3.4
+PKGREVISION=	3
 CATEGORIES=	print
-MASTER_SITES=	http://pwmt.org/projects/zathura/plugins/download/
+MASTER_SITES=	https://pwmt.org/projects/zathura/plugins/download/
+EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	leot@NetBSD.org
-HOMEPAGE=	http://pwmt.org/projects/zathura-pdf-mupdf/
+HOMEPAGE=	https://pwmt.org/projects/zathura-pdf-mupdf/
 COMMENT=	Add PDF support to zathura using mupdf rendering engine
 LICENSE=	zlib
 
-CONFLICTS+=	zathura-pdf-poppler-[0-9]*
+USE_TOOLS+=	pkg-config
 
-USE_TOOLS+=	pkg-config gmake
-USE_LIBTOOL=	yes
+# Link to external dependencies (jpeg, jbig2dec, openjpeg)
+MESON_ARGS+=	-D link-external=true
 
 CPPFLAGS+=	-D_XOPEN_SOURCE=600
 
-MAKE_ENV+=	MUPDF_LIB="-lmupdf -lmupdfthird"
-
+.include "../../devel/py-meson/build.mk"
 .include "../../graphics/cairo/buildlink3.mk"
 .include "../../print/mupdf/buildlink3.mk"
 .include "../../print/zathura/buildlink3.mk"

@@ -1,14 +1,15 @@
-# $NetBSD: Makefile,v 1.29 2017/07/11 14:19:22 jaapb Exp $
+# $NetBSD: Makefile,v 1.35 2018/11/12 16:10:29 jaapb Exp $
 
-DISTNAME=	labltk-8.06.0
-PKGREVISION=	6
+DISTNAME=	labltk-8.06.3
+PKGREVISION=	5
 CATEGORIES=	x11
-MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/1455/
-LICENSE=	gnu-lgpl-v2.1
+# caution: it's the 1701, not the filename, that identifies the download
+MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/1701/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://forge.ocamlcore.org/projects/labltk/
 COMMENT=	Tk bindings for ocaml
+LICENSE=	gnu-lgpl-v2.1
 
 USE_TOOLS+=	gmake
 MAKE_JOBS_SAFE=	no

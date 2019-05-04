@@ -1,28 +1,38 @@
-# $NetBSD: Makefile,v 1.4 2016/11/14 14:10:04 wiz Exp $
+# $NetBSD: Makefile,v 1.11 2019/02/05 09:51:10 adam Exp $
 
-DISTNAME=	rhash-1.3.4
+DISTNAME=	rhash-1.3.8
 CATEGORIES=	security
 MASTER_SITES=	${MASTER_SITE_GITHUB:=rhash/}
 GITHUB_PROJECT=	RHash
-GITHUB_TAG=     v${PKGVERSION_NOREV}
+GITHUB_TAG=	v${PKGVERSION_NOREV}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/rhash/RHash
 COMMENT=	Calculate/check CRC32, MD5, SHA1, GOST, TTH, BTIH or other hash sums
 LICENSE=	mit
 
-WRKSRC=                 ${WRKDIR}/${DISTNAME:S/rh/RH/}
-INSTALLATION_DIRS=	bin include lib ${PKGMANDIR}/man1 share/examples/rhash
+WRKSRC=			${WRKDIR}/${DISTNAME:S/rh/RH/}
+HAS_CONFIGURE=		yes
+USE_GCC_RUNTIME=	yes
+CONFIGURE_ARGS+=	--disable-symlinks
+CONFIGURE_ARGS+=	--disable-openssl-runtime
+CONFIGURE_ARGS+=	--enable-lib-shared
+CONFIGURE_ARGS+=	--enable-lib-static
+CONFIGURE_ARGS+=	--enable-openssl
+CONFIGURE_ARGS+=	--extra-cflags=-I${PREFIX}/include\ ${CFLAGS:Q}
+CONFIGURE_ARGS+=	--extra-ldflags=-L${PREFIX}/lib\ -Wl,-R${PREFIX}/lib\ ${LDFLAGS:Q}
+CONFIGURE_ARGS+=	--mandir=${PREFIX}/${PKGMANDIR}
+CONFIGURE_ARGS+=	--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
+INSTALL_TARGET=		install install-pkg-config
+INSTALLATION_DIRS=	share/examples/rhash
+TEST_TARGET=		test
 
-CONF_FILES+=		${PREFIX}/share/examples/rhash/rhashrc ${PKG_SYSCONFDIR}/rhashrc
+CONF_FILES+=	${PREFIX}/share/examples/rhash/rhashrc ${PKG_SYSCONFDIR}/rhashrc
 
-do-install:
-	cd ${WRKSRC} && \
-	${INSTALL_PROGRAM} rhash ${DESTDIR}${PREFIX}/bin && \
-	${INSTALL_LIB} librhash/librhash.a ${DESTDIR}${PREFIX}/lib && \
-	${INSTALL_DATA} librhash/rhash.h librhash/rhash_timing.h ${DESTDIR}${PREFIX}/include && \
-	${INSTALL_DATA} dist/rhash.1 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1 && \
-	${INSTALL_DATA} dist/rhashrc.sample ${DESTDIR}${PREFIX}/share/examples/rhash/rhashrc
+post-install:
+	${MV} ${DESTDIR}${PKG_SYSCONFDIR}/rhashrc ${DESTDIR}${PREFIX}/share/examples/rhash/rhashrc
 
+.include "../../devel/gettext-lib/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,25 +1,33 @@
-# $NetBSD: Makefile,v 1.31 2016/07/09 06:38:19 wiz Exp $
+# $NetBSD: Makefile,v 1.35 2018/08/22 09:45:11 wiz Exp $
 
 DISTNAME=	cdlabelgen-4.3.0
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	graphics
 MASTER_SITES=	http://www.aczoom.com/pub/tools/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.aczoom.com/tools/cdinsert/
+HOMEPAGE=	https://www.aczoom.com/tools/cdinsert/
 COMMENT=	Generate frontcards and traycards for CDs
 
-USE_TOOLS+=	perl:run perldoc
+USE_TOOLS+=	perl:run
 USE_LANGUAGES=	# empty
 REPLACE_PERL+=	cdlabelgen
 
-MAKE_ENV+=	SED=${SED:Q}
-MAKE_ENV+=	MV=${MV:Q}
+MAKE_FLAGS+=	BASE_DIR=${DESTDIR}${PREFIX}
+MAKE_FLAGS+=	MAN_DIR=${DESTDIR}${PREFIX}/${PKGMANDIR}
+MAKE_FLAGS+=	INSTALL=${INSTALL_SCRIPT:Q}
+MAKE_FLAGS+=	INSTALL_FILE=${INSTALL_DATA:Q}
+MAKE_FLAGS+=	INSTALL_MAN=${INSTALL_MAN:Q}
 
-INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1
+INSTALLATION_DIRS=	bin share/cdlabelgen ${PKGMANDIR}/man1
 
 post-extract:
 	cd ${WRKSRC} && ${CHMOD} go+r *
+
+post-build:
+	cd ${WRKSRC} && \
+	${SED} -e "s,@PREFIX@,${PREFIX},g" cdlabelgen > cdlabelgen.new && \
+	${MV} cdlabelgen.new cdlabelgen
 
 .include "../../mk/bsd.pkg.mk"

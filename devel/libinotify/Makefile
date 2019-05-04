@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.6 2016/04/22 15:27:11 jperkin Exp $
+# $NetBSD: Makefile,v 1.8 2018/05/30 14:37:10 minskim Exp $
 #
 
-DISTNAME=	libinotify-0.0
-PKGREVISION=	1
+DISTNAME=	libinotify
+PKGNAME=	${DISTNAME}-0.0.${GITHUB_TAG}
 CATEGORIES=	devel
-MASTER_SITES=	${MASTER_SITE_GITHUB:=dmatveev/}
+MASTER_SITES=	${MASTER_SITE_GITHUB:=libinotify-kqueue/}
 GITHUB_PROJECT=	libinotify-kqueue
-GITHUB_TAG=	b2873cf8a94b0574819075a003e33c0405f1b690
+GITHUB_TAG=	20180201
 
 MAINTAINER=	me@dmitrymatveev.co.uk
-HOMEPAGE=	http://dmitrymatveev.co.uk/gsoc11
+#HOMEPAGE=	http://dmitrymatveev.co.uk/gsoc11
 COMMENT=	Inotify emulation library for *BSDs
 LICENSE=	mit
 

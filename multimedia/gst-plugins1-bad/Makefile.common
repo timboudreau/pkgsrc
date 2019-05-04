@@ -1,4 +1,4 @@
-# $NetBSD: Makefile.common,v 1.24 2017/03/16 14:51:19 wiz Exp $
+# $NetBSD: Makefile.common,v 1.32 2018/11/08 14:40:23 prlw1 Exp $
 #
 # used by audio/gst-plugins1-dts/Makefile
 # used by audio/gst-plugins1-faac/Makefile
@@ -10,13 +10,13 @@
 # used by multimedia/gst-plugins1-resindvd/Makefile
 ## used by multimedia/gst-plugins1-xvid/Makefile (broken)
 ## used by audio/gst-plugins1-musepack/Makefile (probably newer libmusepack or libmpcdec is needed)
-#
 
 GST_PLUGINS1_TYPE=	bad
-GST_PLUGINS1_VER=	1.10.4
+GST_PLUGINS1_VER=	1.14.4
 
 # Disable all drivers and features by default.
 .for driver in	\
+		apple_media \
 		directfb \
 		dts \
 		dvb \
@@ -28,18 +28,12 @@ GST_PLUGINS1_VER=	1.10.4
 		libmms \
 		musepack \
 		neon \
-		real \
-		sdl \
 		shm \
 		soundtouch \
 		vcd \
-		vdpau \
-		xvid
+		vdpau
 CONFIGURE_ARGS+=	--disable-${driver}
 .endfor
-
-BUILDLINK_API_DEPENDS.gstreamer1+=	gstreamer1>=1.10.0
-BUILDLINK_API_DEPENDS.gst-plugins1-base+=	gst-plugins1-base>=1.10.0
 
 PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-insertbin.pc.in
 PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-bad-audio.pc.in
@@ -51,7 +45,11 @@ PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-bad-base.pc.in
 PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-bad-video.pc.in
 PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-codecparsers.pc.in
 PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-wayland.pc.in
+PKGCONFIG_OVERRIDE+=	pkgconfig/gstreamer-webrtc.pc.in
 
 .include "../../devel/orc/buildlink3.mk"
+BUILDLINK_API_DEPENDS.gstreamer1+=	gstreamer1>=1.14.4
+.include "../../multimedia/gstreamer1/buildlink3.mk"
+BUILDLINK_API_DEPENDS.gst-plugins1-base+=	gst-plugins1-base>=1.14.4
 .include "../../multimedia/gst-plugins1-base/plugins.mk"
 .include "../../multimedia/gst-plugins1-base/buildlink3.mk"

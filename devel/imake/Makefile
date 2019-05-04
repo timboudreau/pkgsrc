@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.24 2016/09/17 17:49:36 richard Exp $
+# $NetBSD: Makefile,v 1.26 2019/03/17 11:15:21 wiz Exp $
 
-DISTNAME=		imake-1.0.7
-PKGREVISION=		3
+DISTNAME=		imake-1.0.8
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=util/}
 EXTRACT_SUFX=		.tar.bz2
@@ -33,6 +32,5 @@ SUBST_SED.xmkmf=	-e "s/^configdirspec= */configdirspec=/"
 
 .include "../../meta-pkgs/modular-xorg/hacks.mk"
 
-.include "../../x11/xproto/buildlink3.mk"
-
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.57 2017/06/20 20:50:50 markd Exp $
+# $NetBSD: Makefile,v 1.84 2019/04/28 13:15:25 rillig Exp $
 
-DISTNAME=	texlive-20170524-source
-PKGNAME=	luatex-1.0.4
+DISTNAME=	texlive-20180414-source
+PKGNAME=	luatex-1.07.0
+PKGREVISION=	12
 CATEGORIES=	print
-MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2017/
+MASTER_SITES=	ftp://tug.org/historic/systems/texlive/2018/
 EXTRACT_SUFX=	.tar.xz
 
 MAINTAINER=	minskim@NetBSD.org
@@ -16,20 +17,20 @@ EXTRACT_ELEMENTS=	${DISTNAME}/build-aux \
 			${DISTNAME}/libs/luajit \
 			${DISTNAME}/texk/web2c
 
-GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++
-USE_LIBTOOL=	yes
-USE_TOOLS+=	gmake lex perl pkg-config yacc
+GNU_CONFIGURE=		yes
+GNU_CONFIGURE_STRICT=	no # libs/lua52 doesn't know all the below options
+USE_LANGUAGES=		c99 c++11
+USE_LIBTOOL=		yes
+USE_TOOLS+=		gmake gsed lex perl pkg-config yacc
 CONFIGURE_ARGS+=	--disable-aleph --disable-etex --disable-pdftex \
 			--enable-luatex --disable-mf --disable-mf-nowin \
 			--with-x=no \
-			--disable-luajittex --disable-mfluajit \
+			--disable-luatex53 --disable-luajittex --disable-mfluajit \
 			--disable-mp --disable-pmp --disable-upmp \
 			--disable-ptex --disable-eptex --disable-uptex --disable-euptex \
 			--disable-web-progs \
 			--enable-web2c --disable-xetex
 CONFIGURE_ARGS+=	--with-system-poppler
-CONFIGURE_ARGS+=	--with-system-xpdf
 CONFIGURE_ARGS+= \
 	--with-fontconfig-includes=${BUILDLINK_PREFIX.fontconfig}/include \
 	--with-fontconfig-libdir=${BUILDLINK_PREFIX.fontconfig}/lib
@@ -59,7 +60,7 @@ SUBST_STAGE.prefix=	post-configure
 SUBST_FILES.prefix=	libs/lua52/lua52-src/src/luaconf.h
 SUBST_VARS.prefix=	PREFIX
 
-CFLAGS.SunOS+= -std=gnu99 -D_XOPEN_SOURCE_EXTENDED=0
+CPPFLAGS.SunOS+=	-D_XOPEN_SOURCE_EXTENDED=0
 
 .include "../../archivers/zziplib/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"

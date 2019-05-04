@@ -1,20 +1,23 @@
-# $NetBSD: Makefile,v 1.11 2017/05/12 20:11:39 leot Exp $
+# $NetBSD: Makefile,v 1.18 2019/04/01 12:36:41 adam Exp $
 
-.include "../../devel/protobuf/Makefile.common"
+DISTNAME=	protobuf-3.7.1
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	devel python
+MASTER_SITES=	${MASTER_SITE_PYPI:=p/protobuf/}
 
-DISTNAME=	protobuf-python-${PROTOBUFVER}
-PKGREVISION=	1
-PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/-python//}
-CATEGORIES+=	python
-
-MAINTAINER=	khorben@defora.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://developers.google.com/protocol-buffers/
 COMMENT=	Python bindings for protobuf
+LICENSE=	modified-bsd
 
-PYSETUPSUBDIR=	python
-
+DEPENDS+=	${PYPKGPREFIX}-setuptools-[0-9]*:../../devel/py-setuptools
 DEPENDS+=	${PYPKGPREFIX}-six>=1.9:../../lang/py-six
 
-EGG_NAME=	protobuf-${PKGVERSION_NOREV}
+USE_LANGUAGES+=	c c++11
+
+MAKE_ENV+=		PROTOC=${PREFIX}/bin/protoc
+PYSETUPBUILDARGS=	--cpp_implementation
+PYSETUPINSTALLARGS=	--cpp_implementation
 
 .include "../../devel/protobuf/buildlink3.mk"
 .include "../../lang/python/egg.mk"

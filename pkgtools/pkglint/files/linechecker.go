@@ -1,82 +1,56 @@
-package main
+package pkglint
 
 import (
 	"fmt"
-	"netbsd.org/pkglint/line"
-	"netbsd.org/pkglint/regex"
-	"netbsd.org/pkglint/trace"
+	"strings"
 )
 
 type LineChecker struct {
-	Line line.Line
+	line Line
 }
 
-func (ck LineChecker) CheckAbsolutePathname(text string) {
-	if trace.Tracing {
-		defer trace.Call1(text)()
+func (ck LineChecker) CheckLength(maxLength int) {
+	if len(ck.line.Text) <= maxLength {
+		return
 	}
 
-	// In the GNU coding standards, DESTDIR is defined as a (usually
-	// empty) prefix that can be used to install files to a different
-	// location from what they have been built for. Therefore
-	// everything following it is considered an absolute pathname.
-	//
-	// Another context where absolute pathnames usually appear is in
-	// assignments like "bindir=/bin".
-	if m, path := match1(text, `(?:^|\$[{(]DESTDIR[)}]|[\w_]+\s*=\s*)(/(?:[^"'\s]|"[^"*]"|'[^']*')*)`); m {
-		if matches(path, `^/\w`) {
-			checkwordAbsolutePathname(ck.Line, path)
+	prefix := ck.line.Text[0:maxLength]
+	for i := 0; i < len(prefix); i++ {
+		if isHspace(prefix[i]) {
+			ck.line.Warnf("Line too long (should be no more than %d characters).", maxLength)
+			ck.line.Explain(
+				"Back in the old time, terminals with 80x25 characters were common.",
+				"And this is still the default size of many terminal emulators.",
+				"Moderately short lines also make reading easier.")
+			return
 		}
 	}
 }
 
-func (ck LineChecker) CheckLength(maxlength int) {
-	if len(ck.Line.Text()) > maxlength {
-		ck.Line.Warnf("Line too long (should be no more than %d characters).", maxlength)
-		Explain(
-			"Back in the old time, terminals with 80x25 characters were common.",
-			"And this is still the default size of many terminal emulators.",
-			"Moderately short lines also make reading easier.")
-	}
-}
-
-func (ck LineChecker) CheckValidCharacters(reChar regex.RegexPattern) {
-	rest := regex.Compile(reChar).ReplaceAllString(ck.Line.Text(), "")
-	if rest != "" {
-		uni := ""
-		for _, c := range rest {
-			uni += fmt.Sprintf(" %U", c)
+func (ck LineChecker) CheckValidCharacters() {
+	var uni strings.Builder
+	for _, r := range ck.line.Text {
+		if r != '\t' && !(' ' <= r && r <= '~') {
+			_, _ = fmt.Fprintf(&uni, " %U", r)
 		}
-		ck.Line.Warnf("Line contains invalid characters (%s).", uni[1:])
+	}
+	if uni.Len() > 0 {
+		ck.line.Warnf("Line contains invalid characters (%s).", uni.String()[1:])
 	}
 }
 
 func (ck LineChecker) CheckTrailingWhitespace() {
-	if hasSuffix(ck.Line.Text(), " ") || hasSuffix(ck.Line.Text(), "\t") {
-		if !ck.Line.AutofixReplaceRegexp(`\s+\n$`, "\n") {
-			ck.Line.Notef("Trailing white-space.")
-			Explain(
-				"When a line ends with some white-space, that space is in most cases",
-				"irrelevant and can be removed.")
-		}
-	}
-}
 
-func (ck LineChecker) CheckRcsid(prefixRe regex.RegexPattern, suggestedPrefix string) bool {
-	if trace.Tracing {
-		defer trace.Call(prefixRe, suggestedPrefix)()
-	}
+	// XXX: Markdown files may need trailing whitespace. If there should ever
+	// be Markdown files in pkgsrc, this code has to be adjusted.
 
-	if matches(ck.Line.Text(), `^`+prefixRe+`\$`+`NetBSD(?::[^\$]+)?\$$`) {
-		return true
+	if strings.HasSuffix(ck.line.Text, " ") || strings.HasSuffix(ck.line.Text, "\t") {
+		fix := ck.line.Autofix()
+		fix.Notef("Trailing whitespace.")
+		fix.Explain(
+			"When a line ends with some whitespace, that space is in most cases",
+			"irrelevant and can be removed.")
+		fix.ReplaceRegex(`[ \t\r]+\n$`, "\n", 1)
+		fix.Apply()
 	}
-
-	if !ck.Line.AutofixInsertBefore(suggestedPrefix + "$" + "NetBSD$") {
-		ck.Line.Errorf("Expected %q.", suggestedPrefix+"$"+"NetBSD$")
-		Explain(
-			"Several files in pkgsrc must contain the CVS Id, so that their",
-			"current version can be traced back later from a binary package.",
-			"This is to ensure reproducible builds, for example for finding bugs.")
-	}
-	return false
 }

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.114 2015/09/29 08:45:29 wiz Exp $
+# $NetBSD: Makefile,v 1.118 2018/08/28 11:32:33 tnn Exp $
 
 DISTNAME=	cdrtools-3.01
 PKGNAME=	${DISTNAME:S/a/alpha/:S/-pre/pre/}
@@ -51,8 +51,13 @@ MAKE_FLAGS+=	GMAKE_NOWARN=true
 #MAKE_ENV+=	LINKMODE=dynamic
 
 # Map PKGSRC_COMPILER to CCOM used by cdrtools build system.
-ccmap.gcc=	gcc
-MAKE_FLAGS+=	CCOM=${ccmap.${PKGSRC_COMPILER}:Ucc}
+.if !empty(PKGSRC_COMPILER:Mclang)
+MAKE_FLAGS+=	CCOM=clang
+.elif !empty(PKGSRC_COMPILER:Mgcc)
+MAKE_FLAGS+=	CCOM=gcc
+.else
+MAKE_FLAGS+=	CCOM=cc
+.endif
 
 # allow us to override the default /etc/default/cdrecord by patching
 # the documentation appropriately. Additionally, we also provide a
@@ -74,7 +79,7 @@ INSTALLATION_DIRS=	bin lib/siconv ${PKGMANDIR}/man1 ${PKGMANDIR}/man8 \
 			share/examples/cdrtools
 
 SUBST_CLASSES+=		fix
-SUBST_STAGE.fix=	post-patch
+SUBST_STAGE.fix=	pre-configure
 SUBST_FILES.fix=	btcflash/btcflash.1
 SUBST_FILES.fix+=	cdrecord/cdrecord.1
 SUBST_FILES.fix+=	libcdrdeflt/cdrdeflt.c
@@ -84,7 +89,7 @@ SUBST_SED.fix=		-e "s,/etc/default/cdrecord,${CDRECORD_CONF},g"
 SUBST_MESSAGE.fix=	Fixing paths.
 
 SUBST_CLASSES+=		oss
-SUBST_STAGE.oss=	post-patch
+SUBST_STAGE.oss=	pre-configure
 SUBST_FILES.oss=	cdda2wav/local.cnf.in
 SUBST_SED.oss=		-e "s,/dev/dsp,${DEVOSSSOUND},g"
 SUBST_MESSAGE.oss=	Fixing OSS sound device path.
@@ -97,11 +102,17 @@ SUBST_MESSAGE.ins_base=	Fixing INS_BASE.
 
 do-configure:
 	cd ${WRKSRC}/RULES;						\
-	for suffix in netbsd-cc.rul netbsd-gcc.rul; do			\
-		if [ ! -f ${MACHINE}-$$suffix ]; then			\
-			ln -sf i386-$$suffix ${MACHINE}-$$suffix;	\
+	if [ ! -e i386-netbsd-clang.rul ]; then				\
+		ln -s i386-netbsd-gcc.rul i386-netbsd-clang.rul;	\
+	fi;								\
+	for suffix in netbsd-cc.rul netbsd-gcc.rul netbsd-clang.rul; do	\
+		if [ ! -e ${MACHINE}-$$suffix ]; then			\
+			ln -s i386-$$suffix ${MACHINE}-$$suffix;	\
 		fi;							\
 	done;								\
+	if [ ! -e x86_64-darwin-clang.rul ]; then			\
+		ln -s i386-darwin-clang.rul x86_64-darwin-clang.rul;	\
+	fi
 	cd ${WRKSRC} && ${SETENV} ${CONFIGURE_ENV} ${MAKE_PROGRAM} ${MAKE_FLAGS} config
 
 post-build:

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.43 2016/02/25 13:37:47 jperkin Exp $
+# $NetBSD: Makefile,v 1.45 2018/03/12 11:16:40 wiz Exp $
 #
 
 DISTNAME=		cqcam-0.91
-PKGREVISION=		8
+PKGREVISION=		9
 CATEGORIES=		graphics x11
 MASTER_SITES=		http://piki.org/patrick/cqcam/
 
@@ -26,8 +26,8 @@ CONFIGURE_ARGS+=	--without-xview
 USE_LANGUAGES=		c c++
 
 CONFIGURE_ENV+=		TCLCONFIG_SH=${TCLCONFIG_SH:Q}
-CONFIGURE_ARGS+=	--x-includes=${X11BASE:Q}/include
-CONFIGURE_ARGS+=	--x-libraries=${X11BASE:Q}/lib
+CONFIGURE_ARGS+=	--x-includes=${X11BASE}/include
+CONFIGURE_ARGS+=	--x-libraries=${X11BASE}/lib
 
 BUILDLINK_DEPMETHOD.libXt?=	build
 

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.36 2017/04/22 21:03:35 adam Exp $
+# $NetBSD: Makefile,v 1.44 2019/04/03 00:32:42 ryoon Exp $
 #
 
 DISTNAME=	svnfs-0.4
-PKGREVISION=	31
+PKGREVISION=	38
 CATEGORIES=	filesystems
 MASTER_SITES=	http://www.jmadden.eu/wp-content/uploads/svnfs/
 EXTRACT_SUFX=	.tgz
@@ -22,7 +22,7 @@ REPLACE_PERL=	svn-config.pl
 SUBST_CLASSES+=		svn
 SUBST_FILES.svn=	svn-config.pl
 SUBST_MESSAGE.svn=	Fixing subversion pathnames in ${SUBST_FILES.svn}
-SUBST_STAGE.svn=	post-patch
+SUBST_STAGE.svn=	pre-configure
 SUBST_VARS.svn=		LOCALBASE
 
 BUILDLINK_ABI_DEPENDS.subversion-base+=	subversion-base>=1.4.3nb2

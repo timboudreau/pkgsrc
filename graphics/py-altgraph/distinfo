@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.3 2015/11/03 21:34:16 agc Exp $
+$NetBSD: distinfo,v 1.6 2018/08/07 06:18:53 adam Exp $
 
-SHA1 (altgraph-0.12.tar.gz) = 63b333e9cf3bd9c6977a386cb89e3f3ee66d9a83
-RMD160 (altgraph-0.12.tar.gz) = c37307bb4c724122b0c1b8dc31b42eb8f32b8b26
-SHA512 (altgraph-0.12.tar.gz) = ab894218f882594b50306bcd3d55d80574bbc373586c12d58e096a9c16cf2508b0333a77479548b95223a0b5681ad60cc098a3451d1e409e447219ee6681840e
-Size (altgraph-0.12.tar.gz) = 492343 bytes
+SHA1 (altgraph-0.16.1.tar.gz) = d12e0e379ce746ec6edcd96ac2f726b644a67686
+RMD160 (altgraph-0.16.1.tar.gz) = df1ca2f94e633023bb41da7a7de9d4e3d4d9c71b
+SHA512 (altgraph-0.16.1.tar.gz) = 9c605a9f84d262fe2c83244091203d89491de0b3043e3c14a356e2c0e6e16a8b943a660c1dde9397b5ff9d2342a4e81aabee61e7833cb0eaa6188410408463be
+Size (altgraph-0.16.1.tar.gz) = 499316 bytes

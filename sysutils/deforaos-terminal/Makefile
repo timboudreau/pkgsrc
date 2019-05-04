@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.16 2017/02/12 06:25:58 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2018/11/14 22:22:23 kleink Exp $
 #
 
 DISTNAME=	Terminal-0.1.0
 PKGNAME=	deforaos-terminal-0.1.0
-PKGREVISION=	3
+PKGREVISION=	7
 CATEGORIES=	sysutils
-MASTER_SITES=	http://www.defora.org/os/download/download/4437/
+MASTER_SITES=	https://www.defora.org/os/download/download/4437/
 
 MAINTAINER=	khorben@defora.org
-HOMEPAGE=	http://www.defora.org/
+HOMEPAGE=	https://www.defora.org/
 COMMENT=	DeforaOS desktop terminal emulator
 
 LICENSE=	modified-bsd

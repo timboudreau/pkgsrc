@@ -1,4 +1,4 @@
-# $NetBSD: emulator.mk,v 1.8 2017/03/06 11:53:54 hauke Exp $
+# $NetBSD: emulator.mk,v 1.10 2019/03/17 01:10:58 tsutsui Exp $
 #
 # This file is included by linux-suse.mk in the emulator framework.
 #
@@ -22,6 +22,7 @@ _SUSE_VERSION_REQD=	>=13.1<13.2
 # DEPENDS_suse-13.1.* maps Linux "modules" to SuSE package dependencies.
 DEPENDS_suse-13.1.alsa?=	suse_alsa${_SUSE_VERSION_REQD}:../../emulators/suse131_alsa
 DEPENDS_suse-13.1.aspell?=	suse_aspell${_SUSE_VERSION_REQD}:../../emulators/suse131_aspell
+DEPENDS_suse-13.1.avahi?=	suse_avahi${_SUSE_VERSION_REQD}:../../emulators/suse131_avahi
 DEPENDS_suse-13.1.base?=	suse_base${_SUSE_VERSION_REQD}:../../emulators/suse131_base
 DEPENDS_suse-13.1.binutils?=	suse_binutils${_SUSE_VERSION_REQD}:../../emulators/suse131_binutils
 DEPENDS_suse-13.1.compat?=	suse_compat${_SUSE_VERSION_REQD}:../../emulators/suse131_compat
@@ -74,4 +75,13 @@ DEPENDS_suse-13.1.xslt?=	suse_libxslt${_SUSE_VERSION_REQD}:../../emulators/suse1
 DEPENDS_suse-13.1.${_mod_}:=	\
 	${DEPENDS_suse-13.1.${_mod_}:S/^suse_/suse32_/:S/suse131_/&32_/}
 .  endfor
+.endif
+
+# SuSE Linux's ld.so(8) uses a cache file of search paths for shared
+# libraries which is managed by ldconfig(8).
+#
+.if !defined(EMUL_IS_NATIVE)
+SUSE_LDCONFIG_CMD=	${EMULDIR}/sbin/ldconfig -r ${EMULDIR}
+LDCONFIG_ADD_CMD?=	${SUSE_LDCONFIG_CMD}
+LDCONFIG_REMOVE_CMD?=	${SUSE_LDCONFIG_CMD}
 .endif

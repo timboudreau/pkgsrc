@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.11 2017/04/22 21:03:28 adam Exp $
+# $NetBSD: Makefile,v 1.20 2019/04/03 00:32:32 ryoon Exp $
 
 DISTNAME=	qore-sqlite3-module-1.0.1
-PKGREVISION=	11
+PKGREVISION=	20
 CATEGORIES=	databases
 MASTER_SITES=   ${MASTER_SITE_SOURCEFORGE:=qore/}
 
@@ -12,7 +12,7 @@ LICENSE=	gnu-lgpl-v2.1
 
 GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++11
 PTHREAD_OPTS+=	native
 
 CONFIGURE_ARGS+=--with-sqlite3=${BUILDLINK_PREFIX.sqlite3}

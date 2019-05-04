@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.17 2016/03/05 11:29:30 jperkin Exp $
+# $NetBSD: Makefile,v 1.20 2018/09/06 09:47:02 jperkin Exp $
 #
 
-DISTNAME=		ipmitool-1.8.11
-PKGREVISION=		4
+DISTNAME=		ipmitool-1.8.18
+PKGREVISION=		1
 CATEGORIES=		sysutils
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=ipmitool/}
 
@@ -16,6 +16,8 @@ INSTALLATION_DIRS+=	share/examples/ipmitool share/doc/ipmitool
 CONFIGURE_ARGS.NetBSD+=		--disable-intf-open --disable-intf-imb
 CONFIGURE_ARGS.DragonFly+=	--disable-intf-open --disable-intf-imb
 CONFIGURE_ARGS.SunOS+=		--enable-solaris-opt
+
+CFLAGS.NetBSD+=		-D_NETBSD_SOURCE
 
 # ipmitool uses rl_event_hook
 .include "../../devel/readline/buildlink3.mk"

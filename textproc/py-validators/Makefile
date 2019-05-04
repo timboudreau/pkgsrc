@@ -1,21 +1,25 @@
-# $NetBSD: Makefile,v 1.4 2016/06/08 17:43:42 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2019/04/25 07:25:56 adam Exp $
 
-DISTNAME=	validators-0.7
+DISTNAME=	validators-0.12.5
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	python textproc
+CATEGORIES=	textproc python
 MASTER_SITES=	${MASTER_SITE_PYPI:=v/validators/}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	https://github.com/kvesteri/validators
 COMMENT=	Python data validation for humans
 LICENSE=	mit
 
-DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
 DEPENDS+=	${PYPKGPREFIX}-decorator>=3.4.0:../../devel/py-decorator
+DEPENDS+=	${PYPKGPREFIX}-six>=1.4.0:../../lang/py-six
+TEST_DEPENDS+=	${PYPKGPREFIX}-flake8>=2.4.0:../../devel/py-flake8
+TEST_DEPENDS+=	${PYPKGPREFIX}-isort>=4.2.2:../../devel/py-isort
+TEST_DEPENDS+=	${PYPKGPREFIX}-test>=2.2.3:../../devel/py-test
 
 USE_LANGUAGES=	# none
 
-.include "options.mk"
+do-test:
+	cd ${WRKSRC}/tests && pytest-${PYVERSSUFFIX}
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

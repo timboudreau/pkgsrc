@@ -1,7 +1,6 @@
-# $NetBSD: Makefile,v 1.30 2017/06/05 14:24:29 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.32 2018/08/22 09:46:22 wiz Exp $
 
-DISTNAME=		Crypt-OpenSSL-Bignum-0.08
+DISTNAME=		Crypt-OpenSSL-Bignum-0.09
 PKGNAME=		p5-${DISTNAME}
 PKGREVISION=		1
 CATEGORIES=		security perl5

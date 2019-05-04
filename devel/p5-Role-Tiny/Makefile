@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.23 2017/06/05 14:23:33 ryoon Exp $
+# $NetBSD: Makefile,v 1.25 2018/08/22 09:44:35 wiz Exp $
 
-DISTNAME=	Role-Tiny-2.000005
+DISTNAME=	Role-Tiny-2.000006
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5

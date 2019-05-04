@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.30 2017/06/20 21:51:31 youri Exp $
+# $NetBSD: Makefile,v 1.37 2018/11/14 22:22:29 kleink Exp $
 
+PKGREVISION= 3
 .include "../../meta-pkgs/xfce4/Makefile.common"
 
-VERSION=	4.0.0
+VERSION=	4.0.1
 DISTNAME=	xfce4-genmon-plugin-${VERSION}
 CATEGORIES=	sysutils
 MASTER_SITES=	http://archive.xfce.org/src/panel-plugins/xfce4-genmon-plugin/${VERSION:R}/

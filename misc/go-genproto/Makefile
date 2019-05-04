@@ -1,26 +1,20 @@
-# $NetBSD: Makefile,v 1.5 2017/04/13 15:12:05 bsiegert Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/16 18:41:08 bsiegert Exp $
 
-DISTNAME=		go-genproto-20160816
-PKGREVISION=		4
-CATEGORIES=		misc
-MASTER_SITES=		${MASTER_SITE_GITHUB:=google/}
-GITHUB_PROJECT=		go-genproto
-GITHUB_TAG=		44808ed
+COMMENT=	Go generated proto packages
+PKGREVISION=	6
 
-HOMEPAGE=		https://${GO_SRCPATH}
-COMMENT=		Go generated proto packages
-LICENSE=		apache-2.0
+DEPENDS+=	go-genproto-googleapis-rpc-[0-9]*:../../misc/go-genproto-googleapis-rpc
 
-GO_SRCPATH=		google.golang.org/genproto
-GO_DIST_BASE=		${GITHUB_PROJECT}-${GITHUB_TAG}*
+.include "Makefile.common"
 
 REPLACE_SH+=		regen.sh
-
-EXTRACT_USING=		bsdtar
-USE_TOOLS+=		bsdtar
 
 .include "../../devel/go-protobuf/buildlink3.mk"
 .include "../../net/go-grpc/buildlink3.mk"
 .include "../../net/go-net/buildlink3.mk"
 .include "../../lang/go/go-package.mk"
+
+pre-configure:
+	${RM} -rf ${WRKSRC}/googleapis/rpc
+
 .include "../../mk/bsd.pkg.mk"

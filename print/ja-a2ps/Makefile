@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.18 2016/07/09 06:38:51 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2018/08/22 09:46:13 wiz Exp $
 
 DISTNAME=	a2ps.pl-1.45
 PKGNAME=	ja-a2ps-1.45
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	japanese print
 MASTER_SITES=	ftp://ftp.sra.co.jp/pub/lang/perl/sra-scripts/
 EXTRACT_SUFX=	# None
 LICENSE=	mit
 
 MAINTAINER=	tech-pkg-ja@jp.NetBSD.org
-HOMEPAGE=	http://www.srekcah.org/~utashiro/perl/scripts/a2ps_pl/
+#HOMEPAGE=	http://www.srekcah.org/~utashiro/perl/scripts/a2ps_pl/
 COMMENT=	Text file to postscript converter (with Japanese support)
 
 WRKSRC=		${WRKDIR}

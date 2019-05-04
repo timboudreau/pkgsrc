@@ -1,4 +1,4 @@
-# $NetBSD: show.mk,v 1.12 2015/01/30 16:45:33 jperkin Exp $
+# $NetBSD: show.mk,v 1.17 2018/11/30 18:38:20 rillig Exp $
 #
 # This file contains some targets that print information gathered from
 # variables. They do not modify any variables.
@@ -82,11 +82,15 @@ show-build-defs: .PHONY
 #	Prints a list of (hopefully) all pkgsrc variables that are visible
 #	to the user or the package developer. It is intended to give
 #	interested parties a better insight into the inner workings of
-#	pkgsrc. Each variable name is prefixed with a "category":
+#	pkgsrc. Each variable name is prefixed with a "scope":
 #
 #		* "usr" for user-settable variables,
 #		* "pkg" for package-settable variables,
 #		* "sys" for system-defined variables.
+#
+#	The variables are listed in groups (e.g. "build", "extract").
+#	For each of these groups, a specialized target show-all-${group}
+#	is defined, e.g. "show-all-extract" for the "extract" group.
 #
 #	CAVEAT: Some few variable values that are shown here may be
 #	misleading. For example, make(1)'s := operator leaves references
@@ -120,6 +124,22 @@ show-build-defs: .PHONY
 #	All variables that are used by this file, whether internal or
 #	not, primary or not.
 #
+# Variables that control the presentation of individual variables:
+#
+# _SORTED_VARS.*
+#	A list of patterns describing the variable names to be shown as
+#	lists, one word per line, sorted alphabetically.
+#
+#	Default: # none
+#	Example: *_ENV *_FILES SUBST_VARS.*
+#
+# _LISTED_VARS.*
+#	A list of patterns describing the variable names to be shown as
+#	lists, one word per line, in the given order.
+#
+#	Default: # none
+#	Example: *_ARGS *_CMD SUBST_SED.*
+#
 _SHOW_ALL_CATEGORIES=	_USER_VARS _PKG_VARS _SYS_VARS _USE_VARS _DEF_VARS
 _LABEL._USER_VARS=	usr
 _LABEL._PKG_VARS=	pkg
@@ -132,30 +152,65 @@ show-all: .PHONY
 
 show-all: show-all-${g}
 
+# In the following code, the variables are evaluated as late as possible.
+# This is especially important for variables that use the :sh modifier,
+# like SUBST_FILES.pkglocaledir from mk/configure/replace-localedir.mk.
+#
+# When finally showing the variables, it is unavoidable that variables
+# using the :sh modifier may show warnings, for example because ${WRKDIR}
+# doesn't exist.
+
 show-all-${g}: .PHONY
-	@echo "${g}:"
+	@${RUN} printf '%s:\n' ${g:Q}
+
 .  for c in ${_SHOW_ALL_CATEGORIES}
 .    for v in ${${c}.${g}}
-.      if defined(${v})
-# Be careful not to evaluate variables too early. Some may use the :sh
-# modifier, which can end up taking much time and issuing unexpected
-# warnings and error messages.
-#
-# When finally showing the variables, it is unavoidable that those
-# variables requiring ${WRKDIR} to exist will show a warning.
-#
-	@value=${${v}:M*:Q};						\
-	if [ "$$value" ]; then						\
-	  echo "  ${_LABEL.${c}}	${v} = $$value";		\
+
+.      if ${_SORTED_VARS.${g}:U:@pattern@ ${v:M${pattern}} @:M*}
+
+# multi-valued variables, values are sorted
+	${RUN}								\
+	if ${!defined(${v}) :? true : false}; then			\
+	  printf '  %s\t%-23s # undefined\n' ${_LABEL.${c}} ${v:Q};	\
+	elif value=${${v}:U:M*:Q} && test "x$$value" = "x"; then	\
+	  printf '  %s\t%-23s # empty\n' ${_LABEL.${c}} ${v:Q}=;	\
 	else								\
-	  echo "  ${_LABEL.${c}}	${v} (defined, but empty)";	\
+	  printf '  %s\t%-23s \\\n' ${_LABEL.${c}} ${v:Q}=;		\
+	  printf '\t\t\t\t%s \\\n' ${${v}:O:@x@${x:Q}@};		\
+	  printf '\t\t\t\t# end of %s (sorted)\n' ${v:Q};		\
 	fi
+
+.      elif ${_LISTED_VARS.${g}:U:@pattern@ ${v:M${pattern}} @:M*}
+
+# multi-valued variables, preserving original order
+	${RUN}								\
+	if ${!defined(${v}) :? true : false}; then			\
+	  printf '  %s\t%-23s # undefined\n' ${_LABEL.${c}} ${v:Q};	\
+	elif value=${${v}:U:M*:Q} && test "x$$value" = "x"; then	\
+	  printf '  %s\t%-23s # empty\n' ${_LABEL.${c}} ${v:Q}=;	\
+	else								\
+	  printf '  %s\t%-23s \\\n' ${_LABEL.${c}} ${v:Q}=;		\
+	  printf '\t\t\t\t%s \\\n' ${${v}:@x@${x:Q}@};			\
+	  printf '\t\t\t\t# end of %s\n' ${v:Q};			\
+	fi
+
 .      else
-	@echo "  ${_LABEL.${c}}	${v} (undefined)"
+
+# single-valued variables
+	${RUN}								\
+	if ${!defined(${v}) :? true : false}; then			\
+	  printf '  %s\t%-23s # undefined\n' ${_LABEL.${c}} ${v:Q};	\
+	elif value=${${v}:U:Q} && test "x$$value" = "x"; then		\
+	  printf '  %s\t%-23s # empty\n' ${_LABEL.${c}} ${v:Q}=;	\
+	else								\
+	  case "$$value" in (*[\	\ ]) eol="# ends with space";; (*) eol=""; esac; \
+	  printf '  %s\t%-23s %s\n' ${_LABEL.${c}} ${v:Q}= "$$value$$eol"; \
+	fi
+
 .      endif
 .    endfor
 .  endfor
-	@echo ""
+	${RUN} printf '\n'
 .endfor
 
 .PHONY: show-depends-options
@@ -167,4 +222,3 @@ show-depends-options:
 		cd ${.CURDIR}/../../$$dir &&                            \
 		${RECURSIVE_MAKE} ${MAKEFLAGS} show-options;            \
 	done
-

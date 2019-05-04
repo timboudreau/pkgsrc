@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.2 2016/06/17 11:57:44 fhajny Exp $
+@comment $NetBSD: PLIST,v 1.4 2019/02/24 20:27:48 adam Exp $
 bin/vba_extract.py
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
@@ -46,9 +46,6 @@ ${PYSITELIB}/xlsxwriter/chartsheet.pyo
 ${PYSITELIB}/xlsxwriter/comments.py
 ${PYSITELIB}/xlsxwriter/comments.pyc
 ${PYSITELIB}/xlsxwriter/comments.pyo
-${PYSITELIB}/xlsxwriter/compat_collections.py
-${PYSITELIB}/xlsxwriter/compat_collections.pyc
-${PYSITELIB}/xlsxwriter/compat_collections.pyo
 ${PYSITELIB}/xlsxwriter/compatibility.py
 ${PYSITELIB}/xlsxwriter/compatibility.pyc
 ${PYSITELIB}/xlsxwriter/compatibility.pyo
@@ -64,6 +61,9 @@ ${PYSITELIB}/xlsxwriter/custom.pyo
 ${PYSITELIB}/xlsxwriter/drawing.py
 ${PYSITELIB}/xlsxwriter/drawing.pyc
 ${PYSITELIB}/xlsxwriter/drawing.pyo
+${PYSITELIB}/xlsxwriter/exceptions.py
+${PYSITELIB}/xlsxwriter/exceptions.pyc
+${PYSITELIB}/xlsxwriter/exceptions.pyo
 ${PYSITELIB}/xlsxwriter/format.py
 ${PYSITELIB}/xlsxwriter/format.pyc
 ${PYSITELIB}/xlsxwriter/format.pyo

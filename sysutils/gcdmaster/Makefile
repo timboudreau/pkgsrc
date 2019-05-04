@@ -1,8 +1,7 @@
-# $NetBSD: Makefile,v 1.83 2017/05/03 08:38:44 jperkin Exp $
+# $NetBSD: Makefile,v 1.91 2018/11/29 11:21:56 prlw1 Exp $
 
+PKGREVISION= 1
 .include "../../sysutils/cdrdao/Makefile.common"
-
-PKGREVISION=	35
 
 PKGNAME=	gcdmaster-${CDRDAO_VER}
 COMMENT=	Gnome UI frontend to cdrdao
@@ -12,11 +11,11 @@ DEPENDS+=	cdrdao-${CDRDAO_VER}{,nb*}:../../sysutils/cdrdao
 WRKSRC=		${WRKDIR}/cdrdao-${CDRDAO_VER}
 
 CONFIGURE_ARGS+=	--without-posix-threads
-CONFIGURE_ARGS+=	--with-xdao
+CONFIGURE_ARGS+=	--with-gcdmaster
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1 share/applications share/pixmaps
 USE_LANGUAGES+=		c++11
 USE_TOOLS+=		pkg-config
-INSTALL_DIRS=		xdao
+INSTALL_DIRS=		gcdmaster
 GCONF_SCHEMAS=		gcdmaster.schemas
 
 .include "../../devel/libsigc++/buildlink3.mk"

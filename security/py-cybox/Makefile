@@ -1,20 +1,23 @@
-# $NetBSD: Makefile,v 1.5 2017/01/01 14:43:55 wiz Exp $
+# $NetBSD: Makefile,v 1.8 2018/03/23 12:51:21 adam Exp $
 
-CYBOX_VERSION=	2.1.0.4
-DISTNAME=	python-cybox-${CYBOX_VERSION}
-PKGNAME=	${PYPKGPREFIX}-cybox-${CYBOX_VERSION}
-CATEGORIES=	security
-DISTFILES=	v${CYBOX_VERSION}${EXTRACT_SUFX}
-MASTER_SITES=	https://github.com/CybOXProject/python-cybox/archive/
+DISTNAME=	cybox-2.1.0.17
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	security python
+MASTER_SITES=	${MASTER_SITE_GITHUB:=CybOXProject/}
 
 MAINTAINER=	khorben@defora.org
 HOMEPAGE=	https://github.com/CybOXProject/python-cybox
 COMMENT=	Python library for manipulating CybOX content
 LICENSE=	modified-bsd
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36
+GITHUB_PROJECT=	python-cybox
+GITHUB_TAG=	v${PKGVERSION_NOREV}
 
-EGG_NAME=	cybox-${CYBOX_VERSION}
+DEPENDS+=	${PYPKGPREFIX}-dateutil-[0-9]*:../../time/py-dateutil
+DEPENDS+=	${PYPKGPREFIX}-lxml>=2.2.3:../../textproc/py-lxml
+DEPENDS+=	${PYPKGPREFIX}-mixbox>=1.0.2:../../devel/py-mixbox
+
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

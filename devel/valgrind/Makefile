@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.24 2016/10/25 17:41:02 alnsn Exp $
+# $NetBSD: Makefile,v 1.29 2019/02/22 23:47:50 alnsn Exp $
 #
 
-DISTNAME=		valgrind-3.12.0
+DISTNAME=		valgrind-3.13.0
+PKGREVISION=		1
 CATEGORIES=		devel
-MASTER_SITES=		http://valgrind.org/downloads/
+MASTER_SITES=		ftp://sourceware.org/pub/valgrind/
 EXTRACT_SUFX=		.tar.bz2
 
-MAINTAINER=		alnsn@NetBSD.org
+MAINTAINER=		pkgsrc-users@NetBSD.org
 HOMEPAGE=		http://valgrind.org/
 COMMENT=		Debugging and profiling tools
 LICENSE=		gnu-gpl-v2
@@ -24,6 +25,7 @@ ONLY_FOR_PLATFORM=	Darwin-*-i386 Darwin-*-x86_64 \
 USE_TOOLS+=		gmake perl
 USE_LANGUAGES=		c c++
 TEST_TARGET=		regtest
+SSP_SUPPORTED=		no
 
 .include "../../mk/bsd.prefs.mk"
 

@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.2 2016/08/21 21:29:45 markd Exp $
+$NetBSD: distinfo,v 1.6 2019/04/25 21:17:14 markd Exp $
 
-SHA1 (kconfigwidgets-5.25.0.tar.xz) = b81aac19d35c63e57d9c23fa7449f4528b704c35
-RMD160 (kconfigwidgets-5.25.0.tar.xz) = 332afe61f198d8ee39470b56c284e365d729a044
-SHA512 (kconfigwidgets-5.25.0.tar.xz) = 3eff9e8666e197d14b509016200749daa64bf8ef72a9d73aa372215242df7ad05a09b87f819e152a6e7ab9e51d5b8fe3173ef3a370f0820b4b82fd220dc401dd
-Size (kconfigwidgets-5.25.0.tar.xz) = 366700 bytes
+SHA1 (kconfigwidgets-5.57.0.tar.xz) = a4de9f440ab230e430c448c957bd09ebefc49d44
+RMD160 (kconfigwidgets-5.57.0.tar.xz) = ef4bf96702679cf01e33ffd05ecb89c647a672f9
+SHA512 (kconfigwidgets-5.57.0.tar.xz) = 4df0d23c08ddb63ccb1bd372a68b279beec4a5183ebd96bfca3c892f60311e72d29ccf35ef9afc84c87d13d014eccbf37b8f062fa45890a2b43571a04591403a
+Size (kconfigwidgets-5.57.0.tar.xz) = 376756 bytes

@@ -18,38 +18,30 @@ func (h *Histogram) Add(s string, n int) {
 	h.histo[s] += n
 }
 
-func (h *Histogram) PrintStats(caption string, out io.Writer, limit int) {
-	entries := make([]entry, len(h.histo))
-
-	i := 0
-	for s, count := range h.histo {
-		entries[i] = entry{s, count}
-		i++
+func (h *Histogram) PrintStats(out io.Writer, caption string, limit int) {
+	type row struct {
+		s     string
+		count int
 	}
 
-	sort.Sort(byCountDesc(entries))
+	entries := make([]row, len(h.histo))
+
+	n := 0
+	for s, count := range h.histo {
+		entries[n] = row{s, count}
+		n++
+	}
+
+	sort.SliceStable(entries, func(i, j int) bool {
+		ei := entries[i]
+		ej := entries[j]
+		return ej.count < ei.count || (ei.count == ej.count && ei.s < ej.s)
+	})
 
 	for i, entry := range entries {
-		fmt.Fprintf(out, "%s %6d %s\n", caption, entry.count, entry.s)
-		if limit > 0 && i >= limit {
+		if limit >= 0 && i >= limit {
 			break
 		}
+		_, _ = fmt.Fprintf(out, "%s %6d %s\n", caption, entry.count, entry.s)
 	}
-}
-
-type entry struct {
-	s     string
-	count int
-}
-
-type byCountDesc []entry
-
-func (a byCountDesc) Len() int {
-	return len(a)
-}
-func (a byCountDesc) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-func (a byCountDesc) Less(i, j int) bool {
-	return a[j].count < a[i].count || (a[i].count == a[j].count && a[i].s < a[j].s)
 }

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.27 2017/02/12 06:26:05 ryoon Exp $
+# $NetBSD: Makefile,v 1.37 2019/04/26 14:12:47 maya Exp $
 
 DISTNAME=	bmpanel2-2.1pre1
-PKGREVISION=	19
+PKGREVISION=	24
 CATEGORIES=	sysutils
 MASTER_SITES=	http://bmpanel2.googlecode.com/files/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/bmpanel2/
+HOMEPAGE=	https://github.com/nsf/bmpanel2
 COMMENT=	NETWM-compatible panel for X11
 LICENSE=	mit
 
@@ -18,7 +18,7 @@ USE_TOOLS+=	pkg-config gzip
 
 PY_PATCHPLIST=	yes
 REPLACE_PYTHON=	extra/py/bmpanel2.py
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 2.1pre1
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 2.1pre1
 
 SUBST_CLASSES+=		prefix
 SUBST_SED.prefix=	-e "s,/usr/local,${PREFIX},g"

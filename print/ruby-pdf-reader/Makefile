@@ -1,10 +1,10 @@
-# $NetBSD: Makefile,v 1.15 2017/03/20 15:05:43 taca Exp $
+# $NetBSD: Makefile,v 1.18 2019/01/20 14:42:43 taca Exp $
 
-DISTNAME=	pdf-reader-2.0.0
+DISTNAME=	pdf-reader-2.2.0
 CATEGORIES=	print
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://github.com/yob/pdf-reader
+HOMEPAGE=	https://github.com/yob/pdf-reader
 COMMENT=	Library for accessing the content of PDF files
 LICENSE=	mit
 

@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.21 2017/02/28 15:19:59 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.24 2018/03/12 11:15:30 wiz Exp $
 
 BUILDLINK_TREE+=	m17n-lib
 
@@ -6,8 +6,8 @@ BUILDLINK_TREE+=	m17n-lib
 M17N_LIB_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.m17n-lib+=	m17n-lib>=1.5.1
-BUILDLINK_ABI_DEPENDS.m17n-lib+=	m17n-lib>=1.7.0nb5
-BUILDLINK_PKGSRCDIR.m17n-lib?=	../../devel/m17n-lib
+BUILDLINK_ABI_DEPENDS.m17n-lib+=	m17n-lib>=1.8.0nb1
+BUILDLINK_PKGSRCDIR.m17n-lib?=		../../devel/m17n-lib
 
 pkgbase := m17n-lib
 .include "../../mk/pkg-build-options.mk"
@@ -21,11 +21,7 @@ pkgbase := m17n-lib
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/gd/buildlink3.mk"
 .include "../../graphics/libotf/buildlink3.mk"
-.include "../../x11/libICE/buildlink3.mk"
-.include "../../x11/libSM/buildlink3.mk"
-.include "../../x11/libX11/buildlink3.mk"
 .include "../../x11/libXft/buildlink3.mk"
-.include "../../x11/libXt/buildlink3.mk"
 .endif
 
 .if !empty(PKG_BUILD_OPTIONS.m17n-lib:Mlibthai)

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.39 2017/01/01 14:43:43 wiz Exp $
+# $NetBSD: Makefile,v 1.43 2019/04/26 13:14:01 maya Exp $
 
 DISTNAME=	Imaging-1.1.7
 PKGNAME=	${PYPKGPREFIX}-imagingtk-1.1.7
-PKGREVISION=	7
+PKGREVISION=	8
 CATEGORIES=	graphics python
 MASTER_SITES=	http://effbot.org/downloads/
 
@@ -15,9 +15,9 @@ DEPENDS+=	${PYPKGPREFIX}-Tk-[0-9]*:../../x11/py-Tk
 DIST_SUBDIR=	python
 EGG_NAME=	${DISTNAME:S/Imaging/PIL/}
 PY_NO_EGG=	yes # same egg installed by py-imaging
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-imaging
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-imaging
 
-PLIST_SUBST+=	PYPKGPREFIX=${PYPKGPREFIX:Q}
+PLIST_SUBST+=	PYPKGPREFIX=${PYPKGPREFIX}
 
 post-install:
 	${INSTALL_DATA_DIR} \

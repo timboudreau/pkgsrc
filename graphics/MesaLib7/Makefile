@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.9 2017/01/01 14:43:41 wiz Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/26 14:12:39 maya Exp $
 
 DISTNAME?=	${MESA_DISTNAME}
 PKGNAME=	MesaLib7-${MESA_PKGVERSION}
-PKGREVISION=	2
+PKGREVISION=	4
 CATEGORIES=	graphics
 MASTER_SITES=	${MESA_SITES}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.mesa3d.org/
+HOMEPAGE=	https://www.mesa3d.org/
 COMMENT=	Graphics library similar to SGI's OpenGL
 
 GNU_CONFIGURE_PREFIX=	${LOCALBASE}/MesaLib7
@@ -46,7 +46,7 @@ CONFIGURE_ARGS+=	--disable-egl
 .include "glx-config.mk"
 
 PYTHON_FOR_BUILD_ONLY=		tool
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 7.11.2
+PYTHON_VERSIONS_INCOMPATIBLE=	36 37 # not yet ported as of 7.11.2
 
 MAKE_ENV+=		MAKE=${GMAKE:Q}
 
@@ -80,13 +80,7 @@ MAKE_FLAGS+=		APP_CXX=${NATIVE_CXX:Q}
 
 .include "options.mk"
 
-.if !empty(MACHINE_PLATFORM:MNetBSD-[12].*)
-##
-## NetBSD 2.x and earlier require pthread stubs
-##
-.  include "../../devel/pthread-stublib/buildlink3.mk"
-PTHREAD_STUBLIB= -L${PREFIX}/lib -Wl,-R${PREFIX}/lib -lpthstub
-.elif !empty(MACHINE_PLATFORM:MNetBSD-*)
+.if !empty(MACHINE_PLATFORM:MNetBSD-*)
 ##
 ## NetBSD 3.x and later have pthread stubs in libc
 ##
@@ -129,8 +123,7 @@ pre-install:
 .include "../../lang/python/tool.mk"
 BUILDLINK_DEPMETHOD.libxml2?=	build
 .include "../../textproc/libxml2/buildlink3.mk"
-BUILDLINK_API_DEPENDS.glproto+=	glproto>=1.4.11
-.include "../../x11/glproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
 .include "../../x11/libXi/buildlink3.mk"
 .include "../../x11/libXmu/buildlink3.mk"

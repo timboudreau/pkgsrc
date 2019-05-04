@@ -1,15 +1,16 @@
-# $NetBSD: Makefile,v 1.29 2017/05/02 13:37:31 wiz Exp $
-#
+# $NetBSD: Makefile,v 1.37 2018/03/12 11:16:49 wiz Exp $
 
 DISTNAME=		qcomicbook-0.9.0
-PKGREVISION=		28
+PKGREVISION=		33
 CATEGORIES=		graphics
 MASTER_SITES=		http://qcomicbook.org/releases/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://qcomicbook.org/
+HOMEPAGE=		https://github.com/stolowski/QComicBook
 COMMENT=		Viewer for comic book archives
 LICENSE=		gnu-gpl-v2
+
+BROKEN=			Needs poppler with qt4 support.
 
 USE_LANGUAGES=		c c++
 USE_TOOLS=		gmake pkg-config
@@ -25,8 +26,7 @@ SUBST_SED.man=		-e "s|share/man|${PKGMANDIR}|1"
 
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-BUILD_DEPENDS+=	poppler-qt4>=0.12.4:../../print/poppler-qt4
-.include "../../print/poppler-qt4/buildlink3.mk"
+#.include "../../print/poppler-qt4/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
 BUILD_DEPENDS+=	qt4-tools>=4.5.0:../../x11/qt4-tools
 .include "../../x11/qt4-tools/buildlink3.mk"

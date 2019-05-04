@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.3 2017/06/05 14:24:53 ryoon Exp $
+# $NetBSD: Makefile,v 1.5 2018/08/22 09:47:03 wiz Exp $
 
-DISTNAME=	Text-VisualWidth-PP-0.04
+DISTNAME=	Text-VisualWidth-PP-0.05
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	2
+PKGREVISION=	1
 CATEGORIES=	textproc perl5
 MASTER_SITES=	http://search.cpan.org/CPAN/authors/id/T/TO/TOKUHIROM/
 
@@ -11,7 +11,9 @@ HOMEPAGE=	http://search.cpan.org/CPAN/authors/id/T/TO/TOKUHIROM/
 COMMENT=	Trimming text by the number of the columns for terminals etc
 LICENSE=	${PERL5_LICENSE}
 
-PERL5_MODULE_TYPE=	Module::Build
+DEPENDS+=	p5-Unicode-EastAsianWidth-[0-9]*:../../converters/p5-Unicode-EastAsianWidth
+
+PERL5_MODULE_TYPE=	Module::Build::Tiny
 PERL5_PACKLIST=		auto/Text/VisualWidth/PP/.packlist
 USE_LANGUAGES=		# none
 

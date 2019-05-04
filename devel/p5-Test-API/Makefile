@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.4 2017/06/05 14:23:40 ryoon Exp $
+# $NetBSD: Makefile,v 1.6 2018/08/22 09:44:43 wiz Exp $
 
-DISTNAME=		Test-API-0.008
+DISTNAME=		Test-API-0.010
 PKGNAME=		p5-${DISTNAME}
 PKGREVISION=		1
 CATEGORIES=		devel perl5

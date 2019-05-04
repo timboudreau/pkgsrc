@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.37 2016/07/09 06:38:45 wiz Exp $
+# $NetBSD: Makefile,v 1.40 2018/08/22 09:46:07 wiz Exp $
 
 DISTNAME=	smokeping-2.6.7
-PKGREVISION=	6
+PKGREVISION=	7
 CATEGORIES=	net
 MASTER_SITES=	http://oss.oetiker.ch/smokeping/pub/
 
 MAINTAINER=	bouyer@NetBSD.org
-HOMEPAGE=	http://oss.oetiker.ch/smokeping/index.en.html
+HOMEPAGE=	https://oss.oetiker.ch/smokeping/index.en.html
 COMMENT=	Latency/packet loss monitoring/graphing tool
 
 GNU_CONFIGURE=		yes
@@ -48,7 +48,7 @@ REPLACE_PERL+=		bin/smokeinfo bin/tSmoke
 .include "../../mk/bsd.prefs.mk"
 
 SUBST_CLASSES+=		files
-SUBST_STAGE.files=	post-patch
+SUBST_STAGE.files=	pre-configure
 SUBST_FILES.files=	etc/config.dist.in bin/smokeping \
 			bin/smokeping_cgi bin/tSmoke \
 			htdocs/Makefile.in smokeping.conf
@@ -60,7 +60,7 @@ SUBST_SED.files+=	-e "s|@SPDIR@|${SPDIR}|g"
 SUBST_MESSAGE.files=	Fixing configuration files.
 
 SUBST_CLASSES+=		libs
-SUBST_STAGE.libs=	post-patch
+SUBST_STAGE.libs=	pre-configure
 SUBST_FILES.libs=	bin/smokeping_cgi bin/smokeping bin/smokeinfo bin/tSmoke
 SUBST_SED.libs=	-e "s|FindBin::Bin/../lib|FindBin::Bin/../lib/smokeping|g"
 SUBST_MESSAGE.libs=	Fixing library path

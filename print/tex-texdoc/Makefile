@@ -1,21 +1,19 @@
-# $NetBSD: Makefile,v 1.8 2017/06/21 13:25:34 markd Exp $
+# $NetBSD: Makefile,v 1.11 2019/02/01 23:31:07 markd Exp $
 
 DISTNAME=	texdoc
-PKGNAME=	tex-${DISTNAME:S/./-/}-2017
-TEXLIVE_REV=	44432
+PKGNAME=	tex-${DISTNAME}-2018.47946
+TEXLIVE_REV=	47946
 
 MAINTAINER=	minskim@NetBSD.org
+HOMEPAGE=	http://ctan.org/pkg/texdoc
 COMMENT=	Documentation access for TeX distributions
-LICENSE=	gnu-gpl-v3
-
-CONFLICTS+=	teTeX-bin<3.0nb50
+LICENSE=	gnu-gpl-v2
 
 REPLACE_TEXLUA=		bin/texdoc
 
 .include "../../print/texlive/package.mk"
-.include "options.mk"
 
-post-extract: extract-texdoctk
+post-extract:
 	${MKDIR} ${WRKSRC}/bin
 	${MV} ${WRKSRC}/texmf-dist/scripts/texdoc/texdoc.tlu \
 		${WRKSRC}/bin/texdoc

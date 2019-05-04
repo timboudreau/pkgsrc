@@ -1,15 +1,15 @@
-# $NetBSD: Makefile,v 1.17 2017/07/11 14:19:19 jaapb Exp $
+# $NetBSD: Makefile,v 1.23 2018/11/12 16:10:17 jaapb Exp $
 
 DISTNAME=	lablgtk-1.2.7
 PKGNAME=	lablgtk1-1.2.7
-PKGREVISION=	15
+PKGREVISION=	20
 CATEGORIES=	x11
 MASTER_SITES=	http://forge.ocamlcore.org/frs/download.php/571/
-LICENSE=	gnu-lgpl-v2.1
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/lablgtk.html
 COMMENT=	GTK+ bindings for ocaml
+LICENSE=	gnu-lgpl-v2.1
 
 MAKE_JOBS_SAFE=	no
 
@@ -38,7 +38,7 @@ PLIST_SRC+=	${PKGDIR}/PLIST.stub
 
 do-configure:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${MAKE_PROGRAM} ${MAKE_FLAGS} \
-		configure USE_DOTOPT=${USE_DOTOPT} USE_CC=1 CC=${CC}
+		configure USE_DOTOPT=${USE_DOTOPT} USE_CC=1 CC=${CC:Q}
 
 .if defined(USE_DOTOPT)
 post-build:

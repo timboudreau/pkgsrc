@@ -1,98 +1,133 @@
-package main
+package pkglint
 
 import (
 	"io/ioutil"
-	"netbsd.org/pkglint/line"
-	"os"
+	"netbsd.org/pkglint/textproc"
+	"path"
 	"strings"
 )
 
-func LoadNonemptyLines(fname string, joinBackslashLines bool) []line.Line {
-	lines, err := readLines(fname, joinBackslashLines)
+type LoadOptions uint8
+
+const (
+	MustSucceed LoadOptions = 1 << iota // It's a fatal error if loading fails.
+	NotEmpty                            // It is an error if the file is empty.
+	Makefile                            // Lines ending in a backslash are continued in the next line.
+	LogErrors                           //
+)
+
+func Load(filename string, options LoadOptions) Lines {
+	if fromCache := G.fileCache.Get(filename, options); fromCache != nil {
+		return fromCache
+	}
+
+	rawBytes, err := ioutil.ReadFile(filename)
 	if err != nil {
-		NewLineWhole(fname).Errorf("Cannot be read.")
+		switch {
+		case options&MustSucceed != 0:
+			NewLineWhole(filename).Fatalf("Cannot be read.")
+		case options&LogErrors != 0:
+			NewLineWhole(filename).Errorf("Cannot be read.")
+		}
 		return nil
 	}
-	if len(lines) == 0 {
-		NewLineWhole(fname).Errorf("Must not be empty.")
+
+	rawText := string(rawBytes)
+	if rawText == "" && options&NotEmpty != 0 {
+		switch {
+		case options&MustSucceed != 0:
+			NewLineWhole(filename).Fatalf("Must not be empty.")
+		case options&LogErrors != 0:
+			NewLineWhole(filename).Errorf("Must not be empty.")
+		}
 		return nil
 	}
-	return lines
+
+	if G.Opts.Profiling {
+		G.loaded.Add(path.Clean(filename), 1)
+	}
+
+	result := convertToLogicalLines(filename, rawText, options&Makefile != 0)
+	if hasSuffix(filename, ".mk") {
+		G.fileCache.Put(filename, options, result)
+	}
+	return result
 }
 
-func LoadExistingLines(fname string, joinBackslashLines bool) []line.Line {
-	lines, err := readLines(fname, joinBackslashLines)
-	if err != nil {
-		NewLineWhole(fname).Fatalf("Cannot be read.")
-	}
+func LoadMk(filename string, options LoadOptions) MkLines {
+	lines := Load(filename, options|Makefile)
 	if lines == nil {
-		NewLineWhole(fname).Fatalf("Must not be empty.")
+		return nil
 	}
-	return lines
+	return NewMkLines(lines)
 }
 
-func getLogicalLine(fname string, rawLines []*RawLine, pindex *int) line.Line {
+func nextLogicalLine(filename string, rawLines []*RawLine, index int) (Line, int) {
 	{ // Handle the common case efficiently
-		index := *pindex
 		rawLine := rawLines[index]
 		textnl := rawLine.textnl
 		if hasSuffix(textnl, "\n") && !hasSuffix(textnl, "\\\n") {
-			*pindex = index + 1
-			return NewLine(fname, rawLine.Lineno, textnl[:len(textnl)-1], rawLines[index:index+1])
+			return NewLine(filename, rawLine.Lineno, textnl[:len(textnl)-1], rawLines[index]), index + 1
 		}
 	}
 
-	text := ""
-	index := *pindex
+	var text strings.Builder
 	firstlineno := rawLines[index].Lineno
 	var lineRawLines []*RawLine
 	interestingRawLines := rawLines[index:]
+	trim := ""
 
 	for i, rawLine := range interestingRawLines {
-		indent, rawText, outdent, cont := splitRawLine(rawLine.textnl)
+		indent, rawText, outdent, cont := matchContinuationLine(rawLine.textnl)
 
-		if text == "" {
-			text += indent
+		if text.Len() == 0 {
+			text.WriteString(indent)
 		}
-		text += rawText
+		text.WriteString(strings.TrimPrefix(rawText, trim))
+
 		lineRawLines = append(lineRawLines, rawLine)
 
 		if cont != "" && i != len(interestingRawLines)-1 {
-			text += " "
+			text.WriteString(" ")
 			index++
+			trim = textproc.NewLexer(rawText).NextString("#")
 		} else {
-			text += outdent + cont
+			text.WriteString(outdent)
+			text.WriteString(cont)
 			break
 		}
 	}
 
 	lastlineno := rawLines[index].Lineno
-	*pindex = index + 1
 
-	return NewLineMulti(fname, firstlineno, lastlineno, text, lineRawLines)
+	return NewLineMulti(filename, firstlineno, lastlineno, text.String(), lineRawLines), index + 1
 }
 
-func splitRawLine(textnl string) (leadingWhitespace, text, trailingWhitespace, cont string) {
-	i, m := 0, len(textnl)
+func matchContinuationLine(textnl string) (leadingWhitespace, text, trailingWhitespace, cont string) {
+	j := len(textnl)
 
-	if m > i && textnl[m-1] == '\n' {
-		m--
+	if textnl[j-1] == '\n' {
+		j--
 	}
 
-	if m > i && textnl[m-1] == '\\' {
-		m--
-		cont = textnl[m : m+1]
+	backslashes := 0
+	for j > 0 && textnl[j-1] == '\\' {
+		j--
+		backslashes++
 	}
+	cont = textnl[j : j+backslashes%2]
+	j += backslashes / 2
 
-	trailingEnd := m
-	for m > i && (textnl[m-1] == ' ' || textnl[m-1] == '\t') {
-		m--
+	trailingEnd := j
+	for j > 0 && isHspace(textnl[j-1]) {
+		j--
 	}
-	trailingStart := m
+	trailingStart := j
 	trailingWhitespace = textnl[trailingStart:trailingEnd]
 
+	i := 0
 	leadingStart := i
-	for i < m && (textnl[i] == ' ' || textnl[i] == '\t') {
+	for i < j && isHspace(textnl[i]) {
 		i++
 	}
 	leadingEnd := i
@@ -102,16 +137,7 @@ func splitRawLine(textnl string) (leadingWhitespace, text, trailingWhitespace, c
 	return
 }
 
-func readLines(fname string, joinBackslashLines bool) ([]line.Line, error) {
-	rawText, err := ioutil.ReadFile(fname)
-	if err != nil {
-		return nil, err
-	}
-
-	return convertToLogicalLines(fname, string(rawText), joinBackslashLines), nil
-}
-
-func convertToLogicalLines(fname string, rawText string, joinBackslashLines bool) []line.Line {
+func convertToLogicalLines(filename string, rawText string, joinBackslashLines bool) Lines {
 	var rawLines []*RawLine
 	for lineno, rawLine := range strings.SplitAfter(rawText, "\n") {
 		if rawLine != "" {
@@ -119,65 +145,24 @@ func convertToLogicalLines(fname string, rawText string, joinBackslashLines bool
 		}
 	}
 
-	var loglines []line.Line
+	var loglines []Line
 	if joinBackslashLines {
 		for lineno := 0; lineno < len(rawLines); {
-			loglines = append(loglines, getLogicalLine(fname, rawLines, &lineno))
+			line, nextLineno := nextLogicalLine(filename, rawLines, lineno)
+			loglines = append(loglines, line)
+			lineno = nextLineno
 		}
 	} else {
 		for _, rawLine := range rawLines {
 			text := strings.TrimSuffix(rawLine.textnl, "\n")
-			logline := NewLine(fname, rawLine.Lineno, text, []*RawLine{rawLine})
+			logline := NewLine(filename, rawLine.Lineno, text, rawLine)
 			loglines = append(loglines, logline)
 		}
 	}
 
-	if 0 < len(rawLines) && !hasSuffix(rawLines[len(rawLines)-1].textnl, "\n") {
-		NewLineEOF(fname).Errorf("File must end with a newline.")
+	if rawText != "" && !hasSuffix(rawText, "\n") {
+		loglines[len(loglines)-1].Errorf("File must end with a newline.")
 	}
 
-	return loglines
-}
-
-func SaveAutofixChanges(lines []line.Line) (autofixed bool) {
-	if !G.opts.Autofix {
-		for _, line := range lines {
-			if line.IsChanged() {
-				G.autofixAvailable = true
-			}
-		}
-		return
-	}
-
-	changes := make(map[string][]string)
-	changed := make(map[string]bool)
-	for _, line := range lines {
-		if line.IsChanged() {
-			changed[line.Filename()] = true
-		}
-		changes[line.Filename()] = append(changes[line.Filename()], line.(*LineImpl).modifiedLines()...)
-	}
-
-	for fname := range changed {
-		changedLines := changes[fname]
-		tmpname := fname + ".pkglint.tmp"
-		text := ""
-		for _, changedLine := range changedLines {
-			text += changedLine
-		}
-		err := ioutil.WriteFile(tmpname, []byte(text), 0666)
-		if err != nil {
-			NewLineWhole(tmpname).Errorf("Cannot write.")
-			continue
-		}
-		err = os.Rename(tmpname, fname)
-		if err != nil {
-			NewLineWhole(fname).Errorf("Cannot overwrite with auto-fixed content.")
-			continue
-		}
-		msg := "Has been auto-fixed. Please re-run pkglint."
-		logs(llAutofix, fname, "", msg, msg)
-		autofixed = true
-	}
-	return
+	return NewLines(filename, loglines)
 }

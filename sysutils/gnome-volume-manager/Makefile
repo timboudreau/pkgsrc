@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.50 2017/02/12 06:26:00 ryoon Exp $
+# $NetBSD: Makefile,v 1.59 2018/11/29 11:21:57 prlw1 Exp $
 #
 
 DISTNAME=	gnome-volume-manager-2.24.1
-PKGREVISION=	43
+PKGREVISION=	51
 CATEGORIES=	sysutils gnome
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gnome-volume-manager/2.24/}
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.gnome.org/
+HOMEPAGE=	https://www.gnome.org/
 COMMENT=	GNOME daemon to auto-mount and manage storage devices
 LICENSE=	gnu-gpl-v2
 

@@ -1,17 +1,17 @@
-# $NetBSD: Makefile,v 1.45 2017/02/12 06:25:21 ryoon Exp $
+# $NetBSD: Makefile,v 1.50 2018/11/14 22:21:30 kleink Exp $
 #
 
 DISTNAME=		Magnetic22Src
 #			core version: 2.2, gui version: 1.6
 PKGNAME=		gtkmagnetic-2.2.1.6
-PKGREVISION=		25
+PKGREVISION=		29
 CATEGORIES=		games
 MASTER_SITES=		http://www.ifarchive.org/if-archive/magnetic-scrolls/interpreters/magnetic/
 EXTRACT_SUFX=		.zip
 DIST_SUBDIR=		${PKGNAME_NOREV}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.if-legends.org/~msmemorial/magnetic.htm
+#HOMEPAGE=		http://www.if-legends.org/~msmemorial/magnetic.htm
 COMMENT=		Interpreter for text adventures from Magnetic Scrolls
 
 USE_TOOLS+=		gmake pkg-config

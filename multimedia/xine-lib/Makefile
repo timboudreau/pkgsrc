@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.145 2017/01/16 23:45:10 wiz Exp $
+# $NetBSD: Makefile,v 1.152 2018/11/23 08:06:29 ryoon Exp $
 
-PKGREVISION= 9
+PKGREVISION= 1
 .include "Makefile.common"
 
 COMMENT=		Multimedia player library
@@ -13,10 +13,8 @@ CONFIGURE_ARGS+=	--disable-real-codecs
 CONFIGURE_ARGS+=	--disable-aalib
 CONFIGURE_ARGS+=	--disable-mlib
 
-BUILDLINK_API_DEPENDS.vcdimager+= vcdimager>=0.7.20nb1
-
 SUBST_CLASSES+=		oss
-SUBST_STAGE.oss=	post-patch
+SUBST_STAGE.oss=	pre-configure
 SUBST_FILES.oss=	src/audio_out/audio_oss_out.c
 SUBST_SED.oss=		-e "s,/dev/dsp,${DEVOSSAUDIO},g"
 .if ${OPSYS} == "NetBSD" || ${OPSYS} == "OpenBSD"
@@ -25,7 +23,7 @@ SUBST_SED.oss+=		-e "s,\"dsp\",\"audio\",g"
 SUBST_MESSAGE.oss=	Fixing hardcoded audio device.
 
 SUBST_CLASSES+=		w32path
-SUBST_STAGE.w32path=	post-patch
+SUBST_STAGE.w32path=	pre-configure
 SUBST_FILES.w32path=	src/libw32dll/common.c
 SUBST_SED.w32path=	-e "s,@W32PATH@,${PREFIX}/lib/win32,"
 SUBST_MESSAGE.w32path=	Fixing win32 dll path.
@@ -79,7 +77,7 @@ CONFIGURE_ARGS+=	--disable-opengl
 CONFIGURE_ARGS+=	--with-external-dvdnav
 .include "../../multimedia/libdvdnav/buildlink3.mk"
 .include "../../multimedia/libtheora/buildlink3.mk"
-.include "../../sysutils/vcdimager-devel/buildlink3.mk"
+.include "../../sysutils/vcdimager/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"
 .include "../../x11/libXt/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"

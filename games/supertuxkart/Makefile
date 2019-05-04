@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.17 2017/04/30 01:21:40 ryoon Exp $
+# $NetBSD: Makefile,v 1.23 2018/12/13 19:51:57 adam Exp $
 #
 
 DISTNAME=	supertuxkart-0.8.1-src
 PKGNAME=	${DISTNAME:S/-src//}
-PKGREVISION=	8
+PKGREVISION=	13
 CATEGORIES=	games
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=supertuxkart/}
 EXTRACT_SUFX=	.tar.bz2
@@ -30,13 +30,13 @@ NOT_PAX_MPROTECT_SAFE+=	bin/supertuxkart
 # Debug nob for STK
 #CMAKE_ARGS+=	-DCMAKE_BUILD_TYPE=Debug
 
-SUBST_CLASSES+=		dos_eol
-SUBST_MESSAGE.dos_eol=	Removing DOS line-ends
-SUBST_STAGE.dos_eol=	post-extract
-SUBST_FILES.dos_eol=	lib/irrlicht/source/Irrlicht/Makefile
-SUBST_FILES.dos_eol+=	lib/irrlicht/source/Irrlicht/os.cpp
-SUBST_FILES.dos_eol+=	lib/irrlicht/source/Irrlicht/COSOperator.cpp
-SUBST_FILES.dos_eol+=	lib/irrlicht/source/Irrlicht/CIrrDeviceLinux.cpp
+SUBST_CLASSES+=			dos_eol
+SUBST_MESSAGE.dos_eol=		Removing DOS line-ends
+SUBST_STAGE.dos_eol=		post-extract
+SUBST_FILES.dos_eol=		lib/irrlicht/source/Irrlicht/Makefile
+SUBST_FILES.dos_eol+=		lib/irrlicht/source/Irrlicht/os.cpp
+SUBST_FILES.dos_eol+=		lib/irrlicht/source/Irrlicht/COSOperator.cpp
+SUBST_FILES.dos_eol+=		lib/irrlicht/source/Irrlicht/CIrrDeviceLinux.cpp
 SUBST_FILTER_CMD.dos_eol=	${TR} -d '\r'
 
 CMAKE_ARGS+=	-DUSE_WIIUSE=OFF

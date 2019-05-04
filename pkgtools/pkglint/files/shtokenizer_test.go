@@ -1,329 +1,421 @@
-package main
+package pkglint
 
 import (
-	check "gopkg.in/check.v1"
+	"gopkg.in/check.v1"
+	"strings"
 )
 
 func (s *Suite) Test_ShTokenizer_ShAtom(c *check.C) {
-	s.Init(c)
-	checkRest := func(s string, expected ...*ShAtom) string {
+	t := s.Init(c)
+
+	// testRest ensures that the given string is parsed to the expected
+	// atoms, and returns the remaining text.
+	testRest := func(s string, expectedAtoms []*ShAtom, expectedRest string) {
 		p := NewShTokenizer(dummyLine, s, false)
-		q := shqPlain
-		for _, exp := range expected {
-			c.Check(p.ShAtom(q), deepEquals, exp)
-			q = exp.Quoting
+
+		actualAtoms := p.ShAtoms()
+
+		t.Check(p.Rest(), equals, expectedRest)
+		c.Check(len(actualAtoms), equals, len(expectedAtoms))
+
+		for i, actualAtom := range actualAtoms {
+			if i < len(expectedAtoms) {
+				c.Check(actualAtom, deepEquals, expectedAtoms[i])
+			} else {
+				c.Check(actualAtom, deepEquals, nil)
+			}
 		}
-		return p.Rest()
 	}
-	check := func(str string, expected ...*ShAtom) {
-		rest := checkRest(str, expected...)
-		c.Check(rest, equals, "")
-		s.CheckOutputEmpty()
+	atoms := func(atoms ...*ShAtom) []*ShAtom { return atoms }
+
+	// test ensures that the given string is parsed to the expected
+	// atoms, and that the text is completely consumed by the parser.
+	test := func(str string, expected ...*ShAtom) {
+		testRest(str, expected, "")
+		t.CheckOutputEmpty()
 	}
 
-	token := func(typ ShAtomType, text string, quoting ShQuoting) *ShAtom {
-		return &ShAtom{typ, text, quoting, nil}
+	atom := func(typ ShAtomType, text string) *ShAtom {
+		return &ShAtom{typ, text, shqPlain, nil}
 	}
-	word := func(s string) *ShAtom { return token(shtWord, s, shqPlain) }
-	dquot := func(s string) *ShAtom { return token(shtWord, s, shqDquot) }
-	squot := func(s string) *ShAtom { return token(shtWord, s, shqSquot) }
-	backt := func(s string) *ShAtom { return token(shtWord, s, shqBackt) }
-	operator := func(s string) *ShAtom { return token(shtOperator, s, shqPlain) }
-	varuse := func(varname string, modifiers ...string) *ShAtom {
+
+	operator := func(s string) *ShAtom { return atom(shtOperator, s) }
+	comment := func(s string) *ShAtom { return atom(shtComment, s) }
+	mkvar := func(varname string, modifiers ...string) *ShAtom {
 		text := "${" + varname
 		for _, modifier := range modifiers {
-			text += ":" + modifier
+			text += ":" + strings.Replace(strings.Replace(modifier, "\\", "\\\\", -1), ":", "\\:", -1)
 		}
 		text += "}"
-		varuse := &MkVarUse{varname: varname, modifiers: modifiers}
+		varuse := NewMkVarUse(varname, modifiers...)
 		return &ShAtom{shtVaruse, text, shqPlain, varuse}
 	}
-	q := func(q ShQuoting, token *ShAtom) *ShAtom {
-		return &ShAtom{token.Type, token.MkText, q, token.Data}
-	}
-	whitespace := func(s string) *ShAtom { return token(shtSpace, s, shqPlain) }
-	space := token(shtSpace, " ", shqPlain)
+	shvar := func(text, varname string) *ShAtom { return &ShAtom{shtShVarUse, text, shqPlain, varname} }
+	text := func(s string) *ShAtom { return atom(shtText, s) }
+	whitespace := func(s string) *ShAtom { return atom(shtSpace, s) }
+
+	space := whitespace(" ")
 	semicolon := operator(";")
 	pipe := operator("|")
+	subshell := atom(shtSubshell, "$$(")
 
-	check("" /* none */)
+	q := func(q ShQuoting) func(atom *ShAtom) *ShAtom {
+		return func(atom *ShAtom) *ShAtom {
+			return &ShAtom{atom.Type, atom.MkText, q, atom.data}
+		}
+	}
+	backt := q(shqBackt)
+	dquot := q(shqDquot)
+	squot := q(shqSquot)
+	subsh := q(shqSubsh)
+	backtDquot := q(shqBacktDquot)
+	backtSquot := q(shqBacktSquot)
+	dquotBackt := q(shqDquotBackt)
+	subshDquot := q(shqSubshDquot)
+	subshSquot := q(shqSubshSquot)
+	subshBackt := q(shqSubshBackt)
+	dquotBacktDquot := q(shqDquotBacktDquot)
+	dquotBacktSquot := q(shqDquotBacktSquot)
 
-	check("$$var",
-		word("$$var"))
+	// Ignore unused functions; useful for deleting some of the tests during debugging.
+	use := func(args ...interface{}) {}
+	use(testRest, test, atoms)
+	use(operator, comment, mkvar, text, whitespace)
+	use(space, semicolon, pipe, subshell, shvar)
+	use(backt, dquot, squot, subsh)
+	use(backtDquot, backtSquot, dquotBackt, subshDquot, subshSquot)
+	use(dquotBacktDquot, dquotBacktSquot)
 
-	check("$$var$$var",
-		word("$$var$$var"))
+	test("",
+		nil...)
 
-	check("$$var;;",
-		word("$$var"),
+	test("$$var",
+		shvar("$$var", "var"))
+
+	test("$$var$$var",
+		shvar("$$var", "var"),
+		shvar("$$var", "var"))
+
+	test("$$var;;",
+		shvar("$$var", "var"),
 		operator(";;"))
 
-	check("'single-quoted'",
-		q(shqSquot, word("'")),
-		q(shqSquot, word("single-quoted")),
-		q(shqPlain, word("'")))
+	test("'single-quoted'",
+		squot(text("'")),
+		squot(text("single-quoted")),
+		text("'"))
 
-	rest := checkRest("\"" /* none */)
-	c.Check(rest, equals, "\"")
+	test("\"",
+		dquot(text("\"")))
 
-	check("$${file%.c}.o",
-		word("$${file%.c}.o"))
+	test("$${file%.c}.o",
+		shvar("$${file%.c}", "file"),
+		text(".o"))
 
-	check("hello",
-		word("hello"))
+	test("hello",
+		text("hello"))
 
-	check("hello, world",
-		word("hello,"),
+	test("hello, world",
+		text("hello,"),
 		space,
-		word("world"))
+		text("world"))
 
-	check("\"",
-		dquot("\""))
+	test("\"",
+		dquot(text("\"")))
 
-	check("`",
-		backt("`"))
+	test("`",
+		backt(text("`")))
 
-	check("`cat fname`",
-		backt("`"),
-		backt("cat"),
-		token(shtSpace, " ", shqBackt),
-		backt("fname"),
-		word("`"))
+	test("`cat filename`",
+		backt(text("`")),
+		backt(text("cat")),
+		backt(space),
+		backt(text("filename")),
+		text("`"))
 
-	check("hello, \"world\"",
-		word("hello,"),
+	test("hello, \"world\"",
+		text("hello,"),
 		space,
-		dquot("\""),
-		dquot("world"),
-		word("\""))
+		dquot(text("\"")),
+		dquot(text("world")),
+		text("\""))
 
-	check("set -e;",
-		word("set"),
+	test("set -e;",
+		text("set"),
 		space,
-		word("-e"),
+		text("-e"),
 		semicolon)
 
-	check("cd ${WRKSRC}/doc/man/man3; PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\";",
-		word("cd"),
+	test("cd ${WRKSRC}/doc/man/man3; PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\";",
+		text("cd"),
 		space,
-		varuse("WRKSRC"),
-		word("/doc/man/man3"),
+		mkvar("WRKSRC"),
+		text("/doc/man/man3"),
 		semicolon,
 		space,
-		word("PAGES="),
-		dquot("\""),
-		q(shqDquotBackt, word("`")),
-		q(shqDquotBackt, word("ls")),
-		q(shqDquotBackt, space),
-		q(shqDquotBackt, word("-1")),
-		q(shqDquotBackt, space),
-		q(shqDquotBackt, operator("|")),
-		q(shqDquotBackt, space),
-		q(shqDquotBackt, varuse("SED")),
-		q(shqDquotBackt, space),
-		q(shqDquotBackt, word("-e")),
-		q(shqDquotBackt, space),
-		q(shqDquotBacktSquot, word("'")),
-		q(shqDquotBacktSquot, word("s,3qt$$,3,")),
-		q(shqDquotBackt, word("'")),
-		q(shqDquot, word("`")),
-		q(shqPlain, word("\"")),
+		text("PAGES="),
+		dquot(text("\"")),
+		dquotBackt(text("`")),
+		dquotBackt(text("ls")),
+		dquotBackt(space),
+		dquotBackt(text("-1")),
+		dquotBackt(space),
+		dquotBackt(operator("|")),
+		dquotBackt(space),
+		dquotBackt(mkvar("SED")),
+		dquotBackt(space),
+		dquotBackt(text("-e")),
+		dquotBackt(space),
+		dquotBacktSquot(text("'")),
+		dquotBacktSquot(text("s,3qt$$,3,")),
+		dquotBackt(text("'")),
+		dquot(text("`")),
+		text("\""),
 		semicolon)
 
-	check("ls -1 | ${SED} -e 's,3qt$$,3,'",
-		word("ls"), space, word("-1"), space,
+	test("ls -1 | ${SED} -e 's,3qt$$,3,'",
+		text("ls"), space, text("-1"), space,
 		pipe, space,
-		varuse("SED"), space, word("-e"), space,
-		squot("'"), squot("s,3qt$$,3,"), word("'"))
+		mkvar("SED"), space, text("-e"), space,
+		squot(text("'")), squot(text("s,3qt$$,3,")), text("'"))
 
-	check("(for PAGE in $$PAGES; do ",
-		&ShAtom{shtOperator, "(", shqPlain, nil},
-		word("for"),
+	test("(for PAGE in $$PAGES; do ",
+		operator("("),
+		text("for"),
 		space,
-		word("PAGE"),
+		text("PAGE"),
 		space,
-		word("in"),
+		text("in"),
 		space,
-		word("$$PAGES"),
+		shvar("$$PAGES", "PAGES"),
 		semicolon,
 		space,
-		word("do"),
+		text("do"),
 		space)
 
-	check("    ${ECHO} installing ${DESTDIR}${QTPREFIX}/man/man3/$${PAGE}; ",
+	test("    ${ECHO} installing ${DESTDIR}${QTPREFIX}/man/man3/$${PAGE}; ",
 		whitespace("    "),
-		varuse("ECHO"),
+		mkvar("ECHO"),
 		space,
-		word("installing"),
+		text("installing"),
 		space,
-		varuse("DESTDIR"),
-		varuse("QTPREFIX"),
-		word("/man/man3/$${PAGE}"),
+		mkvar("DESTDIR"),
+		mkvar("QTPREFIX"),
+		text("/man/man3/"),
+		shvar("$${PAGE}", "PAGE"),
 		semicolon,
 		space)
 
-	check("    set - X `head -1 $${PAGE}qt`; ",
+	test("    set - X `head -1 $${PAGE}qt`; ",
 		whitespace("    "),
-		word("set"),
+		text("set"),
 		space,
-		word("-"),
+		text("-"),
 		space,
-		word("X"),
+		text("X"),
 		space,
-		backt("`"),
-		backt("head"),
-		q(shqBackt, space),
-		backt("-1"),
-		q(shqBackt, space),
-		backt("$${PAGE}qt"),
-		word("`"),
+		backt(text("`")),
+		backt(text("head")),
+		backt(space),
+		backt(text("-1")),
+		backt(space),
+		backt(shvar("$${PAGE}", "PAGE")),
+		backt(text("qt")),
+		text("`"),
 		semicolon,
 		space)
 
-	check("`\"one word\"`",
-		backt("`"),
-		q(shqBacktDquot, word("\"")),
-		q(shqBacktDquot, word("one word")),
-		q(shqBackt, word("\"")),
-		word("`"))
+	test("`\"one word\"`",
+		backt(text("`")),
+		backtDquot(text("\"")),
+		backtDquot(text("one word")),
+		backt(text("\"")),
+		text("`"))
 
-	check("$$var \"$$var\" '$$var' `$$var`",
-		word("$$var"),
+	test("$$var \"$$var\" '$$var' `$$var`",
+		shvar("$$var", "var"),
 		space,
-		dquot("\""),
-		dquot("$$var"),
-		word("\""),
+		dquot(text("\"")),
+		dquot(shvar("$$var", "var")),
+		text("\""),
 		space,
-		squot("'"),
-		squot("$$var"),
-		word("'"),
+		squot(text("'")),
+		squot(shvar("$$var", "var")),
+		text("'"),
 		space,
-		backt("`"),
-		backt("$$var"),
-		word("`"))
+		backt(text("`")),
+		backt(shvar("$$var", "var")),
+		text("`"))
 
-	check("\"`'echo;echo'`\"",
-		q(shqDquot, word("\"")),
-		q(shqDquotBackt, word("`")),
-		q(shqDquotBacktSquot, word("'")),
-		q(shqDquotBacktSquot, word("echo;echo")),
-		q(shqDquotBackt, word("'")),
-		q(shqDquot, word("`")),
-		q(shqPlain, word("\"")))
+	test("\"`'echo;echo'`\"",
+		dquot(text("\"")),
+		dquotBackt(text("`")),
+		dquotBacktSquot(text("'")),
+		dquotBacktSquot(text("echo;echo")),
+		dquotBackt(text("'")),
+		dquot(text("`")),
+		text("\""))
 
-	check("cat<file",
-		word("cat"),
+	test("cat<file",
+		text("cat"),
 		operator("<"),
-		word("file"))
+		text("file"))
 
-	check("-e \"s,\\$$sysconfdir/jabberd,\\$$sysconfdir,g\"",
-		word("-e"),
+	test("\\$$escaped",
+		text("\\$$escaped"))
+
+	test("-e \"s,\\$$sysconfdir/jabberd,\\$$sysconfdir,g\"",
+		text("-e"),
 		space,
-		dquot("\""),
-		dquot("s,\\$$sysconfdir/jabberd,\\$$sysconfdir,g"),
-		word("\""))
+		dquot(text("\"")),
+		dquot(text("s,\\$$sysconfdir/jabberd,\\$$sysconfdir,g")),
+		text("\""))
 
-	check("echo $$,$$/",
-		word("echo"),
+	test("echo $$, $$- $$/ $$; $$| $$,$$/$$;$$-",
+		text("echo"),
 		space,
-		word("$$,$$/"))
+		text("$$,"),
+		space,
+		shvar("$$-", "-"),
+		space,
+		text("$$/"),
+		space,
+		text("$$"),
+		semicolon,
+		space,
+		text("$$"),
+		pipe,
+		space,
+		text("$$,$$/$$"),
+		semicolon,
+		shvar("$$-", "-"))
 
-	rest = checkRest("COMMENT=\t\\Make $$$$ fast\"",
-		word("COMMENT="),
+	test("COMMENT=\t\\Make $$$$ fast\"",
+
+		text("COMMENT="),
 		whitespace("\t"),
-		word("\\Make"),
+		text("\\Make"),
 		space,
-		word("$$$$"),
+		shvar("$$$$", "$"),
 		space,
-		word("fast"))
-	c.Check(rest, equals, "\"")
+		text("fast"),
+		dquot(text("\"")))
 
-	check("var=`echo;echo|echo&echo||echo&&echo>echo`",
-		q(shqPlain, word("var=")),
-		q(shqBackt, word("`")),
-		q(shqBackt, word("echo")),
-		q(shqBackt, semicolon),
-		q(shqBackt, word("echo")),
-		q(shqBackt, operator("|")),
-		q(shqBackt, word("echo")),
-		q(shqBackt, operator("&")),
-		q(shqBackt, word("echo")),
-		q(shqBackt, operator("||")),
-		q(shqBackt, word("echo")),
-		q(shqBackt, operator("&&")),
-		q(shqBackt, word("echo")),
-		q(shqBackt, operator(">")),
-		q(shqBackt, word("echo")),
-		q(shqPlain, word("`")))
+	test("var=`echo;echo|echo&echo||echo&&echo>echo`",
+		text("var="),
+		backt(text("`")),
+		backt(text("echo")),
+		backt(semicolon),
+		backt(text("echo")),
+		backt(operator("|")),
+		backt(text("echo")),
+		backt(operator("&")),
+		backt(text("echo")),
+		backt(operator("||")),
+		backt(text("echo")),
+		backt(operator("&&")),
+		backt(text("echo")),
+		backt(operator(">")),
+		backt(text("echo")),
+		text("`"))
 
-	check("# comment",
-		token(shtComment, "# comment", shqPlain))
-	check("no#comment",
-		word("no#comment"))
-	check("`# comment`continue",
-		token(shtWord, "`", shqBackt),
-		token(shtComment, "# comment", shqBackt),
-		token(shtWord, "`", shqPlain),
-		token(shtWord, "continue", shqPlain))
-	check("`no#comment`continue",
-		token(shtWord, "`", shqBackt),
-		token(shtWord, "no#comment", shqBackt),
-		token(shtWord, "`", shqPlain),
-		token(shtWord, "continue", shqPlain))
+	test("# comment",
+		comment("# comment"))
+	test("no#comment",
+		text("no#comment"))
+	test("`# comment`continue",
+		backt(text("`")),
+		backt(comment("# comment")),
+		text("`"),
+		text("continue"))
+	test("`no#comment`continue",
+		backt(text("`")),
+		backt(text("no#comment")),
+		text("`"),
+		text("continue"))
 
-	check("var=`tr 'A-Z' 'a-z'`",
-		token(shtWord, "var=", shqPlain),
-		token(shtWord, "`", shqBackt),
-		token(shtWord, "tr", shqBackt),
-		token(shtSpace, " ", shqBackt),
-		token(shtWord, "'", shqBacktSquot),
-		token(shtWord, "A-Z", shqBacktSquot),
-		token(shtWord, "'", shqBackt),
-		token(shtSpace, " ", shqBackt),
-		token(shtWord, "'", shqBacktSquot),
-		token(shtWord, "a-z", shqBacktSquot),
-		token(shtWord, "'", shqBackt),
-		token(shtWord, "`", shqPlain))
+	test("var=`tr 'A-Z' 'a-z'`",
+		text("var="),
+		backt(text("`")),
+		backt(text("tr")),
+		backt(space),
+		backtSquot(text("'")),
+		backtSquot(text("A-Z")),
+		backt(text("'")),
+		backt(space),
+		backtSquot(text("'")),
+		backtSquot(text("a-z")),
+		backt(text("'")),
+		text("`"))
 
-	check("var=\"`echo \"\\`echo foo\\`\"`\"",
-		token(shtWord, "var=", shqPlain),
-		token(shtWord, "\"", shqDquot),
-		token(shtWord, "`", shqDquotBackt),
-		token(shtWord, "echo", shqDquotBackt),
-		token(shtSpace, " ", shqDquotBackt),
-		token(shtWord, "\"", shqDquotBacktDquot),
-		token(shtWord, "\\`echo foo\\`", shqDquotBacktDquot), // One token, since it doesn't influence parsing.
-		token(shtWord, "\"", shqDquotBackt),
-		token(shtWord, "`", shqDquot),
-		token(shtWord, "\"", shqPlain))
+	test("var=\"`echo \"\\`echo foo\\`\"`\"",
+		text("var="),
+		dquot(text("\"")),
+		dquotBackt(text("`")),
+		dquotBackt(text("echo")),
+		dquotBackt(space),
+		dquotBacktDquot(text("\"")),
+		dquotBacktDquot(text("\\`echo foo\\`")), // One atom, since it doesn't influence parsing.
+		dquotBackt(text("\"")),
+		dquot(text("`")),
+		text("\""))
 
-	check("if cond1; then action1; elif cond2; then action2; else action3; fi",
-		word("if"), space, word("cond1"), semicolon, space,
-		word("then"), space, word("action1"), semicolon, space,
-		word("elif"), space, word("cond2"), semicolon, space,
-		word("then"), space, word("action2"), semicolon, space,
-		word("else"), space, word("action3"), semicolon, space,
-		word("fi"))
+	test("if cond1; then action1; elif cond2; then action2; else action3; fi",
+		text("if"), space, text("cond1"), semicolon, space,
+		text("then"), space, text("action1"), semicolon, space,
+		text("elif"), space, text("cond2"), semicolon, space,
+		text("then"), space, text("action2"), semicolon, space,
+		text("else"), space, text("action3"), semicolon, space,
+		text("fi"))
 
-	if false {
-		check("$$(cat)",
-			token(shtWord, "$$(", shqSubsh),
-			token(shtWord, "cat", shqSubsh),
-			token(shtWord, ")", shqPlain))
+	test("$$(cat)",
+		subsh(subshell),
+		subsh(text("cat")),
+		operator(")"))
 
-		check("$$(cat 'file')",
-			token(shtWord, "$$(", shqSubsh),
-			token(shtWord, "cat", shqSubsh),
-			token(shtSpace, " ", shqSubsh),
-			token(shtWord, "'", shqSubshSquot),
-			token(shtWord, "file", shqSubshSquot),
-			token(shtWord, "'", shqSubsh),
-			token(shtWord, ")", shqPlain))
-	}
+	test("$$(cat 'file')",
+		subsh(subshell),
+		subsh(text("cat")),
+		subsh(space),
+		subshSquot(text("'")),
+		subshSquot(text("file")),
+		subsh(text("'")),
+		operator(")"))
+
+	test("$$(# comment) arg",
+		subsh(subshell),
+		subsh(comment("# comment")),
+		operator(")"),
+		space,
+		text("arg"))
+
+	test("$$(echo \"first\" 'second')",
+		subsh(subshell),
+		subsh(text("echo")),
+		subsh(space),
+		subshDquot(text("\"")),
+		subshDquot(text("first")),
+		subsh(text("\"")),
+		subsh(space),
+		subshSquot(text("'")),
+		subshSquot(text("second")),
+		subsh(text("'")),
+		operator(")"))
+
+	test("$$(echo `echo nested-subshell`)",
+		subsh(subshell),
+		subsh(text("echo")),
+		subsh(space),
+		subshBackt(text("`")),
+		subshBackt(text("echo")),
+		subshBackt(space),
+		subshBackt(text("nested-subshell")),
+		subsh(operator("`")),
+		operator(")"))
 }
 
-func (s *Suite) Test_Shtokenizer_ShAtom__quoting(c *check.C) {
-	checkQuotingChange := func(input, expectedOutput string) {
+func (s *Suite) Test_ShTokenizer_ShAtom__quoting(c *check.C) {
+	test := func(input, expectedOutput string) {
 		p := NewShTokenizer(dummyLine, input, false)
 		q := shqPlain
 		result := ""
@@ -342,121 +434,233 @@ func (s *Suite) Test_Shtokenizer_ShAtom__quoting(c *check.C) {
 		c.Check(p.Rest(), equals, "")
 	}
 
-	checkQuotingChange("hello, world", "hello, world")
-	checkQuotingChange("hello, \"world\"", "hello, \"[d]world\"[plain]")
-	checkQuotingChange("1 \"\" 2 '' 3 `` 4", "1 \"[d]\"[plain] 2 '[s]'[plain] 3 `[b]`[plain] 4")
-	checkQuotingChange("\"\"", "\"[d]\"[plain]")
-	checkQuotingChange("''", "'[s]'[plain]")
-	checkQuotingChange("``", "`[b]`[plain]")
-	checkQuotingChange("x\"x`x`x\"x'x\"x'", "x\"[d]x`[db]x`[d]x\"[plain]x'[s]x\"x'[plain]")
-	checkQuotingChange("x\"x`x'x'x`x\"", "x\"[d]x`[db]x'[dbs]x'[db]x`[d]x\"[plain]")
-	checkQuotingChange("x\\\"x\\'x\\`x\\\\", "x\\\"x\\'x\\`x\\\\")
-	checkQuotingChange("x\"x\\\"x\\'x\\`x\\\\", "x\"[d]x\\\"x\\'x\\`x\\\\")
-	checkQuotingChange("x'x\\\"x\\'x\\`x\\\\", "x'[s]x\\\"x\\'[plain]x\\`x\\\\")
-	checkQuotingChange("x`x\\\"x\\'x\\`x\\\\", "x`[b]x\\\"x\\'x\\`x\\\\")
+	test("hello, world", "hello, world")
+	test("hello, \"world\"", "hello, \"[d]world\"[plain]")
+	test("1 \"\" 2 '' 3 `` 4", "1 \"[d]\"[plain] 2 '[s]'[plain] 3 `[b]`[plain] 4")
+	test("\"\"", "\"[d]\"[plain]")
+	test("''", "'[s]'[plain]")
+	test("``", "`[b]`[plain]")
+	test("x\"x`x`x\"x'x\"x'", "x\"[d]x`[db]x`[d]x\"[plain]x'[s]x\"x'[plain]")
+	test("x\"x`x'x'x`x\"", "x\"[d]x`[db]x'[dbs]x'[db]x`[d]x\"[plain]")
+	test("x\\\"x\\'x\\`x\\\\", "x\\\"x\\'x\\`x\\\\")
+	test("x\"x\\\"x\\'x\\`x\\\\", "x\"[d]x\\\"x\\'x\\`x\\\\")
+	test("x'x\\\"x\\'x\\`x\\\\", "x'[s]x\\\"x\\'[plain]x\\`x\\\\")
+	test("x`x\\\"x\\'x\\`x\\\\", "x`[b]x\\\"x\\'x\\`x\\\\")
 }
 
 func (s *Suite) Test_ShTokenizer_ShToken(c *check.C) {
-	s.Init(c)
-	check := func(str string, expected ...*ShToken) {
+	t := s.Init(c)
+
+	// testRest ensures that the given string is parsed to the expected
+	// tokens, and returns the remaining text.
+	testRest := func(str string, expected ...string) string {
 		p := NewShTokenizer(dummyLine, str, false)
 		for _, exp := range expected {
-			c.Check(p.ShToken(), deepEquals, exp)
+			c.Check(p.ShToken().MkText, equals, exp)
+		}
+		return p.Rest()
+	}
+
+	test := func(str string, expected ...string) {
+		p := NewShTokenizer(dummyLine, str, false)
+		for _, exp := range expected {
+			c.Check(p.ShToken().MkText, equals, exp)
 		}
 		c.Check(p.Rest(), equals, "")
-		s.CheckOutputEmpty()
+		t.CheckOutputEmpty()
 	}
 
-	check("",
-		nil)
-
-	check("echo",
-		NewShToken("echo",
-			NewShAtom(shtWord, "echo", shqPlain)))
-
-	check("`cat file`",
-		NewShToken("`cat file`",
-			NewShAtom(shtWord, "`", shqBackt),
-			NewShAtom(shtWord, "cat", shqBackt),
-			NewShAtom(shtSpace, " ", shqBackt),
-			NewShAtom(shtWord, "file", shqBackt),
-			NewShAtom(shtWord, "`", shqPlain)))
-
-	check("PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\"",
-		NewShToken("PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\"",
-			NewShAtom(shtWord, "PAGES=", shqPlain),
-			NewShAtom(shtWord, "\"", shqDquot),
-			NewShAtom(shtWord, "`", shqDquotBackt),
-			NewShAtom(shtWord, "ls", shqDquotBackt),
-			NewShAtom(shtSpace, " ", shqDquotBackt),
-			NewShAtom(shtWord, "-1", shqDquotBackt),
-			NewShAtom(shtSpace, " ", shqDquotBackt),
-			NewShAtom(shtOperator, "|", shqDquotBackt),
-			NewShAtom(shtSpace, " ", shqDquotBackt),
-			NewShAtomVaruse("${SED}", shqDquotBackt, "SED"),
-			NewShAtom(shtSpace, " ", shqDquotBackt),
-			NewShAtom(shtWord, "-e", shqDquotBackt),
-			NewShAtom(shtSpace, " ", shqDquotBackt),
-			NewShAtom(shtWord, "'", shqDquotBacktSquot),
-			NewShAtom(shtWord, "s,3qt$$,3,", shqDquotBacktSquot),
-			NewShAtom(shtWord, "'", shqDquotBackt),
-			NewShAtom(shtWord, "`", shqDquot),
-			NewShAtom(shtWord, "\"", shqPlain)))
-
-	check("echo hello, world",
-		NewShToken("echo",
-			NewShAtom(shtWord, "echo", shqPlain)),
-		NewShToken("hello,",
-			NewShAtom(shtWord, "hello,", shqPlain)),
-		NewShToken("world",
-			NewShAtom(shtWord, "world", shqPlain)))
-
-	check("if cond1; then action1; elif cond2; then action2; else action3; fi",
-		NewShToken("if", NewShAtom(shtWord, "if", shqPlain)),
-		NewShToken("cond1", NewShAtom(shtWord, "cond1", shqPlain)),
-		NewShToken(";", NewShAtom(shtOperator, ";", shqPlain)),
-		NewShToken("then", NewShAtom(shtWord, "then", shqPlain)),
-		NewShToken("action1", NewShAtom(shtWord, "action1", shqPlain)),
-		NewShToken(";", NewShAtom(shtOperator, ";", shqPlain)),
-		NewShToken("elif", NewShAtom(shtWord, "elif", shqPlain)),
-		NewShToken("cond2", NewShAtom(shtWord, "cond2", shqPlain)),
-		NewShToken(";", NewShAtom(shtOperator, ";", shqPlain)),
-		NewShToken("then", NewShAtom(shtWord, "then", shqPlain)),
-		NewShToken("action2", NewShAtom(shtWord, "action2", shqPlain)),
-		NewShToken(";", NewShAtom(shtOperator, ";", shqPlain)),
-		NewShToken("else", NewShAtom(shtWord, "else", shqPlain)),
-		NewShToken("action3", NewShAtom(shtWord, "action3", shqPlain)),
-		NewShToken(";", NewShAtom(shtOperator, ";", shqPlain)),
-		NewShToken("fi", NewShAtom(shtWord, "fi", shqPlain)))
-
-	check("PATH=/nonexistent env PATH=${PATH:Q} true",
-		NewShToken("PATH=/nonexistent", NewShAtom(shtWord, "PATH=/nonexistent", shqPlain)),
-		NewShToken("env", NewShAtom(shtWord, "env", shqPlain)),
-		NewShToken("PATH=${PATH:Q}",
-			NewShAtom(shtWord, "PATH=", shqPlain),
-			NewShAtomVaruse("${PATH:Q}", shqPlain, "PATH", "Q")),
-		NewShToken("true", NewShAtom(shtWord, "true", shqPlain)))
-
-	if false { // Don't know how to tokenize this correctly.
-		check("id=$$(${AWK} '{print}' < ${WRKSRC}/idfile)",
-			NewShToken("id=$$(${AWK} '{print}' < ${WRKSRC}/idfile)",
-				NewShAtom(shtWord, "id=", shqPlain),
-				NewShAtom(shtWord, "$$(", shqPlain),
-				NewShAtomVaruse("${AWK}", shqPlain, "AWK")))
+	testNil := func(str string) {
+		p := NewShTokenizer(dummyLine, str, false)
+		c.Check(p.ShToken(), check.IsNil)
+		c.Check(p.Rest(), equals, "")
+		t.CheckOutputEmpty()
 	}
-	check("id=`${AWK} '{print}' < ${WRKSRC}/idfile`",
-		NewShToken("id=`${AWK} '{print}' < ${WRKSRC}/idfile`",
-			NewShAtom(shtWord, "id=", shqPlain),
-			NewShAtom(shtWord, "`", shqBackt),
-			NewShAtomVaruse("${AWK}", shqBackt, "AWK"),
-			NewShAtom(shtSpace, " ", shqBackt),
-			NewShAtom(shtWord, "'", shqBacktSquot),
-			NewShAtom(shtWord, "{print}", shqBacktSquot),
-			NewShAtom(shtWord, "'", shqBackt),
-			NewShAtom(shtSpace, " ", shqBackt),
-			NewShAtom(shtOperator, "<", shqBackt),
-			NewShAtom(shtSpace, " ", shqBackt),
-			NewShAtomVaruse("${WRKSRC}", shqBackt, "WRKSRC"),
-			NewShAtom(shtWord, "/idfile", shqBackt),
-			NewShAtom(shtWord, "`", shqPlain)))
+
+	testNil("")
+	testNil(" ")
+	rest := testRest("\t\t\t\n\n\n\n\t ",
+		"\n\n\n\n")
+	c.Check(rest, equals, "\t ")
+
+	test("echo",
+		"echo")
+
+	test("`cat file`",
+		"`cat file`")
+
+	test("PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\"",
+		"PAGES=\"`ls -1 | ${SED} -e 's,3qt$$,3,'`\"")
+
+	test("echo hello, world",
+		"echo",
+		"hello,",
+		"world")
+
+	test("if cond1; then action1; elif cond2; then action2; else action3; fi",
+		"if", "cond1", ";", "then",
+		"action1", ";",
+		"elif", "cond2", ";", "then",
+		"action2", ";",
+		"else", "action3", ";",
+		"fi")
+
+	test("PATH=/nonexistent env PATH=${PATH:Q} true",
+		"PATH=/nonexistent",
+		"env",
+		"PATH=${PATH:Q}",
+		"true")
+
+	test("id=$$(id)",
+		"id=$$(id)")
+
+	test("id=$$(${AWK} '{print}' < ${WRKSRC}/idfile)",
+		"id=$$(${AWK} '{print}' < ${WRKSRC}/idfile)")
+
+	test("id=`${AWK} '{print}' < ${WRKSRC}/idfile`",
+		"id=`${AWK} '{print}' < ${WRKSRC}/idfile`")
+}
+
+func (s *Suite) Test_ShTokenizer_shVarUse(c *check.C) {
+
+	test := func(input string, output *ShAtom, rest string) {
+		tok := NewShTokenizer(nil, input, false)
+		actual := tok.shVarUse(shqPlain)
+
+		c.Check(actual, deepEquals, output)
+		c.Check(tok.Rest(), equals, rest)
+	}
+
+	shvar := func(text, varname string) *ShAtom {
+		return &ShAtom{shtShVarUse, text, shqPlain, varname}
+	}
+
+	test("$", nil, "$")
+	test("$$", nil, "$$")
+	test("${MKVAR}", nil, "${MKVAR}")
+
+	test("$$a", shvar("$$a", "a"), "")
+	test("$$a.", shvar("$$a", "a"), ".")
+	test("$$a_b_123:", shvar("$$a_b_123", "a_b_123"), ":")
+	test("$$123", shvar("$$1", "1"), "23")
+
+	test("$${varname}", shvar("$${varname}", "varname"), "")
+	test("$${varname}.", shvar("$${varname}", "varname"), ".")
+	test("$${0123}.", shvar("$${0123}", "0123"), ".")
+	test("$${varname", nil, "$${varname")
+
+	test("$${var:=value}", shvar("$${var:=value}", "var"), "")
+	test("$${var#value}", shvar("$${var#value}", "var"), "")
+	test("$${var##value}", shvar("$${var##value}", "var"), "")
+	test("$${var##*}", shvar("$${var##*}", "var"), "")
+	test("$${var%\".gz\"}", shvar("$${var%\".gz\"}", "var"), "")
+
+	// TODO: allow variables in patterns.
+	test("$${var%.${ext}}", nil, "$${var%.${ext}}")
+
+	test("$${var##*", nil, "$${var##*")
+	test("$${var\"", nil, "$${var\"")
+
+	// TODO: test("$${var%${EXT}}", shvar("$${var%${EXT}}", "var"), "")
+	test("$${var%${EXT}}", nil, "$${var%${EXT}}")
+
+	// TODO: length of var
+	test("$${#var}", nil, "$${#var}")
+
+	test("$${/}", nil, "$${/}")
+	test("$${\\}", nil, "$${\\}")
+}
+
+// This test demonstrates that the shell tokenizer is not perfect yet.
+// There are still some corner cases that trigger a parse error.
+// To get 100% code coverage, they have been found using the fuzzer
+// and trimmed down to minimal examples.
+func (s *Suite) Test_ShTokenizer__examples_from_fuzzing(c *check.C) {
+	t := s.Init(c)
+
+	test := func(input string, diagnostics ...string) {
+		mklines := t.NewMkLines("filename.mk",
+			MkRcsID,
+			"\t"+input)
+		mklines.Check()
+		t.CheckOutput(diagnostics)
+	}
+
+	// Covers shAtomBacktDquot: return nil.
+	// These are nested backticks with double quotes,
+	// which should be avoided since POSIX marks them as unspecified.
+	test(
+		"`\"`",
+		"WARN: filename.mk:2: Internal pkglint error in ShTokenizer.ShAtom at \"`\" (quoting=bd).",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"`\\\"`\"")
+
+	// Covers shAtomBacktSquot: return nil
+	test(
+		"`'$`",
+		"WARN: filename.mk:2: Internal pkglint error in ShTokenizer.ShAtom at \"$`\" (quoting=bs).",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"`'$`\"",
+		"WARN: filename.mk:2: Internal pkglint error in MkLine.Tokenize at \"$`\".")
+
+	// Covers shAtomDquotBacktSquot: return nil
+	test(
+		"\"`'`y",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"\\\"`'`y\"")
+
+	// Covers shAtomDquotBackt: return nil
+	// FIXME: Pkglint must parse unescaped dollar in the same way, everywhere.
+	test(
+		"\"`$|",
+		"WARN: filename.mk:2: Internal pkglint error in ShTokenizer.ShAtom at \"$|\" (quoting=db).",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"\\\"`$|\"",
+		"WARN: filename.mk:2: Internal pkglint error in MkLine.Tokenize at \"$|\".")
+
+	// Covers shAtomDquotBacktDquot: return nil
+	// FIXME: Pkglint must support unlimited nesting.
+	test(
+		"\"`\"`",
+		"WARN: filename.mk:2: Internal pkglint error in ShTokenizer.ShAtom at \"`\" (quoting=dbd).",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"\\\"`\\\"`\"")
+
+	// Covers shAtomSubshDquot: return nil
+	test(
+		"$$(\"'",
+		"WARN: filename.mk:2: Invoking subshells via $(...) is not portable enough.")
+
+	// Covers shAtomSubsh: case lexer.AdvanceStr("`")
+	test(
+		"$$(`",
+		"WARN: filename.mk:2: Invoking subshells via $(...) is not portable enough.")
+
+	// Covers shAtomSubshSquot: return nil
+	test(
+		"$$('$)",
+		"WARN: filename.mk:2: Internal pkglint error in ShTokenizer.ShAtom at \"$)\" (quoting=Ss).",
+		"WARN: filename.mk:2: Invoking subshells via $(...) is not portable enough.",
+		"WARN: filename.mk:2: Internal pkglint error in MkLine.Tokenize at \"$)\".")
+
+	// Covers shAtomDquotBackt: case lexer.AdvanceRegexp("^#[^`]*")
+	test(
+		"\"`# comment",
+		"WARN: filename.mk:2: Pkglint ShellLine.CheckShellCommand: splitIntoShellTokens couldn't parse \"\\\"`# comment\"")
+}
+
+// In order to get 100% code coverage for the shell tokenizer, a panic() statement has been
+// added to each uncovered basic block. After that, this fuzzer quickly found relatively
+// small example programs that led to the uncovered code.
+//
+// This test is not useful as-is.
+func (s *Suite) Test_ShTokenizer__fuzzing(c *check.C) {
+	t := s.Init(c)
+
+	fuzzer := NewFuzzer()
+	fuzzer.Char("\"'`$();|_#", 10)
+	fuzzer.Range('a', 'z', 5)
+
+	defer fuzzer.CheckOk()
+	for i := 0; i < 1000; i++ {
+		tokenizer := NewShTokenizer(dummyLine, fuzzer.Generate(50), false)
+		tokenizer.ShAtoms()
+		t.Output() // Discard the output, only react on panics.
+	}
+	fuzzer.Ok()
 }

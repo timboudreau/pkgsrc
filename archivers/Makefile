@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.154 2017/06/10 16:45:16 taca Exp $
+# $NetBSD: Makefile,v 1.160 2019/03/12 18:02:08 jaapb Exp $
 #
 
 COMMENT=	Archivers
@@ -10,8 +10,10 @@ SUBDIR+=	arc
 SUBDIR+=	archangel
 SUBDIR+=	arj
 SUBDIR+=	ark
+SUBDIR+=	atool
 SUBDIR+=	bicom
 SUBDIR+=	bmap-tools
+SUBDIR+=	brotli
 SUBDIR+=	bsdtar
 SUBDIR+=	bunzip
 SUBDIR+=	bzip2
@@ -24,6 +26,7 @@ SUBDIR+=	fcrackzip
 SUBDIR+=	file-roller
 SUBDIR+=	freeze
 SUBDIR+=	gcpio
+SUBDIR+=	go-xz
 SUBDIR+=	gsharutils
 SUBDIR+=	gtar
 SUBDIR+=	gtar-base
@@ -63,6 +66,7 @@ SUBDIR+=	mscompress
 SUBDIR+=	nomarch
 SUBDIR+=	nulib2
 SUBDIR+=	ocaml-bz2
+SUBDIR+=	ocaml-decompress
 SUBDIR+=	ocaml-zip
 SUBDIR+=	p5-Archive-Any
 SUBDIR+=	p5-Archive-Any-Lite
@@ -85,9 +89,11 @@ SUBDIR+=	pigz
 SUBDIR+=	ppmd
 SUBDIR+=	ppunpack
 SUBDIR+=	py-brotlipy
+SUBDIR+=	py-bz2file
 SUBDIR+=	py-czipfile
 SUBDIR+=	py-lhafile
 SUBDIR+=	py-libarchive-c
+SUBDIR+=	py-lz4
 SUBDIR+=	py-rarfile
 SUBDIR+=	py-yuicompressor
 SUBDIR+=	py-zstandard

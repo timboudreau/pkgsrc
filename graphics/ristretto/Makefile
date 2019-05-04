@@ -1,12 +1,13 @@
-# $NetBSD: Makefile,v 1.39 2017/06/18 23:03:29 youri Exp $
+# $NetBSD: Makefile,v 1.46 2019/04/15 22:28:36 gutteridge Exp $
 #
 
-DISTNAME=	ristretto-0.8.2
+VERSION=	0.8.4
+DISTNAME=	ristretto-${VERSION}
 EXTRACT_SUFX=	.tar.bz2
 CATEGORIES=	graphics
-MASTER_SITES=	http://archive.xfce.org/src/apps/ristretto/0.8/
+MASTER_SITES=	http://archive.xfce.org/src/apps/ristretto/${VERSION:R}/
 
-MAINTAINER=	martin@NetBSD.org
+MAINTAINER=	youri@NetBSD.org
 HOMEPAGE=	http://goodies.xfce.org/projects/applications/ristretto
 COMMENT=	Xfce image viewer
 LICENSE=	gnu-gpl-v2

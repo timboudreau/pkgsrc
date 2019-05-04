@@ -1,18 +1,21 @@
-# $NetBSD: Makefile,v 1.32 2015/04/25 14:23:01 tnn Exp $
+# $NetBSD: Makefile,v 1.35 2018/10/12 09:37:25 leot Exp $
 
 DISTNAME=	neverball-1.6.0
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	games
 MASTER_SITES=	http://neverball.org/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://neverball.org/
+HOMEPAGE=	https://neverball.org/
 COMMENT=	Puzzle/action game similar to Super Monkey Ball
+LICENSE=	gnu-gpl-v2
 
 USE_TOOLS+=	gmake pax
 
+USE_LANGUAGES=	c99
+
 # Avoiding multiples patches...
-BUILDLINK_FNAME_TRANSFORM.SDL+=	-e "s|/SDL/|/|g"
+BUILDLINK_FNAME_TRANSFORM.SDL+=		-e "s|/SDL/|/|g"
 BUILDLINK_FNAME_TRANSFORM.SDL_ttf+=	-e "s|/SDL/|/|g"
 
 MAKE_ENV+=	ENABLE_NLS=0

@@ -1,4 +1,4 @@
-# $NetBSD: options.mk,v 1.57 2017/03/24 16:55:15 wiz Exp $
+# $NetBSD: options.mk,v 1.62 2019/03/25 22:55:14 rhialto Exp $
 
 .if defined(PKGNAME) && empty(PKGNAME:Mmplayer-share*)
 
@@ -24,7 +24,7 @@ PKG_OPTIONS_VAR=	PKG_OPTIONS.${PKGNAME:C/-[0-9].*//}
 # Options supported by both mplayer* or mencoder*.
 
 PKG_SUPPORTED_OPTIONS=	gif jpeg mad dts dv png theora vorbis x264 debug
-PKG_SUPPORTED_OPTIONS+= dvdread dvdnav
+PKG_SUPPORTED_OPTIONS+= dvdread dvdnav libmpg123 opus
 .if ${OSS_TYPE} != "none"
 PKG_SUPPORTED_OPTIONS+=	oss
 .endif
@@ -44,9 +44,6 @@ PKG_SUPPORTED_OPTIONS+=	vdpau
 PKG_SUPPORTED_OPTIONS+=	lirc
 .endif
 
-.  if ${OPSYS} != "SunOS"
-PKG_SUPPORTED_OPTIONS+=	arts
-.  endif
 .elif !empty(PKGNAME:M*mencoder*)
 PKG_SUPPORTED_OPTIONS+=	faac lame
 .endif
@@ -86,7 +83,7 @@ PKG_SUPPORTED_OPTIONS+= xvid
 
 .for o in cdparanoia dv esound gif jpeg \
 	    dvdread dvdnav \
-	    lame mad mplayer-menu \
+	    lame libmpg123 mad mplayer-menu \
 	    mplayer-default-cflags mplayer-runtime-cpudetection \
 	    nas oss pulseaudio png sdl theora vorbis x264 xvid vdpau lirc
 .  if !empty(PKG_SUPPORTED_OPTIONS:M${o})
@@ -111,14 +108,6 @@ CONFIGURE_ARGS+=	--enable-aa
 .  include "../../graphics/aalib/buildlink3.mk"
 .else
 CONFIGURE_ARGS+=	--disable-aa
-.endif
-
-.if !empty(PKG_OPTIONS:Marts)
-CONFIGURE_ARGS+=	--enable-arts
-EXTRA_LIBS+=		-lartsc
-.  include "../../audio/arts/buildlink3.mk"
-.else
-CONFIGURE_ARGS+=	--disable-arts
 .endif
 
 .if !empty(PKG_OPTIONS:Mcaca)
@@ -215,11 +204,25 @@ CONFIGURE_ARGS+=	--enable-jpeg
 CONFIGURE_ARGS+=	--disable-jpeg
 .endif
 
+.if !empty(PKG_OPTIONS:Mlibmpg123)
+# no --enable-mpg123: configure forgets to add -lmpg123.
+.  include "../../audio/mpg123/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-mpg123
+.endif
+
 .if !empty(PKG_OPTIONS:Mlame)
 CONFIGURE_ARGS+=	--enable-mp3lame
 .  include "../../audio/lame/buildlink3.mk"
 .else
 CONFIGURE_ARGS+=	--disable-mp3lame
+.endif
+
+.if !empty(PKG_OPTIONS:Mopus)
+CONFIGURE_ARGS+=	--enable-libopus
+.  include "../../audio/libopus/buildlink3.mk"
+.else
+CONFIGURE_ARGS+=	--disable-libopus
 .endif
 
 .if !empty(PKG_OPTIONS:Mmad)
@@ -327,13 +330,7 @@ EXTRA_LIBS+=		-lxvidcore
 CONFIGURE_ARGS+=	--disable-xvid
 .endif
 
-.if !empty(PKG_OPTIONS:Mmplayer-ssse3)
-.  if !empty(MACHINE_PLATFORM:MNetBSD-[0-5].*)        
-     # needs a recent assembler                         
-.    include "../../devel/binutils/buildlink3.mk"      
-.    include "../../devel/binutils/override-as.mk"      
-.  endif                                               
-.else
+.if empty(PKG_OPTIONS:Mmplayer-ssse3)
 CONFIGURE_ARGS+=	--disable-ssse3
 .endif
 

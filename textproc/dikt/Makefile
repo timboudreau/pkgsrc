@@ -1,14 +1,13 @@
-# $NetBSD: Makefile,v 1.33 2017/04/30 01:22:01 ryoon Exp $
-#
+# $NetBSD: Makefile,v 1.41 2018/12/13 19:52:23 adam Exp $
 
 DISTNAME=	dikt-2j
-PKGREVISION=	20
+PKGREVISION=	26
 CATEGORIES=	textproc x11
-MASTER_SITES=	http://dikt.googlecode.com/files/
+#MASTER_SITES=	http://dikt.googlecode.com/files/
 EXTRACT_SUFX=	.txz
 
 MAINTAINER=	cheusov@NetBSD.org
-HOMEPAGE=	http://dikt.googlecode.com/
+HOMEPAGE=	https://www.dikt.tv/
 COMMENT=	Dictionary protocol client for KDE
 LICENSE=	2-clause-bsd
 

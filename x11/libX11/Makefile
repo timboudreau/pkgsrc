@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.44 2017/02/27 09:09:50 wiz Exp $
+# $NetBSD: Makefile,v 1.48 2019/04/28 10:53:03 rillig Exp $
 
-DISTNAME=		libX11-1.6.5
+DISTNAME=		libX11-1.6.7
 CATEGORIES=		x11 devel
 MASTER_SITES=		${MASTER_SITE_XORG:=lib/}
 EXTRACT_SUFX=		.tar.bz2
@@ -14,8 +14,6 @@ USE_LIBTOOL=		yes
 GNU_CONFIGURE=		yes
 USE_TOOLS+=		gmake pkg-config
 
-CONFIGURE_ARGS+=	--enable-man-pages=3
-CONFIGURE_ARGS+=	--with-xcb
 CONFIGURE_ARGS+=	--disable-specs
 PKGCONFIG_OVERRIDE+=	x11.pc.in
 
@@ -30,7 +28,6 @@ LDFLAGS.MirBSD+=	${PTHREAD_LDFLAGS}
 LDFLAGS.OpenBSD+=	${PTHREAD_LDFLAGS}
 
 BUILDLINK_API_DEPENDS.libxcb+=libxcb>=1.11.1
-BUILDLINK_API_DEPENDS.xproto+=xproto>=7.0.17
 
 TOOL_DEPENDS+=		tradcpp-[0-9]*:../../devel/tradcpp
 CONFIGURE_ENV+=		ac_cv_path_RAWCPP="${PREFIX}/bin/tradcpp -Uunix"
@@ -42,19 +39,12 @@ CONFIGURE_ENV+=		CC_FOR_BUILD=${NATIVE_CC:Q}
 
 # XXX This needs to match the version of xcb-proto we get for the
 # target by buildlink3.
-TOOL_DEPENDS+=		xproto-[0-9]*:../../x11/xproto
+TOOL_DEPENDS+=		xorgproto-[0-9]*:../../x11/xorgproto
 .endif
 
-.include "../../x11/bigreqsproto/buildlink3.mk"
-.include "../../x11/inputproto/buildlink3.mk"
-.include "../../x11/kbproto/buildlink3.mk"
+.include "../../x11/xorgproto/buildlink3.mk"
 .include "../../x11/libXau/buildlink3.mk"
 .include "../../x11/libXdmcp/buildlink3.mk"
 .include "../../x11/libxcb/buildlink3.mk"
-.include "../../x11/xcmiscproto/buildlink3.mk"
-.include "../../x11/xextproto/buildlink3.mk"
-.include "../../x11/xf86bigfontproto/buildlink3.mk"
-.include "../../x11/xproto/buildlink3.mk"
 .include "../../x11/xtrans/buildlink3.mk"
-
 .include "../../mk/bsd.pkg.mk"

@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.4 2015/04/25 14:22:54 tnn Exp $
+# $NetBSD: Makefile,v 1.6 2019/04/25 07:32:54 maya Exp $
 #
 
 DISTNAME=	v0.19
 PKGNAME=	flare-engine-${DISTNAME:S/v//1}
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	games
 MASTER_SITES=	https://github.com/clintbellanger/flare-engine/archive/
 DIST_SUBDIR=	${PKGBASE}
 
-MAINTAINER=	rodent@NetBSD.org
+MAINTAINER=	pkgsrc-users@NetBSD.org
 HOMEPAGE=	http://flarerpg.org/
 COMMENT=	Fantasy action RPG using the FLARE engine
 LICENSE=	gnu-gpl-v3 AND cc-by-sa-v3.0 AND ofl-v1.1

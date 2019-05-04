@@ -1,8 +1,9 @@
-# $NetBSD: Makefile,v 1.6 2017/06/23 17:17:44 youri Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/25 07:33:31 maya Exp $
 
 .include "../../meta-pkgs/mate/Makefile.common"
 
 DISTNAME=	mate-desktop-${VERSION}
+PKGREVISION=	1
 CATEGORIES=	x11
 
 COMMENT=	MATE desktop library
@@ -14,8 +15,15 @@ PKGCONFIG_OVERRIDE+=	libmate-desktop/mate-desktop-2.0.pc.in
 
 REPLACE_SH+=	tools/mate-gsettings-toggle
 
+SUBST_CLASSES=		prefix
+SUBST_FILES.prefix=	schemas/org.mate.background.gschema.xml
+SUBST_MESSAGE.prefix=	Fixing prefix
+SUBST_STAGE.prefix=	pre-install
+SUBST_SED.prefix=	-e 's,$${prefix},${PREFIX},'
+
 .include "../../graphics/hicolor-icon-theme/buildlink3.mk"
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
+.include "../../textproc/iso-codes/buildlink3.mk"
 .include "../../devel/dconf/buildlink3.mk"
 .include "../../x11/startup-notification/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

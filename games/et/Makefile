@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.17 2013/04/06 12:04:00 rodent Exp $
+# $NetBSD: Makefile,v 1.19 2018/07/04 13:40:19 jperkin Exp $
 #
 
 DISTNAME=	et-linux-2.56-2.x86
@@ -9,7 +9,7 @@ MASTER_SITES=	ftp://ftp.idsoftware.com/idstuff/et/linux/
 EXTRACT_SUFX=	.run
 
 MAINTAINER=	dhowland@users.sourceforge.net
-HOMEPAGE=	http://games.activision.com/games/wolfenstein/
+#HOMEPAGE=	http://games.activision.com/games/wolfenstein/
 COMMENT=	Wolfenstein: Enemy Territory for Linux
 
 EMUL_PLATFORMS=		linux-i386
@@ -28,7 +28,7 @@ SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	${WRKDIR}/et ${WRKDIR}/etded
 SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
 SUBST_SED.paths+=	-e 's,@SH@,${SH},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 pre-extract:
 	${MKDIR} ${WRKSRC}

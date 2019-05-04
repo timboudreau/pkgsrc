@@ -1,19 +1,19 @@
-# $NetBSD: Makefile,v 1.31 2015/04/25 14:22:56 tnn Exp $
+# $NetBSD: Makefile,v 1.33 2018/01/14 15:26:47 rillig Exp $
 #
 
 DISTNAME=	icebreaker-1.9.7
 PKGREVISION=	12
 CATEGORIES=	games
-MASTER_SITES=	http://mattdm.org/icebreaker/1.9.x/
+MASTER_SITES=	https://mattdm.org/icebreaker/1.9.x/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://mattdm.org/icebreaker/
+HOMEPAGE=	https://mattdm.org/icebreaker/
 COMMENT=	Penguin capturing simulation
 
 USE_TOOLS+=	gmake
 MAKE_ENV+=	mandir="${PREFIX}/man" highscoredir="/var/games"
-MAKE_ENV+=	prefix=${PREFIX:Q}
+MAKE_ENV+=	prefix=${PREFIX}
 
 SETGIDGAME=	yes
 SPECIAL_PERMS=	bin/icebreaker ${SETGID_GAMES_PERMS}

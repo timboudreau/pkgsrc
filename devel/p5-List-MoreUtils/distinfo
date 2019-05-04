@@ -1,6 +1,6 @@
-$NetBSD: distinfo,v 1.18 2017/04/14 15:07:09 mef Exp $
+$NetBSD: distinfo,v 1.22 2017/12/30 13:53:07 wiz Exp $
 
-SHA1 (List-MoreUtils-0.419.tar.gz) = 9ade53004b138b2546fd943e42832d11292a474e
-RMD160 (List-MoreUtils-0.419.tar.gz) = 7f1459d6c1163af242a7f5a5593a078fd5880533
-SHA512 (List-MoreUtils-0.419.tar.gz) = d13beb5031d1559c2ec4cb93826e86f0f314c4f10c4fdcac6910de0cb039199599911838eadd499e81cb41025aae2a52d69a259653a9637679a1705c7adcd37a
-Size (List-MoreUtils-0.419.tar.gz) = 55193 bytes
+SHA1 (List-MoreUtils-0.428.tar.gz) = fe63dcadb0e2a6ae3ce981d6913a19e96fc56a98
+RMD160 (List-MoreUtils-0.428.tar.gz) = 4baf540c44f14c1223e6f453a9852424a6cd6065
+SHA512 (List-MoreUtils-0.428.tar.gz) = f7e11f10f1d7bd3b8f9f8bc2fc325e1a9230056f68591da624aed01fb4e4cbac20caeae0c3e2aa3acc8b71febd6d4149284367f051d3c1e608e3a4ca8b62dbd8
+Size (List-MoreUtils-0.428.tar.gz) = 146030 bytes

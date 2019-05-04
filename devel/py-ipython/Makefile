@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.21 2017/06/24 08:07:14 adam Exp $
+# $NetBSD: Makefile,v 1.35 2019/04/26 10:13:15 adam Exp $
 
-DISTNAME=	ipython-5.4.1
+DISTNAME=	ipython-7.5.0
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
-CATEGORIES=	devel lang
+CATEGORIES=	devel python
 MASTER_SITES=	${MASTER_SITE_PYPI:=i/ipython/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -10,32 +10,33 @@ HOMEPAGE=	http://ipython.org/
 COMMENT=	Interactive computing environment for Python
 LICENSE=	modified-bsd
 
-.include "../../lang/python/distutils.mk"
-
-.if ${PYPKGPREFIX} == py27
-DEPENDS+=	${PYPKGPREFIX}-backports.shutil_get_terminal_size-[0-9]*:../../devel/py-backports.shutil_get_terminal_size
-DEPENDS+=	${PYPKGPREFIX}-pathlib2-[0-9]*:../../devel/py-pathlib2
-DEPENDS+=	${PYPKGPREFIX}-scandir-[0-9]*:../../devel/py-scandir
-.endif
-
+DEPENDS+=	${PYPKGPREFIX}-backcall-[0-9]*:../../devel/py-backcall
 DEPENDS+=	${PYPKGPREFIX}-decorator-[0-9]*:../../devel/py-decorator
+DEPENDS+=	${PYPKGPREFIX}-jedi>=0.10:../../editors/py-jedi
 DEPENDS+=	${PYPKGPREFIX}-pexpect-[0-9]*:../../devel/py-pexpect
-DEPENDS+=	${PYPKGPREFIX}-prompt_toolkit>=1.0.4:../../devel/py-prompt_toolkit
-DEPENDS+=	${PYPKGPREFIX}-setuptools>=18.5:../../devel/py-setuptools
-DEPENDS+=	${PYPKGPREFIX}-pygments-[0-9]*:../../textproc/py-pygments
-DEPENDS+=	${PYPKGPREFIX}-sphinx-[0-9]*:../../textproc/py-sphinx
 DEPENDS+=	${PYPKGPREFIX}-pickleshare-[0-9]*:../../databases/py-pickleshare
+DEPENDS+=	${PYPKGPREFIX}-prompt_toolkit>=2.0.0:../../devel/py-prompt_toolkit2
+DEPENDS+=	${PYPKGPREFIX}-pygments-[0-9]*:../../textproc/py-pygments
+DEPENDS+=	${PYPKGPREFIX}-setuptools>=18.5:../../devel/py-setuptools
 DEPENDS+=	${PYPKGPREFIX}-simplegeneric>0.8:../../devel/py-simplegeneric
+DEPENDS+=	${PYPKGPREFIX}-sqlite3-[0-9]*:../../databases/py-sqlite3
 DEPENDS+=	${PYPKGPREFIX}-traitlets>=4.2:../../devel/py-traitlets
 
 USE_LANGUAGES=	# none
 
-REPLACE_PYTHON=	*/*/*.py */*/*/*.py
+PYTHON_VERSIONS_INCOMPATIBLE=	27
+
+.include "../../lang/python/pyversion.mk"
+.if ${_PYTHON_VERSION} == 34
+DEPENDS+=	${PYPKGPREFIX}-typing-[0-9]*:../../devel/py-typing
+.endif
 
 post-install:
-	${MV} ${DESTDIR}${PREFIX}/bin/iptest ${DESTDIR}${PREFIX}/bin/iptest${PYVERSSUFFIX}
-	${MV} ${DESTDIR}${PREFIX}/bin/ipython ${DESTDIR}${PREFIX}/bin/ipython${PYVERSSUFFIX}
-	${MV} ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1/ipython.1 ${DESTDIR}${PREFIX}/${PKGMANDIR}/man1/ipython${PYVERSSUFFIX}.1
+	cd ${DESTDIR}${PREFIX} && \
+	${RM} bin/iptest3 bin/ipython3 && \
+	${MV} bin/iptest bin/iptest-${PYVERSSUFFIX} && \
+	${MV} bin/ipython bin/ipython-${PYVERSSUFFIX} && \
+	${MV} ${PKGMANDIR}/man1/ipython.1 ${PKGMANDIR}/man1/ipython-${PYVERSSUFFIX}.1 || ${TRUE}
 
-.include "../../lang/python/application.mk"
+.include "../../lang/python/distutils.mk"
 .include "../../mk/bsd.pkg.mk"

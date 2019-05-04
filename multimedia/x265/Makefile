@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.19 2017/07/14 07:56:57 adam Exp $
+# $NetBSD: Makefile,v 1.25 2019/01/25 09:01:13 adam Exp $
 
-DISTNAME=	x265_2.5
+DISTNAME=	x265_3.0
 PKGNAME=	${DISTNAME:S/_/-/}
 CATEGORIES=	multimedia
 MASTER_SITES=	https://bitbucket.org/multicoreware/x265/downloads/
@@ -12,11 +12,15 @@ COMMENT=	High Efficiency Video Coding (HEVC)
 LICENSE=	gnu-gpl-v2
 
 WRKSRC=		${WRKDIR}/${DISTNAME}/source
-BUILD_DEPENDS+=	yasm>=1.0.0:../../devel/yasm
+.if ${MACHINE_ARCH} == "x86_64" || ${MACHINE_ARCH} == "i386"
+BUILD_DEPENDS+=	nasm>=2.13.0:../../devel/nasm
+.endif
 
 CMAKE_ARGS+=	-DENABLE_PIC=ON
 
 USE_CMAKE=		yes
 USE_LANGUAGES=		c c++
+
+.include "options.mk"
 
 .include "../../mk/bsd.pkg.mk"

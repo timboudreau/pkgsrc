@@ -1,33 +1,35 @@
-package main
+package pkglint
 
-import (
-	"netbsd.org/pkglint/line"
-	"netbsd.org/pkglint/textproc"
-)
+import "netbsd.org/pkglint/textproc"
 
 type ShTokenizer struct {
-	parser *Parser
-	mkp    *MkParser
+	parser *MkParser
 }
 
-func NewShTokenizer(line line.Line, text string, emitWarnings bool) *ShTokenizer {
-	p := NewParser(line, text, emitWarnings)
-	mkp := &MkParser{p}
-	return &ShTokenizer{p, mkp}
+func NewShTokenizer(line Line, text string, emitWarnings bool) *ShTokenizer {
+	// TODO: Switching to NewMkParser is nontrivial since emitWarnings must equal (line != nil).
+	p := MkParser{line, textproc.NewLexer(text), emitWarnings}
+	return &ShTokenizer{&p}
 }
 
+// ShAtom parses a basic building block of a shell program.
+// Examples for such atoms are: variable reference (both make and shell),
+// operator, text, quote, space.
+//
 // See ShQuote.Feed
 func (p *ShTokenizer) ShAtom(quoting ShQuoting) *ShAtom {
 	if p.parser.EOF() {
 		return nil
 	}
 
-	repl := p.parser.repl
-	mark := repl.Mark()
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 
-	if varuse := p.mkp.VarUse(); varuse != nil {
-		return &ShAtom{shtVaruse, repl.Since(mark), quoting, varuse}
+	if varuse := p.parser.VarUse(); varuse != nil {
+		return &ShAtom{shtVaruse, lexer.Since(mark), quoting, varuse}
 	}
+
+	// TODO: Most probably there is a more elegant way than the large switch block below.
 
 	var atom *ShAtom
 	switch quoting {
@@ -40,15 +42,19 @@ func (p *ShTokenizer) ShAtom(quoting ShQuoting) *ShAtom {
 	case shqBackt:
 		atom = p.shAtomBackt()
 	case shqSubsh:
-		atom = p.shAtomSub()
+		atom = p.shAtomSubsh()
 	case shqDquotBackt:
 		atom = p.shAtomDquotBackt()
 	case shqBacktDquot:
 		atom = p.shAtomBacktDquot()
 	case shqBacktSquot:
 		atom = p.shAtomBacktSquot()
+	case shqSubshDquot:
+		atom = p.shAtomSubshDquot()
 	case shqSubshSquot:
 		atom = p.shAtomSubshSquot()
+	case shqSubshBackt:
+		atom = p.shAtomSubshBackt()
 	case shqDquotBacktDquot:
 		atom = p.shAtomDquotBacktDquot()
 	case shqDquotBacktSquot:
@@ -56,8 +62,12 @@ func (p *ShTokenizer) ShAtom(quoting ShQuoting) *ShAtom {
 	}
 
 	if atom == nil {
-		repl.Reset(mark)
-		p.parser.Line.Warnf("Pkglint parse error in ShTokenizer.ShAtom at %q (quoting=%s)", repl.Rest(), quoting)
+		lexer.Reset(mark)
+		if hasPrefix(lexer.Rest(), "$${") {
+			p.parser.Line.Warnf("Unclosed shell variable starting at %q.", shorten(lexer.Rest(), 20))
+		} else {
+			p.parser.Line.Warnf("Internal pkglint error in ShTokenizer.ShAtom at %q (quoting=%s).", lexer.Rest(), quoting)
+		}
 	}
 	return atom
 }
@@ -67,48 +77,48 @@ func (p *ShTokenizer) shAtomPlain() *ShAtom {
 	if op := p.shOperator(q); op != nil {
 		return op
 	}
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceHspace():
-		return &ShAtom{shtSpace, repl.Str(), q, nil}
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqDquot, nil}
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqSquot, nil}
-	case repl.AdvanceStr("`"):
-		return &ShAtom{shtWord, repl.Str(), shqBackt, nil}
-	case repl.AdvanceRegexp(`^#.*`):
-		return &ShAtom{shtComment, repl.Group(0), q, nil}
-	case repl.AdvanceStr("$$("):
-		return &ShAtom{shtSubshell, repl.Str(), q, nil}
-	case repl.AdvanceRegexp(`^(?:[!#%*+,\-./0-9:=?@A-Z\[\]^_a-z{}~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Group(0), q, nil}
+	case lexer.NextHspace() != "":
+		return &ShAtom{shtSpace, lexer.Since(mark), q, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquot, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqSquot, nil}
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtText, lexer.Since(mark), shqBackt, nil}
+	case lexer.PeekByte() == '#':
+		rest := lexer.Rest()
+		lexer.Skip(len(rest))
+		return &ShAtom{shtComment, rest, q, nil}
+	case lexer.SkipString("$$("):
+		return &ShAtom{shtSubshell, lexer.Since(mark), shqSubsh, nil}
 	}
-	return nil
+
+	return p.shAtomInternal(q, false, false)
 }
 
 func (p *ShTokenizer) shAtomDquot() *ShAtom {
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqPlain, nil}
-	case repl.AdvanceStr("`"):
-		return &ShAtom{shtWord, repl.Str(), shqDquotBackt, nil}
-	case repl.AdvanceRegexp(`^(?:[\t !#%&'()*+,\-./0-9:;<=>?@A-Z\[\]^_a-z{|}~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Group(0), shqDquot, nil} // XXX: unescape?
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqPlain, nil}
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquotBackt, nil}
 	}
-	return nil
+	return p.shAtomInternal(shqDquot, true, false)
 }
 
 func (p *ShTokenizer) shAtomSquot() *ShAtom {
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqPlain, nil}
-	case repl.AdvanceRegexp(`^([\t !"#%&()*+,\-./0-9:;<=>?@A-Z\[\\\]^_` + "`" + `a-z{|}~]+|\$\$)+`):
-		return &ShAtom{shtWord, repl.Group(0), shqSquot, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqPlain, nil}
 	}
-	return nil
+	return p.shAtomInternal(shqSquot, false, true)
 }
 
 func (p *ShTokenizer) shAtomBackt() *ShAtom {
@@ -116,51 +126,55 @@ func (p *ShTokenizer) shAtomBackt() *ShAtom {
 	if op := p.shOperator(q); op != nil {
 		return op
 	}
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqBacktDquot, nil}
-	case repl.AdvanceStr("`"):
-		return &ShAtom{shtWord, repl.Str(), shqPlain, nil}
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqBacktSquot, nil}
-	case repl.AdvanceHspace():
-		return &ShAtom{shtSpace, repl.Str(), q, nil}
-	case repl.AdvanceRegexp("^#[^`]*"):
-		return &ShAtom{shtComment, repl.Str(), q, nil}
-	case repl.AdvanceRegexp(`^(?:[!#%*+,\-./0-9:=?@A-Z\[\]_a-z~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Str(), q, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqBacktDquot, nil}
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtText, lexer.Since(mark), shqPlain, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqBacktSquot, nil}
+	case lexer.NextHspace() != "":
+		return &ShAtom{shtSpace, lexer.Since(mark), q, nil}
+	case lexer.SkipRegexp(G.res.Compile("^#[^`]*")):
+		return &ShAtom{shtComment, lexer.Since(mark), q, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, false, false)
 }
 
-func (p *ShTokenizer) shAtomSub() *ShAtom {
+// In pkgsrc, the $(...) subshell syntax is not used, in order to preserve
+// compatibility with /bin/sh from Solaris 7.
+func (p *ShTokenizer) shAtomSubsh() *ShAtom {
 	const q = shqSubsh
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
+	switch {
+	case lexer.NextHspace() != "":
+		return &ShAtom{shtSpace, lexer.Since(mark), q, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqSubshDquot, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqSubshSquot, nil}
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtText, lexer.Since(mark), shqSubshBackt, nil}
+	case lexer.SkipRegexp(G.res.Compile(`^#[^)]*`)):
+		return &ShAtom{shtComment, lexer.Since(mark), q, nil}
+	case lexer.SkipByte(')'):
+		// The closing parenthesis can have multiple meanings:
+		// - end of a subshell, such as (echo "in a subshell")
+		// - end of a subshell variable expression, such as var=$$(echo "from a subshell")
+		// - end of a case pattern
+		// In the "subshell variable expression" case, the atom type
+		// could be shtText since it is part of a text node. On the
+		// other hand, pkglint doesn't tokenize shell programs correctly
+		// anyway. This needs to be fixed someday.
+		return &ShAtom{shtOperator, lexer.Since(mark), shqPlain, nil}
+	}
 	if op := p.shOperator(q); op != nil {
 		return op
 	}
-	repl := p.parser.repl
-	mark := repl.Mark()
-	atom := func(typ ShAtomType) *ShAtom {
-		return &ShAtom{typ, repl.Since(mark), shqSubsh, nil}
-	}
-	switch {
-	case repl.AdvanceHspace():
-		return atom(shtSpace)
-	case repl.AdvanceStr("\""):
-	//return &ShAtom{shtWord, repl.Str(), shqDquot, nil}
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqSubshSquot, nil}
-	case repl.AdvanceStr("`"):
-	//return &ShAtom{shtWord, repl.Str(), shqBackt, nil}
-	case repl.AdvanceRegexp(`^#.*`):
-		return &ShAtom{shtComment, repl.Group(0), q, nil}
-	case repl.AdvanceStr(")"):
-		return &ShAtom{shtWord, repl.Str(), shqPlain, nil}
-	case repl.AdvanceRegexp(`^(?:[!#%*+,\-./0-9:=?@A-Z\[\]^_a-z{}~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Group(0), q, nil}
-	}
-	return nil
+	return p.shAtomInternal(q, false, false)
 }
 
 func (p *ShTokenizer) shAtomDquotBackt() *ShAtom {
@@ -168,97 +182,214 @@ func (p *ShTokenizer) shAtomDquotBackt() *ShAtom {
 	if op := p.shOperator(q); op != nil {
 		return op
 	}
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("`"):
-		return &ShAtom{shtWord, repl.Str(), shqDquot, nil}
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqDquotBacktDquot, nil}
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqDquotBacktSquot, nil}
-	case repl.AdvanceRegexp("^#[^`]*"):
-		return &ShAtom{shtComment, repl.Str(), q, nil}
-	case repl.AdvanceRegexp(`^(?:[!#%*+,\-./0-9:=?@A-Z\[\]_a-z~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Str(), q, nil}
-	case repl.AdvanceHspace():
-		return &ShAtom{shtSpace, repl.Str(), q, nil}
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquot, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquotBacktDquot, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquotBacktSquot, nil}
+	case lexer.SkipRegexp(G.res.Compile("^#[^`]*")):
+		return &ShAtom{shtComment, lexer.Since(mark), q, nil}
+	case lexer.NextHspace() != "":
+		return &ShAtom{shtSpace, lexer.Since(mark), q, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, false, false)
 }
 
 func (p *ShTokenizer) shAtomBacktDquot() *ShAtom {
-	repl := p.parser.repl
+	const q = shqBacktDquot
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqBackt, nil}
-	case repl.AdvanceRegexp(`^(?:[\t !%&()*+,\-./0-9:;<=>?@A-Z\[\]^_a-z{|}~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Group(0), shqBacktDquot, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqBackt, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, true, false)
 }
 
 func (p *ShTokenizer) shAtomBacktSquot() *ShAtom {
 	const q = shqBacktSquot
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqBackt, nil}
-	case repl.AdvanceRegexp(`^([\t !"#%&()*+,\-./0-9:;<=>?@A-Z\[\\\]^_` + "`" + `a-z{|}~]+|\$\$)+`):
-		return &ShAtom{shtWord, repl.Group(0), q, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqBackt, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, false, true)
+}
+
+func (p *ShTokenizer) shAtomSubshDquot() *ShAtom {
+	const q = shqSubshDquot
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
+	switch {
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqSubsh, nil}
+	}
+	return p.shAtomInternal(q, true, false)
 }
 
 func (p *ShTokenizer) shAtomSubshSquot() *ShAtom {
 	const q = shqSubshSquot
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqSubsh, nil}
-	case repl.AdvanceRegexp(`^([\t !"#%&()*+,\-./0-9:;<=>?@A-Z\[\\\]^_` + "`" + `a-z{|}~]+|\$\$)+`):
-		return &ShAtom{shtWord, repl.Group(0), q, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqSubsh, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, false, true)
+}
+
+func (p *ShTokenizer) shAtomSubshBackt() *ShAtom {
+	const q = shqSubshBackt
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
+	switch {
+	case lexer.SkipByte('`'):
+		return &ShAtom{shtOperator, lexer.Since(mark), shqSubsh, nil}
+	case lexer.SkipHspace():
+		return &ShAtom{shtSpace, lexer.Since(mark), q, nil}
+	}
+	return p.shAtomInternal(q, false, false)
 }
 
 func (p *ShTokenizer) shAtomDquotBacktDquot() *ShAtom {
 	const q = shqDquotBacktDquot
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("\""):
-		return &ShAtom{shtWord, repl.Str(), shqDquotBackt, nil}
-	case repl.AdvanceRegexp(`^(?:[\t !%&()*+,\-./0-9:;<=>?@A-Z\[\]^_a-z{|}~]+|\\[^$]|` + reShDollar + `)+`):
-		return &ShAtom{shtWord, repl.Group(0), q, nil}
+	case lexer.SkipByte('"'):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquotBackt, nil}
 	}
-	return nil
+	return p.shAtomInternal(q, true, false)
 }
 
 func (p *ShTokenizer) shAtomDquotBacktSquot() *ShAtom {
-	repl := p.parser.repl
+	const q = shqDquotBacktSquot
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("'"):
-		return &ShAtom{shtWord, repl.Str(), shqDquotBackt, nil}
-	case repl.AdvanceRegexp(`^(?:[\t !"#%()*+,\-./0-9:;<=>?@A-Z\[\]^_a-z{|}~]+|\\[^$]|\\\$\$|\$\$)+`):
-		return &ShAtom{shtWord, repl.Group(0), shqDquotBacktSquot, nil}
+	case lexer.SkipByte('\''):
+		return &ShAtom{shtText, lexer.Since(mark), shqDquotBackt, nil}
+	}
+	return p.shAtomInternal(q, false, true)
+}
+
+// shAtomInternal reads the next shtText or shtShVarUse.
+//
+// Examples:
+//  while
+//  text$$,text
+//  $$!
+//  $$$$
+//  text
+//  ${var:=default}
+func (p *ShTokenizer) shAtomInternal(q ShQuoting, dquot, squot bool) *ShAtom {
+	if shVarUse := p.shVarUse(q); shVarUse != nil {
+		return shVarUse
+	}
+
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
+
+loop:
+	for {
+		_ = `^[\t "$&'();<>\\|]+` // These are not allowed in shqPlain.
+
+		switch {
+		case lexer.SkipRegexp(G.res.Compile(`^[!#%*+,\-./0-9:=?@A-Z\[\]^_a-z{}~]+`)):
+			break
+		case dquot && lexer.SkipRegexp(G.res.Compile(`^[\t &'();<>|]+`)):
+			break
+		case squot && lexer.SkipByte('`'):
+			break
+		case squot && lexer.SkipRegexp(G.res.Compile(`^[\t "&();<>\\|]+`)):
+			break
+		case squot && lexer.SkipString("$$"):
+			break
+		case squot:
+			break loop
+		case lexer.SkipString("\\$$"):
+			break
+		case lexer.SkipRegexp(G.res.Compile(`^\\[^$]`)):
+			break
+		case matches(lexer.Rest(), `^\$\$[^!#(*\-0-9?@A-Z_a-z{]`):
+			lexer.NextString("$$")
+		case lexer.Rest() == "$$":
+			lexer.Skip(2)
+		case lexer.Rest() == "$":
+			lexer.Skip(1)
+		default:
+			break loop
+		}
+	}
+
+	if token := lexer.Since(mark); token != "" {
+		return &ShAtom{shtText, token, q, nil}
 	}
 	return nil
 }
 
+// shVarUse parses a use of a shell variable, like $$var or $${var:=value}.
+//
+// See http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_06_02
+func (p *ShTokenizer) shVarUse(q ShQuoting) *ShAtom {
+	lexer := p.parser.lexer
+	beforeDollar := lexer.Mark()
+
+	if !lexer.SkipString("$$") {
+		return nil
+	}
+
+	if lexer.TestByteSet(textproc.Digit) {
+		lexer.Skip(1)
+		text := lexer.Since(beforeDollar)
+		return &ShAtom{shtShVarUse, text, q, text[2:]}
+	}
+
+	brace := lexer.SkipByte('{')
+
+	varnameStart := lexer.Mark()
+	if !lexer.SkipRegexp(G.res.Compile(`^(?:[!#*\-?@]|\$\$|[A-Za-z_]\w*|\d+)`)) {
+		lexer.Reset(beforeDollar)
+		return nil
+	}
+
+	shVarname := lexer.Since(varnameStart)
+	if shVarname == "$$" {
+		shVarname = "$"
+	}
+
+	if brace {
+		lexer.SkipRegexp(G.res.Compile(`^(?:##?|%%?|:?[+\-=?])[^$\\{}]*`))
+		if !lexer.SkipByte('}') {
+			lexer.Reset(beforeDollar)
+			return nil
+		}
+	}
+
+	return &ShAtom{shtShVarUse, lexer.Since(beforeDollar), q, shVarname}
+}
+
 func (p *ShTokenizer) shOperator(q ShQuoting) *ShAtom {
-	repl := p.parser.repl
+	lexer := p.parser.lexer
+	mark := lexer.Mark()
 	switch {
-	case repl.AdvanceStr("||"),
-		repl.AdvanceStr("&&"),
-		repl.AdvanceStr(";;"),
-		repl.AdvanceStr("\n"),
-		repl.AdvanceStr(";"),
-		repl.AdvanceStr("("),
-		repl.AdvanceStr(")"),
-		repl.AdvanceStr("|"),
-		repl.AdvanceStr("&"):
-		return &ShAtom{shtOperator, repl.Str(), q, nil}
-	case repl.AdvanceRegexp(`^\d*(?:<<-|<<|<&|<>|>>|>&|>\||<|>)`):
-		return &ShAtom{shtOperator, repl.Group(0), q, nil}
+	case lexer.SkipString("||"),
+		lexer.SkipString("&&"),
+		lexer.SkipString(";;"),
+		lexer.NextBytesFunc(func(b byte) bool { return b == '\n' }) != "",
+		lexer.SkipByte(';'),
+		lexer.SkipByte('('),
+		lexer.SkipByte(')'),
+		lexer.SkipByte('|'),
+		lexer.SkipByte('&'):
+		return &ShAtom{shtOperator, lexer.Since(mark), q, nil}
+	case lexer.SkipRegexp(G.res.Compile(`^\d*(?:<<-|<<|<&|<>|>>|>&|>\||<|>)`)):
+		return &ShAtom{shtOperator, lexer.Since(mark), q, nil}
 	}
 	return nil
 }
@@ -279,10 +410,13 @@ func (p *ShTokenizer) ShAtoms() []*ShAtom {
 func (p *ShTokenizer) ShToken() *ShToken {
 	var curr *ShAtom
 	q := shqPlain
+	prevQ := q
+
 	peek := func() *ShAtom {
 		if curr == nil {
 			curr = p.ShAtom(q)
 			if curr != nil {
+				prevQ = q
 				q = curr.Quoting
 			}
 		}
@@ -292,44 +426,42 @@ func (p *ShTokenizer) ShToken() *ShToken {
 		curr = nil
 	}
 
-	repl := p.parser.repl
-	inimark := repl.Mark()
+	lexer := p.parser.lexer
+	initialMark := lexer.Mark()
 	var atoms []*ShAtom
 
 	for peek() != nil && peek().Type == shtSpace {
 		skip()
-		inimark = repl.Mark()
+		initialMark = lexer.Mark()
 	}
 
-	if peek() == nil {
+	if curr == nil {
 		return nil
 	}
-	if atom := peek(); !atom.Type.IsWord() {
+
+	if atom := peek(); !atom.Type.IsWord() && atom.Quoting != shqSubsh {
 		return NewShToken(atom.MkText, atom)
 	}
 
-nextatom:
-	mark := repl.Mark()
-	atom := peek()
-	if atom != nil && (atom.Type.IsWord() || atom.Quoting != shqPlain) {
-		skip()
-		atoms = append(atoms, atom)
-		goto nextatom
+	for {
+		mark := lexer.Mark()
+		atom := peek()
+		if atom != nil && (atom.Type.IsWord() || q != shqPlain || prevQ == shqSubsh) {
+			skip()
+			atoms = append(atoms, atom)
+			continue
+		}
+		lexer.Reset(mark)
+		break
 	}
-	repl.Reset(mark)
 
-	if len(atoms) == 0 {
+	if q != shqPlain {
+		lexer.Reset(initialMark)
 		return nil
 	}
-	return NewShToken(repl.Since(inimark), atoms...)
-}
 
-func (p *ShTokenizer) Mark() textproc.PrefixReplacerMark {
-	return p.parser.repl.Mark()
-}
-
-func (p *ShTokenizer) Reset(mark textproc.PrefixReplacerMark) {
-	p.parser.repl.Reset(mark)
+	G.Assertf(len(atoms) > 0, "ShTokenizer.ShToken")
+	return NewShToken(lexer.Since(initialMark), atoms...)
 }
 
 func (p *ShTokenizer) Rest() string {

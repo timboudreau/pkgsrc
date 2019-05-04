@@ -1,10 +1,6 @@
-$NetBSD: distinfo,v 1.17 2015/11/03 01:20:20 agc Exp $
+$NetBSD: distinfo,v 1.20 2019/01/30 10:16:47 nia Exp $
 
-SHA1 (InspIRCd-1.1.23.tar.bz2) = 0def2426fa60cb32a2514e64196c04f37fa67e5e
-RMD160 (InspIRCd-1.1.23.tar.bz2) = 122ae3c269af0af3f8362f17eae29767d6c314d4
-SHA512 (InspIRCd-1.1.23.tar.bz2) = 578c12eca0607b90752137d4766fb38c5e9e27c0c7c913244418c2fe297f5e286be2fd3c8844fe8b4cfcf6e1112b0abf52715d62597957976f8e319b501ceb9a
-Size (InspIRCd-1.1.23.tar.bz2) = 505853 bytes
-SHA1 (patch-aa) = d62675b6ace79ba5c0c0c4db2b4f9454346170c3
-SHA1 (patch-ab) = c0921dda70348839c286315a3fa0244828d5116a
-SHA1 (patch-ac) = 266c8d6015923d890748d4157f7e5aff87da5df1
-SHA1 (patch-ad) = d35df392a574728f6c61c4107bb3d2ce1e11568a
+SHA1 (inspircd-2.0.27.tar.gz) = e6db8a29e9270ceed51bd2fa9c45bb8a0d03aba5
+RMD160 (inspircd-2.0.27.tar.gz) = f911770fed2145086cddc91ebf0ed6d5c1bad578
+SHA512 (inspircd-2.0.27.tar.gz) = 56f03c3259fad54365e97fd82f4e309edc60b641ccadd7916d04156fd157858f79930c8b9df99aa98c5505f76ab19e6bcd150ae5ed04d2bddfff572e18226cdd
+Size (inspircd-2.0.27.tar.gz) = 735970 bytes

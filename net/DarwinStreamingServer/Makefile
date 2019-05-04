@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.20 2017/06/05 14:24:15 ryoon Exp $
+# $NetBSD: Makefile,v 1.24 2018/08/22 09:45:51 wiz Exp $
 
 DISTNAME=	DarwinStreamingSrvr5.5.5-Source
 PKGNAME=	DarwinStreamingServer-5.5.5
-PKGREVISION=	10
+PKGREVISION=	12
 CATEGORIES=	net multimedia
 MASTER_SITES=	http://static.macosforge.org/dss/downloads/
 
@@ -17,7 +17,7 @@ RESTRICTED=	Under APSL (see http://www.opensource.apple.com/apsl/).
 NO_BIN_ON_CDROM=${RESTRICTED}
 NO_BIN_ON_FTP=	${RESTRICTED}
 
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 MAKE_FILE=	Makefile.POSIX
 MAKE_ENV+=	CCOMP=${CC:Q} CPLUS=${CXX:Q}\ -fPIC LINKER=${CXX:Q}
@@ -70,14 +70,14 @@ REPLACE_PERL+=	WebAdmin/WebAdminHtml/view_broadcast.cgi
 REPLACE_PERL+=	WebAdmin/src/streamingadminserver.pl
 REPLACE_PERL+=	WinNTSupport/WinPasswdAssistant.pl
 
-REQUIRE_DIRS+=	${PKG_SYSCONFDIR}/streaming
-CONF_FILES=	share/examples/streaming/qtgroups ${PKG_SYSCONFDIR}/streaming/qtgroups
-CONF_FILES+=	share/examples/streaming/qtusers ${PKG_SYSCONFDIR}/streaming/qtusers
-CONF_FILES+=	share/examples/streaming/relayconfig.xml-Sample ${PKG_SYSCONFDIR}/streaming/relayconfig.xml
-CONF_FILES+=	share/examples/streaming/streamingserver.xml-POSIX ${PKG_SYSCONFDIR}/streaming/streamingserver.xml
+PKG_SYSCONFSUBDIR=	streaming
+CONF_FILES=	share/examples/streaming/qtgroups ${PKG_SYSCONFDIR}/qtgroups
+CONF_FILES+=	share/examples/streaming/qtusers ${PKG_SYSCONFDIR}/qtusers
+CONF_FILES+=	share/examples/streaming/relayconfig.xml-Sample ${PKG_SYSCONFDIR}/relayconfig.xml
+CONF_FILES+=	share/examples/streaming/streamingserver.xml-POSIX ${PKG_SYSCONFDIR}/streamingserver.xml
 
 SUBST_CLASSES+=		makefile
-SUBST_STAGE.makefile=	post-patch
+SUBST_STAGE.makefile=	pre-configure
 SUBST_MESSAGE.makefile=	Fixing Makefiles
 SUBST_FILES.makefile+=	APIModules/QTSSDemoAuthorizationModule.bproj/Makefile.POSIX
 SUBST_FILES.makefile+=	APIModules/QTSSHomeDirectoryModule/Makefile.POSIX
@@ -104,12 +104,12 @@ SUBST_FILES.makefile+=	qtpasswd.tproj/Makefile.POSIX
 SUBST_SED.makefile+=	-e "s|-O[023]||"
 
 SUBST_CLASSES+=		path
-SUBST_STAGE.path=	post-patch
+SUBST_STAGE.path=	pre-configure
 SUBST_MESSAGE.path=	Fixing paths
 SUBST_FILES.path+=	defaultPaths.h
 SUBST_FILES.path+=	WebAdmin/src/streamingadminserver.pl
 SUBST_FILES.path+=	streamingserver.xml-POSIX
-SUBST_SED.path+=	-e "s|/etc/streaming|${PKG_SYSCONFDIR}/streaming|"
+SUBST_SED.path+=	-e "s|/etc/streaming|${PKG_SYSCONFDIR}|"
 SUBST_SED.path+=	-e "s|/movies|/share/streaming/movies|"
 SUBST_SED.path+=	-e "s|/usr/local|${PREFIX}|"
 SUBST_SED.path+=	-e "s|/sbin/StreamingServer|/libexec/StreamingServer|"
@@ -118,7 +118,7 @@ SUBST_SED.path+=	-e "s|/var/streaming/playlists|${PREFIX}/share/streaming/playli
 SUBST_SED.path+=	-e "s|/var/streaming/logs|${VARBASE}/log/streaming|"
 
 SUBST_CLASSES+=		conf
-SUBST_STAGE.conf=	post-patch
+SUBST_STAGE.conf=	pre-configure
 SUBST_MESSAGE.conf=	Fixing configuration file
 SUBST_FILES.conf+=	WebAdmin/streamingadminserver.conf
 SUBST_SED.conf+=	-e "s|/Library/QuickTimeStreaming/AdminHtml|${PREFIX}/share/streaming/AdminHtml|"

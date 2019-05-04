@@ -1,7 +1,7 @@
-# $NetBSD: Makefile,v 1.27 2017/04/30 01:21:32 ryoon Exp $
+# $NetBSD: Makefile,v 1.33 2018/12/13 19:51:47 adam Exp $
 
 DISTNAME=	exempi-2.3.0
-PKGREVISION=	3
+PKGREVISION=	8
 CATEGORIES=	devel graphics
 MASTER_SITES=	http://libopenraw.freedesktop.org/download/
 EXTRACT_SUFX=	.tar.bz2
@@ -15,7 +15,7 @@ GNU_CONFIGURE=	yes
 CONFIGURE_ENV+=	ac_cv_tls=none
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 
 CONFIGURE_ARGS+=	LIBS=${BUILDLINK_LDADD.iconv:Q}
 

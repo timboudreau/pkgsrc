@@ -1,9 +1,10 @@
-# $NetBSD: Makefile,v 1.1.1.1 2014/08/09 16:21:28 wiz Exp $
+# $NetBSD: Makefile,v 1.4 2019/04/06 09:29:23 maya Exp $
 
 DISTNAME=	Symbola
-PKGNAME=	symbola-ttf-7.17
+PKGNAME=	symbola-ttf-9.17
 CATEGORIES=	fonts
 MASTER_SITES=	http://users.teilar.gr/~g1951d/
+DIST_SUBDIR=	${PKGNAME_NOREV}
 EXTRACT_SUFX=	.zip
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
@@ -14,20 +15,7 @@ COMMENT=	Basic Latin, Greek, Cyrillic, and many Symbol blocks from Unicode
 # packaged and redistributed.
 LICENSE=	public-domain
 
-DIST_SUBDIR=	${PKGNAME_NOREV}
 WRKSRC=		${WRKDIR}
 
-USE_LANGUAGES=	# none
-NO_CONFIGURE=	yes
-NO_BUILD=	yes
-
-FONTS_DIRS.ttf=	${PREFIX}/share/fonts/X11/TTF
-
-DOCDIR=		${PREFIX}/share/doc/${PKGBASE}
-INSTALLATION_DIRS=	share/fonts/X11/TTF ${DOCDIR} ${FONTS_DIRS.ttf}
-
-do-install:
-	${INSTALL_DATA} ${WRKSRC}/*.ttf ${DESTDIR}${FONTS_DIRS.ttf}
-	${INSTALL_DATA} ${WRKSRC}/*.docx ${DESTDIR}${DOCDIR}
-
+.include "../../mk/fonts.mk"
 .include "../../mk/bsd.pkg.mk"

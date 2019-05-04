@@ -1,12 +1,12 @@
-# $NetBSD: buildlink3.mk,v 1.53 2017/02/12 06:24:40 ryoon Exp $
+# $NetBSD: buildlink3.mk,v 1.61 2018/11/29 11:21:45 prlw1 Exp $
 
 BUILDLINK_TREE+=	libbonoboui
 
 .if !defined(LIBBONOBOUI_BUILDLINK3_MK)
 LIBBONOBOUI_BUILDLINK3_MK:=
 
-BUILDLINK_API_DEPENDS.libbonoboui+=		libbonoboui>=2.8.0
-BUILDLINK_ABI_DEPENDS.libbonoboui+=	libbonoboui>=2.24.4nb29
+BUILDLINK_API_DEPENDS.libbonoboui+=	libbonoboui>=2.8.0
+BUILDLINK_ABI_DEPENDS.libbonoboui+=	libbonoboui>=2.24.4nb36
 BUILDLINK_PKGSRCDIR.libbonoboui?=	../../devel/libbonoboui
 
 .include "../../devel/GConf/buildlink3.mk"

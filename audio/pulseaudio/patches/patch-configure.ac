@@ -1,4 +1,4 @@
-$NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
+$NetBSD: patch-configure.ac,v 1.12 2018/07/25 12:15:59 adam Exp $
 
 * Don't assume sys/capability.h is guaranteed present on Linux.
 * Fix NetBSD detection for libatomics_ops check.
@@ -7,15 +7,18 @@ $NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
 * Install default config files in example directory; pkgsrc config
   file framework will install them in the right place.
 * Avoid hardcoded SDK paths on Darwin.
+* Check for memfd_create instead of assuming libc does not define it.
+  (Will be included in next release after 11.1)
+* On Darwin, do not use macosx-version-min.
 
---- configure.ac.orig	2016-06-22 06:53:09.000000000 +0000
+--- configure.ac.orig	2018-06-18 13:33:47.000000000 +0000
 +++ configure.ac
 @@ -21,7 +21,7 @@
  
  AC_PREREQ(2.63)
  
 -AC_INIT([pulseaudio],[m4_esyscmd(./git-version-gen .tarball-version)],[pulseaudio-discuss (at) lists (dot) freedesktop (dot) org],[pulseaudio],[http://pulseaudio.org/])
-+AC_INIT([pulseaudio],[10.0],[pulseaudio-discuss (at) lists (dot) freedesktop (dot) org],[pulseaudio],[http://pulseaudio.org/])
++AC_INIT([pulseaudio],[12.0],[pulseaudio-discuss (at) lists (dot) freedesktop (dot) org],[pulseaudio],[http://pulseaudio.org/])
  AC_CONFIG_SRCDIR([src/daemon/main.c])
  AC_CONFIG_MACRO_DIR([m4])
  AC_CONFIG_HEADERS([config.h])
@@ -27,7 +30,17 @@ $NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
          os_is_linux=1
      ;;
      freebsd*)
-@@ -1041,7 +1040,7 @@ AS_IF([test "x$HAVE_DBUS" = "x1"], AC_DE
+@@ -613,6 +612,9 @@ AS_IF([test "x$enable_memfd" = "xyes" &&
+ AS_IF([test "x$HAVE_MEMFD" = "x1"],
+     AC_CHECK_FUNCS([memfd_create]))
+ 
++AS_IF([test "x$HAVE_MEMFD" = "x1"],
++    AC_CHECK_FUNCS([memfd_create]))
++
+ AC_SUBST(HAVE_MEMFD)
+ AM_CONDITIONAL([HAVE_MEMFD], [test "x$HAVE_MEMFD" = x1])
+ AS_IF([test "x$HAVE_MEMFD" = "x1"], AC_DEFINE([HAVE_MEMFD], 1, [Have memfd shared memory.]))
+@@ -1065,7 +1067,7 @@ AS_IF([test "x$HAVE_DBUS" = "x1"], AC_DE
  
  PA_MACHINE_ID="${sysconfdir}/machine-id"
  AX_DEFINE_DIR(PA_MACHINE_ID, PA_MACHINE_ID, [D-Bus machine-id file])
@@ -36,7 +49,7 @@ $NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
  AX_DEFINE_DIR(PA_MACHINE_ID_FALLBACK, PA_MACHINE_ID_FALLBACK,
  	      [Fallback machine-id file])
  
-@@ -1364,9 +1363,9 @@ fi
+@@ -1364,9 +1366,9 @@ fi
  
  PA_SYSTEM_RUNTIME_PATH="${localstatedir}/run/pulse"
  AX_DEFINE_DIR(PA_SYSTEM_RUNTIME_PATH, PA_SYSTEM_RUNTIME_PATH, [System runtime dir])
@@ -48,7 +61,7 @@ $NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
  AX_DEFINE_DIR(PA_SYSTEM_STATE_PATH, PA_SYSTEM_STATE_PATH, [System state dir])
  
  PA_BINARY=${bindir}/pulseaudio${EXEEXT}
-@@ -1378,8 +1377,9 @@ AX_DEFINE_DIR(PACTL_BINARY, PACTL_BINARY
+@@ -1378,8 +1380,9 @@ AX_DEFINE_DIR(PACTL_BINARY, PACTL_BINARY
  AC_SUBST(PA_SOEXT, [.so])
  AC_DEFINE(PA_SOEXT, [".so"], [Shared object extension])
  
@@ -60,3 +73,12 @@ $NetBSD: patch-configure.ac,v 1.8 2017/01/21 19:32:11 ryoon Exp $
  
  #### Mac OSX specific stuff #####
  
+@@ -1396,8 +1399,6 @@ AC_ARG_WITH(mac-sysroot,
+     mac_sysroot=$withval)
+ 
+ if test "x$os_is_darwin" = "x1" ; then
+-    LDFLAGS="$LDFLAGS -mmacosx-version-min=$mac_version_min"
+-    CFLAGS="$CFLAGS -mmacosx-version-min=$mac_version_min"
+ 
+     if test "x$mac_sysroot" != "x" ; then
+         LDFLAGS="$LDFLAGS -isysroot $mac_sysroot"

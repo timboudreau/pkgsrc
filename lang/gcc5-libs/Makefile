@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.10 2017/07/09 05:30:41 maya Exp $
+# $NetBSD: Makefile,v 1.14 2018/11/28 16:08:55 abs Exp $
 
 GCC_PKGNAME=	gcc5
 .include	"../../lang/${GCC_PKGNAME}/version.mk"

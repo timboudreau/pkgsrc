@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.58 2017/01/19 18:52:18 agc Exp $
+# $NetBSD: Makefile,v 1.60 2018/08/22 09:45:47 wiz Exp $
 #
 
 DISTNAME=	vfu-3.04
-PKGREVISION=	11
+PKGREVISION=	12
 CATEGORIES=	misc
 MASTER_SITES=	http://cade.datamax.bg/vfu/
 MASTER_SITES+=	${MASTER_SITE_SUNSITE:=utils/file/managers/}
@@ -24,7 +24,7 @@ CONF_FILES=	${EGDIR}/vfu.conf ${PKG_SYSCONFDIR}/vfu.conf
 
 MAKE_ENV+=	PKG_SYSCONFDIR=${PKG_SYSCONFDIR:Q}
 
-INSTALLATION_DIRS=	bin man/man1
+INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1
 
 do-build:
 	cd ${WRKSRC} && ${SETENV} ${MAKE_ENV} ${SH} build.netbsd

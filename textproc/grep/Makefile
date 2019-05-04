@@ -1,19 +1,20 @@
-# $NetBSD: Makefile,v 1.50 2017/03/30 19:23:17 ryoon Exp $
+# $NetBSD: Makefile,v 1.53 2018/08/22 09:46:45 wiz Exp $
 
-DISTNAME=	grep-3.0
+DISTNAME=	grep-3.1
 CATEGORIES=	textproc
+PKGREVISION=	2
 MASTER_SITES=	${MASTER_SITE_GNU:=grep/}
 EXTRACT_SUFX=	.tar.xz
 
-MAINTAINER=	bouyer@NetBSD.org
-HOMEPAGE=	http://www.gnu.org/software/grep/grep.html
+MAINTAINER=	pkgsrc-users@pkgsrc.org
+HOMEPAGE=	https://www.gnu.org/software/grep/grep.html
 COMMENT=	GNU grep
 LICENSE=	gnu-gpl-v3 # or later
 
 USE_PKGLOCALEDIR=	yes
 USE_TOOLS+=		makeinfo msgfmt
 GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--disable-perl-regexp
+CONFIGURE_ARGS+=	--enable-perl-regexp
 CONFIGURE_ARGS+=	--program-prefix=g
 CONFIGURE_ENV+=		MKDIR_P=${INSTALL_DATA_DIR:Q}
 INFO_FILES=		yes
@@ -38,4 +39,5 @@ post-install:
 .endfor
 
 .include "../../devel/gettext-lib/buildlink3.mk"
+.include "../../devel/pcre/buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

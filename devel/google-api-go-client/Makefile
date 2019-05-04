@@ -1,9 +1,8 @@
-# $NetBSD: Makefile,v 1.11 2017/04/13 15:12:05 bsiegert Exp $
-#
+# $NetBSD: Makefile,v 1.21 2019/04/16 18:41:12 bsiegert Exp $
 
 DISTNAME=		google-api-go-client
 PKGNAME=		google-api-go-client-20160909
-PKGREVISION=		3
+PKGREVISION=		12
 CATEGORIES=		devel
 MASTER_SITES=		${MASTER_SITE_GITHUB:=google/}
 GITHUB_PROJECT=		${DISTNAME}
@@ -16,6 +15,9 @@ LICENSE=		modified-bsd
 
 GO_SRCPATH=		google.golang.org/api
 GO_DIST_BASE=		${DISTNAME}-${GITHUB_TAG}*
+
+CHECK_RELRO_SKIP+=	bin/go-api-demo
+CHECK_RELRO_SKIP+=	bin/google-api-go-generator
 
 pre-patch:
 	cd ${WRKSRC} && mv examples go-api-demo

@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.28 2015/07/04 16:18:34 joerg Exp $
+# $NetBSD: Makefile,v 1.32 2018/07/18 00:06:17 joerg Exp $
 
 DISTNAME=		Maelstrom-1.4.3-L2.0.6-src.tar.gz
 PKGNAME=		maelstrom-x11-2.0.6
@@ -10,8 +10,8 @@ MASTER_SITES+=		ftp://ftp.devolution.com/pub/maelstrom/Add-Ons/
 DISTFILES=		${DISTNAME} ${STREK} ${SWARS} ${ESOUND}
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://www.ambrosiasw.com/Products/Maelstrom.html
-COMMENT=	High resolution graphics version of Asteroids (X11 version)
+#HOMEPAGE=		http://www.ambrosiasw.com/Products/Maelstrom.html
+COMMENT=		High resolution graphics version of Asteroids (X11 version)
 
 ESOUND=			Maelstrom-Sounds-L2.0.0.tar.gz
 STREK=			Star_Trek.tar.gz
@@ -22,12 +22,12 @@ CONFLICTS=		maelstrom-[0-9]* maelstrom-sdl-[0-9]*
 EXTRACT_ONLY=		${DISTNAME}
 
 WRKSRC=			${WRKDIR}/Maelstrom
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		pax
 LDFLAGS.SunOS+=		-lsocket -lnsl
 LIBS.SunOS+=		-lsocket -lnsl
 MAKE_FLAGS+=		EXTRALIBS=${LIBS:Q}
-MAKE_ENV+=		BINOWN=${BINOWN:Q} BINGRP=${BINGRP:Q} XPMDIR=${BUILDLINK_PREFIX.libXpm}
+MAKE_ENV+=		BINOWN=${BINOWN} BINGRP=${BINGRP} XPMDIR=${BUILDLINK_PREFIX.libXpm}
 MAKE_ENV+=		GAMEOWN=${GAMEOWN} GAMEGRP=${GAMEGRP}
 MAKE_ENV+=		GAMEMODE=${GAMEMODE} GAMEDATAMODE=${GAMEDATAMODE}
 MAKE_ENV+=		VARBASE=${VARBASE}

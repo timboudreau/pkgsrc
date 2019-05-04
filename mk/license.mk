@@ -1,11 +1,11 @@
-# $NetBSD: license.mk,v 1.80 2017/05/11 12:56:21 jperkin Exp $
+# $NetBSD: license.mk,v 1.98 2019/02/10 21:36:54 leot Exp $
 #
 # This file handles everything about the LICENSE variable. It is
 # included automatically by bsd.pkg.mk.
 #
 # XXX There should be one place to set the default list and for users
 # to set the ACCEPTABLE_LICENSES list, used by both source builds and
-# binary installs#
+# binary installs.
 #
 # XXX: Some of this content arguably belongs in the pkgsrc guide
 # instead.
@@ -19,11 +19,6 @@
 #	build the package and instead print an error message.
 #	(pkg_install has code to behave the same way, but it is not
 #	yet turned on.)
-#
-#	XXX: Perhaps there should be some mechanism to prevent running
-#	programs that are part of packages that declare LICENSEs that
-#	are not in ACCEPTABLE_LICENSES or some per-user variable.
-#	This is surely controversial and requires discussion.
 #
 #	To include the default licenses, you can use the += operator
 #	in mk.conf. To override it, use the plain = operator.
@@ -66,22 +61,37 @@
 #	The list of licenses that will be the default value of
 #	ACCEPTABLE_LICENSES.  Adapting the longstanding policy of Open
 #	Source or Free licenses not requiring tags, it should contain
-#	almost all licenses that are Open Source or Free, so as to provide
-#	the most expansive default that almost all people find
-#	acceptable.  (Many people will want to add more licenses to
-#	ACCEPTABLE_LICENSES; the point is to have a default that very
-#	few people want to shrink.)
+#	all licenses that are definitively Free or Open Source --
+#	except those specifically excluded by the TNF board -- so as
+#	to provide the most expansive default that almost all people
+#	find acceptable.  (Many people will want to add more licenses
+#	to ACCEPTABLE_LICENSES; the point is to have a default that
+#	very few people want to shrink.)
 #
-#	As an exception to the Open Source or Free policy, the board
-#	of The NetBSD Foundation has decided that licenses that
-#	trigger obligations from use (rather than redistribution),
-#	such as the Affero GPL, should not be in
+#	Licenses approved by FSF as Free and by OSI as Open Source
+#	will be added by default, without annotation, as these
+#	organizations publish lists of approved licenses.
+#
+#	Licenses approved by Debian as meeting the Debian Free
+#	Software Guidelines will also be added by default.  They
+#	should be in a second section with a comment about each one,
+#	because Debian does not publish an accepted license list and
+#	acceptability must be inferred from inclusion in main.
+#
+#	The board of The NetBSD Foundation is the final arbiter of
+#	which licenses may be in DEFAULT_ACCEPTABLE_LICENSES.  As an
+#	exception to the above policy on treating Free, Open Source,
+#	and DFSG licenses as acceptable, the board has decided that
+#	licenses that trigger obligations from use (rather than
+#	redistribution), such as the Affero GPL, should not be in
 #	DEFAULT_ACCEPTABLE_LICENSES.
 #
 #	Licenses not formally approved as Free or Open Source may be
-#	added if they have terms that would obviously be approved if
-#	the effort were made.  Such license names will have a comment
-#	near them in the assignment to DEFAULT_ACCEPTABLE_LICENSES.
+#	added if they have terms that would 1) obviously be approved
+#	by FSF or OSI if the effort were made and 2) obviously not
+#	trigger the above issue with AGPL-type licenses.  Such license
+#	names will be in an additional section and have a comment near
+#	them in the assignment to DEFAULT_ACCEPTABLE_LICENSES.
 #
 #	The pkg_install sources also have a
 #	DEFAULT_ACCEPTABLE_LICENSES list, and that should be updated
@@ -95,18 +105,22 @@
 # Keywords: licence license
 #
 
-# This list is not complete.  Free and Open Source licenses should be
-# added to the list as they are added to pkgsrc.
-
-# The convention is that Free or Open Source licenses do not have a
-# -license suffix, and nonfree licenses end in -license.
-
+# The convention is that Free and Open Source licenses do not have a
+# -license suffix, and non-Free licenses end in -license.  Thus,
+# license in DEFAULT_ACCEPTABLE_LICENSES should not end in -license.
+#
+# First, we set DEFAULT_ACCEPTABLE_LICENSES to the set of licenses
+# formally approved as Free Software by FSF or Open Source by OSI,
+# except that we exclude the AGPL (clearly a Free license), following
+# the decision of the board of TNF.
 DEFAULT_ACCEPTABLE_LICENSES= \
 	apache-1.1 apache-2.0 \
 	arphic-public \
 	artistic artistic-2.0 \
 	boost-license \
 	cc-by-sa-v3.0 \
+	cc-by-sa-v4.0 \
+	cc-by-v4.0 \
 	cc0-1.0-universal \
 	cddl-1.0 \
 	cecill-2.1 \
@@ -151,11 +165,25 @@ DEFAULT_ACCEPTABLE_LICENSES= \
 	zpl-2.1 \
 	zsh
 
-# not approved by OSI, derived from BSD
+# The following licenses meet the DFSG (but are not formally approved
+# by FSF/OSI) as evidenced by inclusion in Debian main.
+#
+# \todo reference to package
+DEFAULT_ACCEPTABLE_LICENSES+=	happy
+# used in https://sources.debian.org/copyright/license/lsof/
+DEFAULT_ACCEPTABLE_LICENSES+=	purdue
+
+# The following licenses are included based on it being obvious they
+# would be approved.
+#
+# derived from BSD
 DEFAULT_ACCEPTABLE_LICENSES+=	info-zip
 
-# not approved by OSI, in line with Free Software principles but with rename
-# restrictions and typefaces can not be sold by itself.
+# The following licenses do not currently meet our standards for
+# inclusion.
+
+# mostly inline with Free Software principles and typefaces can not be
+# sold by itself.
 DEFAULT_ACCEPTABLE_LICENSES+=	vera-ttf-license
 
 ##### Variant spellings
@@ -236,3 +264,33 @@ PKG_FAIL_REASON+= \
 .endif
 
 .endif
+
+# guess-license:
+#	Extracts the current package and tries to guess its license.
+#	This is useful for package developers.
+#
+# Keywords: license
+guess-license: .PHONY
+	@# Running "make extract" would fetch and build the dependencies
+	${RUN} [ -d ${WRKSRC} ] \
+	|| ALLOW_VULNERABLE_PACKAGES=yes ${MAKE} makedirs fetch pre-extract do-extract
+
+	${RUN} \
+	\
+	type ninka > /dev/null 2>&1 || ${FAIL_MSG} "To guess the license, wip/ninka must be installed."; \
+	\
+	${PHASE_MSG} "Guessing licenses for ${PKGNAME}"; \
+	\
+	: "Note that ninka can only handle one file at a time; therefore the slow loop below."; \
+	cd ${WRKDIR} \
+	&& ${FIND} ./* -type f -print \
+	| while read fname; do ninka "$$fname"; done \
+	| ${AWK} -F ';' '{ print $$2 }' \
+	| LC_ALL=C ${SORT} | uniq -c | LC_ALL=C ${SORT} -nr \
+	| ${AWK} 'BEGIN { printf("%5s   %s\n", "Files", "License") } { printf("%5d   %s\n", $$1, $$2); }'
+
+_VARGROUPS+=		license
+_USER_VARS.license=	ACCEPTABLE_LICENSES SKIP_LICENSE_CHECK
+_PKG_VARS.license=	LICENSE
+_SYS_VARS.license=	DEFAULT_ACCEPTABLE_LICENSES
+_SORTED_VARS.license=	*_LICENSES SKIP_*

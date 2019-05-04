@@ -1,6 +1,7 @@
-@comment $NetBSD: PLIST,v 1.2 2016/06/16 04:06:17 markd Exp $
+@comment $NetBSD: PLIST,v 1.4 2019/01/30 07:10:26 markd Exp $
 share/texmf-dist/tex/latex/tools/.tex
 share/texmf-dist/tex/latex/tools/afterpage.sty
+share/texmf-dist/tex/latex/tools/array-2016-10-06.sty
 share/texmf-dist/tex/latex/tools/array.sty
 share/texmf-dist/tex/latex/tools/bm.sty
 share/texmf-dist/tex/latex/tools/calc.sty
@@ -16,6 +17,7 @@ share/texmf-dist/tex/latex/tools/hhline.sty
 share/texmf-dist/tex/latex/tools/indentfirst.sty
 share/texmf-dist/tex/latex/tools/layout.sty
 share/texmf-dist/tex/latex/tools/longtable.sty
+share/texmf-dist/tex/latex/tools/multicol-2017-04-11.sty
 share/texmf-dist/tex/latex/tools/multicol.sty
 share/texmf-dist/tex/latex/tools/q.tex
 share/texmf-dist/tex/latex/tools/r.tex

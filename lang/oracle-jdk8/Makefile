@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.4 2016/09/19 06:57:49 ryoon Exp $
+# $NetBSD: Makefile,v 1.8 2018/11/25 12:41:50 ryoon Exp $
 
 # Note: This must be kept in sync with the oracle-jre8 package
 # Note: make sure you include sums for both the x86_64 and the x86_32
@@ -16,15 +16,11 @@ DEPENDS+=	${PKGNAME_NOREV:S/jdk/jre/}*:../../lang/oracle-jre8
 
 WRKSRC=		${WRKDIR}/jdk1.8.0_${UPDATE_NUMBER}
 JAVA_WRAPPERS=	appletviewer apt extcheck idlj jar jarsigner \
-		javac javadoc javah javap jcmd jdb rmic serialver jps
+		javac javadoc javah javap jcmd jdb jhat rmic serialver jps
 
 MAKE_JOBS_SAFE=	no
 
 .include "../../lang/oracle-jre8/Makefile.common"
-
-.if !empty(MACHINE_PLATFORM:MLinux-*-x86_64)
-CHECK_SHLIBS_SUPPORTED=	no
-.endif
 
 PLIST_SRC=	PLIST.${DIST_OS}-${EMUL_ARCH}
 PLIST_SUBST+=	JAVA_ARCH="${JAVA_ARCH}"
@@ -66,16 +62,5 @@ pre-install:
 	${RM} -f ${WRKSRC}/register.html
 	${RM} -f ${WRKSRC}/register_ja.html
 	${RM} -f ${WRKSRC}/register_zh_CN.html
-	${CHMOD} -x \
-		${WRKSRC}/db/bin/NetworkServerControl.bat \
-		${WRKSRC}/db/bin/dblook.bat \
-		${WRKSRC}/db/bin/derby_common.bat \
-		${WRKSRC}/db/bin/ij.bat \
-		${WRKSRC}/db/bin/setEmbeddedCP.bat \
-		${WRKSRC}/db/bin/setNetworkClientCP.bat \
-		${WRKSRC}/db/bin/setNetworkServerCP.bat \
-		${WRKSRC}/db/bin/startNetworkServer.bat \
-		${WRKSRC}/db/bin/stopNetworkServer.bat \
-		${WRKSRC}/db/bin/sysinfo.bat
 
 .include "../../mk/bsd.pkg.mk"

@@ -1,16 +1,16 @@
-# $NetBSD: Makefile,v 1.9 2017/07/11 06:50:24 adam Exp $
+# $NetBSD: Makefile,v 1.13 2018/08/22 09:43:31 wiz Exp $
 
-DISTNAME=	gperftools-2.6.1
+DISTNAME=	gperftools-2.7
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_GITHUB:=gperftools/}
+GITHUB_PROJECT=	gperftools
+GITHUB_RELEASE=	${DISTNAME}
 
 MAINTAINER=	cheusov@NetBSD.org
 HOMEPAGE=	https://github.com/gperftools/gperftools
 COMMENT=	Fast, multi-threaded malloc() and nifty performance analysis tools
 LICENSE=	modified-bsd
-
-GITHUB_PROJECT=	gperftools
-GITHUB_RELEASE=	${DISTNAME}
 
 USE_LANGUAGES=		c c++
 USE_LIBTOOL=		yes

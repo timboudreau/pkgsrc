@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.16 2017/05/20 18:20:02 adam Exp $
+@comment $NetBSD: PLIST,v 1.21 2019/02/09 00:15:53 wen Exp $
 share/doc/drupal/CHANGELOG.txt
 share/doc/drupal/COPYRIGHT.txt
 share/doc/drupal/INSTALL.mysql.txt
@@ -46,6 +46,7 @@ share/drupal/includes/entity.inc
 share/drupal/includes/errors.inc
 share/drupal/includes/file.inc
 share/drupal/includes/file.mimetypes.inc
+share/drupal/includes/file.phar.inc
 share/drupal/includes/filetransfer/filetransfer.inc
 share/drupal/includes/filetransfer/ftp.inc
 share/drupal/includes/filetransfer/local.inc
@@ -67,6 +68,7 @@ share/drupal/includes/pager.inc
 share/drupal/includes/password.inc
 share/drupal/includes/path.inc
 share/drupal/includes/registry.inc
+share/drupal/includes/request-sanitizer.inc
 share/drupal/includes/session.inc
 share/drupal/includes/stream_wrappers.inc
 share/drupal/includes/tablesort.inc
@@ -149,6 +151,17 @@ share/drupal/misc/throbber.gif
 share/drupal/misc/timezone.js
 share/drupal/misc/tree-bottom.png
 share/drupal/misc/tree.png
+share/drupal/misc/typo3/drupal-security/PharExtensionInterceptor.php
+share/drupal/misc/typo3/phar-stream-wrapper/LICENSE
+share/drupal/misc/typo3/phar-stream-wrapper/README.md
+share/drupal/misc/typo3/phar-stream-wrapper/composer.json
+share/drupal/misc/typo3/phar-stream-wrapper/src/Assertable.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/Behavior.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/Exception.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/Helper.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/Interceptor/PharExtensionInterceptor.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/Manager.php
+share/drupal/misc/typo3/phar-stream-wrapper/src/PharStreamWrapper.php
 share/drupal/misc/ui/images/ui-bg_flat_0_aaaaaa_40x100.png
 share/drupal/misc/ui/images/ui-bg_flat_75_ffffff_40x100.png
 share/drupal/misc/ui/images/ui-bg_glass_55_fbf9ee_1x400.png
@@ -396,6 +409,9 @@ share/drupal/modules/file/icons/x-office-spreadsheet.png
 share/drupal/modules/file/tests/file.test
 share/drupal/modules/file/tests/file_module_test.info
 share/drupal/modules/file/tests/file_module_test.module
+share/drupal/modules/file/tests/fixtures/file_scan_ignore/a.txt
+share/drupal/modules/file/tests/fixtures/file_scan_ignore/frontend_framework/b.txt
+share/drupal/modules/file/tests/fixtures/file_scan_ignore/frontend_framework/c.txt
 share/drupal/modules/filter/filter.admin.inc
 share/drupal/modules/filter/filter.admin.js
 share/drupal/modules/filter/filter.api.php
@@ -610,6 +626,7 @@ share/drupal/modules/simpletest/files/image-test.jpg
 share/drupal/modules/simpletest/files/image-test.png
 share/drupal/modules/simpletest/files/javascript-1.txt
 share/drupal/modules/simpletest/files/javascript-2.script
+share/drupal/modules/simpletest/files/phar-1.phar
 share/drupal/modules/simpletest/files/php-1.txt
 share/drupal/modules/simpletest/files/php-2.php
 share/drupal/modules/simpletest/files/sql-1.txt
@@ -760,6 +777,7 @@ share/drupal/modules/simpletest/tests/themes/test_subtheme/test_subtheme.info
 share/drupal/modules/simpletest/tests/themes/test_theme/template.php
 share/drupal/modules/simpletest/tests/themes/test_theme/templates/node--1.tpl.php
 share/drupal/modules/simpletest/tests/themes/test_theme/test_theme.info
+share/drupal/modules/simpletest/tests/themes/test_theme/theme-settings.php
 share/drupal/modules/simpletest/tests/themes/test_theme_nyan_cat/templates/theme_test_template_test.nyan-cat.html
 share/drupal/modules/simpletest/tests/themes/test_theme_nyan_cat/test_theme_nyan_cat.info
 share/drupal/modules/simpletest/tests/unicode.test

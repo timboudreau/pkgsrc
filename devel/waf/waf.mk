@@ -1,4 +1,7 @@
-# $NetBSD: waf.mk,v 1.5 2016/06/18 21:46:07 kamil Exp $
+# $NetBSD: waf.mk,v 1.7 2019/03/25 14:09:55 tnn Exp $
+
+# XXX why does this does not respect the standard pkgsrc variables like
+# CONFIGURE_ENV et al?
 
 WAF_ENV+=	CC=${CC:Q}
 WAF_ENV+=	CFLAGS=${CFLAGS:Q}
@@ -9,7 +12,7 @@ WAF_ENV+=	LINKFLAGS=${LDFLAGS:Q}
 WAF_ENV+=	PATH=${PATH:Q}
 WAF_ENV+=	PREFIX=${PREFIX}
 .if defined(MAKE_JOBS)
-WAF_ENV+=	JOBS=${MAKE_JOBS:Q}
+WAF_ENV+=	JOBS=${MAKE_JOBS}
 .endif
 
 # Kludge to support rst2man on Mac OS X, PR pkg/49921

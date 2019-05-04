@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2017/06/26 02:04:35 schmonz Exp $
+# $NetBSD: Makefile,v 1.31 2018/10/24 16:33:40 schmonz Exp $
 #
 
 DISTNAME=		mess822-0.58
-PKGREVISION=		7
+PKGREVISION=		8
 CATEGORIES=		mail
 MASTER_SITES=		http://cr.yp.to/software/
 
@@ -26,7 +26,14 @@ SUBST_FILES.djbware+=	cdb_seek.c
 SUBST_CLASSES+=		paths
 SUBST_STAGE.paths=	do-configure
 SUBST_FILES.paths=	hier.c
-SUBST_SED.paths=	-e 's,@PKGMANDIR@,${PKGMANDIR},g'
+SUBST_VARS.paths=	PKGMANDIR
+
+MESS822PATCHES=		qmailqueue:${QMAILQUEUE_PATCH}
+QMAILQUEUE_PATCH=	mess822-0.58-qmailqueue-20170527.patch
+PATCHFILES+=		${QMAILQUEUE_PATCH}
+SITES.${QMAILQUEUE_PATCH}=https://schmonz.com/qmail/mess822qmailqueue/
+
+BUILD_DEFS+=		MESS822PATCHES
 
 pre-build:
 	cp ${BUILDLINK_DIR}/include/*.h ${WRKSRC}

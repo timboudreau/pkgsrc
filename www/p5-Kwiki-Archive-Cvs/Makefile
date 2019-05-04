@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.14 2017/06/05 14:25:24 ryoon Exp $
+# $NetBSD: Makefile,v 1.16 2018/08/22 09:47:45 wiz Exp $
 
 DISTNAME=	Kwiki-Archive-Cvs-0.104
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	8
+PKGREVISION=	9
 CATEGORIES=	www perl5
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Kwiki/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.kwiki.org/
+#HOMEPAGE=	http://www.kwiki.org/
 #HOMEPAGE=	http://search.cpan.org/dist/Kwiki-Archive-Cvs/
 COMMENT=	Kwiki page archive using CVS
 

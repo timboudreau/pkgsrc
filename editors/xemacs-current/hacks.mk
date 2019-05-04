@@ -1,17 +1,16 @@
-# $NetBSD: hacks.mk,v 1.1 2016/10/31 14:28:20 hauke Exp $
+# $NetBSD: hacks.mk,v 1.3 2019/04/11 16:05:24 hauke Exp $
 
-.if !defined(XEMACS_HACKS_MK)
-XEMACS_HACKS_MK=	defined
+.if !defined(XEMACS_CURRENT_HACKS_MK)
+XEMACS_CURRENT_HACKS_MK=	defined
 
 .include "../../mk/compiler.mk"
 
-### [Fri Oct 28 10:00:00 UTC 2016 : hauke]
-### gcc 5 builtins collide with src/gmalloc.c's calloc(), which
-### results in 'xemacs -vanilla' busy-looping during the build.
+### Position-independent code does not rhyme well with
+### dumped emacsen.
 ###
-.if !empty(PKGSRC_COMPILER:Mgcc) && !empty(CC_VERSION:Mgcc-5.[0-9]*)
-PKG_HACKS+=		gcc5-malloc-builtin-conflict
-CFLAGS+=		-fno-builtin
+.if !empty(CC_VERSION:Mgcc-[6789].*)
+PKG_HACKS+=		disable-gcc-pie
+CFLAGS+=		-no-pie
 .endif
 
-.endif  # XEMACS_HACKS_MK
+.endif  # XEMACS_CURRENT_HACKS_MK

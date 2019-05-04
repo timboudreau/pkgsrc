@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.26 2016/05/07 09:57:16 joerg Exp $
+# $NetBSD: Makefile,v 1.28 2018/01/26 13:42:29 jperkin Exp $
 #
 
 DISTNAME=		Wormz-1.0b5
@@ -8,7 +8,7 @@ CATEGORIES=		games x11
 MASTER_SITES=		http://lide.punknet.cz/miri/
 
 MAINTAINER=		pkgsrc-users@NetBSD.org
-HOMEPAGE=		http://lide.punknet.cz/miri/Wormz.html
+#HOMEPAGE=		http://lide.punknet.cz/miri/Wormz.html
 COMMENT=		Networked game for X11
 LICENSE=		gnu-gpl-v2
 
@@ -16,7 +16,7 @@ LICENSE=		gnu-gpl-v2
 MAKE_JOBS_SAFE=		no
 
 WRKSRC=			${WRKDIR}/Wormz
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
 USE_TOOLS+=		gmake
 
 post-extract:

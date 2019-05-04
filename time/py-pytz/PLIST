@@ -1,4 +1,4 @@
-@comment $NetBSD: PLIST,v 1.20 2017/04/05 17:07:35 adam Exp $
+@comment $NetBSD: PLIST,v 1.23 2019/01/07 10:05:42 adam Exp $
 ${PYSITELIB}/${EGG_INFODIR}/PKG-INFO
 ${PYSITELIB}/${EGG_INFODIR}/SOURCES.txt
 ${PYSITELIB}/${EGG_INFODIR}/dependency_links.txt
@@ -323,6 +323,7 @@ ${PYSITELIB}/pytz/zoneinfo/Asia/Phnom_Penh
 ${PYSITELIB}/pytz/zoneinfo/Asia/Pontianak
 ${PYSITELIB}/pytz/zoneinfo/Asia/Pyongyang
 ${PYSITELIB}/pytz/zoneinfo/Asia/Qatar
+${PYSITELIB}/pytz/zoneinfo/Asia/Qostanay
 ${PYSITELIB}/pytz/zoneinfo/Asia/Qyzylorda
 ${PYSITELIB}/pytz/zoneinfo/Asia/Rangoon
 ${PYSITELIB}/pytz/zoneinfo/Asia/Riyadh
@@ -396,7 +397,6 @@ ${PYSITELIB}/pytz/zoneinfo/CET
 ${PYSITELIB}/pytz/zoneinfo/CST6CDT
 ${PYSITELIB}/pytz/zoneinfo/Canada/Atlantic
 ${PYSITELIB}/pytz/zoneinfo/Canada/Central
-${PYSITELIB}/pytz/zoneinfo/Canada/East-Saskatchewan
 ${PYSITELIB}/pytz/zoneinfo/Canada/Eastern
 ${PYSITELIB}/pytz/zoneinfo/Canada/Mountain
 ${PYSITELIB}/pytz/zoneinfo/Canada/Newfoundland
@@ -609,7 +609,6 @@ ${PYSITELIB}/pytz/zoneinfo/US/Indiana-Starke
 ${PYSITELIB}/pytz/zoneinfo/US/Michigan
 ${PYSITELIB}/pytz/zoneinfo/US/Mountain
 ${PYSITELIB}/pytz/zoneinfo/US/Pacific
-${PYSITELIB}/pytz/zoneinfo/US/Pacific-New
 ${PYSITELIB}/pytz/zoneinfo/US/Samoa
 ${PYSITELIB}/pytz/zoneinfo/UTC
 ${PYSITELIB}/pytz/zoneinfo/Universal
@@ -617,7 +616,8 @@ ${PYSITELIB}/pytz/zoneinfo/W-SU
 ${PYSITELIB}/pytz/zoneinfo/WET
 ${PYSITELIB}/pytz/zoneinfo/Zulu
 ${PYSITELIB}/pytz/zoneinfo/iso3166.tab
-${PYSITELIB}/pytz/zoneinfo/localtime
+${PYSITELIB}/pytz/zoneinfo/leapseconds
 ${PYSITELIB}/pytz/zoneinfo/posixrules
+${PYSITELIB}/pytz/zoneinfo/tzdata.zi
 ${PYSITELIB}/pytz/zoneinfo/zone.tab
 ${PYSITELIB}/pytz/zoneinfo/zone1970.tab

@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.6 2014/05/17 16:10:44 wiz Exp $
+# $NetBSD: Makefile,v 1.9 2019/04/25 07:32:52 maya Exp $
 
 DISTNAME=	dynagen-0.11.0
-PKGREVISION=	4
+PKGREVISION=	5
 CATEGORIES=	emulators
 MASTER_SITES=	${MASTER_SITE_SOURCEFORGE:=dyna-gen/}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://dynagen.org/
+#HOMEPAGE=	http://dynagen.org/
 COMMENT=	Network configuration generator for Dynamips
 LICENSE=	gnu-gpl-v2
 
@@ -18,7 +18,7 @@ REPLACE_PYTHON+= dynagen confConsole.py console.py dynamips_lib.py pemu_lib.py \
 		pemubin.py pemuwrapper.py
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	dynagen
 SUBST_SED.paths=	-e "s|@SYSCONFDIR@|${PKG_SYSCONFDIR}|"
 SUBST_SED.paths+=	-e "s|@PREFIX@|${PREFIX}|"

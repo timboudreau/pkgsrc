@@ -1,0 +1,16 @@
+$NetBSD: patch-pkg_META,v 1.5 2019/01/29 13:33:00 jaapb Exp $
+
+Remove camlp4 support (no longer in js_of_ocaml)
+--- pkg/META.orig	2018-12-19 14:15:17.000000000 +0000
++++ pkg/META
+@@ -98,8 +98,8 @@ package "syntax" (
+     description = "Syntax extension: predefined commonly use syntaxes"
+     version = "[distributed with Eliom]"
+ 
+-    requires(syntax, preprocessor) = "js_of_ocaml-camlp4,js_of_ocaml-camlp4.deriving,lwt_camlp4"
+-    requires(syntax, toploop) = "js_of_ocaml-camlp4,js_of_ocaml-camlp4.deriving,lwt_camlp4"
++    requires(syntax, preprocessor) = "lwt_camlp4"
++    requires(syntax, toploop) = "lwt_camlp4"
+     archive(syntax, preprocessor) = "-ignore dummy"
+   )
+ 

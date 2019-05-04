@@ -1,14 +1,14 @@
-# $NetBSD: Makefile.common,v 1.14 2017/05/12 20:55:40 fhajny Exp $
+# $NetBSD: Makefile.common,v 1.27 2019/01/18 16:24:37 jperkin Exp $
 # used by lang/nodejs/Makefile
-# used by lang/nodejs4/Makefile
 # used by lang/nodejs6/Makefile
+# used by lang/nodejs8/Makefile
 
 CATEGORIES=	devel
-MASTER_SITES=	http://nodejs.org/dist/${DISTNAME:S/node-//}/
+MASTER_SITES=	https://nodejs.org/dist/${DISTNAME:S/node-//}/
 PKGNAME=	${DISTNAME:S/-v/js-/}
 
-MAINTAINER=	filip@joyent.com
-HOMEPAGE=	http://nodejs.org/
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://nodejs.org/
 COMMENT=	V8 JavaScript for clients and servers
 LICENSE=	mit
 
@@ -16,16 +16,18 @@ HAS_CONFIGURE=	yes
 USE_TOOLS+=	bash gmake pkg-config
 USE_LANGUAGES=	c c++
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # not yet ported as of 0.10.24
-
-.include "../../mk/bsd.prefs.mk"
-.include "options.mk"
+PYTHON_FOR_BUILD_ONLY=		yes
+PYTHON_VERSIONS_ACCEPTED=	27 # not yet ported as of 0.10.24
 
 GCC_REQD+=		4.8
 
 CONFIG_SHELL=		${PYTHONBIN}
 CONFIGURE_ARGS+=	--prefix=${PREFIX}
+CONFIGURE_ARGS+=	--shared-cares
+CONFIGURE_ARGS+=	--shared-http-parser
+CONFIGURE_ARGS+=	--shared-libuv
 CONFIGURE_ARGS+=	--shared-zlib
+CONFIGURE_ARGS+=	--without-npm
 PTHREAD_AUTO_VARS=	yes
 
 CONFIGURE_ENV.NetBSD+=	GYP_DEFINES="OS=netbsd"
@@ -39,10 +41,9 @@ REPLACE_PYTHON+=	configure
 REPLACE_PYTHON+=	tools/genv8constants.py
 REPLACE_PYTHON+=	tools/gyp/pylib/gyp/flock_tool.py
 
-CHECK_INTERPRETER_SKIP+=	lib/node_modules/npm/*
-
 .if ${OPSYS} == "NetBSD"
 BUILD_DEPENDS+=	lockf-[0-9]*:../../sysutils/lockf
+BUILDLINK_TRANSFORM+=	rm:-ldl
 .endif
 
 TEST_TARGET=		check
@@ -50,18 +51,22 @@ TEST_TARGET=		check
 .if defined(TOOLS_PLATFORM.paxctl)
 SUBST_CLASSES+=			mksnapshot
 SUBST_STAGE.mksnapshot=		post-configure
+# nodejs6
 SUBST_FILES.mksnapshot=		out/deps/v8/tools/gyp/mksnapshot.target.mk
+# nodejs8
 SUBST_FILES.mksnapshot+=	out/deps/v8/src/mksnapshot.target.mk
+# nodejs10+
+SUBST_FILES.mksnapshot+=	out/deps/v8/gypfiles/mksnapshot.target.mk
 SUBST_SED.mksnapshot+=		-e 's|call do_cmd,link)|call do_cmd,link)\${.newline}	${TOOLS_PLATFORM.paxctl} +m $$@|'
 .endif
 
+CFLAGS.SunOS+=		-D_FILE_OFFSET_BITS=64
+CXXFLAGS.SunOS+=	-D_FILE_OFFSET_BITS=64
+
 pre-install:
-	${FIND} ${WRKSRC}/deps/npm -name '*.orig' | ${XARGS} ${RM} -f
 	${CHMOD} -R g-w ${WRKSRC}
 
 post-install:
-	cd ${DESTDIR}${PREFIX} && ${SETENV} ${BASH} \
-		./lib/node_modules/npm/scripts/relocate.sh ${PREFIX}/bin/node
 .if defined(TOOLS_PLATFORM.paxctl)
 	${TOOLS_PLATFORM.paxctl} +m ${DESTDIR}${PREFIX}/bin/node
 .endif
@@ -69,7 +74,10 @@ post-install:
 .if ${OPSYS} != "Darwin"
 .include "../../devel/libexecinfo/buildlink3.mk"
 .endif
+.include "../../devel/libuv/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
 .include "../../lang/python/application.mk"
 .include "../../lang/python/tool.mk"
+.include "../../net/libcares/buildlink3.mk"
+.include "../../www/http-parser/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"

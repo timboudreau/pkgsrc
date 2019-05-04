@@ -1,12 +1,12 @@
-# $NetBSD: Makefile,v 1.11 2017/01/01 14:43:51 wiz Exp $
+# $NetBSD: Makefile,v 1.15 2019/04/26 13:14:09 maya Exp $
 
 DISTNAME=	caldav-0.2.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
 CATEGORIES=	net
 MASTER_SITES=	${MASTER_SITE_PYPI:=c/caldav/}
 
-MAINTAINER=	rodent@NetBSD.org
-HOMEPAGE=	http://bitbucket.org/cyrilrbt/caldav
+MAINTAINER=	pkgsrc-users@NetBSD.org
+HOMEPAGE=	https://bitbucket.org/cyrilrbt/caldav
 COMMENT=	CalDAV (RFC4791) client library for Python
 LICENSE=	apache-2.0 AND gnu-gpl-v3
 
@@ -17,7 +17,7 @@ DEPENDS+=	${PYPKGPREFIX}-vobject-[0-9]*:../../textproc/py-vobject
 
 USE_LANGUAGES=	# none
 
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # as of 0.2.1
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # as of 0.2.1
 
 REPLACE_PYTHON+=	caldav/__init__.py caldav/davclient.py
 REPLACE_PYTHON+=	caldav/elements/__init__.py caldav/elements/base.py

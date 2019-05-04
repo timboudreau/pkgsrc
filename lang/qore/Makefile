@@ -1,15 +1,14 @@
-# $NetBSD: Makefile,v 1.13 2017/07/11 19:41:20 joerg Exp $
+# $NetBSD: Makefile,v 1.18 2018/12/27 15:15:22 joerg Exp $
 
-DISTNAME=	qore-0.8.12.10
+DISTNAME=	qore-0.8.13.5
 CATEGORIES=	lang
 MASTER_SITES=   ${MASTER_SITE_GITHUB:=qorelanguage/}
 EXTRACT_SUFX=   .tar.bz2
 
 GITHUB_RELEASE=	release-${PKGVERSION_NOREV}
-GITHUB_TYPE=	release
 
 MAINTAINER=	nros@NetBSD.org
-COMMENT=	Qore programming language
+COMMENT=	Embeddable multithreaded scripting language
 HOMEPAGE=	http://www.qore.org/
 LICENSE=	gnu-gpl-v2 OR gnu-lgpl-v2.1 OR mit
 
@@ -21,14 +20,11 @@ PTHREAD_OPTS+=	native
 FLEX_REQD=	2.5.31
 
 PKGCONFIG_OVERRIDE+=	qore.pc.in
-REPLACE_QORE=		bin/qget bin/rest bin/schema-reverse 
+REPLACE_QORE=		bin/qdbg bin/qdbg-remote bin/qdbg-server
+REPLACE_QORE+=		bin/qget bin/rest bin/schema-reverse
 REPLACE_QORE+=		bin/sfrest bin/sqlutil doxygen/qdx
 
-CONFIGURE_ARGS+=--with-libsuffix=""
-
-#pre-configure:
-#	set -e; cd ${WRKSRC}; \
-#	autoheader; autoconf
+CONFIGURE_ARGS+=--with-libsuffix="" --disable-single-compilation-unit
 
 #This is needed in order to comply the with MIT license and binary distribution
 #Install docs

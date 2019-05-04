@@ -1,16 +1,19 @@
-$NetBSD: patch-buildtools_wafsamba_samba__conftests.py,v 1.1 2014/11/19 15:36:26 schmonz Exp $
+$NetBSD: patch-buildtools_wafsamba_samba__conftests.py,v 1.4 2019/03/02 14:05:04 adam Exp $
 
-Don't build and install the man page just because xsltproc happens
-to find docbook.xsl on a given system.
+Ensure defines are strings to avoid assertion failure, some
+returned values are unicode.
 
---- buildtools/wafsamba/samba_conftests.py.orig	2013-06-04 14:21:30.000000000 +0000
+--- buildtools/wafsamba/samba_conftests.py.orig	2019-02-26 06:44:21.000000000 +0000
 +++ buildtools/wafsamba/samba_conftests.py
-@@ -491,6 +491,8 @@ def CHECK_INLINE(conf):
- @conf
- def CHECK_XSLTPROC_MANPAGES(conf):
-     '''check if xsltproc can run with the given stylesheets'''
-+    if "pkgsrc":
-+        return False
+@@ -97,9 +97,9 @@ def CHECK_LARGEFILE(conf, define='HAVE_L
+                 if flag[:2] == "-D":
+                     flag_split = flag[2:].split('=')
+                     if len(flag_split) == 1:
+-                        conf.DEFINE(flag_split[0], '1')
++                        conf.DEFINE(str(flag_split[0]), '1')
+                     else:
+-                        conf.DEFINE(flag_split[0], flag_split[1])
++                        conf.DEFINE(str(flag_split[0]), str(flag_split[1]))
  
- 
-     if not conf.CONFIG_SET('XSLTPROC'):
+     if conf.CHECK_CODE('if (sizeof(off_t) < 8) return 1',
+                        define,

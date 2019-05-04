@@ -1,0 +1,11 @@
+@comment $NetBSD: PLIST,v 1.2 2018/02/15 15:05:55 leot Exp $
+bin/fzf
+bin/fzf-tmux
+man/man1/fzf-tmux.1
+man/man1/fzf.1
+share/fzf/plugin/fzf.vim
+share/fzf/shell/completion.bash
+share/fzf/shell/completion.zsh
+share/fzf/shell/key-bindings.bash
+share/fzf/shell/key-bindings.fish
+share/fzf/shell/key-bindings.zsh

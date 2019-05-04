@@ -1,18 +1,18 @@
-# $NetBSD: Makefile,v 1.26 2017/02/12 06:26:07 ryoon Exp $
+# $NetBSD: Makefile,v 1.32 2018/11/14 22:22:34 kleink Exp $
 #
 
 DISTNAME=	wbar-2.2.2
-PKGREVISION=	21
+PKGREVISION=	25
 CATEGORIES=	wm
 MASTER_SITES=	http://wbar.googlecode.com/files/
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://code.google.com/p/wbar/
+HOMEPAGE=	https://github.com/rodolf0/wbar
 COMMENT=	Simple and highly customizable quick-launch tool
 LICENSE=	gnu-gpl-v3
 
 GNU_CONFIGURE=	yes
-USE_LANGUAGES=	c c++
+USE_LANGUAGES=	c c++03
 USE_TOOLS+=	gmake gsed:build intltool pkg-config msgfmt
 
 BUILDLINK_TRANSFORM+=	rm:-Werror

@@ -1,41 +1,9 @@
-# $NetBSD: hacks.mk,v 1.19 2016/10/28 15:55:50 dholland Exp $
+# $NetBSD: hacks.mk,v 1.23 2019/04/23 09:27:46 adam Exp $
 
 .if !defined(PERL5_HACKS_MK)
 PERL5_HACKS_MK=	defined
 
 .include "../../mk/compiler.mk"
-
-### [Thu Jun 7 04:25:34 UTC 2001 : jlam]
-### Fix brokenness when using an older toolchain (gcc<3.3) on
-### NetBSD/sparc64.  Pass -g and -DDEBUGGING to the compiler to
-### circumvent some code-generation bugs.
-###
-.if !empty(MACHINE_PLATFORM:MNetBSD-*-sparc64)
-.  if !empty(CC_VERSION:Mgcc*)
-.    if !defined(_GCC_IS_TOO_OLD)
-_GCC_IS_TOO_OLD!=	\
-	if ${PKG_ADMIN} pmatch 'gcc<3.3' ${CC_VERSION}; then		\
-		${ECHO} "yes";						\
-	else								\
-		${ECHO} "no";						\
-	fi
-MAKEFLAGS+=	_GCC_IS_TOO_OLD=${_GCC_IS_TOO_OLD:Q}
-.    endif
-.    if !empty(_GCC_IS_TOO_OLD:M[yY][eE][sS])
-PKG_HACKS+=	sparc64-codegen
-CFLAGS+=	-DDEBUGGING -g -msoft-quad-float -O2
-.    endif
-.  endif
-.endif
-
-### [Mon May 9 15:35:44 UTC 2005 : jlam]
-### On NetBSD/arm, skipping one part of the optimization pass empirically
-### "fixes" the build of perl using gcc-3.x.
-###
-.if !empty(CC_VERSION:Mgcc-3.*) && !empty(MACHINE_ARCH:Marm*)
-PKG_HACKS+=	arm-codegen
-CFLAGS+=	-fno-cse-skip-blocks
-.endif
 
 ### [ Fri Oct 11 10:00:00 UTC 2011 : hauke ]
 ###
@@ -54,6 +22,16 @@ PKG_HACKS+=		m68k-codegen
 BUILDLINK_TRANSFORM+=	opt:-O[0-9]*:-Os
 .endif
 
+### [ Wed Nov 21 11:35:48 IST 2018 : maya ]
+### Alignment fault on perl 5.28.0
+### Might be specific to GCC 4.9
+### https://rt.perl.org/Public/Bug/Display.html?id=133495
+### See PR pkg/53568
+.if ${OPSYS} == "SunOS" && !empty(MACHINE_ARCH:Msparc*)
+PKG_HACKS+=		sun-sparc-alignment-fault
+BUILDLINK_TRANSFORM+=	opt:-O3:-O2
+.endif
+
 ### [Fri Jan 31 11:09:04 CST 2014 : schnoebe]
 ### [Fri Oct 28 11:53:57 EDT 2016 : dholland - extended to gcc5]
 ### gcc-[45].*.* in NetBSD/alpha causes unaligned access exception in perl.
@@ -62,7 +40,7 @@ BUILDLINK_TRANSFORM+=	opt:-O[0-9]*:-Os
 	&& !empty(CC_VERSION:Mgcc-[45].*.*)
 # XXX: is there any good way to replace the default -O2 with multiple args?
 PKG_HACKS+=		alpha-optimisation
-#BUILDLINK_TRANSFORM+=  opt:-O[2-9]*:-O2 -fno-tree-ter
+#BUILDLINK_TRANSFORM+=	opt:-O[2-9]*:-O2 -fno-tree-ter
 CFLAGS+=-fno-tree-ter
 .endif
 

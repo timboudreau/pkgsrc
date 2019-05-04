@@ -1,14 +1,14 @@
-# $NetBSD: Makefile,v 1.18 2012/10/23 10:24:14 wiz Exp $
+# $NetBSD: Makefile,v 1.20 2018/07/04 13:40:40 jperkin Exp $
 #
 
 DISTNAME=	larswm-7.5.3
 PKGREVISION=	1
 CATEGORIES=	wm x11
-MASTER_SITES=	http://home.earthlink.net/~lab1701/larswm/
+#MASTER_SITES=	http://home.earthlink.net/~lab1701/larswm/
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX} ${DOCFILES}
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://home.earthlink.net/~lab1701/larswm/
+#HOMEPAGE=	http://home.earthlink.net/~lab1701/larswm/
 COMMENT=	9wm-like window manager
 
 EXTRACT_ONLY=	${DISTNAME}${EXTRACT_SUFX}
@@ -27,7 +27,7 @@ CPPFLAGS+=	-DPKG_SYSCONFDIR=\"${PKG_SYSCONFDIR:Q}\"
 SUBST_CLASSES+=		paths
 SUBST_FILES.paths=	larswm.man
 SUBST_SED.paths+=	-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 
 INSTALLATION_DIRS=	share/doc/larswm share/examples/larswm
 

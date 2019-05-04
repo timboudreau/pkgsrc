@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.45 2017/04/30 01:21:22 ryoon Exp $
+# $NetBSD: Makefile,v 1.51 2018/12/13 19:51:34 adam Exp $
 #
 
 DISTNAME=		rudiments-1.0.2
-PKGREVISION=		1
+PKGREVISION=		6
 CATEGORIES=		devel
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=rudiments/}
 
@@ -24,6 +24,8 @@ BUILDLINK_TRANSFORM+=	rm:-Wno-long-double
 .if !empty(PKGSRC_COMPILER:Mclang)
 _WRAP_EXTRA_ARGS.CXX+=	-Wno-error=unused-private-field
 CWRAPPERS_APPEND.cxx+=	-Wno-error=unused-private-field
+# Avoid deprecation errors on Darwin for GSS.framework
+CWRAPPERS_APPEND.cxx+=	-Wno-error=deprecated-declarations
 .endif
 
 .include "../../devel/pcre/buildlink3.mk"

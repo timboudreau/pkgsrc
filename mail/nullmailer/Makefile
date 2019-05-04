@@ -1,30 +1,32 @@
-# $NetBSD: Makefile,v 1.40 2016/12/12 23:54:12 wiedi Exp $
+# $NetBSD: Makefile,v 1.46 2018/10/13 14:38:54 schmonz Exp $
 
-DISTNAME=		nullmailer-1.13
-PKGREVISION=		4
+DISTNAME=		nullmailer-2.2
 CATEGORIES=		mail
 MASTER_SITES=		${HOMEPAGE:Q}
-DIST_SUBDIR=		${PKGNAME_NOREV}
 
 MAINTAINER=		schmonz@NetBSD.org
 HOMEPAGE=		http://untroubled.org/nullmailer/
 COMMENT=		Simple relay-only mail transport agent
-
 LICENSE=		gnu-gpl-v2
 
-PKG_DESTDIR_SUPPORT=	destdir
+.include "../../mk/bsd.prefs.mk"
+.if ${INIT_SYSTEM} == "rc.d"
+DEPENDS+=		daemontools-[0-9]*:../../sysutils/daemontools
+.endif
 
-USE_LANGUAGES=		c c++
+USE_LANGUAGES=		c c++03
+USE_TOOLS+=		gmake
 GNU_CONFIGURE=		yes
 CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
-CONFIGURE_ARGS+=	--localstatedir=${VARBASE}/spool
+CONFIGURE_ARGS+=	--localstatedir=${VARBASE}
 CONFIGURE_ARGS+=	--bindir=${PREFIX}/libexec/nullmailer
 CONFIGURE_ARGS+=	--sbindir=${PREFIX}/libexec/nullmailer
 
+TEST_TARGET=		check
+USE_TOOLS+=		bash
+
 .include "../../mk/bsd.prefs.mk"
 
-NULLMAILER_GROUP?=	nullmail
-NULLMAILER_USER?=	nullmail
 PKG_GROUPS=		${NULLMAILER_GROUP}
 PKG_USERS=		${NULLMAILER_USER}:${NULLMAILER_GROUP}
 PKG_GROUPS_VARS=	NULLMAILER_GROUP
@@ -34,6 +36,7 @@ MAKE_ENV+=		NULLMAILER_GROUP=${NULLMAILER_GROUP}
 MAKE_ENV+=		NULLMAILER_USER=${NULLMAILER_USER}
 
 FILES_SUBST+=		VARBASE=${VARBASE}				\
+			PKGNAME=${PKGNAME}				\
 			NULLMAILER_GROUP=${NULLMAILER_GROUP}		\
 			NULLMAILER_USER=${NULLMAILER_USER}
 
@@ -50,11 +53,10 @@ SPECIAL_PERMS+=		libexec/nullmailer/nullmailer-queue		\
 			${NULLMAILER_USER} ${NULLMAILER_GROUP} 4555
 
 SUBST_CLASSES+=		paths
-SUBST_FILES.paths=	${WRKDIR}/mailer.conf ${WRKDIR}/nullmailer-daemon
+SUBST_FILES.paths=	${WRKDIR}/mailer.conf
 SUBST_FILES.paths+=	doc/nullmailer-send.8 doc/nullmailer-queue.8
-SUBST_SED.paths+=	-e 's,@PREFIX@,${PREFIX},g'
-SUBST_SED.paths+=	-e 's,@VARBASE@,${VARBASE},g'
-SUBST_SED.paths+=	-e 's,@PKG_SYSCONFDIR@,${PKG_SYSCONFDIR},g'
+SUBST_FILES.paths+=	test/functions.in
+SUBST_VARS.paths=	PREFIX VARBASE PKG_SYSCONFDIR
 SUBST_STAGE.paths=	post-configure
 
 INSTALLATION_DIRS=	share/doc/${PKGBASE} share/examples/${PKGBASE}
@@ -64,14 +66,11 @@ BUILD_DEFS+=		VARBASE
 
 post-extract:
 	${CP} ${FILESDIR}/mailer.conf ${WRKDIR}/mailer.conf
-	${CP} ${FILESDIR}/nullmailer-daemon ${WRKDIR}/nullmailer-daemon
 
 post-install:
 	cd ${WRKSRC} && ${INSTALL_DATA} AUTHORS BUGS COPYING ChangeLog	\
 		HOWTO NEWS README TODO ${DESTDIR}${PREFIX}/share/doc/nullmailer
 	${INSTALL_DATA} ${WRKDIR}/mailer.conf				\
 		${DESTDIR}${PREFIX}/share/examples/nullmailer/
-	${INSTALL_SCRIPT} ${WRKDIR}/nullmailer-daemon			\
-		${DESTDIR}${PREFIX}/libexec/nullmailer/
 
 .include "../../mk/bsd.pkg.mk"

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.27 2017/05/02 13:37:32 wiz Exp $
+# $NetBSD: Makefile,v 1.51 2019/04/26 13:14:11 maya Exp $
 
 DISTNAME=	pypoppler-0.12.1
 PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/py//}
-PKGREVISION=	21
+PKGREVISION=	41
 CATEGORIES=	print
 MASTER_SITES=	https://launchpad.net/poppler-python/trunk/development/+download/
 
@@ -15,12 +15,11 @@ GNU_CONFIGURE=	yes
 USE_LIBTOOL=	yes
 USE_TOOLS+=	pkg-config
 PY_PATCHPLIST=	yes
-PYTHON_VERSIONED_DEPENDENCIES=	cairo:link
-PYTHON_VERSIONS_INCOMPATIBLE=	34 35 36 # py-gtk2
+PYTHON_VERSIONS_INCOMPATIBLE=	 36 37 # py-gtk2
 
+.include "../../graphics/py-cairo/buildlink3.mk"
 .include "../../lang/python/extension.mk"
 .include "../../devel/atk/buildlink3.mk"
-.include "../../lang/python/versioned_dependencies.mk"
 BUILDLINK_API_DEPENDS.poppler-glib+=	poppler-glib>=0.12.1
 .include "../../print/poppler-glib/buildlink3.mk"
 BUILDLINK_API_DEPENDS.pygtk2+=		${PYPKGPREFIX}-gtk2>=2.8.4

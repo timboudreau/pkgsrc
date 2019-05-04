@@ -1,4 +1,4 @@
-# $NetBSD: buildlink3.mk,v 1.45 2016/03/05 11:27:59 jperkin Exp $
+# $NetBSD: buildlink3.mk,v 1.47 2018/03/12 11:15:55 wiz Exp $
 
 BUILDLINK_TREE+=	qt4-libs
 
@@ -6,8 +6,8 @@ BUILDLINK_TREE+=	qt4-libs
 QT4_LIBS_BUILDLINK3_MK:=
 
 BUILDLINK_API_DEPENDS.qt4-libs+=	qt4-libs>=4.6.1nb2
-BUILDLINK_ABI_DEPENDS.qt4-libs+=	qt4-libs>=4.8.7nb1
-BUILDLINK_PKGSRCDIR.qt4-libs?=	../../x11/qt4-libs
+BUILDLINK_ABI_DEPENDS.qt4-libs+=	qt4-libs>=4.8.7nb12
+BUILDLINK_PKGSRCDIR.qt4-libs?=		../../x11/qt4-libs
 
 BUILDLINK_INCDIRS.qt4-libs+=	qt4/include
 BUILDLINK_LIBDIRS.qt4-libs+=	qt4/lib
@@ -31,7 +31,7 @@ PTHREAD_OPTS+=	require
 .include "../../x11/libXmu/buildlink3.mk"
 .include "../../x11/libXrandr/buildlink3.mk"
 .  if ${X11_TYPE} == "modular"
-.  include "../../x11/libXinerama/buildlink3.mk"
+.    include "../../x11/libXinerama/buildlink3.mk"
 .  endif
 .endif
 .include "../../security/openssl/buildlink3.mk"

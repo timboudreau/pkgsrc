@@ -1,4 +1,4 @@
-# $NetBSD: bsd.prefs.mk,v 1.393 2017/07/09 14:30:07 khorben Exp $
+# $NetBSD: bsd.prefs.mk,v 1.403 2019/01/06 12:51:45 bsiegert Exp $
 #
 # This file includes the mk.conf file, which contains the user settings.
 #
@@ -207,6 +207,9 @@ LOWER_VENDOR?=		sgi
 .elif ${OPSYS} == "Linux"
 OS_VERSION:=		${OS_VERSION:C/-.*$//}
 LOWER_OPSYS?=		linux
+.  if exists(/etc/lsb-release)
+CHROMEOS_RELEASE_NAME!=	awk -F = '$$1 == "CHROMEOS_RELEASE_NAME" { print $$2 }' /etc/lsb-release
+.  endif
 .  if exists(/etc/debian_version)
 LOWER_VENDOR?=		debian
 .  elif exists(/etc/mandrake-release)
@@ -217,10 +220,17 @@ LOWER_VENDOR?=		redhat
 LOWER_VENDOR?=		slackware
 .  elif exists(/etc/ssdlinux_version)
 LOWER_VENDOR?=		ssd
+.  elif !empty(CHROMEOS_RELEASE_NAME)
+LOWER_VENDOR?=		chromeos
 .  elif ${MACHINE_ARCH} == "i386"
 LOWER_VENDOR?=          pc
 .  endif
 LOWER_VENDOR?=          unknown
+OS_VARIANT!=		${UNAME} -r
+OS_VARIANT:=		${OS_VARIANT:C/^.*-//}
+.  if ${OS_VARIANT} != "Microsoft"
+OS_VARIANT=		${LOWER_VENDOR}
+.  endif
 .  if !defined(HOST_MACHINE_ARCH)
 HOST_MACHINE_ARCH!=	${UNAME} -m
 MAKEFLAGS+=		HOST_MACHINE_ARCH=${HOST_MACHINE_ARCH:Q}
@@ -271,9 +281,8 @@ OS_VARIANT=		SCOOSR6
 .  endif
 
 .elif ${OPSYS} == "Minix"
-LOWER_VENDOR?=		pc
+LOWER_VENDOR?=		unknown
 LOWER_OPSYS:=		${OPSYS:tl}
-LDFLAGS+=		-lcompat_minix -lminlib
 
 .elif !defined(LOWER_OPSYS)
 LOWER_OPSYS:=		${OPSYS:tl}
@@ -323,6 +332,8 @@ OBJECT_FMT?=	a.out
 .elif ${OPSYS} == "FreeBSD"
 OBJECT_FMT?=	ELF
 .elif ${OPSYS} == "DragonFly"
+OBJECT_FMT=	ELF
+.elif ${OPSYS} == "Minix"
 OBJECT_FMT=	ELF
 .elif ${OPSYS} == "MirBSD"
 OBJECT_FMT=	ELF
@@ -693,34 +704,84 @@ INIT_SYSTEM?=		rc.d
 _BUILD_DEFS+=		INIT_SYSTEM
 .endif
 
+# Build Position Independent Executables if supported
+# Allows the security mitigation of ASLR to be used.
+# Impact: very small performance drop.
+#
 _PKGSRC_MKPIE=	no
-.if (${PKGSRC_MKPIE:tl} == "yes") && \
-    (${_OPSYS_SUPPORTS_MKPIE:Uno} == "yes")
+.if ${PKGSRC_MKPIE:tl} == "yes" && \
+    ${MKPIE_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_MKPIE:Uno} == "yes"
 _PKGSRC_MKPIE=	yes
 .endif
 
+# Enable reproducible build flags
+# Adjusts debug symbols to omit workdir references
+#
+_PKGSRC_MKREPRO=	no
+.if ${PKGSRC_MKREPRO:tl} == "yes" && \
+    ${MKREPRO_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_MKREPRO:Uno} == "yes"
+_PKGSRC_MKREPRO=	yes
+.endif
+
+# Enable FORTIFY
+# Security mitigation: compile and run-time checks for buffer overflows.
+# Impact: performance drop
+#
 _PKGSRC_USE_FORTIFY=	no
-.if (${PKGSRC_USE_FORTIFY:tl} != "no") && \
-    (${_OPSYS_SUPPORTS_FORTIFY:Uno} == "yes")
+.if ${PKGSRC_USE_FORTIFY:tl} != "no" && \
+    ${FORTIFY_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_FORTIFY:Uno} == "yes"
 _PKGSRC_USE_FORTIFY=	yes
 .endif
 
+# Use read-only relocations
+# Security mitigation: some ELF sections are mapped read-only.
+# Impact: increases program startup time as it disables lazy-binding
+#
 _PKGSRC_USE_RELRO=	no
-.if (${PKGSRC_USE_RELRO:tl} != "no") && \
-    (${_OPSYS_SUPPORTS_RELRO:Uno} == "yes")
+.if ${PKGSRC_USE_RELRO:tl} != "no" && \
+    ${RELRO_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_RELRO:Uno} == "yes"
 _PKGSRC_USE_RELRO=	yes
 .endif
 
+# Enable Stack-Smashing Protection
+# Security mitigation: add and check canaries on the stack at runtime
+# to find buffer overruns.
+# Impact: performance drop
+#
 _PKGSRC_USE_SSP=	no
-.if (${PKGSRC_USE_SSP:tl} != "no") && \
-    (${_OPSYS_SUPPORTS_SSP:Uno} == "yes")
+.if ${PKGSRC_USE_SSP:tl} != "no" && \
+    ${SSP_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_SSP:Uno} == "yes"
 _PKGSRC_USE_SSP=	yes
 .endif
 
+# Enable stack check
+# Generate code to ensure we don't exceed our given stack.
+# Impact: performance drop
+#
 _PKGSRC_USE_STACK_CHECK=no
-.if (${PKGSRC_USE_STACK_CHECK:tl} != "no") && \
-    (${_OPSYS_SUPPORTS_STACK_CHECK:Uno} == "yes")
+.if ${PKGSRC_USE_STACK_CHECK:tl} != "no" && \
+    ${STACK_CHECK_SUPPORTED:Uyes:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_STACK_CHECK:Uno} == "yes"
 _PKGSRC_USE_STACK_CHECK=yes
+.endif
+
+# Enable CTF conversion if the user requested it, the OPSYS supports it, there
+# is a tool for it, and the package supports it.  We also need to explicitly
+# turn on _INSTALL_UNSTRIPPED as conversion is impossible on stripped files.
+#
+.if ${PKGSRC_USE_CTF:Uno:tl} == "yes" && \
+    ${_OPSYS_SUPPORTS_CTF:Uno:tl} == "yes" && \
+    defined(TOOLS_PLATFORM.ctfconvert) && \
+    ${CTF_SUPPORTED:Uyes:tl} == "yes"
+_PKGSRC_USE_CTF=	yes
+_INSTALL_UNSTRIPPED=	# defined
+.else
+_PKGSRC_USE_CTF=	no
 .endif
 
 # Enable cwrappers if not building the wrappers themselves, and if the user has
@@ -775,8 +836,7 @@ _SYS_VARS.dirs=		WRKDIR DESTDIR PKG_SYSCONFBASEDIR
 # Keywords: BROKEN_ON_PLATFORM 64bit
 #
 LP64PLATFORMS=		*-*-aarch64 *-*-aarch64eb *-*-alpha *-*-ia64 \
-			*-*-mips64eb *-*-mips64el *-*-powerpc64 *-*-riscv64 \
-			*-*-sparc64 *-*-x86_64
+			*-*-powerpc64 *-*-riscv64 *-*-sparc64 *-*-x86_64
 
 # Lists of big-endian and little-endian platforms, to be used with
 # BROKEN_ON_PLATFORM.

@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.103 2017/02/12 06:25:08 ryoon Exp $
+# $NetBSD: Makefile,v 1.111 2018/11/29 11:21:48 prlw1 Exp $
 #
 
 DISTNAME=	gossip-0.10.2
-PKGREVISION=	48
+PKGREVISION=	55
 CATEGORIES=	chat
 MASTER_SITES=	${MASTER_SITE_GNOME:=sources/gossip/0.10/}
 EXTRACT_SUFX=	.tar.bz2
@@ -18,7 +18,7 @@ USE_LIBTOOL=		yes
 USE_PKGLOCALEDIR=	yes
 GNU_CONFIGURE=		yes
 
-CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR:Q}
+CONFIGURE_ARGS+=	--sysconfdir=${PKG_SYSCONFDIR}
 
 GCONF_SCHEMAS=		gossip.schemas
 

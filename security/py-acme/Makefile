@@ -1,32 +1,29 @@
-# $NetBSD: Makefile,v 1.7 2017/05/11 08:23:35 fhajny Exp $
+# $NetBSD: Makefile,v 1.16 2019/04/08 15:48:30 adam Exp $
 
-PKGNAME=	${PYPKGPREFIX}-${DISTNAME:S/certbot/acme/}
-CATEGORIES=	security
+DISTNAME=	acme-0.33.1
+PKGNAME=	${PYPKGPREFIX}-${DISTNAME}
+CATEGORIES=	security python
+MASTER_SITES=	${MASTER_SITE_PYPI:=a/acme/}
 
+MAINTAINER=	fhajny@NetBSD.org
+HOMEPAGE=	https://github.com/certbot/certbot
 COMMENT=	ACME protocol implementation in Python
-MAINTAINER=	filip@joyent.com
 LICENSE=	apache-2.0
 
-.include "../../security/py-certbot/Makefile.common"
-
-DEPENDS+=	${PYPKGPREFIX}-cryptography>=0.8:../../security/py-cryptography
 DEPENDS+=	${PYPKGPREFIX}-OpenSSL>=0.15:../../security/py-OpenSSL
+DEPENDS+=	${PYPKGPREFIX}-cryptography>=1.2.3:../../security/py-cryptography
+DEPENDS+=	${PYPKGPREFIX}-josepy>=1.1.0:../../security/py-josepy
 DEPENDS+=	${PYPKGPREFIX}-mock-[0-9]*:../../devel/py-mock
 DEPENDS+=	${PYPKGPREFIX}-pytz-[0-9]*:../../time/py-pytz
 DEPENDS+=	${PYPKGPREFIX}-requests>2.10:../../devel/py-requests
+DEPENDS+=	${PYPKGPREFIX}-requests-toolbelt>=0.3.0:../../devel/py-requests-toolbelt
 DEPENDS+=	${PYPKGPREFIX}-rfc3339-[0-9]*:../../time/py-rfc3339
-DEPENDS+=	${PYPKGPREFIX}-six-[0-9]*:../../lang/py-six
+DEPENDS+=	${PYPKGPREFIX}-setuptools-[0-9]*:../../devel/py-setuptools
+DEPENDS+=	${PYPKGPREFIX}-six>1.9.0:../../lang/py-six
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-[0-9]*:../../devel/py-test
+TEST_DEPENDS+=	${PYPKGPREFIX}-test-xdist-[0-9]*:../../devel/py-test-xdist
 
-EGG_NAME=	${DISTNAME:S/certbot/acme/}
-
-# TEST_DEPENDS
-BUILD_DEPENDS+=	${PYPKGPREFIX}-pbr-[0-9]*:../../devel/py-pbr
-
-PYSETUPSUBDIR=	acme
-
-post-install:
-	${MV} ${DESTDIR}${PREFIX}/bin/jws \
-		${DESTDIR}${PREFIX}/bin/jws${PYVERSSUFFIX}
+USE_LANGUAGES=	# none
 
 .include "../../lang/python/egg.mk"
 .include "../../mk/bsd.pkg.mk"

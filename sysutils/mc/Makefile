@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.107 2017/03/13 09:20:24 wiz Exp $
+# $NetBSD: Makefile,v 1.114 2019/04/28 18:55:19 rillig Exp $
 
-DISTNAME=	mc-4.8.19
+DISTNAME=	mc-4.8.22
 CATEGORIES=	sysutils
 MASTER_SITES=	http://www.midnight-commander.org/downloads/
 EXTRACT_SUFX=	.tar.bz2
@@ -30,8 +30,9 @@ CHECK_WRKREF_SKIP+=	bin/mcview
 PLIST_SRC+=		${PKGDIR}/PLIST.cons.saver
 .endif
 
+CONFIGURE_ARGS.Darwin+=	ac_cv_func_utimensat=no
 # we need working e2fsprogs and gpm packages first
-CONFIGURE_ARGS+=	--without-ext2undel
+CONFIGURE_ARGS+=	--disable-vfs-undelfs
 CONFIGURE_ARGS+=	--without-gpm-mouse
 CONFIGURE_ARGS+=	UNZIP=${TOOLS_PATH.unzip} ZIP=${TOOLS_PATH.zip}
 

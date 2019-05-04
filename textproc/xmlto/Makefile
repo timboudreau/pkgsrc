@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.30 2015/12/11 23:31:09 joerg Exp $
+# $NetBSD: Makefile,v 1.33 2018/07/17 10:56:24 jperkin Exp $
 
 DISTNAME=	xmlto-0.0.28
-PKGREVISION=	1
+PKGREVISION=	2
 CATEGORIES=	textproc
-MASTER_SITES=	https://fedorahosted.org/releases/x/m/xmlto/
+MASTER_SITES=	https://releases.pagure.org/xmlto/
 EXTRACT_SUFX=	.tar.bz2
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	https://fedorahosted.org/xmlto/
+HOMEPAGE=	https://pagure.io/xmlto/
 COMMENT=	Tool to help transform XML documents into other formats
 LICENSE=	gnu-gpl-v2
 
@@ -15,11 +15,12 @@ DEPENDS+=		getopt-[0-9]*:../../misc/getopt
 DEPENDS+=		docbook-xsl>=1.67.0nb1:../../textproc/docbook-xsl
 DEPENDS+=		libxml2>=2.6.2:../../textproc/libxml2
 
+USE_GCC_RUNTIME=	yes
 USE_PKGLOCALEDIR=	yes
-USE_TOOLS+=		bash:run mktemp
+USE_TOOLS+=		mktemp
 GNU_CONFIGURE=		yes
 CONFIGURE_ENV+=		GETOPT=${PREFIX}/bin/getopt
-CONFIGURE_ENV+=		BASH=${TOOLS_PATH.bash}
+CONFIGURE_ENV+=		BASH=${TOOLS_PATH.sh}
 CONFIGURE_ENV+=		GCP=${TOOLS_PATH.cp}
 CONFIGURE_ENV+=		TAIL=${TOOLS_PATH.tail}
 

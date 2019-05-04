@@ -1,13 +1,13 @@
-# $NetBSD: Makefile,v 1.5 2016/03/05 11:28:48 jperkin Exp $
+# $NetBSD: Makefile,v 1.8 2018/02/02 00:20:45 rillig Exp $
 
 DISTNAME=	gnarwl-3.6
-PKGREVISION=	2
+PKGREVISION=	3
 CATEGORIES=	mail
-MASTER_SITES=	http://www.onyxbits.de/sites/default/files/upload_cck/node/526/
+#MASTER_SITES=	http://www.onyxbits.de/sites/default/files/upload_cck/node/526/
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	pkgsrc-users@NetBSD.org
-HOMEPAGE=	http://www.onyxbits.de/sites/default/files/upload_cck/node/526/
+#HOMEPAGE=	http://www.onyxbits.de/sites/default/files/upload_cck/node/526/
 COMMENT=	LDAP based mail autoresponder
 LICENSE=	gnu-gpl-v2
 
@@ -31,7 +31,7 @@ LDFLAGS.SunOS+=	-liconv
 GNARWL_USER?=	gnarwl
 GNARWL_GROUP?=	gnarwl
 GNARWL_HOME?=	${VARBASE}/gnarwl
-BUILD_DEFS+=	GNARWL_USER GNARWL_GROUP 
+BUILD_DEFS+=	GNARWL_USER GNARWL_GROUP
 PKG_GROUPS+=	${GNARWL_GROUP}
 PKG_USERS+=	${GNARWL_USER}:${GNARWL_GROUP}
 PKG_HOME.gnarwl=${GNARWL_HOME}
@@ -54,7 +54,7 @@ do-install:
 	${INSTALL_MAN} ${WRKSRC}/doc/gnarwl.man ${GNARWL_MANDIR}/man8/gnarwl.8
 
 EGDIR=		${PREFIX}/share/examples/gnarwl
-EGFILES=	badheaders.txt blacklist.txt footer.txt header.txt gnarwl.cfg	
+EGFILES=	badheaders.txt blacklist.txt footer.txt header.txt gnarwl.cfg
 
 .for files in ${EGFILES}
 CONF_FILES+=            ${EGDIR}/${files} ${PKG_SYSCONFDIR}/${files}

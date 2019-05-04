@@ -1,15 +1,13 @@
-# $NetBSD: Makefile,v 1.4 2016/05/17 10:32:07 fhajny Exp $
+# $NetBSD: Makefile,v 1.7 2018/07/24 16:28:35 jperkin Exp $
 #
 
 .include "Makefile.common"
 
-PKGREVISION=		1
 COMMENT=		Highly reliable distributed coordination server
 
 DISTFILES=			${DEFAULT_DISTFILES} ${DISTNAME}-deps.tar.gz
 SITES.${DISTNAME}-deps.tar.gz=	ftp://ftp.NetBSD.org/pub/NetBSD/misc/fhajny/
 
-BUILD_DEPENDS+=		apache-ant-[0-9]*:../../devel/apache-ant
 BUILD_DEPENDS+=		apache-ivy>=2.2.0:../../devel/apache-ivy
 
 USE_JAVA=		yes
@@ -44,7 +42,7 @@ BUILDDIR=		${WRKSRC}/build/${DISTNAME}
 EGDIR=			share/examples/zookeeper
 
 SUBST_CLASSES+=		paths
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_MESSAGE.paths=	Fixing ZooKeeper default paths
 SUBST_FILES.paths=	conf/zoo_sample.cfg
 SUBST_FILES.paths+=	src/packages/templates/conf/zookeeper-env.sh

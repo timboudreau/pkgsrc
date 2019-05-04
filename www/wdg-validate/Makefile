@@ -1,9 +1,9 @@
-# $NetBSD: Makefile,v 1.28 2016/07/09 06:39:15 wiz Exp $
+# $NetBSD: Makefile,v 1.30 2018/08/22 09:47:59 wiz Exp $
 #
 
 DISTNAME=	validate-1.2.2
 PKGNAME=	wdg-${DISTNAME}
-PKGREVISION=	5
+PKGREVISION=	6
 CATEGORIES=	www
 MASTER_SITES=	http://www.htmlhelp.com/tools/validator/offline/
 DISTFILES=	${DISTNAME} wdg-sgml-lib-1.1.4.tar.gz README
@@ -25,7 +25,7 @@ NO_BUILD=	YES
 
 SUBST_CLASSES+=		paths
 SUBST_MESSAGE.paths=	Fixing hardcoded paths.
-SUBST_STAGE.paths=	post-patch
+SUBST_STAGE.paths=	pre-configure
 SUBST_FILES.paths=	validate
 SUBST_SED.paths=	-e 's,/usr/local/share,${PREFIX}/share,g'
 SUBST_SED.paths+=	-e 's,/usr/local/bin/lq-nsgmls,${LOCALBASE}/bin/lq-nsgmls,g'

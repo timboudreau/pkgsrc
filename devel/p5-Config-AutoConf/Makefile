@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.20 2017/06/05 14:22:45 ryoon Exp $
+# $NetBSD: Makefile,v 1.24 2018/08/22 09:43:46 wiz Exp $
 
-DISTNAME=	Config-AutoConf-0.314
+DISTNAME=	Config-AutoConf-0.317
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	devel perl5
@@ -18,10 +18,11 @@ PERL5_PACKLIST=		auto/Config/AutoConf/.packlist
 DEPENDS+=	p5-Capture-Tiny-[0-9]*:../../devel/p5-Capture-Tiny
 #DEPENDS+=	{perl>=5.14.1,p5-ExtUtils-CBuilder>=0.23}:../../devel/p5-ExtUtils-CBuilder
 
-ALL_ENV+=	TMPDIR=${WRKDIR}/tmp
+# following lines do not seems to be necessary, but commentted out for the moment
+#ALL_ENV+=	TMPDIR=${WRKDIR}/tmp
 
-pre-configure:
-	${MKDIR} ${WRKDIR}/tmp
+#pre-configure:
+#	${MKDIR} ${WRKDIR}/tmp
 
 .include "../../lang/perl5/module.mk"
 .include "../../mk/bsd.pkg.mk"

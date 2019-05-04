@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.18 2017/06/05 14:22:36 ryoon Exp $
+# $NetBSD: Makefile,v 1.21 2018/08/22 09:43:37 wiz Exp $
 
-DISTNAME=	Async-Interrupt-1.21
+DISTNAME=	Async-Interrupt-1.24
 PKGNAME=	p5-${DISTNAME}
-PKGREVISION=	3
+PKGREVISION=	1
 CATEGORIES=	devel
 MASTER_SITES=	${MASTER_SITE_PERL_CPAN:=Async/}
 
@@ -12,6 +12,7 @@ COMMENT=	Allow C/XS libraries to interrupt perl asynchronously
 LICENSE=	${PERL5_LICENSE}
 
 DEPENDS+=	p5-common-sense-[0-9]*:../../devel/p5-common-sense
+DEPENDS+=	p5-Canary-Stability-[0-9]*:../../devel/p5-Canary-Stability
 
 USE_LANGUAGES=		c
 PERL5_PACKLIST=		auto/Async/Interrupt/.packlist

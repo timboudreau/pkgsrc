@@ -1,8 +1,8 @@
-# $NetBSD: Makefile,v 1.28 2017/07/04 09:18:34 wiz Exp $
+# $NetBSD: Makefile,v 1.31 2018/01/24 17:02:15 ryoon Exp $
 
-DISTNAME=	par2cmdline-0.7.3
+DISTNAME=	par2cmdline-0.8.0
 PKGNAME=	${DISTNAME:S/cmdline//}
-CATEGORIES=	misc
+CATEGORIES=	archivers misc
 MASTER_SITES=	${MASTER_SITE_GITHUB:=BlackIkeEagle/}
 GITHUB_PROJECT=	par2cmdline
 GITHUB_RELEASE=	v${PKGVERSION_NOREV}

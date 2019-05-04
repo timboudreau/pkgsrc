@@ -1,6 +1,6 @@
-# $NetBSD: Makefile,v 1.17 2017/06/05 14:25:06 ryoon Exp $
+# $NetBSD: Makefile,v 1.20 2018/08/22 09:47:20 wiz Exp $
 
-DISTNAME=	Time-Local-1.25
+DISTNAME=	Time-Local-1.28
 PKGNAME=	p5-${DISTNAME}
 PKGREVISION=	1
 CATEGORIES=	time perl5

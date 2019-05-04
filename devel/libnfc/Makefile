@@ -1,6 +1,7 @@
-# $NetBSD: Makefile,v 1.1 2016/12/16 08:11:55 manu Exp $
+# $NetBSD: Makefile,v 1.3 2018/02/27 23:56:09 khorben Exp $
 
 DISTNAME=	libnfc-1.7.1
+PKGREVISION=	1
 CATEGORIES=	net
 MASTER_SITES=	https://dl.bintray.com/nfc-tools/sources/
 EXTRACT_SUFX=	.tar.bz2
@@ -19,7 +20,7 @@ CONFIGURE_ARGS+=--enable-doc
 
 BUILD_DEPENDS+=	doxygen>=1.8.11:../../devel/doxygen
 
-.include "../../devel/libusb/buildlink3.mk"
+.include "../../mk/libusb.buildlink3.mk"
 .include "../../devel/readline/buildlink3.mk"
 .include "../../security/pcsc-lite/buildlink3.mk"
 
